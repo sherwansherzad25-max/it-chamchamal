@@ -17,13 +17,25 @@
             --sem1-color: #3498db; 
             --sem2-color: #27ae60; 
             --sem3-color: #f39c12; 
-            --sem4-color: #8e44ad; 
+            --sem4-color: #8e44ad;
+            --text-color: #2c3e50;
+            --table-border: #eee;
+        }
+
+        /* لێرە ستایلی مۆدی شەو زیاد کراوە */
+        body.dark-mode {
+            --background: #121212;
+            --white: #1e1e1e;
+            --primary: #ecf0f1;
+            --text-color: #e0e0e0;
+            --table-border: #333;
         }
 
         body {
             font-family: 'Vazirmatn', sans-serif;
             background-color: var(--background);
-            margin: 0; padding: 0; color: var(--primary);
+            margin: 0; padding: 0; color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
         }
 
         header {
@@ -32,6 +44,24 @@
             text-align: center;
             box-shadow: 0 2px 15px rgba(0,0,0,0.1);
             margin-bottom: 30px;
+            position: relative;
+        }
+
+        /* دوگمەی مۆدی شەو و ڕۆژ */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Vazirmatn';
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            z-index: 1000;
         }
 
         .moving-header {
@@ -78,12 +108,13 @@
         .semester-content.active { display: block; }
 
         table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { padding: 15px; text-align: center; border-bottom: 1px solid #eee; }
-        th { background-color: var(--primary); color: white; }
+        th, td { padding: 15px; text-align: center; border-bottom: 1px solid var(--table-border); color: var(--text-color); }
+        th { background-color: #2c3e50; color: white; }
+        body.dark-mode th { background-color: #34495e; }
 
         .download-btn {
             display: inline-block; padding: 8px 16px; background-color: var(--secondary);
-            color: white; text-decoration: none; border-radius: 6px;
+            color: white !important; text-decoration: none; border-radius: 6px;
             font-size: 0.9rem; transition: 0.2s;
         }
 
@@ -92,10 +123,13 @@
 
         .extra-section { background: var(--white); padding: 25px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-top: 30px; }
         .form-group { margin-bottom: 15px; text-align: right; }
-        .form-group input, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; font-family: 'Vazirmatn'; box-sizing: border-box; }
+        .form-group input, .form-group textarea { 
+            width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; font-family: 'Vazirmatn'; box-sizing: border-box;
+            background-color: var(--background); color: var(--text-color);
+        }
         .send-btn { background-color: var(--accent); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; }
 
-        footer { text-align: center; padding: 40px; background-color: var(--primary); color: white; margin-top: 50px; }
+        footer { text-align: center; padding: 40px; background-color: #2c3e50; color: white; margin-top: 50px; }
 
         .moving-text {
             margin-top: 15px;
@@ -116,6 +150,7 @@
 <body>
 
 <header>
+    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">مۆدی شەو 🌙</button>
     <h1 class="moving-header">پەیمانگای تەکنیکی چەمچەماڵ</h1>
     <h2>بەشی تەکنەلۆژیای زانیاری (IT)</h2>
 </header>
@@ -238,6 +273,29 @@
         document.getElementById(semesterId).style.display = "block";
         document.getElementById(semesterId).classList.add("active");
         evt.currentTarget.classList.add("active");
+    }
+
+    // فرمانی گۆڕینی مۆدی شەو و ڕۆژ
+    function toggleTheme() {
+        const body = document.body;
+        const btn = document.getElementById('themeBtn');
+        body.classList.toggle('dark-mode');
+        
+        if (body.classList.contains('dark-mode')) {
+            btn.innerHTML = "مۆدی ڕۆژ ☀️";
+            localStorage.setItem('theme', 'dark');
+        } else {
+            btn.innerHTML = "مۆدی شەو 🌙";
+            localStorage.setItem('theme', 'light');
+        }
+    }
+
+    // پاراستنی مۆدەکە دوای ڕیفریش کردنی پەیجەکە
+    window.onload = function() {
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            document.getElementById('themeBtn').innerHTML = "مۆدی ڕۆژ ☀️";
+        }
     }
 
     (function() {
