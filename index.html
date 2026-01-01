@@ -281,7 +281,7 @@
 <footer>
     <p>دروستکراوە لەلایەن خوێندکار: <strong>شیروان شێرزاد خالد</strong></p>
     <span class="moving-text">بە هیوای سود گەیاندن بە هەموو خوێندكارانی بەشی ئایتی</span>
-    <p>© ٢٠٢٦     بەردەوام لە نوێ كردنەوەدایە</p>
+    <p>© ٢٠٢٦    بەردەوام لە نوێ كردنەوەدایە</p>
 </footer>
 
 <script>
@@ -335,6 +335,11 @@
         }
     }
 
+    // جێگیرکردنی گفتوگۆی خوێندکاران
+    var disqus_config = function () {
+        this.page.url = window.location.href;  
+        this.page.identifier = 'it-chamchamal-unique'; 
+    };
     (function() {
         var d = document, s = d.createElement('script');
         s.src = 'https://it-chamchamal.disqus.com/embed.js';
