@@ -22,7 +22,7 @@
             --table-border: #eee;
         }
 
-        /* لێرە ستایلی مۆدی شەو زیاد کراوە */
+        /* ستایلی مۆدی شەو */
         body.dark-mode {
             --background: #121212;
             --white: #1e1e1e;
@@ -61,7 +61,7 @@
             font-family: 'Vazirmatn';
             font-weight: bold;
             box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-            z-index: 1000;
+            transition: 0.3s;
         }
 
         .moving-header {
@@ -123,11 +123,35 @@
 
         .extra-section { background: var(--white); padding: 25px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-top: 30px; }
         .form-group { margin-bottom: 15px; text-align: right; }
-        .form-group input, .form-group textarea { 
+        .form-group textarea { 
             width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; font-family: 'Vazirmatn'; box-sizing: border-box;
             background-color: var(--background); color: var(--text-color);
         }
-        .send-btn { background-color: var(--accent); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; }
+
+        /* دوگمەی تێلەگرام */
+        .telegram-btn {
+            background-color: #0088cc;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            font-family: 'Vazirmatn';
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+
+        .telegram-btn:hover {
+            background-color: #0077b5;
+            transform: scale(1.02);
+        }
 
         footer { text-align: center; padding: 40px; background-color: #2c3e50; color: white; margin-top: 50px; }
 
@@ -238,12 +262,14 @@
     </div>
 
     <div class="extra-section">
-        <h3 style="color: var(--accent);">📧 ناردنی تێبینی یان پێشنیار</h3>
-        <form action="mailto:your-email@example.com" method="post" enctype="text/plain">
-            <div class="form-group"><input type="text" name="name" placeholder="ناوەکەت" required></div>
-            <div class="form-group"><textarea name="message" rows="3" placeholder="تێبینییەکەت لێرە بنووسە" required></textarea></div>
-            <button type="submit" class="send-btn">ناردنی نامە</button>
-        </form>
+        <h3 style="color: var(--accent);">💬 ناردنی تێبینی و پەیوەندی خێرا</h3>
+        <p style="font-size: 0.9rem; margin-bottom: 15px;">تێبینییەکەت لێرە بنووسە و دوگمەی تێلەگرام دابگرە بۆ ناردنی:</p>
+        <div class="form-group">
+            <textarea id="userMessage" rows="3" placeholder="نامەکەت لێرە بنووسە..."></textarea>
+        </div>
+        <a href="#" onclick="sendToTelegram()" class="telegram-btn">
+             ناردن لە ڕێگەی تێلەگرام ✈️
+        </a>
     </div>
 
     <div class="extra-section">
@@ -259,6 +285,19 @@
 </footer>
 
 <script>
+    // لێرە یووزەرنەیمەکەت دابنێ لە جیاتی YOUR_USERNAME
+    const TELEGRAM_USERNAME = "shirwan_sherzad"; 
+
+    function sendToTelegram() {
+        const msg = document.getElementById('userMessage').value;
+        if(msg.trim() === "") {
+            alert("تکایە سەرەتا نامەیەک بنووسە!");
+            return;
+        }
+        const url = `https://t.me/${TELEGRAM_USERNAME}?text=${encodeURIComponent(msg)}`;
+        window.open(url, '_blank');
+    }
+
     function showTab(evt, semesterId) {
         var i, content, tablinks;
         content = document.getElementsByClassName("semester-content");
@@ -275,7 +314,6 @@
         evt.currentTarget.classList.add("active");
     }
 
-    // فرمانی گۆڕینی مۆدی شەو و ڕۆژ
     function toggleTheme() {
         const body = document.body;
         const btn = document.getElementById('themeBtn');
@@ -290,7 +328,6 @@
         }
     }
 
-    // پاراستنی مۆدەکە دوای ڕیفریش کردنی پەیجەکە
     window.onload = function() {
         if (localStorage.getItem('theme') === 'dark') {
             document.body.classList.add('dark-mode');
