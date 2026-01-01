@@ -276,11 +276,23 @@
         </a>
     </div>
 
-    <div class="extra-section">
-        <h3 style="color: var(--secondary);">💬 گفتوگۆی خوێندکاران</h3>
-        <div id="HCB_comment_box">بارکردنی گفتوگۆکان...</div>
-        <link rel="stylesheet" type="text/css" href="https://www.htmlcommentbox.com/static/skin/bootstrap/twitter-bootstrap.css?v=0" />
-    </div>
+   <div class="extra-section">
+    <h3 style="color: var(--secondary); text-align: center;">💬 مەکۆی گفتوگۆی خوێندکاران</h3>
+    <p style="text-align: center; font-size: 0.9rem; color: #666;">نامەکانتان لێرە بنووسن (پێویست بە خۆتۆمارکردن ناکات)</p>
+    
+    <div id="commento"></div>
+    <script defer src="https://cdn.commento.io/js/commento.js"></script>
+    
+    <div id="hyvor-talk-view"></div>
+    <script type="text/javascript">
+        var HYVOR_TALK_WEBSITE = 11094; // ناسنامەی گشتی بۆ تاقیکردنەوە
+        var HYVOR_TALK_CONFIG = {
+            url: false,
+            id: false
+        };
+    </script>
+    <script async type="text/javascript" src="//talk.hyvor.com/web-api/embed.js"></script>
+</div>
 </div>
 
 <footer>
