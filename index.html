@@ -128,7 +128,6 @@
             background-color: var(--background); color: var(--text-color);
         }
 
-        /* دوگمەی تێلەگرام */
         .telegram-btn {
             background-color: #0088cc;
             color: white;
@@ -169,10 +168,6 @@
         }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        
-        /* ستایلی چاتی نوێ */
-        #HCB_comment_box { direction: ltr; text-align: left; }
-        .hcb-wrapper { direction: rtl !important; text-align: right !important; }
     </style>
 </head>
 <body>
@@ -281,7 +276,7 @@
 <footer>
     <p>دروستکراوە لەلایەن خوێندکار: <strong>شیروان شێرزاد خالد</strong></p>
     <span class="moving-text">بە هیوای سود گەیاندن بە هەموو خوێندكارانی بەشی ئایتی</span>
-    <p>© (٢٠٢٦    (بەردەوام لە نوێ كردنەوەدایە</p>
+    <p>© ٢٠٢٦  بەردەوام لە نوێ كردنەوەدایە</p>
 </footer>
 
 <script>
@@ -333,20 +328,11 @@
             document.getElementById('themeBtn').innerHTML = "مۆدی ڕۆژ ☀️";
         }
     }
-
-    /* کۆدی سیستەمی گفتوگۆ */
-    if(!window.hcb_user){hcb_user={};} 
-    (function(){
-        var s=document.createElement("script"), l=window.hcb_user.PAGE_URL || (""+window.location).replace(/'/g,"%27"), h="https://www.htmlcommentbox.com";
-        s.setAttribute("type","text/javascript");
-        s.setAttribute("src", h+"/jscript?page="+encodeURIComponent(l).replaceCanvas+"&opts=16798&num=10&ts="+(new Date()).getTime());
-        if (typeof s!="undefined") document.getElementsByTagName("head")[0].appendChild(s);
-    })();
 </script>
+
 <div style="text-align: center; margin-top: 20px;">
     <p>ژمارەی سەردانەکان:</p>
     <img src="https://profile-counter.glitch.me/sherwansherzad25-max/count.svg" alt="Visitor Count">
 </div>
 </body>
 </html>
-
