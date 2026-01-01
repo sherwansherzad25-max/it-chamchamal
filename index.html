@@ -34,7 +34,20 @@
             margin-bottom: 30px;
         }
 
-        header h1 { color: var(--accent); margin: 0; font-size: 2.5rem; }
+        /* لێرە تەنها ستایلی جوڵانەوەکەم بۆ ناوی پەیمانگا زیاد کردووە */
+        .moving-header {
+            color: var(--accent);
+            margin: 0;
+            font-size: 2.5rem;
+            display: inline-block;
+            animation: headerJump 3s infinite ease-in-out;
+        }
+
+        @keyframes headerJump {
+            0%, 100% { transform: translateY(0); color: var(--accent); }
+            50% { transform: translateY(-10px); color: var(--secondary); }
+        }
+
         header h2 { color: var(--primary); font-size: 1.5rem; margin-top: 10px; opacity: 0.8; }
 
         .main-container { max-width: 1000px; margin: 0 auto 50px auto; padding: 0 20px; }
@@ -78,23 +91,25 @@
         .old-btn { background-color: #e67e22; }
         .download-btn:hover { opacity: 0.8; transform: scale(1.05); }
 
-        /* ستایلی نوێ بۆ بەشی گفتوگۆ و فۆرم */
-        .interaction-section {
-            background: var(--white); padding: 30px; border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-top: 30px;
-        }
+        .extra-section { background: var(--white); padding: 25px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-top: 30px; }
         .form-group { margin-bottom: 15px; text-align: right; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
-        .form-group input, .form-group textarea {
-            width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;
-            font-family: 'Vazirmatn'; box-sizing: border-box;
-        }
-        .submit-btn {
-            background-color: var(--accent); color: white; border: none;
-            padding: 12px 25px; border-radius: 8px; cursor: pointer; font-weight: bold;
-        }
+        .form-group input, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; font-family: 'Vazirmatn'; box-sizing: border-box; }
+        .send-btn { background-color: var(--accent); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; }
 
         footer { text-align: center; padding: 40px; background-color: var(--primary); color: white; margin-top: 50px; }
+
+        .moving-text {
+            margin-top: 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            display: block;
+            animation: moveText 3s infinite alternate ease-in-out;
+        }
+
+        @keyframes moveText {
+            from { transform: scale(1); color: var(--secondary); }
+            to { transform: scale(1.05); color: var(--accent); }
+        }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
@@ -102,7 +117,7 @@
 <body>
 
 <header>
-    <h1>پەیمانگای تەکنیکی چەمچەماڵ</h1>
+    <h1 class="moving-header">پەیمانگای تەکنیکی چەمچەماڵ</h1>
     <h2>بەشی تەکنەلۆژیای زانیاری (IT)</h2>
 </header>
 
@@ -128,51 +143,90 @@
         </table>
     </div>
 
-    <div id="sem2" class="semester-content"><h3>سمستەری دووەم</h3><p>ناوەرۆکی سمستەری دوو...</p></div>
-    <div id="sem3" class="semester-content"><h3>سمستەری سێیەم</h3><p>ناوەرۆکی سمستەری سێ...</p></div>
-    <div id="sem4" class="semester-content"><h3>سمستەری چوارەم</h3><p>ناوەرۆکی سمستەری چوار...</p></div>
+    <div id="sem2" class="semester-content">
+        <h3 style="color: var(--sem2-color); border-right: 5px solid var(--sem2-color); padding-right: 10px;">وانەکانی سمستەری دووەم</h3>
+        <table>
+            <thead><tr><th>ناوی وانە</th><th>مەلزەمە</th><th>ساڵانی پێشوو</th></tr></thead>
+            <tbody>
+                <tr><td>Structured Programming (C++)</td><td><a href="files/cpp.pdf" class="download-btn">داگرتن</a></td><td><a href="#" class="download-btn old-btn">پرسیار</a></td></tr>
+                <tr><td>Database Management</td><td><a href="files/dbms.pdf" class="download-btn">داگرتن</a></td><td><a href="#" class="download-btn old-btn">پرسیار</a></td></tr>
+                <tr><td>Discrete Structures</td><td><a href="files/discrete.pdf" class="download-btn">داگرتن</a></td><td><a href="#" class="download-btn old-btn">پرسیار</a></td></tr>
+                <tr><td>Web Development I</td><td><a href="files/web1.pdf" class="download-btn">داگرتن</a></td><td><a href="#" class="download-btn old-btn">پرسیار</a></td></tr>
+                <tr><td>Operating Systems</td><td><a href="files/os.pdf" class="download-btn">داگرتن</a></td><td><a href="#" class="download-btn old-btn">پرسیار</a></td></tr>
+            </tbody>
+        </table>
+    </div>
 
-    <div class="interaction-section">
-        <h3 style="color: var(--accent);">📧 ناردنی تێبینی یان پرسیار</h3>
-        <p>ئەگەر مەلزەمەیەک نیە  یان کێشەیەک لە سایتەکەدا هەیە، لێرەوە ئاگادارم بكەرەوە:</p>
-        <form action="mailto:sherwan@example.com" method="post" enctype="text/plain">
-            <div class="form-group">
-                <label>ناوەکەت:</label>
-                <input type="text" name="name" placeholder="ناوی خۆت بنووسە..." required>
-            </div>
-            <div class="form-group">
-                <label>نامەکەت:</label>
-                <textarea name="message" rows="4" placeholder="تێبینییەکەت لێرە بنووسە..." required></textarea>
-            </div>
-            <button type="submit" class="submit-btn">ناردنی نامە</button>
+    <div id="sem3" class="semester-content">
+        <h3 style="color: var(--sem3-color); border-right: 5px solid var(--sem3-color); padding-right: 10px;">وانەکانی سمستەری سێیەم</h3>
+        <table>
+            <thead><tr><th>ناوی وانە</th><th>مەلزەمە</th><th>ساڵانی پێشوو</th></tr></thead>
+            <tbody>
+                <tr><td>Object Oriented Programming</td><td><a href="files/java.pdf" class="download-btn">داگرتن</a></td><td><a href="#" class="download-btn old-btn">پرسیار</a></td></tr>
+                <tr><td>Computer Networks</td><td><a href="files/network.pdf" class="download-btn">داگرتن</a></td><td><a href="#" class="download-btn old-btn">پرسیار</a></td></tr>
+                <tr><td>Data Structures</td><td><a href="files/data_struct.pdf" class="download-btn">داگرتن</a></td><td><a href="#" class="download-btn old-btn">پرسیار</a></td></tr>
+                <tr><td>Visual Programming</td><td><a href="files/visual.pdf" class="download-btn">داگرتن</a></td><td><a href="#" class="download-btn old-btn">پرسیار</a></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="sem4" class="semester-content">
+        <h3 style="color: var(--sem4-color); border-right: 5px solid var(--sem4-color); padding-right: 10px;">وانەکانی سمستەری چوارەم</h3>
+        <table>
+            <thead><tr><th>ناوی وانە</th><th>مەلزەمە</th><th>ساڵانی پێشوو</th></tr></thead>
+            <tbody>
+                <tr><td>Network Security</td><td><a href="files/security.pdf" class="download-btn">داگرتن</a></td><td><a href="#" class="download-btn old-btn">پرسیار</a></td></tr>
+                <tr><td>Web Programming (PHP)</td><td><a href="files/php.pdf" class="download-btn">داگرتن</a></td><td><a href="#" class="download-btn old-btn">پرسیار</a></td></tr>
+                <tr><td>Mobile Application</td><td><a href="files/mobile.pdf" class="download-btn">داگرتن</a></td><td><a href="#" class="download-btn old-btn">پرسیار</a></td></tr>
+                <tr><td>Software Engineering</td><td><a href="files/software.pdf" class="download-btn">داگرتن</a></td><td><a href="#" class="download-btn old-btn">پرسیار</a></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="extra-section">
+        <h3 style="color: var(--accent);">📧 ناردنی تێبینی یان پێشنیار</h3>
+        <form action="mailto:ئیمەیڵەکەت_لێرە_بنووسە" method="post" enctype="text/plain">
+            <div class="form-group"><input type="text" name="name" placeholder="ناوەکەت" required></div>
+            <div class="form-group"><textarea name="message" rows="3" placeholder="تێبینییەکەت لێرە بنووسە" required></textarea></div>
+            <button type="submit" class="send-btn">ناردنی نامە</button>
         </form>
     </div>
 
-    <div class="interaction-section">
+    <div class="extra-section">
         <h3 style="color: var(--secondary);">💬 گفتوگۆی خوێندکاران</h3>
-        <p>لێرەدا دەتوانن ڕاوبۆچوونی خۆتان بنووسن :</p>
-        <div style="background: #f9f9f9; padding: 20px; border-radius: 10px; text-align: center; border: 1px dashed #ccc;">
-           
-        </div>
+        <div id="disqus_thread"></div>
     </div>
-
 </div>
 
 <footer>
-    <p>دروستکراوە لەلایەن خوێندکار: <strong>شێروان شێرزاد خالد</strong></p>
-    <p>© ٢٠٢٦ بەهیوای سود گەیاندن بە هەموو خوێندكارانی بەشی تەكنەلۆژیای زانیاری</p>
+    <p>دروستکراوە لەلایەن خوێندکار: <strong>شیروان شێرزاد خالد</strong></p>
+    <span class="moving-text">بە هیوای سود گەیاندن بە هەموو خوێندكارانی بەشی ئایتی</span>
+    <p>© ٢٠٢٦     GOOD LUCK</p>
 </footer>
 
 <script>
     function showTab(evt, semesterId) {
         var i, content, tablinks;
         content = document.getElementsByClassName("semester-content");
-        for (i = 0; i < content.length; i++) { content[i].style.display = "none"; }
+        for (i = 0; i < content.length; i++) {
+            content[i].style.display = "none";
+            content[i].classList.remove("active");
+        }
         tablinks = document.getElementsByClassName("tab-btn");
-        for (i = 0; i < tablinks.length; i++) { tablinks[i].classList.remove("active"); }
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].classList.remove("active");
+        }
         document.getElementById(semesterId).style.display = "block";
+        document.getElementById(semesterId).classList.add("active");
         evt.currentTarget.classList.add("active");
     }
+
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://it-chamchamal.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
 </script>
 
 </body>
