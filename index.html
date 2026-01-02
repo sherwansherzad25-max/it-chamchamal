@@ -314,8 +314,40 @@
 </div>
 
 <footer>
-    <p>دروستکراوە لەلایەن خوێندکار: <strong>شیروان شێرزاد خالد</strong></p>
-    <span class="moving-text">بە هیوای سود گەیاندن بە هەموو خوێندكارانی بەشی ئایتی</span>
+<div style="margin-top: 20px; padding: 15px;">
+    <p style="font-size: 1rem; margin-bottom: 12px; opacity: 0.8; color: white;">دروستکراوە لەلایەن خوێندکار:</p>
+    
+    <div class="rainbow-name">
+        شیروان شێرزاد خالد
+    </div>
+</div>
+
+<style>
+    .rainbow-name {
+        display: inline-block;
+        font-size: 1.6rem;
+        font-weight: bold;
+        /* دروستکردنی ڕەنگە گۆڕاوەکان */
+        background: linear-gradient(to right, #3498db, #e74c3c, #f1c40f, #2ecc71, #9b59b6, #3498db);
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        /* جوڵاندنی ڕەنگەکان */
+        animation: gradient-animation 4s linear infinite;
+        padding: 5px 15px;
+        transition: 0.3s;
+    }
+
+    @keyframes gradient-animation {
+        0% { background-position: 0% center; }
+        100% { background-position: 200% center; }
+    }
+
+    .rainbow-name:hover {
+        transform: scale(1.1);
+        filter: brightness(1.2);
+    }
+</style>    <span class="moving-text">بە هیوای سود گەیاندن بە هەموو خوێندكارانی بەشی ئایتی</span>
     <p>© ٢٠٢٦  بەردەوام لە نوێ كردنەوەدایە</p>
 </footer>
 
