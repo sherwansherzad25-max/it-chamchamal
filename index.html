@@ -8,7 +8,47 @@
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
-        :root {
+       /* هێدەری سیحری و ڕەنگی جوڵاو */
+        header {
+            background: linear-gradient(-45deg, #107015, #3498db, #eb7b6f, #0a3b1e);
+            background-size: 400% 400%;
+            animation: magicGradient 15s ease infinite;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        @keyframes magicGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* خڕکردنی کەوانەکان بۆ 20px و جوڵەی دوگمەکان لە کاتی ماوس لێدان */
+        .tab-btn {
+            flex: 1; padding: 15px; border: none; border-radius: 20px;
+            font-size: 1.1rem; font-weight: bold; cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            color: white; background-color: #95a5a6;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            font-family: 'Vazirmatn', sans-serif;
+        }
+
+        .tab-btn:hover { 
+            transform: translateY(-7px) scale(1.03); 
+            filter: brightness(1.1); 
+        }
+
+        .semester-content, .extra-section, .form-group textarea, .telegram-btn {
+            border-radius: 20px !important;
+        }
+        
+        .moving-header, header h2 {
+            color: white !important;
+        }
+       :root {
             --primary: #2c3e50;
             --secondary: #3498db;
             --accent: #c0392b;
@@ -174,8 +214,8 @@
 
 <header>
     <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">مۆدی شەو 🌙</button>
-    <h1 class="moving-header">پەیمانگای تەکنیکی چەمچەماڵ</h1>
-    <h2>بەشی تەکنەلۆژیای زانیاری (IT)</h2>
+   <h1 class="moving-header" style="color: white;">پەیمانگای تەکنیکی چەمچەماڵ</h1>
+<h2 style="color: white; opacity: 0.9;">بەشی تەکنەلۆژیای زانیاری (IT)</h2>
 </header>
 
 <div class="main-container">
@@ -335,8 +375,3 @@
 <img src="https://komarev.com/ghpvc/?username=sherwan-tech-2026&color=green&style=flat-square&label=سەردانەکان" alt="Visitor Count"></div>
 </body>
 </html>
-
-
-
-
-
