@@ -265,11 +265,14 @@
             <button class="tab-btn" style="background:#3498db; flex:none; width:100px;" onclick="selectGroup('A')">Group A</button>
             <button class="tab-btn" style="background:#27ae60; flex:none; width:100px;" onclick="selectGroup('B')">Group B</button>
         </div>
+
+        <h3 id="group-display-title" style="text-align: center; color: var(--secondary); margin-bottom: 15px; font-weight: bold; display: none; border-bottom: 2px solid #eee; padding-bottom: 10px;"></h3>
+
         <div id="daysArea" style="text-align:center; margin-bottom:20px;"></div>
         <div id="schedule-box" style="display:none;">
             <div class="table-container">
                 <table style="border: 2px solid var(--secondary);">
-                    <thead><tr><th>وانە</th><th>بابەت</th><th>کات</th><th>مامۆستا</th></tr></thead>
+                    <thead><tr><th>ژمارە</th><th>بابەت</th><th>کات</th><th>مامۆستا</th></tr></thead>
                     <tbody id="schedule-body"></tbody>
                 </table>
             </div>
@@ -341,8 +344,13 @@
             4: [["١", "IT Fundamentals", "2:00", "م. عمر"], ["٢", "IT Fundamentals", "4:00", "م. عمر+امین+هۆگر"]]
         }
     };
+
  function selectGroup(g) {
-        // گۆڕینی ڕەنگی دوگمەی ڕۆژەکان بۆ ڕەنگێکی جوانتر
+        // ئەم بەشە ناونیشانەکە نوێ دەکاتەوە
+        const title = document.getElementById('group-display-title');
+        title.innerText = "خشتەی وانەکانی Group " + g;
+        title.style.display = "block";
+
         document.getElementById('daysArea').innerHTML = `
             <button class="tab-btn" style="background:#8e44ad; margin:2px;" onclick="selectDay('${g}', 1)">یەکشەممە</button>
             <button class="tab-btn" style="background:#2980b9; margin:2px;" onclick="selectDay('${g}', 2)">دووشەممە</button>
@@ -355,7 +363,6 @@
         const body = document.getElementById('schedule-body');
         body.innerHTML = '';
         
-        // لێرە ڕەنگەکان دیاری کراون بۆ هەر وانەیەک
         const subjectColors = {
             'Logic Design': '#e74c3c',
             'English': '#3498db',
