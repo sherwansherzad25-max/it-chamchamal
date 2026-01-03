@@ -35,6 +35,7 @@
             background-color: var(--background);
             margin: 0; padding: 0; color: var(--text-color);
             transition: background-color 0.3s, color 0.3s;
+            overflow-x: hidden;
         }
 
         header {
@@ -107,6 +108,17 @@
         th { background-color: #2c3e50; color: white; }
         body.dark-mode th { background-color: #34495e; }
 
+        /* بەشی تایبەت بە مۆبایل بۆ ئەوەی تێکنەچێت */
+        @media screen and (max-width: 768px) {
+            table, thead, tbody, th, td, tr { display: block; width: 100%; }
+            thead tr { display: none; }
+            tr { margin-bottom: 15px; border: 1px solid var(--table-border); border-radius: 15px; padding: 10px; background: var(--white); }
+            td { text-align: left !important; padding-right: 45% !important; position: relative; border-bottom: 1px solid var(--table-border); min-height: 40px; display: flex; align-items: center; }
+            td:last-child { border-bottom: none; }
+            td:before { content: attr(data-label); position: absolute; right: 10px; font-weight: bold; color: var(--secondary); }
+            .download-btn { width: 100%; text-align: center; margin-top: 2px; }
+        }
+
         .download-btn {
             display: inline-block; padding: 8px 16px; background-color: var(--secondary);
             color: white !important; text-decoration: none; border-radius: 6px;
@@ -171,34 +183,34 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>Logic Design</td>
-                    <td><a href="https://drive.google.com/drive/folders/16v8Zf_xiCYPCkcPib7bIS_ah4hk6dDPj" class="download-btn">داگرتن</a></td>
-                    <td><a href="https://drive.google.com/drive/folders/1w4lv3S1wskIFRmJzgrR3m_Vib2SzklOv" class="download-btn old-btn">بینین</a></td>
-                    <td><a href="https://www.youtube.com/watch?v=XdowYbdOLr4&list=PL44iV_p1_v_L0rAnH0-U8l96u4lC7yN0J" class="download-btn" style="background-color: #e74c3c;">ڤیدیۆ 🎥</a></td>
+                    <td data-label="ناوی وانە">Logic Design</td>
+                    <td data-label="مەلزەمە"><a href="https://drive.google.com/drive/folders/16v8Zf_xiCYPCkcPib7bIS_ah4hk6dDPj" class="download-btn">داگرتن</a></td>
+                    <td data-label="پرسیار"><a href="https://drive.google.com/drive/folders/1w4lv3S1wskIFRmJzgrR3m_Vib2SzklOv" class="download-btn old-btn">بینین</a></td>
+                    <td data-label="فێركاری"><a href="https://www.youtube.com/watch?v=XdowYbdOLr4&list=PL44iV_p1_v_L0rAnH0-U8l96u4lC7yN0J" class="download-btn" style="background-color: #e74c3c;">ڤیدیۆ 🎥</a></td>
                 </tr>
                 <tr>
-                    <td>IT Fundamentals</td>
-                    <td><a href="https://drive.google.com/drive/folders/1MUimiqD30yYTs1U53IVkb2B4lZn8Q5Dx" class="download-btn">داگرتن</a></td>
-                    <td><a href="https://drive.google.com/drive/folders/1dqo6IA60wMPzrD-tpE92e_NPb1x9MlGY" class="download-btn old-btn">بینین</a></td>
-                    <td><a href="#" class="download-btn" style="background-color: #e74c3c;">سەیرکردن 🎥</a></td>
+                    <td data-label="ناوی وانە">IT Fundamentals</td>
+                    <td data-label="مەلزەمە"><a href="https://drive.google.com/drive/folders/1MUimiqD30yYTs1U53IVkb2B4lZn8Q5Dx" class="download-btn">داگرتن</a></td>
+                    <td data-label="پرسیار"><a href="https://drive.google.com/drive/folders/1dqo6IA60wMPzrD-tpE92e_NPb1x9MlGY" class="download-btn old-btn">بینین</a></td>
+                    <td data-label="فێركاری"><a href="#" class="download-btn" style="background-color: #e74c3c;">سەیرکردن 🎥</a></td>
                 </tr>
                 <tr>
-                    <td>Mathematics</td>
-                    <td><a href="https://drive.google.com/drive/folders/15oJqsrWSfqplqdO2XPV88UmI0mpsK7Tv" target="_blank" class="download-btn">داگرتن</a></td>
-                    <td><a href="https://drive.google.com/drive/folders/1txr0hJgSoTuRse6Zj7ARdxDWIPtjcI8C" target="_blank" class="download-btn old-btn">بینین</a></td>
-                    <td><a href="https://www.youtube.com/playlist?list=PLCfnFVb0wrYoBgOnmKoAf1t8CqbS4dcQh" target="_blank" class="download-btn" style="background-color: #e74c3c;">ڤیدیۆ 🎥</a></td>
+                    <td data-label="ناوی وانە">Mathematics</td>
+                    <td data-label="مەلزەمە"><a href="https://drive.google.com/drive/folders/15oJqsrWSfqplqdO2XPV88UmI0mpsK7Tv" target="_blank" class="download-btn">داگرتن</a></td>
+                    <td data-label="پرسیار"><a href="https://drive.google.com/drive/folders/1txr0hJgSoTuRse6Zj7ARdxDWIPtjcI8C" target="_blank" class="download-btn old-btn">بینین</a></td>
+                    <td data-label="فێركاری"><a href="https://www.youtube.com/playlist?list=PLCfnFVb0wrYoBgOnmKoAf1t8CqbS4dcQh" target="_blank" class="download-btn" style="background-color: #e74c3c;">ڤیدیۆ 🎥</a></td>
                 </tr>
                 <tr>
-                    <td>English</td>
-                    <td><a href="https://drive.google.com/drive/folders/1D9DL2xHQRVJYSFlQB6BUDStWt_qKF0QI" class="download-btn">داگرتن</a></td>
-                    <td><a href="https://drive.google.com/drive/folders/1s2q2r18eHAAwEwvagR2r0d0WjIR2_ZVe" class="download-btn old-btn">بینین</a></td>
-                    <td><a href="#" class="download-btn" style="background-color: #e74c3c;">سەیرکردن 🎥</a></td>
+                    <td data-label="ناوی وانە">English</td>
+                    <td data-label="مەلزەمە"><a href="https://drive.google.com/drive/folders/1D9DL2xHQRVJYSFlQB6BUDStWt_qKF0QI" class="download-btn">داگرتن</a></td>
+                    <td data-label="پرسیار"><a href="https://drive.google.com/drive/folders/1s2q2r18eHAAwEwvagR2r0d0WjIR2_ZVe" class="download-btn old-btn">بینین</a></td>
+                    <td data-label="فێركاری"><a href="#" class="download-btn" style="background-color: #e74c3c;">سەیرکردن 🎥</a></td>
                 </tr>
                 <tr>
-                    <td>Kurdology</td>
-                    <td><a href="https://drive.google.com/drive/folders/1zktjZlnocNqLwQIeJZ_S0jb4hhWgYc0C" class="download-btn">داگرتن</a></td>
-                    <td><a href="https://drive.google.com/drive/folders/1SIpy883RCPN4cvpFy2TPx7ea5TZvcppM" class="download-btn old-btn">بینین</a></td>
-                    <td><a href="#" class="download-btn" style="background-color: #e74c3c;">سەیرکردن 🎥</a></td>
+                    <td data-label="ناوی وانە">Kurdology</td>
+                    <td data-label="مەلزەمە"><a href="https://drive.google.com/drive/folders/1zktjZlnocNqLwQIeJZ_S0jb4hhWgYc0C" class="download-btn">داگرتن</a></td>
+                    <td data-label="پرسیار"><a href="https://drive.google.com/drive/folders/1SIpy883RCPN4cvpFy2TPx7ea5TZvcppM" class="download-btn old-btn">بینین</a></td>
+                    <td data-label="فێركاری"><a href="#" class="download-btn" style="background-color: #e74c3c;">سەیرکردن 🎥</a></td>
                 </tr>
             </tbody>
         </table>
@@ -207,15 +219,13 @@
     <div id="sem2" class="semester-content">
         <h3 style="color: var(--sem2-color); border-right: 5px solid var(--sem2-color); padding-right: 10px;">وانەکانی سمستەری دووەم</h3>
         <table>
-            <thead>
-                <tr><th>ناوی وانە</th><th>مەلزەمە</th><th>پرسیار</th><th>فێركاری وانە</th></tr>
-            </thead>
+            <thead><tr><th>ناوی وانە</th><th>مەلزەمە</th><th>پرسیار</th><th>فێركاری وانە</th></tr></thead>
             <tbody>
-                <tr><td>Computer Graphics</td><td><a href="#" class="download-btn">داگرتن</a></td><td><a href="#" class="download-btn old-btn">بینین</a></td><td><a href="#" class="download-btn" style="background-color: #e74c3c;">سەیرکردن 🎥</a></td></tr>
-                <tr><td>Web Programming</td><td><a href="#" class="download-btn">داگرتن</a></td><td><a href="#" class="download-btn old-btn">بینین</a></td><td><a href="#" class="download-btn" style="background-color: #e74c3c;">سەیرکردن 🎥</a></td></tr>
-                <tr><td>Visual Programming</td><td><a href="#" class="download-btn">داگرتن</a></td><td><a href="#" class="download-btn old-btn">بینین</a></td><td><a href="#" class="download-btn" style="background-color: #e74c3c;">سەیرکردن 🎥</a></td></tr>
-                <tr><td>Networking</td><td><a href="#" class="download-btn">داگرتن</a></td><td><a href="#" class="download-btn old-btn">بینین</a></td><td><a href="#" class="download-btn" style="background-color: #e74c3c;">سەیرکردن 🎥</a></td></tr>
-                <tr><td>Academic Debate</td><td><a href="#" class="download-btn">داگرتن</a></td><td><a href="#" class="download-btn old-btn">بینین</a></td><td><a href="#" class="download-btn" style="background-color: #e74c3c;">سەیرکردن 🎥</a></td></tr>
+                <tr><td data-label="ناوی وانە">Computer Graphics</td><td data-label="مەلزەمە"><a href="#" class="download-btn">داگرتن</a></td><td data-label="پرسیار"><a href="#" class="download-btn old-btn">بینین</a></td><td data-label="فێركاری"><a href="#" class="download-btn" style="background-color: #e74c3c;">🎥</a></td></tr>
+                <tr><td data-label="ناوی وانە">Web Programming</td><td data-label="مەلزەمە"><a href="#" class="download-btn">داگرتن</a></td><td data-label="پرسیار"><a href="#" class="download-btn old-btn">بینین</a></td><td data-label="فێركاری"><a href="#" class="download-btn" style="background-color: #e74c3c;">🎥</a></td></tr>
+                <tr><td data-label="ناوی وانە">Visual Programming</td><td data-label="مەلزەمە"><a href="#" class="download-btn">داگرتن</a></td><td data-label="پرسیار"><a href="#" class="download-btn old-btn">بینین</a></td><td data-label="فێركاری"><a href="#" class="download-btn" style="background-color: #e74c3c;">🎥</a></td></tr>
+                <tr><td data-label="ناوی وانە">Networking</td><td data-label="مەلزەمە"><a href="#" class="download-btn">داگرتن</a></td><td data-label="پرسیار"><a href="#" class="download-btn old-btn">بینین</a></td><td data-label="فێركاری"><a href="#" class="download-btn" style="background-color: #e74c3c;">🎥</a></td></tr>
+                <tr><td data-label="ناوی وانە">Academic Debate</td><td data-label="مەلزەمە"><a href="#" class="download-btn">داگرتن</a></td><td data-label="پرسیار"><a href="#" class="download-btn old-btn">بینین</a></td><td data-label="فێركاری"><a href="#" class="download-btn" style="background-color: #e74c3c;">🎥</a></td></tr>
             </tbody>
         </table>
     </div>
@@ -223,15 +233,13 @@
     <div id="sem3" class="semester-content">
         <h3 style="color: var(--sem3-color); border-right: 5px solid var(--sem3-color); padding-right: 10px;">وانەکانی سمستەری سێیەم</h3>
         <table>
-            <thead>
-                <tr><th>ناوی وانە</th><th>مەلزەمە</th><th>پرسیار</th><th>فێركاری وانە</th></tr>
-            </thead>
+            <thead><tr><th>ناوی وانە</th><th>مەلزەمە</th><th>پرسیار</th><th>فێركاری وانە</th></tr></thead>
             <tbody>
-                <tr><td>Database System</td><td><a href="#" class="download-btn">داگرتن</a></td><td><a href="#" class="download-btn old-btn">بینین</a></td><td><a href="#" class="download-btn" style="background-color: #e74c3c;">سەیرکردن 🎥</a></td></tr>
-                <tr><td>OOP</td><td><a href="#" class="download-btn">داگرتن</a></td><td><a href="#" class="download-btn old-btn">بینین</a></td><td><a href="#" class="download-btn" style="background-color: #e74c3c;">سەیرکردن 🎥</a></td></tr>
-                <tr><td>Operating System</td><td><a href="#" class="download-btn">داگرتن</a></td><td><a href="#" class="download-btn old-btn">بینین</a></td><td><a href="#" class="download-btn" style="background-color: #e74c3c;">سەیرکردن 🎥</a></td></tr>
-                <tr><td>Network Admin</td><td><a href="#" class="download-btn">داگرتن</a></td><td><a href="#" class="download-btn old-btn">بینین</a></td><td><a href="#" class="download-btn" style="background-color: #e74c3c;">سەیرکردن 🎥</a></td></tr>
-                <tr><td>System Analysis</td><td><a href="#" class="download-btn">داگرتن</a></td><td><a href="#" class="download-btn old-btn">بینین</a></td><td><a href="#" class="download-btn" style="background-color: #e74c3c;">سەیرکردن 🎥</a></td></tr>
+                <tr><td data-label="ناوی وانە">Database System</td><td data-label="مەلزەمە"><a href="#" class="download-btn">داگرتن</a></td><td data-label="پرسیار"><a href="#" class="download-btn old-btn">بینین</a></td><td data-label="فێركاری"><a href="#" class="download-btn" style="background-color: #e74c3c;">🎥</a></td></tr>
+                <tr><td data-label="ناوی وانە">OOP</td><td data-label="مەلزەمە"><a href="#" class="download-btn">داگرتن</a></td><td data-label="پرسیار"><a href="#" class="download-btn old-btn">بینین</a></td><td data-label="فێركاری"><a href="#" class="download-btn" style="background-color: #e74c3c;">🎥</a></td></tr>
+                <tr><td data-label="ناوی وانە">Operating System</td><td data-label="مەلزەمە"><a href="#" class="download-btn">داگرتن</a></td><td data-label="پرسیار"><a href="#" class="download-btn old-btn">بینین</a></td><td data-label="فێركاری"><a href="#" class="download-btn" style="background-color: #e74c3c;">🎥</a></td></tr>
+                <tr><td data-label="ناوی وانە">Network Admin</td><td data-label="مەلزەمە"><a href="#" class="download-btn">داگرتن</a></td><td data-label="پرسیار"><a href="#" class="download-btn old-btn">بینین</a></td><td data-label="فێركاری"><a href="#" class="download-btn" style="background-color: #e74c3c;">🎥</a></td></tr>
+                <tr><td data-label="ناوی وانە">System Analysis</td><td data-label="مەلزەمە"><a href="#" class="download-btn">داگرتن</a></td><td data-label="پرسیار"><a href="#" class="download-btn old-btn">بینین</a></td><td data-label="فێركاری"><a href="#" class="download-btn" style="background-color: #e74c3c;">🎥</a></td></tr>
             </tbody>
         </table>
     </div>
@@ -239,20 +247,16 @@
     <div id="sem4" class="semester-content">
         <h3 style="color: var(--sem4-color); border-right: 5px solid var(--sem4-color); padding-right: 10px;">وانەکانی سمستەری چوارەم</h3>
         <table>
-            <thead>
-                <tr><th>ناوی وانە</th><th>مەلزەمە</th><th>پرسیار</th><th>فێركاری</th></tr>
-            </thead>
+            <thead><tr><th>ناوی وانە</th><th>مەلزەمە</th><th>پرسیار</th><th>فێركاری</th></tr></thead>
             <tbody>
-                <tr><td>Data Security</td><td><a href="#" class="download-btn">داگرتن</a></td><td><a href="#" class="download-btn old-btn">بینین</a></td><td><a href="#" class="download-btn" style="background-color: #e74c3c;">سەیرکردن 🎥</a></td></tr>
-                <tr><td>Mobile App</td><td><a href="#" class="download-btn">داگرتن</a></td><td><a href="#" class="download-btn old-btn">بینین</a></td><td><a href="#" class="download-btn" style="background-color: #e74c3c;">سەیرکردن 🎥</a></td></tr>
-                <tr><td>Cloud Computing</td><td><a href="#" class="download-btn">داگرتن</a></td><td><a href="#" class="download-btn old-btn">بینین</a></td><td><a href="#" class="download-btn" style="background-color: #e74c3c;">سەیرکردن 🎥</a></td></tr>
-                <tr><td>Software Eng.</td><td><a href="#" class="download-btn">داگرتن</a></td><td><a href="#" class="download-btn old-btn">بینین</a></td><td><a href="#" class="download-btn" style="background-color: #e74c3c;">سەیرکردن 🎥</a></td></tr>
-                <tr><td>Graduation Project</td><td><a href="#" class="download-btn">داگرتن</a></td><td><a href="#" class="download-btn old-btn">بینین</a></td><td><a href="#" class="download-btn" style="background-color: #e74c3c;">سەیرکردن 🎥</a></td></tr>
+                <tr><td data-label="ناوی وانە">Data Security</td><td data-label="مەلزەمە"><a href="#" class="download-btn">داگرتن</a></td><td data-label="پرسیار"><a href="#" class="download-btn old-btn">بینین</a></td><td data-label="فێركاری"><a href="#" class="download-btn" style="background-color: #e74c3c;">🎥</a></td></tr>
+                <tr><td data-label="ناوی وانە">Mobile App</td><td data-label="مەلزەمە"><a href="#" class="download-btn">داگرتن</a></td><td data-label="پرسیار"><a href="#" class="download-btn old-btn">بینین</a></td><td data-label="فێركاری"><a href="#" class="download-btn" style="background-color: #e74c3c;">🎥</a></td></tr>
+                <tr><td data-label="ناوی وانە">Cloud Computing</td><td data-label="مەلزەمە"><a href="#" class="download-btn">داگرتن</a></td><td data-label="پرسیار"><a href="#" class="download-btn old-btn">بینین</a></td><td data-label="فێركاری"><a href="#" class="download-btn" style="background-color: #e74c3c;">🎥</a></td></tr>
+                <tr><td data-label="ناوی وانە">Software Eng.</td><td data-label="مەلزەمە"><a href="#" class="download-btn">داگرتن</a></td><td data-label="پرسیار"><a href="#" class="download-btn old-btn">بینین</a></td><td data-label="فێركاری"><a href="#" class="download-btn" style="background-color: #e74c3c;">🎥</a></td></tr>
+                <tr><td data-label="ناوی وانە">Graduation Project</td><td data-label="مەلزەمە"><a href="#" class="download-btn">داگرتن</a></td><td data-label="پرسیار"><a href="#" class="download-btn old-btn">بینین</a></td><td data-label="فێركاری"><a href="#" class="download-btn" style="background-color: #e74c3c;">🎥</a></td></tr>
             </tbody>
         </table>
     </div>
-
-
 
     <div class="extra-section">
         <h3 style="color: var(--accent);">💬 سەرنج و تێبینیەكانتان لێرەوە بنێرن</h3>
@@ -261,19 +265,14 @@
         </div>
         <a href="#" onclick="sendToTelegram()" class="telegram-btn">ناردن لە ڕێگەی تێلەگرام ✈️</a>
     </div>
-<div style="margin: 20px auto; background: #ffffff; padding: 10px; border-radius: 20px; max-width: 350px; border: 2px dashed #3498db; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-    
-    <p style="font-size: 13px; color: #2c3e50; font-weight: bold; margin: 5px 0 10px 0; letter-spacing: 1px;">
-        ─── سکان بۆ هاوبەشکردن ───
-    </p>
 
-    <div style="background: #f8f9fa; padding: 10px; border-radius: 15px; width: 90%; display: flex; justify-content: center;">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=https://sherwansherzad25-max.github.io/it-chamchamal/&margin=0" 
-             style="width: 100%; max-width: 200px; height: auto; display: block; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.1));">
+    <div style="margin: 20px auto; background: white; padding: 10px; border-radius: 20px; max-width: 250px; display: flex; align-items: center; gap: 10px; border: 1px solid #ddd; box-sizing: border-box;">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://sherwansherzad25-max.github.io/it-chamchamal/&margin=0" style="width: 80px; height: 80px; border-radius: 10px;">
+        <div style="text-align: right;">
+            <p style="font-size: 11px; color: #2c3e50; font-weight: bold; margin: 0;">سکان بۆ هاوبەشکردن</p>
+            <p style="font-size: 10px; color: #7f8c8d; margin: 0;">IT Chamchamal</p>
+        </div>
     </div>
-
-    <p style="font-size: 11px; color: #7f8c8d; margin-top: 8px;">IT Chamchamal Institute</p>
-</div>
 </div>
 
 <footer>
@@ -281,22 +280,19 @@
     <div class="rainbow-name">شیروان شێرزاد خالد</div>
     <span class="moving-text">بە هیوای سود گەیاندن بە هەموو خوێندكارانی بەشی ئایتی</span>
     <p>© ٢٠٢٦ بەردەوام لە نوێ كردنەوەدایە</p>
-
-    <div style="text-align: center; margin: 20px auto; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 20px; max-width: 220px;">
-        <p style="font-weight: bold; margin-bottom: 10px; font-size: 0.9rem;">📊 ژمارەی سەردانەکان</p>
+    <div style="text-align: center; margin-top: 20px;">
+        <p style="font-weight: bold; margin-bottom: 5px;">📊 ژمارەی سەردانەکان</p>
         <img src="https://counter9.optistats.ovh/private/freecounterstat.php?c=8m8u6l3u8u7x8u1b1u7u1u1u1u1u1u1u" border="0">
     </div>
 </footer>
 
 <script>
     const TELEGRAM_USERNAME = "sherwan25"; 
-
     function sendToTelegram() {
         const msg = document.getElementById('userMessage').value;
         if(msg.trim() === "") { alert("تکایە سەرەتا نامەیەک بنووسە!"); return; }
         window.open(`https://t.me/${TELEGRAM_USERNAME}?text=${encodeURIComponent(msg)}`, '_blank');
     }
-
     function showTab(evt, semesterId) {
         var i, content, tablinks;
         content = document.getElementsByClassName("semester-content");
@@ -306,18 +302,12 @@
         document.getElementById(semesterId).style.display = "block";
         evt.currentTarget.classList.add("active");
     }
-
     function toggleTheme() {
         const body = document.body;
         const btn = document.getElementById('themeBtn');
         body.classList.toggle('dark-mode');
-        if (body.classList.contains('dark-mode')) {
-            btn.innerHTML = "مۆدی ڕۆژ ☀️"; localStorage.setItem('theme', 'dark');
-        } else {
-            btn.innerHTML = "مۆدی شەو 🌙"; localStorage.setItem('theme', 'light');
-        }
+        btn.innerHTML = body.classList.contains('dark-mode') ? "مۆدی ڕۆژ ☀️" : "مۆدی شەو 🌙";
     }
-
     window.onload = function() {
         if (localStorage.getItem('theme') === 'dark') {
             document.body.classList.add('dark-mode');
