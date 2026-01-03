@@ -104,7 +104,6 @@
         }
         .semester-content.active { display: block; }
 
-        /* خشتەی چاککراو بۆ مۆبایل و کۆمپیوتەر */
         .table-container { overflow-x: auto; width: 100%; }
         table { width: 100%; border-collapse: collapse; margin-top: 10px; min-width: 400px; }
         th, td { padding: 12px 8px; text-align: center; border-bottom: 1px solid var(--table-border); color: var(--text-color); font-size: 0.95rem; }
@@ -146,7 +145,6 @@
         @keyframes moveText { from { transform: scale(1); color: #3498db; } to { transform: scale(1.05); color: #e74c3c; } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* ڕێکخستنی QR بۆ مۆبایل */
         .qr-section {
             margin: 20px auto; background: var(--white); padding: 15px; border-radius: 20px; 
             max-width: 300px; border: 2px dashed var(--secondary); display: flex; flex-direction: column; align-items: center;
@@ -167,6 +165,7 @@
         <button class="tab-btn btn-s2" onclick="showTab(event, 'sem2')">سمستەری ٢</button>
         <button class="tab-btn btn-s3" onclick="showTab(event, 'sem3')">سمستەری ٣</button>
         <button class="tab-btn btn-s4" onclick="showTab(event, 'sem4')">سمستەری ٤</button>
+        <button class="tab-btn" style="background:#2c3e50" onclick="showTab(event, 'schedule-tab')">📅 جەدۆل</button>
     </div>
 
     <div id="sem1" class="semester-content active">
@@ -260,6 +259,23 @@
         </div>
     </div>
 
+    <div id="schedule-tab" class="semester-content">
+        <h3 style="text-align:center;">📅 کاتی دەوام (جەدۆل)</h3>
+        <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 20px;">
+            <button class="tab-btn" style="background:#3498db; flex:none; width:100px;" onclick="selectGroup('A')">Group A</button>
+            <button class="tab-btn" style="background:#27ae60; flex:none; width:100px;" onclick="selectGroup('B')">Group B</button>
+        </div>
+        <div id="daysArea" style="text-align:center; margin-bottom:20px;"></div>
+        <div id="schedule-box" style="display:none;">
+            <div class="table-container">
+                <table style="border: 2px solid var(--secondary);">
+                    <thead><tr><th>وانە</th><th>وانە</th><th>کات</th><th>مامۆستا</th></tr></thead>
+                    <tbody id="schedule-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
     <div class="extra-section">
         <h3 style="color: var(--accent);">💬 سەرنج و تێبینیەكانتان لێرەوە بنێرن</h3>
         <div class="form-group">
@@ -269,13 +285,13 @@
     </div>
 
     <div style="margin: 20px auto; background: var(--white); padding: 12px; border-radius: 18px; max-width: 220px; display: flex; align-items: center; gap: 12px; border: 1.5px solid var(--secondary); box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-    <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://sherwansherzad25-max.github.io/it-chamchamal/&margin=0" 
-         style="width: 65px; height: 65px; border-radius: 8px; border: 1px solid #eee;">
-    <div style="text-align: right;">
-        <p style="font-size: 11px; color: var(--text-color); font-weight: bold; margin: 0; line-height: 1.4;">سکان بۆ هاوبەشکردن</p>
-        <p style="font-size: 9px; color: #7f8c8d; margin: 2px 0 0 0;">IT Chamchamal</p>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://sherwansherzad25-max.github.io/it-chamchamal/&margin=0" 
+             style="width: 65px; height: 65px; border-radius: 8px; border: 1px solid #eee;">
+        <div style="text-align: right;">
+            <p style="font-size: 11px; color: var(--text-color); font-weight: bold; margin: 0; line-height: 1.4;">سکان بۆ هاوبەشکردن</p>
+            <p style="font-size: 9px; color: #7f8c8d; margin: 2px 0 0 0;">IT Chamchamal</p>
+        </div>
     </div>
-</div>
 </div>
 
 <footer>
@@ -310,6 +326,59 @@
         const btn = document.getElementById('themeBtn');
         body.classList.toggle('dark-mode');
         btn.innerHTML = body.classList.contains('dark-mode') ? "مۆدی ڕۆژ ☀️" : "مۆدی شەو 🌙";
+    }
+    const scheduleData = {
+        'A': {
+            1: [["١", "Logic Design", "2:00", "م. پشتیوان + هەڵكەوت"], ["٢", "English", "4:00", "م. بەرهەم"], ["٣", "IT Fundamentals", "6:00", "م.عمر+هۆگر+امین"]],
+            2: [["١", "Mathematics", "2:00", "م. سۆران"], ["٢", "Logic Design", "4:00", "م. پشتیوان"], ["٣", "IT Fundamentals", "6:00", "م. عمر"]],
+            3: [["١", "Kurdology", "2:00", "م. ڕێبین"], ["٢", "English", "4:00", "م. بەرهەم"], ["٣", "Kurdology", "6:00", "م. ڕێبین"]],
+            4: [["١", "IT Fundamentals", "2:00", "م. عمر"], ["٢", "IT Fundamentals", "4:00", "م. عمر+امین+هۆگر"]]
+        },
+        'B': {
+            1: [["١", "English", "2:00", "م. بەرهەم"], ["٢", "Logic Design", "4:00", "م. پشتیوان+هەڵكەوت"], ["٣", "IT Fundamentals", "6:00", "م.عمر+هۆگر+امین"]],
+            2: [["١", "Logic Design", "2:00", "م. پشتیوان"], ["١", "Mathematics", "4:00", "م. سۆران"], ["٣", "IT Fundamentals", "6:00", "م. عمر"]],
+            3: [["١", "English", "2:00", "م. بەرهەم"], ["٢", "Kurdology", "4:00", "م. ڕێبین"], ["٣", "Kurdology", "6:00", "م. ڕێبین"]],
+            4: [["١", "IT Fundamentals", "2:00", "م. عمر"], ["٢", "IT Fundamentals", "4:00", "م. عمر+امین+هۆگر"]]
+        }
+    };
+ function selectGroup(g) {
+        // گۆڕینی ڕەنگی دوگمەی ڕۆژەکان بۆ ڕەنگێکی جوانتر
+        document.getElementById('daysArea').innerHTML = `
+            <button class="tab-btn" style="background:#8e44ad; margin:2px;" onclick="selectDay('${g}', 1)">یەکشەممە</button>
+            <button class="tab-btn" style="background:#2980b9; margin:2px;" onclick="selectDay('${g}', 2)">دووشەممە</button>
+            <button class="tab-btn" style="background:#27ae60; margin:2px;" onclick="selectDay('${g}', 3)">سێشەممە</button>
+            <button class="tab-btn" style="background:#d35400; margin:2px;" onclick="selectDay('${g}', 4)">چوارشەممە</button>`;
+        document.getElementById('schedule-box').style.display = 'none';
+    }
+
+    function selectDay(g, d) {
+        const body = document.getElementById('schedule-body');
+        body.innerHTML = '';
+        
+        // لێرە ڕەنگەکان دیاری کراون بۆ هەر وانەیەک
+        const subjectColors = {
+            'Logic Design': '#e74c3c',
+            'English': '#3498db',
+            'IT Fundamentals': '#2ecc71',
+            'Mathematics': '#f39c12',
+            'Kurdology': '#9b59b6'
+        };
+
+        scheduleData[g][d].forEach(r => {
+            const color = subjectColors[r[1]] || '#95a5a6';
+            body.innerHTML += `
+                <tr>
+                    <td style="font-weight:bold;">${r[0]}</td>
+                    <td>
+                        <span style="background-color: ${color}; color: white; padding: 4px 10px; border-radius: 8px; font-weight: bold; display: inline-block; min-width: 110px;">
+                            ${r[1]}
+                        </span>
+                    </td>
+                    <td dir="ltr" style="font-weight: bold;">${r[2]}</td>
+                    <td style="font-size: 0.85rem;">${r[3]}</td>
+                </tr>`;
+        });
+        document.getElementById('schedule-box').style.display = 'block';
     }
 </script>
 </body>
