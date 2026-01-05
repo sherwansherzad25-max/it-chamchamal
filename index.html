@@ -177,7 +177,7 @@
         <button class="tab-btn btn-s2" onclick="showTab(event, 'sem2')">سمستەری ٢</button>
         <button class="tab-btn btn-s3" onclick="showTab(event, 'sem3')">سمستەری ٣</button>
         <button class="tab-btn btn-s4" onclick="showTab(event, 'sem4')">سمستەری ٤</button>
-        <button class="tab-btn" style="background:#2c3e50" onclick="showTab(event, 'schedule-tab')">📅 جەدۆل</button>
+        <button class="tab-btn" style="background:#2c3e50" onclick="showTab(event, 'schedule-tab')">📅  خشتەی هەفتانە (جەدۆل)</button>
     </div>
 
     <div id="sem1" class="semester-content active">
@@ -271,12 +271,19 @@
         </div>
     </div>
 
-    <div id="schedule-tab" class="semester-content">
-        <h3 style="text-align:center;">📅 کاتی دەوام (جەدۆل)</h3>
-        <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 20px;">
-            <button class="tab-btn" style="background:#3498db; flex:none; width:100px;" onclick="selectGroup('A')">Group A</button>
-            <button class="tab-btn" style="background:#27ae60; flex:none; width:100px;" onclick="selectGroup('B')">Group B</button>
+  <div id="schedule-tab" class="semester-content">
+<h3 style="text-align:center;">📅 خشتەی هەفتانە (جەدۆل)</h3>        
+        <div style="display: flex; gap: 8px; justify-content: center; margin-bottom: 15px; flex-wrap: wrap;">
+            <button class="tab-btn" style="background:#3498db; flex:none; width:120px;" onclick="setSem(1)">سمستەری ١</button>
+            <button class="tab-btn" style="background:#27ae60; flex:none; width:120px;" onclick="setSem(2)">سمستەری ٢</button>
+            <button class="tab-btn" style="background:#f39c12; flex:none; width:120px;" onclick="setSem(3)">سمستەری ٣</button>
+            <button class="tab-btn" style="background:#8e44ad; flex:none; width:120px;" onclick="setSem(4)">سمستەری ٤</button>
         </div>
+
+        <div id="group-selection" style="display: none; gap: 15px; justify-content: center; margin-bottom: 25px;">
+    <button class="tab-btn" style="background:linear-gradient(135deg, #3498db, #2980b9); flex:none; width:130px; box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);" onclick="selectGroup('A')">Group A 🔵</button>
+    <button class="tab-btn" style="background:linear-gradient(135deg, #27ae60, #219150); flex:none; width:130px; box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);" onclick="selectGroup('B')">Group B 🟢</button>
+</div>
 
         <h3 id="group-display-title" style="text-align: center; color: var(--secondary); margin-bottom: 15px; font-weight: bold; display: none; border-bottom: 2px solid #eee; padding-bottom: 10px;"></h3>
 
@@ -322,11 +329,14 @@
 
 <script>
     const TELEGRAM_USERNAME = "sherwan25"; 
+    let currentSem = 1;
+
     function sendToTelegram() {
         const msg = document.getElementById('userMessage').value;
         if(msg.trim() === "") { alert("تکایە سەرەتا نامەیەک بنووسە!"); return; }
         window.open(`https://t.me/${TELEGRAM_USERNAME}?text=${encodeURIComponent(msg)}`, '_blank');
     }
+
     function showTab(evt, id) {
         var i, content, tablinks;
         content = document.getElementsByClassName("semester-content");
@@ -336,68 +346,90 @@
         document.getElementById(id).style.display = "block";
         evt.currentTarget.classList.add("active");
     }
+
     function toggleTheme() {
         const body = document.body;
         const btn = document.getElementById('themeBtn');
         body.classList.toggle('dark-mode');
         btn.innerHTML = body.classList.contains('dark-mode') ? "مۆدی ڕۆژ ☀️" : "مۆدی شەو 🌙";
     }
+
+    // لێرەدا هەموو سمستەرەکان ئامادەکراون، تەنها ناوەکان بگۆڕە
     const scheduleData = {
-        'A': {
-            1: [["١", "Logic Design", "2:00", "م. پشتیوان + هەڵكەوت"], ["٢", "English", "4:00", "م. بەرهەم"], ["٣", "IT Fundamentals", "6:00", "م.عمر+هۆگر+امین"]],
-            2: [["١", "Mathematics", "2:00", "م. سۆران"], ["٢", "Logic Design", "4:00", "م. پشتیوان"], ["٣", "IT Fundamentals", "6:00", "م. عمر"]],
-            3: [["١", "Kurdology", "2:00", "م. ڕێبین"], ["٢", "English", "4:00", "م. بەرهەم"], ["٣", "Kurdology", "6:00", "م. ڕێبین"]],
-            4: [["١", "IT Fundamentals", "2:00", "م. عمر"], ["٢", "IT Fundamentals", "4:00", "م. عمر+امین+هۆگر"]]
+        1: {
+            'A': {
+                1: [["١", "Logic Design", "2:00", "م. پشتیوان + هەڵكەوت"], ["٢", "English", "4:00", "م. بەرهەم"], ["٣", "IT Fundamentals", "6:00", "م.عمر+هۆگر+امین"]],
+                2: [["١", "Mathematics", "2:00", "م. سۆران"], ["٢", "Logic Design", "4:00", "م. پشتیوان"], ["٣", "IT Fundamentals", "6:00", "م. عمر"]],
+                3: [["١", "Kurdology", "2:00", "م. ڕێبین"], ["٢", "English", "4:00", "م. بەرهەم"], ["٣", "Kurdology", "6:00", "م. ڕێبین"]],
+                4: [["١", "IT Fundamentals", "2:00", "م. عمر"], ["٢", "IT Fundamentals", "4:00", "م. عمر+امین+هۆگر"]]
+            },
+            'B': {
+                1: [["١", "English", "2:00", "م. بەرهەم"], ["٢", "Logic Design", "4:00", "م. پشتیوان+هەڵكەوت"], ["٣", "IT Fundamentals", "6:00", "م.عمر+هۆگر+امین"]],
+                2: [["١", "Logic Design", "2:00", "م. پشتیوان"], ["١", "Mathematics", "4:00", "م. سۆران"], ["٣", "IT Fundamentals", "6:00", "م. عمر"]],
+                3: [["١", "English", "2:00", "م. بەرهەم"], ["٢", "Kurdology", "4:00", "م. ڕێبین"], ["٣", "Kurdology", "6:00", "م. ڕێبین"]],
+                4: [["١", "IT Fundamentals", "2:00", "م. عمر"], ["٢", "IT Fundamentals", "4:00", "م. عمر+امین+هۆگر"]]
+            }
         },
-        'B': {
-            1: [["١", "English", "2:00", "م. بەرهەم"], ["٢", "Logic Design", "4:00", "م. پشتیوان+هەڵكەوت"], ["٣", "IT Fundamentals", "6:00", "م.عمر+هۆگر+امین"]],
-            2: [["١", "Logic Design", "2:00", "م. پشتیوان"], ["١", "Mathematics", "4:00", "م. سۆران"], ["٣", "IT Fundamentals", "6:00", "م. عمر"]],
-            3: [["١", "English", "2:00", "م. بەرهەم"], ["٢", "Kurdology", "4:00", "م. ڕێبین"], ["٣", "Kurdology", "6:00", "م. ڕێبین"]],
-            4: [["١", "IT Fundamentals", "2:00", "م. عمر"], ["٢", "IT Fundamentals", "4:00", "م. عمر+امین+هۆگر"]]
+        2: {
+            'A': { 1: [["١", "ناوی بابەت", "0:00", "ناوی مامۆستا"]], 2: [["١", "ناوی بابەت", "0:00", "ناوی مامۆستا"]], 3: [["١", "ناوی بابەت", "0:00", "ناوی مامۆستا"]], 4: [["١", "ناوی بابەت", "0:00", "ناوی مامۆستا"]] },
+            'B': { 1: [["١", "ناوی بابەت", "0:00", "ناوی مامۆستا"]], 2: [["١", "ناوی بابەت", "0:00", "ناوی مامۆستا"]], 3: [["١", "ناوی بابەت", "0:00", "ناوی مامۆستا"]], 4: [["١", "ناوی بابەت", "0:00", "ناوی مامۆستا"]] }
+        },
+        3: {
+            'A': { 1: [["١", "ناوی بابەت", "0:00", "ناوی مامۆستا"]], 2: [], 3: [], 4: [] },
+            'B': { 1: [["١", "ناوی بابەت", "0:00", "ناوی مامۆستا"]], 2: [], 3: [], 4: [] }
+        },
+        4: {
+            'A': { 1: [["١", "ناوی بابەت", "0:00", "ناوی مامۆستا"]], 2: [], 3: [], 4: [] },
+            'B': { 1: [["١", "ناوی بابەت", "0:00", "ناوی مامۆستا"]], 2: [], 3: [], 4: [] }
         }
     };
 
- function selectGroup(g) {
-        // ئەم بەشە ناونیشانەکە نوێ دەکاتەوە
-        const title = document.getElementById('group-display-title');
-        title.innerText = "خشتەی وانەکانی Group " + g;
-        title.style.display = "block";
-
-        document.getElementById('daysArea').innerHTML = `
-            <button class="tab-btn" style="background:#8e44ad; margin:2px;" onclick="selectDay('${g}', 1)">یەکشەممە</button>
-            <button class="tab-btn" style="background:#2980b9; margin:2px;" onclick="selectDay('${g}', 2)">دووشەممە</button>
-            <button class="tab-btn" style="background:#27ae60; margin:2px;" onclick="selectDay('${g}', 3)">سێشەممە</button>
-            <button class="tab-btn" style="background:#d35400; margin:2px;" onclick="selectDay('${g}', 4)">چوارشەممە</button>`;
+    function setSem(s) {
+        currentSem = s;
+        document.getElementById('group-selection').style.display = 'flex';
+        document.getElementById('group-display-title').style.display = 'block';
+        document.getElementById('group-display-title').innerHTML = `سمستەری ${s} - <span style="color:#e67e22">گروپ هەڵبژێرە</span>`;
+        document.getElementById('daysArea').innerHTML = "";
         document.getElementById('schedule-box').style.display = 'none';
     }
 
-    function selectDay(g, d) {
+    function selectGroup(g) {
+        const color = (g === 'A') ? '#3498db' : '#27ae60';
+        document.getElementById('group-display-title').innerHTML = `سمستەری ${currentSem} - <span style="color:${color}">گروپی ${g}</span>`;
+        document.getElementById('daysArea').innerHTML = `
+            <button class="tab-btn" style="background:#8e44ad; margin:2px;" onclick="selectDay('${g}', 1, 'یەکشەممە')">یەکشەممە</button>
+            <button class="tab-btn" style="background:#2980b9; margin:2px;" onclick="selectDay('${g}', 2, 'دووشەممە')">دووشەممە</button>
+            <button class="tab-btn" style="background:#27ae60; margin:2px;" onclick="selectDay('${g}', 3, 'سێشەممە')">سێشەممە</button>
+            <button class="tab-btn" style="background:#d35400; margin:2px;" onclick="selectDay('${g}', 4, 'چوارشەممە')">چوارشەممە</button>`;
+    }
+
+    function selectDay(g, d, dayName) {
+        const color = (g === 'A') ? '#3498db' : '#27ae60';
+        document.getElementById('group-display-title').innerHTML = `سمستەری ${currentSem} - <span style="color:${color}">گروپی ${g}</span> - ${dayName}`;
         const body = document.getElementById('schedule-body');
         body.innerHTML = '';
         
         const subjectColors = {
-            'Logic Design': '#e74c3c',
-            'English': '#3498db',
-            'IT Fundamentals': '#2ecc71',
-            'Mathematics': '#f39c12',
-            'Kurdology': '#9b59b6'
+            'Logic Design': '#e74c3c', 'English': '#3498db', 'IT Fundamentals': '#2ecc71', 'Mathematics': '#f39c12', 'Kurdology': '#9b59b6'
         };
 
-        scheduleData[g][d].forEach(r => {
-            const color = subjectColors[r[1]] || '#95a5a6';
-            body.innerHTML += `
-                <tr>
-                    <td style="font-weight:bold;">${r[0]}</td>
-                    <td>
-                        <span style="background-color: ${color}; color: white; padding: 4px 10px; border-radius: 8px; font-weight: bold; display: inline-block; min-width: 110px;">
-                            ${r[1]}
-                        </span>
-                    </td>
-                    <td dir="ltr" style="font-weight: bold;">${r[2]}</td>
-                    <td style="font-size: 0.85rem;">${r[3]}</td>
-                </tr>`;
-        });
-        document.getElementById('schedule-box').style.display = 'block';
+        const data = scheduleData[currentSem][g][d];
+        if(data && data.length > 0) {
+            data.forEach(r => {
+                const sColor = subjectColors[r[1]] || '#95a5a6'; 
+                body.innerHTML += `
+                    <tr>
+                        <td style="font-weight:bold;">${r[0]}</td>
+                        <td><span style="background-color: ${sColor}; color: white; padding: 5px 12px; border-radius: 20px; font-weight: bold; display: inline-block;">${r[1]}</span></td>
+                        <td dir="ltr" style="font-weight: bold;">${r[2]}</td>
+                        <td style="font-size: 0.9rem;">${r[3]}</td>
+                    </tr>`;
+            });
+            document.getElementById('schedule-box').style.display = 'block';
+        } else {
+            body.innerHTML = '<tr><td colspan="4" style="padding:20px; color:#95a5a6;">بۆ ئەم ڕۆژە هێشتا خشتە دانەنراوە</td></tr>';
+            document.getElementById('schedule-box').style.display = 'block';
+        }
     }
 </script>
 </body>
