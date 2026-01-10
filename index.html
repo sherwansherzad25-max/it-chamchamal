@@ -213,8 +213,7 @@
 @keyframes continuousScroll { 
     0% { transform: translateY(0); }
     100% { transform: translateY(-50%); } 
-}
- </style>
+} </style>
 </head>
 <body>
 
@@ -232,55 +231,59 @@
         <button class="tab-btn" onclick="showTab(event, 'about-tab')">ℹ️ دەربارە</button>
     </div>
 
-   <div class="scrolling-container" style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #6a11cb 100%);">
-    <div class="scrolling-content">
-        <div class="scroll-item">
-            <h2 style="color: #f1c40f; font-size: 1.9rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); margin-bottom: 20px; border-bottom: 2px dashed rgba(255,255,255,0.2); padding-bottom: 10px;">
-                بەخێربێن خوێندکارانی ئازیزی بەشی تەکنەلۆژیای زانیاری (IT)
-            </h2>
-            <p style="font-size: 1.3rem; line-height: 1.8; margin-bottom: 20px; color: #ffffff; font-weight: 500;">
-                ئەم وێبسایتە دروستکراوە بۆ ئەوەی تۆی خوێندکار لێی سوودمەند بیت و کارئاسانییەک بێت بۆ خوێندنی وانەکانی ڕۆژانەت.
-            </p>
-            <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; margin-bottom: 15px; text-align: right; direction: rtl;">
-                <p style="font-size: 1.2rem; margin: 10px 0;">🔹 <b>بەشی سمستەرەکان:</b></p>
-                <p style="font-size: 1.1rem; margin: 5px 20px 15px 0; color: #e0e0e0;">١. بە کرتە کردن لەسەر مەلزەمەکان، هەموو مەلزەمەکانی وانەکەت دەست دەکەوێت.</p>
-                <p style="font-size: 1.1rem; margin: 5px 20px 15px 0; color: #e0e0e0;">٢. بە کرتە کردن لەسەر بەشی پرسیار، پرسیاری ساڵانی ڕابردووت دەست دەکەوێت بۆ بەرچاوڕوونی خوێندکار.</p>
-                <p style="font-size: 1.1rem; margin: 5px 20px 15px 0; color: #e0e0e0;">٣. بە کرتە کردن لەسەر بەشی فێرکاری، دەتباتە ناو پلەی لیستی یوتیوب و فێرکاری ئەو بابەتە.</p>
-                <p style="font-size: 1.2rem; margin: 15px 0 5px 0;">📅 <b>بەشی خشتەی هەفتانە:</b></p>
-                <p style="font-size: 1.1rem; margin: 5px 20px 0 0; color: #e0e0e0;">خشتەی وانەکانی ڕۆژانەی هەردوو گرووپی تێدایە بەشێوەیەکی زۆر جوان ڕوونکراوەتەوە.</p>
-            </div>
-            <h3 style="color: #00d2ff; font-size: 1.6rem; margin-top: 25px; text-shadow: 1px 1px 3px rgba(0,0,0,0.2);">بەهیوای سەرکەوتن بۆ هەموو خوێندکاران</h3>
-            <div style="margin-top: 30px; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 15px; border: 1px solid rgba(255,255,255,0.1);">
-                <p style="font-size: 1.1rem; color: #ffffff; margin-bottom: 10px;">
-                    سوپاس بۆ هەردوو خوێندکار <b style="color: #f1c40f;">(محمد اسماعیل)</b> و <b style="color: #f1c40f;">(محمد بێستون)</b>
-                </p>
-                <p style="font-size: 1rem; color: #2ecc71; font-weight: bold;">کە هاوکار بوون لە دروستکردنی ئەم وێبسایتەدا</p>
-            </div>
-            <div style="height: 150px;"></div> </div>
+    <div id="home-tab" class="semester-content active" style="padding: 0; background: transparent; box-shadow: none;">
+        
+        <div class="scrolling-container" style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #6a11cb 100%);">
+            <div class="scrolling-content">
+                <div class="scroll-item">
+                    <h2 style="color: #f1c40f; font-size: 1.9rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); margin-bottom: 20px; border-bottom: 2px dashed rgba(255,255,255,0.2); padding-bottom: 10px;">
+                        بەخێربێن خوێندکارانی ئازیزی بەشی تەکنەلۆژیای زانیاری (IT)
+                    </h2>
+                    <p style="font-size: 1.3rem; line-height: 1.8; margin-bottom: 20px; color: #ffffff; font-weight: 500;">
+                        ئەم وێبسایتە دروستکراوە بۆ ئەوەی تۆی خوێندکار لێی سوودمەند بیت و کارئاسانییەک بێت بۆ خوێندنی وانەکانی ڕۆژانەت.
+                    </p>
+                    <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; margin-bottom: 15px; text-align: right; direction: rtl;">
+                        <p style="font-size: 1.2rem; margin: 10px 0;">🔹 <b>بەشی سمستەرەکان:</b></p>
+                        <p style="font-size: 1.1rem; margin: 5px 20px 15px 0; color: #e0e0e0;">١. بە کرتە کردن لەسەر مەلزەمەکان، هەموو مەلزەمەکانی وانەکەت دەست دەکەوێت.</p>
+                        <p style="font-size: 1.1rem; margin: 5px 20px 15px 0; color: #e0e0e0;">٢. بە کرتە کردن لەسەر بەشی پرسیار، پرسیاری ساڵانی ڕابردووت دەست دەکەوێت بۆ بەرچاوڕوونی خوێندکار.</p>
+                        <p style="font-size: 1.1rem; margin: 5px 20px 15px 0; color: #e0e0e0;">٣. بە کرتە کردن لەسەر بەشی فێرکاری، دەتباتە ناو پلەی لیستی یوتیوب و فێرکاری ئەو بابەتە.</p>
+                        <p style="font-size: 1.2rem; margin: 15px 0 5px 0;">📅 <b>بەشی خشتەی هەفتانە:</b></p>
+                        <p style="font-size: 1.1rem; margin: 5px 20px 0 0; color: #e0e0e0;">خشتەی وانەکانی ڕۆژانەی هەردوو گرووپی تێدایە بەشێوەیەکی زۆر جوان ڕوونکراوەتەوە.</p>
+                    </div>
+                    <h3 style="color: #00d2ff; font-size: 1.6rem; margin-top: 25px; text-shadow: 1px 1px 3px rgba(0,0,0,0.2);">بەهیوای سەرکەوتن بۆ هەموو خوێندکاران</h3>
+                    <div style="margin-top: 30px; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 15px; border: 1px solid rgba(255,255,255,0.1);">
+                        <p style="font-size: 1.1rem; color: #ffffff; margin-bottom: 10px;">
+                            سوپاس بۆ هەردوو خوێندکار <b style="color: #f1c40f;">(محمد اسماعیل)</b> و <b style="color: #f1c40f;">(محمد بێستون)</b>
+                        </p>
+                        <p style="font-size: 1rem; color: #2ecc71; font-weight: bold;">کە هاوکار بوون لە دروستکردنی ئەم وێبسایتەدا</p>
+                    </div>
+                    <div style="height: 150px;"></div>
+                </div>
 
-        <div class="scroll-item">
-            <h2 style="color: #f1c40f; font-size: 1.9rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); margin-bottom: 20px; border-bottom: 2px dashed rgba(255,255,255,0.2); padding-bottom: 10px;">
-                بەخێربێن خوێندکارانی ئازیزی بەشی تەکنەلۆژیای زانیاری (IT)
-            </h2>
-            <p style="font-size: 1.3rem; line-height: 1.8; margin-bottom: 20px; color: #ffffff; font-weight: 500;">
-                ئەم وێبسایتە دروستکراوە بۆ ئەوەی تۆی خوێندکار لێی سوودمەند بیت و کارئاسانییەک بێت بۆ خوێندنی وانەکانی ڕۆژانەت.
-            </p>
-            <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; margin-bottom: 15px; text-align: right; direction: rtl;">
-                <p style="font-size: 1.2rem; margin: 10px 0;">🔹 <b>بەشی سمستەرەکان:</b></p>
-                <p style="font-size: 1.1rem; margin: 5px 20px 15px 0; color: #e0e0e0;">١. بە کرتە کردن لەسەر مەلزەمەکان، هەموو مەلزەمەکانی وانەکەت دەست دەکەوێت.</p>
-                <p style="font-size: 1.1rem; margin: 5px 20px 15px 0; color: #e0e0e0;">٢. بە کرتە کردن لەسەر بەشی پرسیار، پرسیاری ساڵانی ڕابردووت دەست دەکەوێت بۆ بەرچاوڕوونی خوێندکار.</p>
-                <p style="font-size: 1.1rem; margin: 5px 20px 15px 0; color: #e0e0e0;">٣. بە کرتە کردن لەسەر بەشی فێرکاری، دەتباتە ناو پلەی لیستی یوتیوب و فێرکاری ئەو بابەتە.</p>
-                <p style="font-size: 1.2rem; margin: 15px 0 5px 0;">📅 <b>بەشی خشتەی هەفتانە:</b></p>
-                <p style="font-size: 1.1rem; margin: 5px 20px 0 0; color: #e0e0e0;">خشتەی وانەکانی ڕۆژانەی هەردوو گرووپی تێدایە بەشێوەیەکی زۆر جوان ڕوونکراوەتەوە.</p>
+                <div class="scroll-item">
+                    <h2 style="color: #f1c40f; font-size: 1.9rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); margin-bottom: 20px; border-bottom: 2px dashed rgba(255,255,255,0.2); padding-bottom: 10px;">
+                        بەخێربێن خوێندکارانی ئازیزی بەشی تەکنەلۆژیای زانیاری (IT)
+                    </h2>
+                    <p style="font-size: 1.3rem; line-height: 1.8; margin-bottom: 20px; color: #ffffff; font-weight: 500;">
+                        ئەم وێبسایتە دروستکراوە بۆ ئەوەی تۆی خوێندکار لێی سوودمەند بیت و کارئاسانییەک بێت بۆ خوێندنی وانەکانی ڕۆژانەت.
+                    </p>
+                    <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; margin-bottom: 15px; text-align: right; direction: rtl;">
+                        <p style="font-size: 1.2rem; margin: 10px 0;">🔹 <b>بەشی سمستەرەکان:</b></p>
+                        <p style="font-size: 1.1rem; margin: 5px 20px 15px 0; color: #e0e0e0;">١. بە کرتە کردن لەسەر مەلزەمەکان، هەموو مەلزەمەکانی وانەکەت دەست دەکەوێت.</p>
+                        <p style="font-size: 1.1rem; margin: 5px 20px 15px 0; color: #e0e0e0;">٢. بە کرتە کردن لەسەر بەشی پرسیار، پرسیاری ساڵانی ڕابردووت دەست دەکەوێت بۆ بەرچاوڕوونی خوێندکار.</p>
+                        <p style="font-size: 1.1rem; margin: 5px 20px 15px 0; color: #e0e0e0;">٣. بە کرتە کردن لەسەر بەشی فێرکاری، دەتباتە ناو پلەی لیستی یوتیوب و فێرکاری ئەو بابەتە.</p>
+                        <p style="font-size: 1.2rem; margin: 15px 0 5px 0;">📅 <b>بەشی خشتەی هەفتانە:</b></p>
+                        <p style="font-size: 1.1rem; margin: 5px 20px 0 0; color: #e0e0e0;">خشتەی وانەکانی ڕۆژانەی هەردوو گرووپی تێدایە بەشێوەیەکی زۆر جوان ڕوونکراوەتەوە.</p>
+                    </div>
+                    <h3 style="color: #00d2ff; font-size: 1.6rem; margin-top: 25px;">بەهیوای سەرکەوتن بۆ هەموو خوێندکاران</h3>
+                    <div style="margin-top: 30px; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 15px;">
+                        <p style="font-size: 1.1rem; color: #ffffff;">سوپاس بۆ هەردوو خوێندکار <b style="color: #f1c40f;">(محمد اسماعیل)</b> و <b style="color: #f1c40f;">(محمد بێستون)</b></p>
+                    </div>
+                    <div style="height: 150px;"></div>
+                </div>
             </div>
-            <h3 style="color: #00d2ff; font-size: 1.6rem; margin-top: 25px;">بەهیوای سەرکەوتن بۆ هەموو خوێندکاران</h3>
-            <div style="margin-top: 30px; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 15px;">
-                <p style="font-size: 1.1rem; color: #ffffff;">سوپاس بۆ هەردوو خوێندکار <b style="color: #f1c40f;">(محمد اسماعیل)</b> و <b style="color: #f1c40f;">(محمد بێستون)</b></p>
-            </div>
-            <div style="height: 150px;"></div>
         </div>
-    </div>
-</div>
+    </div> ```
 
     <div id="schedule-tab" class="semester-content">
         <h3 style="text-align:center;">📅 خشتەی هەفتانە (جەدۆل)</h3>        
