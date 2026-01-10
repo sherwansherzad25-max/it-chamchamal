@@ -178,17 +178,17 @@
         }
 
         /* ستایلی هەواڵە جوڵاوەکان */
-       .news-marquee {
+.news-marquee {
     display: inline-block;
-    animation: newsScroll 80s linear infinite; /* کاتەکەم زۆر زیاد کرد بۆ ئەوەی خاو بێتەوە */
-    font-weight: bold;
-    font-size: 1.1rem; /* تۆزێک گەورەتر بۆ ئەوەی ئاسان بخوێنرێتەوە */
+    animation: newsScroll 40s linear infinite; /* خێراییەکەی لێرە ڕێکبخە */
+    white-space: nowrap;
+    direction: rtl; /* دڵنیابوونەوە لەوەی دەقەکە خۆی بە کوردی دەمێنێتەوە */
 }
 
-        @keyframes newsScroll {
-            0%   { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
+@keyframes newsScroll {
+    100%   { transform: translateX(-100%); } /* لێرە دەست پێ دەکات لە لای چەپ */
+    100% { transform: translateX(100%); }  /* لێرە کۆتایی دێت لە لای ڕاست */
+}
 
         .news-marquee:hover {
             animation-play-state: paused;
