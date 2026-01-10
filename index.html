@@ -10,14 +10,13 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="IT Chamchamal">
 
-    <meta name="description" content="سایتی فەرمی بەشی IT پەیمانگای تەکنیکی چەمچەماڵ - سەرچاوەی وانەکان، مەلزەمە، و خشتەی دەوام بۆ هەموو سمستەرەکان">
-    <meta name="keywords" content="IT Chamchamal, بەشی ئایتی چەمچەماڵ, پەیمانگای تەکنیکی چەمچەماڵ, شیروان شێرزاد, خشتەی دەوام, مەلزەمەی ئایتی">
+    <meta name="description" content="سایتی فەرمی بەشی IT پەیمانگای تەکنیکی چەمچەماڵ">
+    <meta name="keywords" content="IT Chamchamal, بەشی ئایتی چەمچەماڵ">
     <meta name="author" content="Sherwan Sherzad">
     
     <meta property="og:title" content="بەشی IT | پەیمانگای تەکنیکی چەمچەماڵ">
-    <meta property="og:description" content="هەموو سەرچاوەکانی بەشی ئایتی لە یەک شوێندا.">
     <meta property="og:url" content="https://sherwansherzad25-max.github.io/it-chamchamal/">
-    <title>بەشی IT پەیمانگای تەکنیکی چەمچەماڵ - سەرچاوەی وانەکان و خشتەی دەوام</title>
+    <title>بەشی IT پەیمانگای تەکنیکی چەمچەماڵ</title>
 
     <style>
         :root {
@@ -98,7 +97,7 @@
             z-index: 999;
             background-color: var(--background);
             padding: 15px 0;
-            margin-bottom: 25px;
+            margin-bottom: 10px;
             border-bottom: 1px solid rgba(0,0,0,0.1);
         }
 
@@ -121,7 +120,6 @@
         }
         .semester-content.active { display: block; }
 
-        /* Style for Semester Grid Buttons */
         .sem-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -178,42 +176,61 @@
             background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             animation: gradient-animation 4s linear infinite;
         }
+
+        /* ستایلی هەواڵە جوڵاوەکان */
+       .news-marquee {
+    display: inline-block;
+    animation: newsScroll 80s linear infinite; /* کاتەکەم زۆر زیاد کرد بۆ ئەوەی خاو بێتەوە */
+    font-weight: bold;
+    font-size: 1.1rem; /* تۆزێک گەورەتر بۆ ئەوەی ئاسان بخوێنرێتەوە */
+}
+
+        @keyframes newsScroll {
+            0%   { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .news-marquee:hover {
+            animation-play-state: paused;
+        }
+
         @keyframes gradient-animation { 0% { background-position: 0% center; } 100% { background-position: 200% center; } }
         
         .moving-text { margin-top: 15px; font-size: 1rem; font-weight: bold; display: block; animation: moveText 3s infinite alternate ease-in-out; }
         @keyframes moveText { from { transform: scale(1); color: #3498db; } to { transform: scale(1.05); color: #e74c3c; } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-  .scrolling-container { 
-    height: 450px; 
-    overflow: hidden; 
-    position: relative; 
-    border-radius: 25px;
-    direction: rtl; /* بۆ ئەوەی نوسینە کوردییەکە ڕێک بێت */
-}
+        
+        .scrolling-container { 
+            height: 450px; 
+            overflow: hidden; 
+            position: relative; 
+            border-radius: 25px;
+            direction: rtl;
+        }
 
-.scrolling-content { 
-    display: block;
-    width: 100%;
-    /* لێرە 100px زیاد کراوە بۆ ئەوەی یەکسەر لە ناوەڕاستەوە دەست پێ بکات */
-    padding-top: 150px; 
-    animation: continuousScroll 45s linear infinite; 
-}
+        .scrolling-content { 
+            display: block;
+            width: 100%;
+            padding-top: 150px; 
+            animation: continuousScroll 45s linear infinite; 
+        }
 
-.scrolling-container:hover .scrolling-content { 
-    animation-play-state: paused; 
-}
+        .scrolling-container:hover .scrolling-content { 
+            animation-play-state: paused; 
+        }
 
-.scroll-item {
-    text-align: center;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 0 20px;
-}
+        .scroll-item {
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 0 20px;
+        }
 
-@keyframes continuousScroll { 
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-50%); } 
-} </style>
+        @keyframes continuousScroll { 
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-50%); } 
+        } 
+    </style>
 </head>
 <body>
 
@@ -229,6 +246,17 @@
         <button class="tab-btn" onclick="showTab(event, 'schedule-tab')">📅 خشتەی هەفتانە</button>
         <button class="tab-btn" onclick="showTab(event, 'semesters-tab')">📚 سمستەرەکان</button>
         <button class="tab-btn" onclick="showTab(event, 'about-tab')">ℹ️ دەربارە</button>
+    </div>
+
+    <div style="margin: 0 0 25px 0; direction: rtl; position: relative; z-index: 10;">
+        <div style="background: #c0392b; color: white; padding: 6px 18px; border-radius: 12px 12px 0 0; display: inline-block; font-weight: bold; font-size: 0.95rem; margin-right: 15px; box-shadow: 0 -3px 10px rgba(192, 57, 43, 0.2); font-family: 'Vazirmatn', sans-serif;">
+            🚨 ئاگاداری گرنگ
+        </div>
+        <div style="background: var(--white); border: 2.5px solid #c0392b; border-radius: 0 20px 20px 20px; overflow: hidden; white-space: nowrap; box-shadow: 0 6px 20px rgba(0,0,0,0.1); padding: 18px 0; position: relative;">
+            <div id="news-list" class="news-marquee">
+                چاوەڕێ بکە... دوایین هەواڵەکان بار دەکرێن...
+            </div>
+        </div>
     </div>
 
     <div id="home-tab" class="semester-content active" style="padding: 0; background: transparent; box-shadow: none;">
@@ -283,10 +311,10 @@
                 </div>
             </div>
         </div>
-    </div> ```
+    </div>
 
     <div id="schedule-tab" class="semester-content">
-        <h3 style="text-align:center;">📅 خشتەی هەفتانە (جەدۆل)</h3>        
+        <h3 style="text-align:center;">📅 خشتەی هەفتانە (جەدۆل)</h3>        
         <div style="display: flex; gap: 8px; justify-content: center; margin-bottom: 15px; flex-wrap: wrap;">
             <button class="tab-btn" style="background:#3498db;" onclick="setSem(1)">سمستەری ١</button>
             <button class="tab-btn" style="background:#27ae60;" onclick="setSem(2)">سمستەری ٢</button>
@@ -327,65 +355,65 @@
                 <table>
                     <thead><tr><th>ناوی وانە</th><th>مەلزەمە</th><th>پرسیار</th><th>فێركاری</th></tr></thead>
                     <tbody>
-                       <tr><td>Logic Design</td><td><a href="https://drive.google.com/drive/folders/16v8Zf_xiCYPCkcPib7bIS_ah4hk6dDPj" class="download-btn">داگرتن</a></td><td><a href="https://drive.google.com/drive/folders/1w4lv3S1wskIFRmJzgrR3m_Vib2SzklOv" class="download-btn old-btn">بینین</a></td><td><a href="https://www.youtube.com/playlist?list=PLCfnFVb0wrYroYmhAU2fJR9nD8TqUjSy0" class="download-btn" style="background-color: #e74c3c;">🎥 ڤیدیۆ</a></td></tr>
-                       <tr><td>IT Fundamentals</td><td><a href="https://drive.google.com/drive/folders/1MUimiqD30yYTs1U53IVkb2B4lZn8Q5Dx" class="download-btn">داگرتن</a></td><td><a href="https://drive.google.com/drive/folders/1dqo6IA60wMPzrD-tpE92e_NPb1x9MlGY" class="download-btn old-btn">بینین</a></td><td><a href="https://www.youtube.com/playlist?list=PLCfnFVb0wrYrrG8eEF0VjVu5bctbCZfGf" class="download-btn" style="background-color: #e74c3c;">🎥 ڤیدیۆ</a></td></tr>
-                       <tr><td>Mathematics</td><td><a href="https://drive.google.com/drive/folders/15oJqsrWSfqplqdO2XPV88UmI0mpsK7Tv" class="download-btn">داگرتن</a></td><td><a href="https://drive.google.com/drive/folders/1txr0hJgSoTuRse6Zj7ARdxDWIPtjcI8C" class="download-btn old-btn">بینین</a></td><td><a href="https://www.youtube.com/playlist?list=PLCfnFVb0wrYoBgOnmKoAf1t8CqbS4dcQh" class="download-btn" style="background-color: #e74c3c;">🎥</a></td></tr>
-                       <tr><td>English</td><td><a href="https://drive.google.com/drive/folders/1D9DL2xHQRVJYSFlQB6BUDStWt_qKF0QI" class="download-btn">داگرتن</a></td><td><a href="https://drive.google.com/drive/folders/1s2q2r18eHAAwEwvagR2r0d0WjIR2_ZVe" class="download-btn old-btn">بینین</a></td><td><a href="#" class="download-btn" style="background-color: #e74c3c;">🎥</a></td></tr>
-                       <tr><td>Kurdology</td><td><a href="https://drive.google.com/drive/folders/1zktjZlnocNqLwQIeJZ_S0jb4hhWgYc0C" class="download-btn">داگرتن</a></td><td><a href="https://drive.google.com/drive/folders/1SIpy883RCPN4cvpFy2TPx7ea5TZvcppM" class="download-btn old-btn">بینین</a></td><td><a href="#" class="download-btn" style="background-color: #e74c3c;">🎥</a></td></tr>
+                        <tr><td>Logic Design</td><td><a href="https://drive.google.com/drive/folders/16v8Zf_xiCYPCkcPib7bIS_ah4hk6dDPj" class="download-btn">داگرتن</a></td><td><a href="https://drive.google.com/drive/folders/1w4lv3S1wskIFRmJzgrR3m_Vib2SzklOv" class="download-btn old-btn">بینین</a></td><td><a href="https://www.youtube.com/playlist?list=PLCfnFVb0wrYroYmhAU2fJR9nD8TqUjSy0" class="download-btn" style="background-color: #e74c3c;">🎥 ڤیدیۆ</a></td></tr>
+                        <tr><td>IT Fundamentals</td><td><a href="https://drive.google.com/drive/folders/1MUimiqD30yYTs1U53IVkb2B4lZn8Q5Dx" class="download-btn">داگرتن</a></td><td><a href="https://drive.google.com/drive/folders/1dqo6IA60wMPzrD-tpE92e_NPb1x9MlGY" class="download-btn old-btn">بینین</a></td><td><a href="https://www.youtube.com/playlist?list=PLCfnFVb0wrYrrG8eEF0VjVu5bctbCZfGf" class="download-btn" style="background-color: #e74c3c;">🎥 ڤیدیۆ</a></td></tr>
+                        <tr><td>Mathematics</td><td><a href="https://drive.google.com/drive/folders/15oJqsrWSfqplqdO2XPV88UmI0mpsK7Tv" class="download-btn">داگرتن</a></td><td><a href="https://drive.google.com/drive/folders/1txr0hJgSoTuRse6Zj7ARdxDWIPtjcI8C" class="download-btn old-btn">بینین</a></td><td><a href="https://www.youtube.com/playlist?list=PLCfnFVb0wrYoBgOnmKoAf1t8CqbS4dcQh" class="download-btn" style="background-color: #e74c3c;">🎥</a></td></tr>
+                        <tr><td>English</td><td><a href="https://drive.google.com/drive/folders/1D9DL2xHQRVJYSFlQB6BUDStWt_qKF0QI" class="download-btn">داگرتن</a></td><td><a href="https://drive.google.com/drive/folders/1s2q2r18eHAAwEwvagR2r0d0WjIR2_ZVe" class="download-btn old-btn">بینین</a></td><td><a href="#" class="download-btn" style="background-color: #e74c3c;">🎥</a></td></tr>
+                        <tr><td>Kurdology</td><td><a href="https://drive.google.com/drive/folders/1zktjZlnocNqLwQIeJZ_S0jb4hhWgYc0C" class="download-btn">داگرتن</a></td><td><a href="https://drive.google.com/drive/folders/1SIpy883RCPN4cvpFy2TPx7ea5TZvcppM" class="download-btn old-btn">بینین</a></td><td><a href="#" class="download-btn" style="background-color: #e74c3c;">🎥</a></td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
         <div id="sem2" class="inner-sem-content" style="display: none;">
-    <h3 style="color: #27ae60; border-right: 5px solid #27ae60; padding-right: 10px; margin-bottom: 20px;">
-        وانەکانی سمستەری دووەم
-    </h3>
-    <div class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th>ناوی وانە</th>
-                    <th>مەلزەمە</th>
-                    <th>پرسیار</th>
-                    <th>فێركاری</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Web Programming</td>
-                    <td><a href="#" class="download-btn">داگرتن</a></td>
-                    <td><a href="#" class="download-btn old-btn">بینین</a></td>
-                    <td><a href="#" class="download-btn" style="background-color: #e74c3c;">🎥</a></td>
-                </tr>
-                <tr>
-                    <td>O.O.P</td>
-                    <td><a href="#" class="download-btn">داگرتن</a></td>
-                    <td><a href="#" class="download-btn old-btn">بینین</a></td>
-                    <td><a href="#" class="download-btn" style="background-color: #e74c3c;">🎥</a></td>
-                </tr>
-                <tr>
-                    <td>Database Management System</td>
-                    <td><a href="#" class="download-btn">داگرتن</a></td>
-                    <td><a href="#" class="download-btn old-btn">بینین</a></td>
-                    <td><a href="#" class="download-btn" style="background-color: #e74c3c;">🎥</a></td>
-                </tr>
-                <tr>
-                    <td>Computer Network II</td>
-                    <td><a href="#" class="download-btn">داگرتن</a></td>
-                    <td><a href="#" class="download-btn old-btn">بینین</a></td>
-                    <td><a href="#" class="download-btn" style="background-color: #e74c3c;">🎥</a></td>
-                </tr>
-                <tr>
-                    <td>Operating System</td>
-                    <td><a href="#" class="download-btn">داگرتن</a></td>
-                    <td><a href="#" class="download-btn old-btn">بینین</a></td>
-                    <td><a href="#" class="download-btn" style="background-color: #e74c3c;">🎥</a></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+            <h3 style="color: #27ae60; border-right: 5px solid #27ae60; padding-right: 10px; margin-bottom: 20px;">
+                وانەکانی سمستەری دووەم
+            </h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ناوی وانە</th>
+                            <th>مەلزەمە</th>
+                            <th>پرسیار</th>
+                            <th>فێركاری</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Web Programming</td>
+                            <td><a href="#" class="download-btn">داگرتن</a></td>
+                            <td><a href="#" class="download-btn old-btn">بینین</a></td>
+                            <td><a href="#" class="download-btn" style="background-color: #e74c3c;">🎥</a></td>
+                        </tr>
+                        <tr>
+                            <td>O.O.P</td>
+                            <td><a href="#" class="download-btn">داگرتن</a></td>
+                            <td><a href="#" class="download-btn old-btn">بینین</a></td>
+                            <td><a href="#" class="download-btn" style="background-color: #e74c3c;">🎥</a></td>
+                        </tr>
+                        <tr>
+                            <td>Database Management System</td>
+                            <td><a href="#" class="download-btn">داگرتن</a></td>
+                            <td><a href="#" class="download-btn old-btn">بینین</a></td>
+                            <td><a href="#" class="download-btn" style="background-color: #e74c3c;">🎥</a></td>
+                        </tr>
+                        <tr>
+                            <td>Computer Network II</td>
+                            <td><a href="#" class="download-btn">داگرتن</a></td>
+                            <td><a href="#" class="download-btn old-btn">بینین</a></td>
+                            <td><a href="#" class="download-btn" style="background-color: #e74c3c;">🎥</a></td>
+                        </tr>
+                        <tr>
+                            <td>Operating System</td>
+                            <td><a href="#" class="download-btn">داگرتن</a></td>
+                            <td><a href="#" class="download-btn old-btn">بینین</a></td>
+                            <td><a href="#" class="download-btn" style="background-color: #e74c3c;">🎥</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
         <div id="sem3" class="inner-sem-content" style="display: none;">
             <h3 style="color: var(--sem3-color); border-right: 5px solid var(--sem3-color); padding-right: 10px;">وانەکانی سمستەری سێیەم</h3>
@@ -514,50 +542,726 @@
         document.getElementById('daysArea').innerHTML = "";
         document.getElementById('schedule-box').style.display = 'none';
     }
-
-    function selectGroup(g) {
+function selectGroup(g) {
         const color = (g === 'A') ? '#3498db' : '#27ae60';
-        document.getElementById('group-display-title').innerHTML = `سمستەری ${currentSem} - <span style="color:${color}">گروپی ${g}</span>`;
-        document.getElementById('daysArea').innerHTML = `
-            <button class="tab-btn" style="background:#8e44ad; margin:2px;" onclick="selectDay('${g}', 1, 'یەکشەممە')">یەکشەممە</button>
-            <button class="tab-btn" style="background:#2980b9; margin:2px;" onclick="selectDay('${g}', 2, 'دووشەممە')">دووشەممە</button>
-            <button class="tab-btn" style="background:#27ae60; margin:2px;" onclick="selectDay('${g}', 3, 'سێشەممە')">سێشەممە</button>
-            <button class="tab-btn" style="background:#d35400; margin:2px;" onclick="selectDay('${g}', 4, 'چوارشەممە')">چوارشەممە</button>`;
+        const titleElement = document.getElementById('group-display-title');
+        const daysArea = document.getElementById('daysArea');
+        
+        if (titleElement) {
+            titleElement.innerHTML = `سمستەری ${currentSem} - <span style="color:${color}">گروپی ${g}</span>`;
+        }
+        
+        if (daysArea) {
+            daysArea.innerHTML = `
+                <button class="tab-btn" style="background:#8e44ad; margin:2px;" onclick="selectDay('${g}', 1, 'یەکشەممە')">یەکشەممە</button>
+                <button class="tab-btn" style="background:#2980b9; margin:2px;" onclick="selectDay('${g}', 2, 'دووشەممە')">دووشەممە</button>
+                <button class="tab-btn" style="background:#27ae60; margin:2px;" onclick="selectDay('${g}', 3, 'سێشەممە')">سێشەممە</button>
+                <button class="tab-btn" style="background:#d35400; margin:2px;" onclick="selectDay('${g}', 4, 'چوارشەممە')">چوارشەممە</button>`;
+        }
     }
 
     function selectDay(g, d, dayName) {
         const color = (g === 'A') ? '#3498db' : '#27ae60';
-        document.getElementById('group-display-title').innerHTML = `سمستەری ${currentSem} - <span style="color:${color}">گروپی ${g}</span> - ${dayName}`;
+        const titleElement = document.getElementById('group-display-title');
+        if (titleElement) {
+            titleElement.innerHTML = `سمستەری ${currentSem} - <span style="color:${color}">گروپی ${g}</span> - ${dayName}`;
+        }
+
         const body = document.getElementById('schedule-body');
+        if (!body) return;
+        
         body.innerHTML = '';
         
-        // ڕەنگە نوێیەکان بەبێ ڕەنگی رەساسی
         const subjectColors = { 
-            'Logic Design': '#e74c3c',
-            'English': '#3498db',
-            'IT Fundamentals': '#2ecc71',
-            'Mathematics': '#f39c12',
-            'Kurdology': '#9b59b6',
-            'Web Programming': '#1abc9c',
-            'O.O.P': '#34495e',
-            'Database Management': '#e67e22',
-            'Database': '#e67e22',
-            'Operating System': '#e74c3c',
-            'Computer Network II': '#2980b9'
+            'Logic Design': '#e74c3c', 'English': '#3498db', 'IT Fundamentals': '#2ecc71', 'Mathematics': '#f39c12',
+            'Kurdology': '#9b59b6', 'Web Programming': '#1abc9c', 'O.O.P': '#34495e', 'Database Management': '#e67e22',
+            'Database': '#e67e22', 'Operating System': '#e74c3c', 'Computer Network II': '#2980b9'
         };
 
-        const data = scheduleData[currentSem][g][d];
-        if(data && data.length > 0) {
+        // دڵنیابوون لەوەی داتا لە scheduleData بوونی هەیە
+        if (typeof scheduleData !== 'undefined' && scheduleData[currentSem] && scheduleData[currentSem][g] && scheduleData[currentSem][g][d]) {
+            const data = scheduleData[currentSem][g][d];
             data.forEach(r => {
-                const sColor = subjectColors[r[1]] || '#00a8ff'; // ئەگەر وانەیەک نەبوو ڕەنگی شینی گەش دەگرێت نەک رەساسی
-                body.innerHTML += `<tr><td style="font-weight:bold;">${r[0]}</td><td><span style="background-color: ${sColor}; color: white; padding: 5px 12px; border-radius: 20px; font-weight: bold; display: inline-block;">${r[1]}</span></td><td dir="ltr" style="font-weight: bold;">${r[2]}</td><td style="font-size: 0.9rem;">${r[3]}</td></tr>`;
+                const sColor = subjectColors[r[1]] || '#00a8ff'; 
+                body.innerHTML += `<tr>
+                    <td style="font-weight:bold;">${r[0]}</td>
+                    <td><span style="background-color: ${sColor}; color: white; padding: 5px 12px; border-radius: 20px; font-weight: bold; display: inline-block;">${r[1]}</span></td>
+                    <td dir="ltr" style="font-weight: bold;">${r[2]}</td>
+                    <td style="font-size: 0.9rem;">${r[3]}</td>
+                </tr>`;
             });
             document.getElementById('schedule-box').style.display = 'block';
         } else {
-            body.innerHTML = '<tr><td colspan="4" style="padding:20px; color:#95a5a6;">بۆ ئەم ڕۆژە هێشتا خشتە دانەنراوە</td></tr>';
-            document.getElementById('schedule-box').style.display = 'block';
+            body.innerHTML = '<tr><td colspan="4">زانیاری بۆ ئەم ڕۆژە بەردەست نییە</td></tr>';
         }
     }
-</script>
+
+    // --- بەشی هەواڵەکان ---
+    async function fetchNews() {
+        const newsContainer = document.getElementById('news-list');
+        if (!newsContainer) return;
+
+        const apiUrl = 'https://api.npoint.io/4b0dc1a0e26d31366572'; 
+
+        try {
+            const response = await fetch(apiUrl);
+            if (!response.ok) throw new Error('وەڵام نەبوو');
+            const data = await response.json();
+            
+            let allNews = "";
+            data.forEach(item => {
+                if (item.title && item.content) {
+                    allNews += ` <span style="color: #e74c3c; font-weight:bold;">●</span> 
+                                 <span style="color: #3498db; font-weight:bold;">${item.title} (${item.date}):</span> 
+                                 <span>${item.content}</span> 
+                                 <span style="margin-right: 80px;"></span> `;
+                }
+            });
+            
+            newsContainer.innerHTML = allNews ? (allNews + allNews) : "هیچ هەواڵێکی نوێ نییە.";
+        } catch (error) {
+            console.error("Error:", error);
+            newsContainer.innerHTML = "⚠️ هەڵە لە بارکردنی هەواڵەکان.";
+        }
+    }
+
+    // بانگکردنی فەنکشنەکان
+    window.onload = function() {
+        fetchNews();
+        // ئەگەر فەنکشنی تریشت هەبوو لێرە دەتوانی بانگی بکەیت
+    };    </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="google-site-verification" content="KRUnPZNhg3NP-_UojaPqUmyg0Nl_naNcoGN3c3upo-4" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="IT Chamchamal">
+
+    <meta name="description" content="سایتی فەرمی بەشی IT پەیمانگای تەکنیکی چەمچەماڵ">
+    <meta name="keywords" content="IT Chamchamal, بەشی ئایتی چەمچەماڵ">
+    <meta name="author" content="Sherwan Sherzad">
+    
+    <meta property="og:title" content="بەشی IT | پەیمانگای تەکنیکی چەمچەماڵ">
+    <meta property="og:url" content="https://sherwansherzad25-max.github.io/it-chamchamal/">
+    <title>بەشی IT پەیمانگای تەکنیکی چەمچەماڵ</title>
+
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #c0392b;
+            --background: #f4f7f6;
+            --white: #ffffff;
+            --sem1-color: #3498db; 
+            --sem2-color: #27ae60; 
+            --sem3-color: #f39c12; 
+            --sem4-color: #8e44ad;
+            --text-color: #2c3e50;
+            --table-border: #eee;
+        }
+
+        body.dark-mode {
+            --background: #121212;
+            --white: #1e1e1e;
+            --primary: #ecf0f1;
+            --text-color: #e0e0e0;
+            --table-border: #333;
+        }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: var(--background);
+            margin: 0; padding: 0; color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: linear-gradient(-45deg, #107015, #3498db, #eb7b6f, #0a3b1e);
+            background-size: 400% 400%;
+            animation: magicGradient 15s ease infinite;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        @keyframes magicGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .theme-toggle {
+            position: absolute; top: 20px; left: 20px;
+            background: var(--secondary); color: white; border: none;
+            padding: 8px 15px; border-radius: 50px; cursor: pointer;
+            font-family: 'Vazirmatn'; font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2); transition: 0.3s;
+            z-index: 101;
+        }
+
+        .moving-header {
+            color: white !important; margin: 0; font-size: 2rem;
+            display: inline-block; animation: headerJump 3s infinite ease-in-out;
+        }
+
+        @keyframes headerJump {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        header h2 { color: white !important; font-size: 1.2rem; margin-top: 10px; opacity: 0.9; }
+
+        .main-container { max-width: 1000px; margin: 0 auto 50px auto; padding: 0 15px; }
+
+        .tabs { 
+            display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;
+            position: sticky;
+            top: 135px; 
+            z-index: 999;
+            background-color: var(--background);
+            padding: 15px 0;
+            margin-bottom: 10px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .tab-btn {
+            padding: 12px 20px; border: none; border-radius: 15px;
+            font-size: 1rem; font-weight: bold; cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            color: white; background-color: #95a5a6;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            font-family: 'Vazirmatn', sans-serif;
+        }
+
+        .tab-btn:hover { transform: translateY(-5px); filter: brightness(1.1); }
+        .tab-btn.active { background-color: var(--secondary); transform: scale(1.05); border: 2px solid white; }
+
+        .semester-content {
+            display: none; background: var(--white); padding: 25px;
+            border-radius: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            animation: fadeIn 0.5s ease;
+        }
+        .semester-content.active { display: block; }
+
+        .sem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .sem-card {
+            padding: 30px;
+            border-radius: 20px;
+            color: white;
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .sem-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
+
+        .table-container { overflow-x: auto; width: 100%; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; min-width: 400px; }
+        th, td { padding: 12px 8px; text-align: center; border-bottom: 1px solid var(--table-border); color: var(--text-color); font-size: 0.95rem; }
+        th { background-color: #2c3e50; color: white; }
+        body.dark-mode th { background-color: #34495e; }
+
+        .download-btn {
+            display: inline-block; padding: 6px 12px; background-color: var(--secondary);
+            color: white !important; text-decoration: none; border-radius: 8px;
+            font-size: 0.85rem; transition: 0.2s; white-space: nowrap;
+        }
+        .old-btn { background-color: #e67e22; }
+        .download-btn:hover { opacity: 0.8; transform: scale(1.05); }
+
+        .extra-section { background: var(--white); padding: 25px; border-radius: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-top: 30px; }
+        .form-group textarea { 
+            width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 15px; font-family: 'Vazirmatn'; box-sizing: border-box;
+            background-color: var(--background); color: var(--text-color); font-size: 1rem;
+        }
+
+        .telegram-btn {
+            background-color: #0088cc; color: white; border: none; padding: 12px 20px;
+            border-radius: 15px; cursor: pointer; font-weight: bold; width: 100%;
+            font-family: 'Vazirmatn'; font-size: 1.1rem; display: flex;
+            align-items: center; justify-content: center; gap: 10px; text-decoration: none; transition: 0.3s; margin-top: 10px;
+        }
+
+        footer { text-align: center; padding: 40px; background-color: #2c3e50; color: white; margin-top: 50px; }
+
+        .rainbow-name {
+            display: inline-block; font-size: 1.5rem; font-weight: bold;
+            background: linear-gradient(to right, #3498db, #e74c3c, #f1c40f, #2ecc71, #9b59b6, #3498db);
+            background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: gradient-animation 4s linear infinite;
+        }
+
+        /* ستایلی هەواڵە جوڵاوەکان */
+       .news-marquee {
+    display: inline-block;
+    animation: newsScroll 80s linear infinite; /* کاتەکەم زۆر زیاد کرد بۆ ئەوەی خاو بێتەوە */
+    font-weight: bold;
+    font-size: 1.1rem; /* تۆزێک گەورەتر بۆ ئەوەی ئاسان بخوێنرێتەوە */
+}
+
+        @keyframes newsScroll {
+            0%   { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .news-marquee:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes gradient-animation { 0% { background-position: 0% center; } 100% { background-position: 200% center; } }
+        
+        .moving-text { margin-top: 15px; font-size: 1rem; font-weight: bold; display: block; animation: moveText 3s infinite alternate ease-in-out; }
+        @keyframes moveText { from { transform: scale(1); color: #3498db; } to { transform: scale(1.05); color: #e74c3c; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .scrolling-container { 
+            height: 450px; 
+            overflow: hidden; 
+            position: relative; 
+            border-radius: 25px;
+            direction: rtl;
+        }
+
+        .scrolling-content { 
+            display: block;
+            width: 100%;
+            padding-top: 150px; 
+            animation: continuousScroll 45s linear infinite; 
+        }
+
+        .scrolling-container:hover .scrolling-content { 
+            animation-play-state: paused; 
+        }
+
+        .scroll-item {
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 0 20px;
+        }
+
+        @keyframes continuousScroll { 
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-50%); } 
+        } 
+    </style>
+</head>
+<body>
+
+<header>
+    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">مۆدی شەو 🌙</button>
+    <h1 class="moving-header">پەیمانگای تەکنیکی چەمچەماڵ</h1>
+    <h2>بەشی تەکنەلۆژیای زانیاری (IT)</h2>
+</header>
+
+<div class="main-container">
+    <div class="tabs">
+        <button class="tab-btn active" onclick="showTab(event, 'home-tab')">🏠 سەرەکی</button>
+        <button class="tab-btn" onclick="showTab(event, 'schedule-tab')">📅 خشتەی هەفتانە</button>
+        <button class="tab-btn" onclick="showTab(event, 'semesters-tab')">📚 سمستەرەکان</button>
+        <button class="tab-btn" onclick="showTab(event, 'about-tab')">ℹ️ دەربارە</button>
+    </div>
+
+    <div style="margin: 0 0 25px 0; direction: rtl; position: relative; z-index: 10;">
+        <div style="background: #c0392b; color: white; padding: 6px 18px; border-radius: 12px 12px 0 0; display: inline-block; font-weight: bold; font-size: 0.95rem; margin-right: 15px; box-shadow: 0 -3px 10px rgba(192, 57, 43, 0.2); font-family: 'Vazirmatn', sans-serif;">
+            🚨 ئاگاداری گرنگ
+        </div>
+        <div style="background: var(--white); border: 2.5px solid #c0392b; border-radius: 0 20px 20px 20px; overflow: hidden; white-space: nowrap; box-shadow: 0 6px 20px rgba(0,0,0,0.1); padding: 18px 0; position: relative;">
+            <div id="news-list" class="news-marquee">
+                چاوەڕێ بکە... دوایین هەواڵەکان بار دەکرێن...
+            </div>
+        </div>
+    </div>
+
+    <div id="home-tab" class="semester-content active" style="padding: 0; background: transparent; box-shadow: none;">
+        
+        <div class="scrolling-container" style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #6a11cb 100%);">
+            <div class="scrolling-content">
+                <div class="scroll-item">
+                    <h2 style="color: #f1c40f; font-size: 1.9rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); margin-bottom: 20px; border-bottom: 2px dashed rgba(255,255,255,0.2); padding-bottom: 10px;">
+                        بەخێربێن خوێندکارانی ئازیزی بەشی تەکنەلۆژیای زانیاری (IT)
+                    </h2>
+                    <p style="font-size: 1.3rem; line-height: 1.8; margin-bottom: 20px; color: #ffffff; font-weight: 500;">
+                        ئەم وێبسایتە دروستکراوە بۆ ئەوەی تۆی خوێندکار لێی سوودمەند بیت و کارئاسانییەک بێت بۆ خوێندنی وانەکانی ڕۆژانەت.
+                    </p>
+                    <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; margin-bottom: 15px; text-align: right; direction: rtl;">
+                        <p style="font-size: 1.2rem; margin: 10px 0;">🔹 <b>بەشی سمستەرەکان:</b></p>
+                        <p style="font-size: 1.1rem; margin: 5px 20px 15px 0; color: #e0e0e0;">١. بە کرتە کردن لەسەر مەلزەمەکان، هەموو مەلزەمەکانی وانەکەت دەست دەکەوێت.</p>
+                        <p style="font-size: 1.1rem; margin: 5px 20px 15px 0; color: #e0e0e0;">٢. بە کرتە کردن لەسەر بەشی پرسیار، پرسیاری ساڵانی ڕابردووت دەست دەکەوێت بۆ بەرچاوڕوونی خوێندکار.</p>
+                        <p style="font-size: 1.1rem; margin: 5px 20px 15px 0; color: #e0e0e0;">٣. بە کرتە کردن لەسەر بەشی فێرکاری، دەتباتە ناو پلەی لیستی یوتیوب و فێرکاری ئەو بابەتە.</p>
+                        <p style="font-size: 1.2rem; margin: 15px 0 5px 0;">📅 <b>بەشی خشتەی هەفتانە:</b></p>
+                        <p style="font-size: 1.1rem; margin: 5px 20px 0 0; color: #e0e0e0;">خشتەی وانەکانی ڕۆژانەی هەردوو گرووپی تێدایە بەشێوەیەکی زۆر جوان ڕوونکراوەتەوە.</p>
+                    </div>
+                    <h3 style="color: #00d2ff; font-size: 1.6rem; margin-top: 25px; text-shadow: 1px 1px 3px rgba(0,0,0,0.2);">بەهیوای سەرکەوتن بۆ هەموو خوێندکاران</h3>
+                    <div style="margin-top: 30px; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 15px; border: 1px solid rgba(255,255,255,0.1);">
+                        <p style="font-size: 1.1rem; color: #ffffff; margin-bottom: 10px;">
+                            سوپاس بۆ هەردوو خوێندکار <b style="color: #f1c40f;">(محمد اسماعیل)</b> و <b style="color: #f1c40f;">(محمد بێستون)</b>
+                        </p>
+                        <p style="font-size: 1rem; color: #2ecc71; font-weight: bold;">کە هاوکار بوون لە دروستکردنی ئەم وێبسایتەدا</p>
+                    </div>
+                    <div style="height: 150px;"></div>
+                </div>
+
+                <div class="scroll-item">
+                    <h2 style="color: #f1c40f; font-size: 1.9rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); margin-bottom: 20px; border-bottom: 2px dashed rgba(255,255,255,0.2); padding-bottom: 10px;">
+                        بەخێربێن خوێندکارانی ئازیزی بەشی تەکنەلۆژیای زانیاری (IT)
+                    </h2>
+                    <p style="font-size: 1.3rem; line-height: 1.8; margin-bottom: 20px; color: #ffffff; font-weight: 500;">
+                        ئەم وێبسایتە دروستکراوە بۆ ئەوەی تۆی خوێندکار لێی سوودمەند بیت و کارئاسانییەک بێت بۆ خوێندنی وانەکانی ڕۆژانەت.
+                    </p>
+                    <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; margin-bottom: 15px; text-align: right; direction: rtl;">
+                        <p style="font-size: 1.2rem; margin: 10px 0;">🔹 <b>بەشی سمستەرەکان:</b></p>
+                        <p style="font-size: 1.1rem; margin: 5px 20px 15px 0; color: #e0e0e0;">١. بە کرتە کردن لەسەر مەلزەمەکان، هەموو مەلزەمەکانی وانەکەت دەست دەکەوێت.</p>
+                        <p style="font-size: 1.1rem; margin: 5px 20px 15px 0; color: #e0e0e0;">٢. بە کرتە کردن لەسەر بەشی پرسیار، پرسیاری ساڵانی ڕابردووت دەست دەکەوێت بۆ بەرچاوڕوونی خوێندکار.</p>
+                        <p style="font-size: 1.1rem; margin: 5px 20px 15px 0; color: #e0e0e0;">٣. بە کرتە کردن لەسەر بەشی فێرکاری، دەتباتە ناو پلەی لیستی یوتیوب و فێرکاری ئەو بابەتە.</p>
+                        <p style="font-size: 1.2rem; margin: 15px 0 5px 0;">📅 <b>بەشی خشتەی هەفتانە:</b></p>
+                        <p style="font-size: 1.1rem; margin: 5px 20px 0 0; color: #e0e0e0;">خشتەی وانەکانی ڕۆژانەی هەردوو گرووپی تێدایە بەشێوەیەکی زۆر جوان ڕوونکراوەتەوە.</p>
+                    </div>
+                    <h3 style="color: #00d2ff; font-size: 1.6rem; margin-top: 25px;">بەهیوای سەرکەوتن بۆ هەموو خوێندکاران</h3>
+                    <div style="margin-top: 30px; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 15px;">
+                        <p style="font-size: 1.1rem; color: #ffffff;">سوپاس بۆ هەردوو خوێندکار <b style="color: #f1c40f;">(محمد اسماعیل)</b> و <b style="color: #f1c40f;">(محمد بێستون)</b></p>
+                    </div>
+                    <div style="height: 150px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="schedule-tab" class="semester-content">
+        <h3 style="text-align:center;">📅 خشتەی هەفتانە (جەدۆل)</h3>        
+        <div style="display: flex; gap: 8px; justify-content: center; margin-bottom: 15px; flex-wrap: wrap;">
+            <button class="tab-btn" style="background:#3498db;" onclick="setSem(1)">سمستەری ١</button>
+            <button class="tab-btn" style="background:#27ae60;" onclick="setSem(2)">سمستەری ٢</button>
+            <button class="tab-btn" style="background:#f39c12;" onclick="setSem(3)">سمستەری ٣</button>
+            <button class="tab-btn" style="background:#8e44ad;" onclick="setSem(4)">سمستەری ٤</button>
+        </div>
+        <div id="group-selection" style="display: none; gap: 15px; justify-content: center; margin-bottom: 25px;">
+            <button class="tab-btn" style="background:linear-gradient(135deg, #3498db, #2980b9);" onclick="selectGroup('A')">Group A 🔵</button>
+            <button class="tab-btn" style="background:linear-gradient(135deg, #27ae60, #219150);" onclick="selectGroup('B')">Group B 🟢</button>
+        </div>
+        <h3 id="group-display-title" style="text-align: center; color: var(--secondary); margin-bottom: 15px; font-weight: bold; display: none;"></h3>
+        <div id="daysArea" style="text-align:center; margin-bottom:20px;"></div>
+        <div id="schedule-box" style="display:none;">
+            <div class="table-container">
+                <table style="border: 2px solid var(--secondary);">
+                    <thead><tr><th>ژمارە</th><th>بابەت</th><th>کات</th><th>مامۆستا</th></tr></thead>
+                    <tbody id="schedule-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="semesters-tab" class="semester-content">
+        <h2 style="text-align: center; color: var(--primary);">هەڵبژاردنی سمستەر</h2>
+        
+        <div class="sem-grid">
+            <div class="sem-card" style="background: linear-gradient(45deg, #3498db, #2980b9);" onclick="openInnerSem('sem1')">📚 سمستەری یەکەم</div>
+            <div class="sem-card" style="background: linear-gradient(45deg, #27ae60, #219150);" onclick="openInnerSem('sem2')">📚 سمستەری دووەم</div>
+            <div class="sem-card" style="background: linear-gradient(45deg, #f39c12, #d35400);" onclick="openInnerSem('sem3')">📚 سمستەری سێیەم</div>
+            <div class="sem-card" style="background: linear-gradient(45deg, #8e44ad, #71368a);" onclick="openInnerSem('sem4')">📚 سمستەری چوارەم</div>
+        </div>
+
+        <hr style="margin: 40px 0; border: 0; border-top: 1px solid #ddd;">
+
+        <div id="sem1" class="inner-sem-content" style="display: none;">
+            <h3 style="color: var(--sem1-color); border-right: 5px solid var(--sem1-color); padding-right: 10px;">وانەکانی سمستەری یەکەم</h3>
+            <div class="table-container">
+                <table>
+                    <thead><tr><th>ناوی وانە</th><th>مەلزەمە</th><th>پرسیار</th><th>فێركاری</th></tr></thead>
+                    <tbody>
+                        <tr><td>Logic Design</td><td><a href="https://drive.google.com/drive/folders/16v8Zf_xiCYPCkcPib7bIS_ah4hk6dDPj" class="download-btn">داگرتن</a></td><td><a href="https://drive.google.com/drive/folders/1w4lv3S1wskIFRmJzgrR3m_Vib2SzklOv" class="download-btn old-btn">بینین</a></td><td><a href="https://www.youtube.com/playlist?list=PLCfnFVb0wrYroYmhAU2fJR9nD8TqUjSy0" class="download-btn" style="background-color: #e74c3c;">🎥 ڤیدیۆ</a></td></tr>
+                        <tr><td>IT Fundamentals</td><td><a href="https://drive.google.com/drive/folders/1MUimiqD30yYTs1U53IVkb2B4lZn8Q5Dx" class="download-btn">داگرتن</a></td><td><a href="https://drive.google.com/drive/folders/1dqo6IA60wMPzrD-tpE92e_NPb1x9MlGY" class="download-btn old-btn">بینین</a></td><td><a href="https://www.youtube.com/playlist?list=PLCfnFVb0wrYrrG8eEF0VjVu5bctbCZfGf" class="download-btn" style="background-color: #e74c3c;">🎥 ڤیدیۆ</a></td></tr>
+                        <tr><td>Mathematics</td><td><a href="https://drive.google.com/drive/folders/15oJqsrWSfqplqdO2XPV88UmI0mpsK7Tv" class="download-btn">داگرتن</a></td><td><a href="https://drive.google.com/drive/folders/1txr0hJgSoTuRse6Zj7ARdxDWIPtjcI8C" class="download-btn old-btn">بینین</a></td><td><a href="https://www.youtube.com/playlist?list=PLCfnFVb0wrYoBgOnmKoAf1t8CqbS4dcQh" class="download-btn" style="background-color: #e74c3c;">🎥</a></td></tr>
+                        <tr><td>English</td><td><a href="https://drive.google.com/drive/folders/1D9DL2xHQRVJYSFlQB6BUDStWt_qKF0QI" class="download-btn">داگرتن</a></td><td><a href="https://drive.google.com/drive/folders/1s2q2r18eHAAwEwvagR2r0d0WjIR2_ZVe" class="download-btn old-btn">بینین</a></td><td><a href="#" class="download-btn" style="background-color: #e74c3c;">🎥</a></td></tr>
+                        <tr><td>Kurdology</td><td><a href="https://drive.google.com/drive/folders/1zktjZlnocNqLwQIeJZ_S0jb4hhWgYc0C" class="download-btn">داگرتن</a></td><td><a href="https://drive.google.com/drive/folders/1SIpy883RCPN4cvpFy2TPx7ea5TZvcppM" class="download-btn old-btn">بینین</a></td><td><a href="#" class="download-btn" style="background-color: #e74c3c;">🎥</a></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="sem2" class="inner-sem-content" style="display: none;">
+            <h3 style="color: #27ae60; border-right: 5px solid #27ae60; padding-right: 10px; margin-bottom: 20px;">
+                وانەکانی سمستەری دووەم
+            </h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ناوی وانە</th>
+                            <th>مەلزەمە</th>
+                            <th>پرسیار</th>
+                            <th>فێركاری</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Web Programming</td>
+                            <td><a href="#" class="download-btn">داگرتن</a></td>
+                            <td><a href="#" class="download-btn old-btn">بینین</a></td>
+                            <td><a href="#" class="download-btn" style="background-color: #e74c3c;">🎥</a></td>
+                        </tr>
+                        <tr>
+                            <td>O.O.P</td>
+                            <td><a href="#" class="download-btn">داگرتن</a></td>
+                            <td><a href="#" class="download-btn old-btn">بینین</a></td>
+                            <td><a href="#" class="download-btn" style="background-color: #e74c3c;">🎥</a></td>
+                        </tr>
+                        <tr>
+                            <td>Database Management System</td>
+                            <td><a href="#" class="download-btn">داگرتن</a></td>
+                            <td><a href="#" class="download-btn old-btn">بینین</a></td>
+                            <td><a href="#" class="download-btn" style="background-color: #e74c3c;">🎥</a></td>
+                        </tr>
+                        <tr>
+                            <td>Computer Network II</td>
+                            <td><a href="#" class="download-btn">داگرتن</a></td>
+                            <td><a href="#" class="download-btn old-btn">بینین</a></td>
+                            <td><a href="#" class="download-btn" style="background-color: #e74c3c;">🎥</a></td>
+                        </tr>
+                        <tr>
+                            <td>Operating System</td>
+                            <td><a href="#" class="download-btn">داگرتن</a></td>
+                            <td><a href="#" class="download-btn old-btn">بینین</a></td>
+                            <td><a href="#" class="download-btn" style="background-color: #e74c3c;">🎥</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="sem3" class="inner-sem-content" style="display: none;">
+            <h3 style="color: var(--sem3-color); border-right: 5px solid var(--sem3-color); padding-right: 10px;">وانەکانی سمستەری سێیەم</h3>
+            <div class="table-container"><table><thead><tr><th>ناوی وانە</th><th>مەلزەمە</th><th>پرسیار</th><th>فێركاری</th></tr></thead><tbody><tr><td colspan="4">هێشتا زانیاری دانەنراوە</td></tr></tbody></table></div>
+        </div>
+
+        <div id="sem4" class="inner-sem-content" style="display: none;">
+            <h3 style="color: var(--sem4-color); border-right: 5px solid var(--sem4-color); padding-right: 10px;">وانەکانی سمستەری چوارەم</h3>
+            <div class="table-container"><table><thead><tr><th>ناوی وانە</th><th>مەلزەمە</th><th>پرسیار</th><th>فێركاری</th></tr></thead><tbody><tr><td colspan="4">هێشتا زانیاری دانەنراوە</td></tr></tbody></table></div>
+        </div>
+    </div>
+
+    <div id="about-tab" class="semester-content">
+        <div style="text-align: center;">
+            <div style="width: 80px; height: 80px; background: var(--secondary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; font-size: 30px;">ℹ️</div>
+            <h2 style="color: var(--primary);">دەربارەی پڕۆژە</h2>
+            <p style="line-height: 1.8; text-align: justify; direction: rtl;">
+                ئەم پڕۆژەیە هەوڵێکی تایبەتە بۆ کۆکردنەوەی هەموو پێداویستییەکانی خوێندکارانی بەشی تەکنەلۆژیای زانیاری (IT) لە پەیمانگای تەکنیکی چەمچەماڵ. ئامانجی سەرەکی ئاسانکارییە بۆ گەیشتن بە زانیارییەکان بە خێراترین کات.
+            </p>
+            <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+            <p>گەشەپێدەر: <strong>شیروان شێرزاد خالد</strong></p>
+            <p>وەشان: 2.1 (٢٠٢٦)</p>
+        </div>
+    </div>
+    
+    <div class="extra-section">
+        <h3 style="color: var(--accent);">💬 سەرنج و تێبینیەكانتان لێرەوە بنێرن</h3>
+        <div class="form-group">
+            <textarea id="userMessage" rows="3" placeholder="نامەکەت لێرە بنووسە..."></textarea>
+        </div>
+        <a href="#" onclick="sendToTelegram()" class="telegram-btn">ناردن لە ڕێگەی تێلەگرام ✈️</a>
+    </div>
+
+    <div style="margin: 20px auto; background: var(--white); padding: 12px; border-radius: 18px; max-width: 220px; display: flex; align-items: center; gap: 12px; border: 1.5px solid var(--secondary); box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://sherwansherzad25-max.github.io/it-chamchamal/&margin=0" style="width: 65px; height: 65px; border-radius: 8px; border: 1px solid #eee;">
+        <div style="text-align: right;">
+            <p style="font-size: 11px; color: var(--text-color); font-weight: bold; margin: 0; line-height: 1.4;">سکان بۆ هاوبەشکردن</p>
+            <p style="font-size: 9px; color: #7f8c8d; margin: 2px 0 0 0;">IT Chamchamal</p>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>دروستکراوە لەلایەن خوێندکار:</p>
+    <div class="rainbow-name">شیروان شێرزاد خالد</div>
+    <span class="moving-text">بە هیوای سود گەیاندن بە هەموو خوێندكارانی بەشی ئایتی</span>
+    <p>© ٢٠٢٦ بەردەوام لە نوێ كردنەوەدایە</p>
+    <div style="margin-top: 20px;">
+        <p style="font-weight: bold; font-size: 0.9rem;">📊 ژمارەی سەردانەکان</p>
+        <img src="https://counter9.optistats.ovh/private/freecounterstat.php?c=8m8u6l3u8u7x8u1b1u7u1u1u1u1u1u1u">
+    </div>
+</footer>
+
+<script>
+    const TELEGRAM_USERNAME = "sherwan25"; 
+    let currentSem = 1;
+
+    function sendToTelegram() {
+        const msg = document.getElementById('userMessage').value;
+        if(msg.trim() === "") { alert("تکایە سەرەتا نامەیەک بنووسە!"); return; }
+        window.open(`https://t.me/${TELEGRAM_USERNAME}?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    function showTab(evt, id) {
+        var i, content, tablinks;
+        content = document.getElementsByClassName("semester-content");
+        for (i = 0; i < content.length; i++) { content[i].style.display = "none"; }
+        tablinks = document.getElementsByClassName("tab-btn");
+        for (i = 0; i < tablinks.length; i++) { tablinks[i].classList.remove("active"); }
+        document.getElementById(id).style.display = "block";
+        evt.currentTarget.classList.add("active");
+    }
+
+    function openInnerSem(semId) {
+        let contents = document.getElementsByClassName("inner-sem-content");
+        for (let i = 0; i < contents.length; i++) { contents[i].style.display = "none"; }
+        document.getElementById(semId).style.display = "block";
+        document.getElementById(semId).scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function toggleTheme() {
+        const body = document.body;
+        const btn = document.getElementById('themeBtn');
+        body.classList.toggle('dark-mode');
+        btn.innerHTML = body.classList.contains('dark-mode') ? "مۆدی ڕۆژ ☀️" : "مۆدی شەو 🌙";
+    }
+
+    const scheduleData = {
+        1: {
+            'A': {
+                1: [["١", "Logic Design", "2:00", "م. پشتیوان + هەڵكەوت"], ["٢", "English", "4:00", "م. بەرهەم"], ["٣", "IT Fundamentals", "6:00", "م.عمر+هۆگر+امین"]],
+                2: [["١", "Mathematics", "2:00", "م. سۆران"], ["٢", "Logic Design", "4:00", "م. پشتیوان"], ["٣", "IT Fundamentals", "6:00", "م. عمر"]],
+                3: [["١", "Kurdology", "2:00", "م. ڕێبین"], ["٢", "English", "4:00", "م. بەرهەم"], ["٣", "Kurdology", "6:00", "م. ڕێبین"]],
+                4: [["١", "IT Fundamentals", "2:00", "م. عمر"], ["٢", "IT Fundamentals", "4:00", "م. عمر+امین+هۆگر"]]
+            },
+            'B': {
+                1: [["١", "English", "2:00", "م. بەرهەم"], ["٢", "Logic Design", "4:00", "م. پشتیوان+هەڵكەوت"], ["٣", "IT Fundamentals", "6:00", "م.عمر+هۆگر+امین"]],
+                2: [["١", "Logic Design", "2:00", "م. پشتیوان"], ["١", "Mathematics", "4:00", "م. سۆران"], ["٣", "IT Fundamentals", "6:00", "م. عمر"]],
+                3: [["١", "English", "2:00", "م. بەرهەم"], ["٢", "Kurdology", "4:00", "م. ڕێبین"], ["٣", "Kurdology", "6:00", "م. ڕێبین"]],
+                4: [["١", "IT Fundamentals", "2:00", "م. عمر"], ["٢", "IT Fundamentals", "4:00", "م. عمر+امین+هۆگر"]]
+            }
+        },
+        2: {
+            'A': {
+                1: [["١", "Web Programming", "2:00", "م. زانیار"], ["٢", "O.O.P", "4:00", "م. علی"]],
+                2: [["١", "Database Management", "2:00", "م. محمد + امین"], ["٢", "Web Programming", "4:00", "م. زانیار + گۆران"]],
+                3: [["١", "Database", "2:00", "م. محمد"], ["٢", "O.O.P", "4:00", "م. علی + هۆگر + سامان"]],
+                4: [["١", "Operating System", "2:00", "م. ڕێبین"], ["٢", "Computer Network II", "4:00", "م. هەڵۆ"]]
+            },
+            'B': {
+                1: [["١", "Web Programming", "2:00", "م. زانیار"], ["٢", "O.O.P", "4:00", "م. علی"]],
+                2: [["١", "Database Management", "2:00", "م. محمد + امین"], ["٢", "Web Programming", "4:00", "م. زانیار + گۆران"]],
+                3: [["١", "Database", "2:00", "م. محمد"], ["٢", "O.O.P", "4:00", "م. علی + هۆگر + سامان"]],
+                4: [["١", "Operating System", "2:00", "م. ڕێبین"], ["٢", "Computer Network II", "4:00", "م. هەڵۆ"]]
+            }
+        },
+        3: { 'A': {}, 'B': {} },
+        4: { 'A': {}, 'B': {} }
+    };
+
+    function setSem(s) {
+        currentSem = s;
+        document.getElementById('group-selection').style.display = 'flex';
+        document.getElementById('group-display-title').style.display = 'block';
+        document.getElementById('group-display-title').innerHTML = `سمستەری ${s} - <span style="color:#e67e22">گروپ هەڵبژێرە</span>`;
+        document.getElementById('daysArea').innerHTML = "";
+        document.getElementById('schedule-box').style.display = 'none';
+    }
+function selectGroup(g) {
+        const color = (g === 'A') ? '#3498db' : '#27ae60';
+        const titleElement = document.getElementById('group-display-title');
+        const daysArea = document.getElementById('daysArea');
+        
+        if (titleElement) {
+            titleElement.innerHTML = `سمستەری ${currentSem} - <span style="color:${color}">گروپی ${g}</span>`;
+        }
+        
+        if (daysArea) {
+            daysArea.innerHTML = `
+                <button class="tab-btn" style="background:#8e44ad; margin:2px;" onclick="selectDay('${g}', 1, 'یەکشەممە')">یەکشەممە</button>
+                <button class="tab-btn" style="background:#2980b9; margin:2px;" onclick="selectDay('${g}', 2, 'دووشەممە')">دووشەممە</button>
+                <button class="tab-btn" style="background:#27ae60; margin:2px;" onclick="selectDay('${g}', 3, 'سێشەممە')">سێشەممە</button>
+                <button class="tab-btn" style="background:#d35400; margin:2px;" onclick="selectDay('${g}', 4, 'چوارشەممە')">چوارشەممە</button>`;
+        }
+    }
+
+    function selectDay(g, d, dayName) {
+        const color = (g === 'A') ? '#3498db' : '#27ae60';
+        const titleElement = document.getElementById('group-display-title');
+        if (titleElement) {
+            titleElement.innerHTML = `سمستەری ${currentSem} - <span style="color:${color}">گروپی ${g}</span> - ${dayName}`;
+        }
+
+        const body = document.getElementById('schedule-body');
+        if (!body) return;
+        
+        body.innerHTML = '';
+        
+        const subjectColors = { 
+            'Logic Design': '#e74c3c', 'English': '#3498db', 'IT Fundamentals': '#2ecc71', 'Mathematics': '#f39c12',
+            'Kurdology': '#9b59b6', 'Web Programming': '#1abc9c', 'O.O.P': '#34495e', 'Database Management': '#e67e22',
+            'Database': '#e67e22', 'Operating System': '#e74c3c', 'Computer Network II': '#2980b9'
+        };
+
+        // دڵنیابوون لەوەی داتا لە scheduleData بوونی هەیە
+        if (typeof scheduleData !== 'undefined' && scheduleData[currentSem] && scheduleData[currentSem][g] && scheduleData[currentSem][g][d]) {
+            const data = scheduleData[currentSem][g][d];
+            data.forEach(r => {
+                const sColor = subjectColors[r[1]] || '#00a8ff'; 
+                body.innerHTML += `<tr>
+                    <td style="font-weight:bold;">${r[0]}</td>
+                    <td><span style="background-color: ${sColor}; color: white; padding: 5px 12px; border-radius: 20px; font-weight: bold; display: inline-block;">${r[1]}</span></td>
+                    <td dir="ltr" style="font-weight: bold;">${r[2]}</td>
+                    <td style="font-size: 0.9rem;">${r[3]}</td>
+                </tr>`;
+            });
+            document.getElementById('schedule-box').style.display = 'block';
+        } else {
+            body.innerHTML = '<tr><td colspan="4">زانیاری بۆ ئەم ڕۆژە بەردەست نییە</td></tr>';
+        }
+    }
+
+    // --- بەشی هەواڵەکان ---
+    async function fetchNews() {
+        const newsContainer = document.getElementById('news-list');
+        if (!newsContainer) return;
+
+        const apiUrl = 'https://api.npoint.io/4b0dc1a0e26d31366572'; 
+
+        try {
+            const response = await fetch(apiUrl);
+            if (!response.ok) throw new Error('وەڵام نەبوو');
+            const data = await response.json();
+            
+            let allNews = "";
+            data.forEach(item => {
+                if (item.title && item.content) {
+                    allNews += ` <span style="color: #e74c3c; font-weight:bold;">●</span> 
+                                 <span style="color: #3498db; font-weight:bold;">${item.title} (${item.date}):</span> 
+                                 <span>${item.content}</span> 
+                                 <span style="margin-right: 80px;"></span> `;
+                }
+            });
+            
+            newsContainer.innerHTML = allNews ? (allNews + allNews) : "هیچ هەواڵێکی نوێ نییە.";
+        } catch (error) {
+            console.error("Error:", error);
+            newsContainer.innerHTML = "⚠️ هەڵە لە بارکردنی هەواڵەکان.";
+        }
+    }
+
+    // بانگکردنی فەنکشنەکان
+    window.onload = function() {
+        fetchNews();
+        // ئەگەر فەنکشنی تریشت هەبوو لێرە دەتوانی بانگی بکەیت
+    };    </script>
 </body>
 </html>
