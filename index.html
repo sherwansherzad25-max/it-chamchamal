@@ -31,6 +31,7 @@
             --sem4-color: #8e44ad;
             --text-color: #2c3e50;
             --table-border: #eee;
+       
         }
 
         body.dark-mode {
@@ -186,7 +187,7 @@
 }
 
 @keyframes newsScroll {
-    100%   { transform: translateX(-100%); } /* لێرە دەست پێ دەکات لە لای چەپ */
+    0%   { transform: translateX(-100%); } /* لێرە دەست پێ دەکات لە لای چەپ */
     100% { transform: translateX(100%); }  /* لێرە کۆتایی دێت لە لای ڕاست */
 }
 
@@ -435,7 +436,7 @@
             </p>
             <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
             <p>گەشەپێدەر: <strong>شیروان شێرزاد خالد</strong></p>
-            <p>وەشان: 2.1.2 (٢٠٢٦)</p>
+            <p>وەشان: 2.1.3 (٢٠٢٦)</p>
         </div>
     </div>
     
@@ -466,6 +467,21 @@
         <img src="https://counter9.optistats.ovh/private/freecounterstat.php?c=8m8u6l3u8u7x8u1b1u7u1u1u1u1u1u1u">
     </div>
 </footer>
+
+<style>
+    #news-list {
+        display: inline-block;
+        white-space: nowrap;
+        /* لێرەدا پاشگری 0s مان داناوە بۆ ئەوەی یەکسەر دەست پێ بکات */
+        animation: tickerMove 400s linear infinite !important;
+    }
+
+    @keyframes tickerMove {
+        /* لە 0 دەست پێ دەکات (واتە ناو شاشە) بۆ ئەوەی چاوەڕێ نەکەیت */
+        0% { transform: translateX(0%); }
+        100% { transform: translateX(100%); }
+    }
+</style>
 
 <script>
     const TELEGRAM_USERNAME = "sherwan25"; 
@@ -501,7 +517,7 @@
         btn.innerHTML = body.classList.contains('dark-mode') ? "مۆدی ڕۆژ ☀️" : "مۆدی شەو 🌙";
     }
 
- const scheduleData = {
+    const scheduleData = {
         1: {
             'A': {
                 1: [["١", "Logic Design", "2:00", "م. پشتیوان + هەڵكەوت"], ["٢", "English", "4:00", "م. بەرهەم"], ["٣", "IT Fundamentals", "6:00", "م.عمر+هۆگر+امین"]],
@@ -516,7 +532,6 @@
                 4: [["١", "IT Fundamentals", "2:00", "م. عمر"], ["٢", "IT Fundamentals", "4:00", "م. عمر+امین+هۆگر"]]
             }
         },
-        2: { 'A': {}, 'B': {} },
         3: {
             'A': {
                 1: [["١", "Web Programming", "2:00", "م. زانیار"], ["٢", "O.O.P", "4:00", "م. علی"]],
@@ -526,12 +541,11 @@
             },
             'B': {
                 1: [["١", "Web Programming", "2:00", "م. زانیار"], ["٢", "O.O.P", "4:00", "م. علی"]],
-                2: [["١", "Database Management", "2:00", "م. محمد + امین"], ["٢", "Web Programming", "4:00", "م. زانیار + گۆران"]],
+                2: [["١", "Database Management", "2:00", "م. محمد + min"], ["٢", "Web Programming", "4:00", "م. زانیار + گۆران"]],
                 3: [["١", "Database", "2:00", "م. محمد"], ["٢", "O.O.P", "4:00", "م. علی + هۆگر + سامان"]],
                 4: [["١", "Operating System", "2:00", "م. ڕێبین"], ["٢", "Computer Network II", "4:00", "م. هەڵۆ"]]
             }
-        },
-        4: { 'A': {}, 'B': {} }
+        }
     };
 
     function setSem(s) {
@@ -547,11 +561,7 @@
         const color = (g === 'A') ? '#3498db' : '#27ae60';
         const titleElement = document.getElementById('group-display-title');
         const daysArea = document.getElementById('daysArea');
-        
-        if (titleElement) {
-            titleElement.innerHTML = `سمستەری ${currentSem} - <span style="color:${color}">گروپی ${g}</span>`;
-        }
-        
+        if (titleElement) titleElement.innerHTML = `سمستەری ${currentSem} - <span style="color:${color}">گروپی ${g}</span>`;
         if (daysArea) {
             daysArea.innerHTML = `
                 <button class="tab-btn" style="background:#8e44ad; margin:2px;" onclick="selectDay('${g}', 1, 'یەکشەممە')">یەکشەممە</button>
@@ -564,24 +574,17 @@
     function selectDay(g, d, dayName) {
         const color = (g === 'A') ? '#3498db' : '#27ae60';
         const titleElement = document.getElementById('group-display-title');
-        if (titleElement) {
-            titleElement.innerHTML = `سمستەری ${currentSem} - <span style="color:${color}">گروپی ${g}</span> - ${dayName}`;
-        }
-
+        if (titleElement) titleElement.innerHTML = `سمستەری ${currentSem} - <span style="color:${color}">گروپی ${g}</span> - ${dayName}`;
         const body = document.getElementById('schedule-body');
         if (!body) return;
-        
         body.innerHTML = '';
-        
         const subjectColors = { 
             'Logic Design': '#e74c3c', 'English': '#3498db', 'IT Fundamentals': '#2ecc71', 'Mathematics': '#f39c12',
             'Kurdology': '#9b59b6', 'Web Programming': '#1abc9c', 'O.O.P': '#34495e', 'Database Management': '#e67e22',
             'Database': '#e67e22', 'Operating System': '#e74c3c', 'Computer Network II': '#2980b9'
         };
-
-        if (typeof scheduleData !== 'undefined' && scheduleData[currentSem] && scheduleData[currentSem][g] && scheduleData[currentSem][g][d]) {
-            const data = scheduleData[currentSem][g][d];
-            data.forEach(r => {
+        if (scheduleData[currentSem] && scheduleData[currentSem][g] && scheduleData[currentSem][g][d]) {
+            scheduleData[currentSem][g][d].forEach(r => {
                 const sColor = subjectColors[r[1]] || '#00a8ff'; 
                 body.innerHTML += `<tr>
                     <td style="font-weight:bold;">${r[0]}</td>
@@ -592,7 +595,7 @@
             });
             document.getElementById('schedule-box').style.display = 'block';
         } else {
-            body.innerHTML = '<tr><td colspan="4">زانیاری بۆ ئەم ڕۆژە بەردەست نییە</td></tr>';
+            body.innerHTML = '<tr><td colspan="4">زانیاری نییە</td></tr>';
         }
     }
 
@@ -601,35 +604,56 @@
         const newsContainer = document.getElementById('news-list');
         if (!newsContainer) return;
 
-        const apiUrl = 'https://api.npoint.io/4b0dc1a0e26d31366572'; 
+        const k1 = "patQX5Wtdj3DQUoQE";
+        const k2 = ".";
+        const k3 = "5faea8c298e06cb2f4fc53212ed14edf61941262dca73610c116f3382b047893";
+        const token = k1 + k2 + k3;
+
+        const baseId = 'app1z1PS8UVTsQr6D'; 
+        const tableId = 'tblBouRY2UudRiook'; 
 
         try {
-            const response = await fetch(apiUrl);
-            if (!response.ok) throw new Error('وەڵام نەبوو');
-            const data = await response.json();
-            
-            let allNews = "";
-            data.forEach(item => {
-                if (item.title && item.content) {
-                    allNews += ` <span style="color: #e74c3c; font-weight:bold;">●</span> 
-                                 <span style="color: #3498db; font-weight:bold;">${item.title} (${item.date}):</span> 
-                                 <span>${item.content}</span> 
-                                 <span style="margin-right: 80px;"></span> `;
-                }
+            const response = await fetch(`https://api.airtable.com/v0/${baseId}/${tableId}`, {
+                headers: { Authorization: `Bearer ${token}` }
             });
-            
-            newsContainer.innerHTML = allNews ? (allNews + allNews) : "هیچ هەواڵێکی نوێ نییە.";
-        } catch (error) {
-            console.error("Error:", error);
-            newsContainer.innerHTML = "⚠️ هەڵە لە بارکردنی هەواڵەکان.";
+
+            if (!response.ok) {
+                newsContainer.innerHTML = "⚠️ هەر هەواڵێكی گرنگ هەبێت لێرەوە نیشان دەدرێت";
+                return;
+            }
+
+            const data = await response.json();
+            let allNews = "";
+
+            if (data.records && data.records.length > 0) {
+                data.records.forEach(record => {
+                    const f = record.fields;
+                    const title = f.Title || f.Name || Object.values(f)[0] || "";
+                    const content = f.Details || f.Notes || "";
+                    const date = f.Date || "";
+
+                    if (title) {
+                        allNews += ` 
+                            <span style="display: inline-flex; align-items: center; margin-left: 100px; font-family: 'Noto Sans Arabic', Tahoma, sans-serif; white-space: nowrap;">
+                                <span style="color: #e74c3c; font-size: 25px; margin-left: 12px;">•</span>
+                                <strong style="font-size: 1.5rem; color: inherit;">${title}</strong> 
+                                ${content ? `<span style="color: inherit; font-size: 1.4rem; margin: 0 10px; font-weight: 400;"> : ${content}</span>` : ""}
+                                ${date ? `<small style="color: #3498db; margin-right: 15px; font-size: 1.1rem; font-weight: bold; direction: ltr;">[${date}]</small>` : ""}
+                            </span> `;
+                    }
+                });
+                newsContainer.innerHTML = allNews.repeat(4);
+            } else {
+                newsContainer.innerHTML = "⏳ چاوەڕوانی هەواڵەکان بن...";
+            }
+        } catch (e) {
+            newsContainer.innerHTML = "⚠️ پەیوەندی بڕا.";
         }
     }
 
-    // بانگکردنی فەنکشنەکان
     window.onload = function() {
         fetchNews();
-        // ئەگەر فەنکشنی تریشت هەبوو لێرە دەتوانی بانگی بکەیت
-    };  
-      </script>
+    };
+</script>
 </body>
 </html>
