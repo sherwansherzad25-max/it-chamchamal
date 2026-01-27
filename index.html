@@ -18,6 +18,12 @@
     <meta property="og:url" content="https://sherwansherzad25-max.github.io/it-chamchamal/">
     <title>بەشی IT پەیمانگای تەکنیکی چەمچەماڵ</title>
 
+    <!-- App Icons -->
+    <link rel="icon" type="image/png" sizes="192x192" href="it-icon-final-192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="it-icon-final-180.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="it-icon-final-512.png">
+    <meta name="theme-color" content="#27ae60">
+
     <style>
         :root {
             --primary: #2c3e50;
@@ -178,18 +184,17 @@
             animation: gradient-animation 4s linear infinite;
         }
 
-        /* ستایلی هەواڵە جوڵاوەکان */
-.news-marquee {
-    display: inline-block;
-    animation: newsScroll 40s linear infinite; /* خێراییەکەی لێرە ڕێکبخە */
-    white-space: nowrap;
-    direction: rtl; /* دڵنیابوونەوە لەوەی دەقەکە خۆی بە کوردی دەمێنێتەوە */
-}
+        .news-marquee {
+            display: inline-block;
+            animation: newsScroll 40s linear infinite;
+            white-space: nowrap;
+            direction: rtl;
+        }
 
-@keyframes newsScroll {
-    0%   { transform: translateX(-100%); } /* لێرە دەست پێ دەکات لە لای چەپ */
-    100% { transform: translateX(100%); }  /* لێرە کۆتایی دێت لە لای ڕاست */
-}
+        @keyframes newsScroll {
+            0%   { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
 
         .news-marquee:hover {
             animation-play-state: paused;
@@ -436,7 +441,7 @@
             </p>
             <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
             <p>گەشەپێدەر: <strong>شیروان شێرزاد خالد</strong></p>
-            <p>وەشان: 2.1.3 (٢٠٢٦)</p>
+            <p>وەشان: 2.1.4 (٢٠٢٦)</p>
         </div>
     </div>
     
@@ -464,7 +469,7 @@
     <p>© ٢٠٢٦ بەردەوام لە نوێ كردنەوەدایە</p>
     <div style="margin-top: 20px;">
         <p style="font-weight: bold; font-size: 0.9rem;">📊 ژمارەی سەردانەکان</p>
-        <img src="https://counter9.optistats.ovh/private/freecounterstat.php?c=8m8u6l3u8u7x8u1b1u7u1u1u1u1u1u1u">
+        <div id="visitor-counter" style="font-size:1.8rem;font-weight:bold;color:#3498db;letter-spacing:3px;font-family:monospace;margin-top:10px">0000000</div>
     </div>
 </footer>
 
@@ -472,12 +477,10 @@
     #news-list {
         display: inline-block;
         white-space: nowrap;
-        /* لێرەدا پاشگری 0s مان داناوە بۆ ئەوەی یەکسەر دەست پێ بکات */
         animation: tickerMove 200s linear infinite !important;
     }
 
     @keyframes tickerMove {
-        /* لە 0 دەست پێ دەکات (واتە ناو شاشە) بۆ ئەوەی چاوەڕێ نەکەیت */
         0% { transform: translateX(0%); }
         100% { transform: translateX(100%); }
     }
@@ -513,8 +516,9 @@
     function toggleTheme() {
         const body = document.body;
         const btn = document.getElementById('themeBtn');
-        body.classList.toggle('dark-mode');
-        btn.innerHTML = body.classList.contains('dark-mode') ? "مۆدی ڕۆژ ☀️" : "مۆدی شەو 🌙";
+        const isDark = body.classList.toggle('dark-mode');
+        btn.textContent = isDark ? "مۆدی ڕۆژ ☀️" : "مۆدی شەو 🌙";
+        localStorage.setItem('darkMode', isDark);
     }
 
     const scheduleData = {
@@ -541,7 +545,7 @@
             },
             'B': {
                 1: [["١", "Web Programming", "2:00", "م. زانیار"], ["٢", "O.O.P", "4:00", "م. علی"]],
-                2: [["١", "Database Management", "2:00", "م. محمد + min"], ["٢", "Web Programming", "4:00", "م. زانیار + گۆران"]],
+                2: [["١", "Database Management", "2:00", "م. محمد + امین"], ["٢", "Web Programming", "4:00", "م. زانیار + گۆران"]],
                 3: [["١", "Database", "2:00", "م. محمد"], ["٢", "O.O.P", "4:00", "م. علی + هۆگر + سامان"]],
                 4: [["١", "Operating System", "2:00", "م. ڕێبین"], ["٢", "Computer Network II", "4:00", "م. هەڵۆ"]]
             }
@@ -599,7 +603,6 @@
         }
     }
 
-    // --- بەشی هەواڵەکان ---
     async function fetchNews() {
         const newsContainer = document.getElementById('news-list');
         if (!newsContainer) return;
@@ -651,8 +654,48 @@
         }
     }
 
+    function initVisitorCounter() {
+        const counterKey = 'it-chamchamal-visits';
+        let count = localStorage.getItem(counterKey);
+        
+        if (!count) {
+            count = 2500;
+        } else {
+            count = parseInt(count) + 1;
+        }
+        
+        localStorage.setItem(counterKey, count);
+        displayCounter(count);
+    }
+
+    function displayCounter(num) {
+        const formatted = String(num).padStart(7, '0');
+        document.getElementById('visitor-counter').textContent = formatted;
+    }
+
+    function initAutoTheme() {
+        const hour = new Date().getHours();
+        const savedMode = localStorage.getItem('darkMode');
+        
+        if (savedMode !== null) {
+            if (savedMode === 'true') {
+                document.body.classList.add('dark-mode');
+                document.getElementById('themeBtn').textContent = "مۆدی ڕۆژ ☀️";
+            }
+        } else {
+            // مۆدی ئۆتۆماتیک: لە 6 ئێوارە تا 6 بەیانی = مۆدی شەو
+            if (hour >= 18 || hour < 6) {
+                document.body.classList.add('dark-mode');
+                document.getElementById('themeBtn').textContent = "مۆدی ڕۆژ ☀️";
+            }
+            // لە 6 بەیانی تا 6 ئێوارە = مۆدی ڕۆژ (default)
+        }
+    }
+
     window.onload = function() {
         fetchNews();
+        initVisitorCounter();
+        initAutoTheme();
     };
 </script>
 </body>
