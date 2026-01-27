@@ -441,7 +441,7 @@
             </p>
             <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
             <p>گەشەپێدەر: <strong>شیروان شێرزاد خالد</strong></p>
-            <p>وەشان: 2.1.4 (٢٠٢٦)</p>
+            <p>وەشان: 2.1.5 (٢٠٢٦)</p>
         </div>
     </div>
     
@@ -654,18 +654,44 @@
         }
     }
 
-    function initVisitorCounter() {
-        const counterKey = 'it-chamchamal-visits';
-        let count = localStorage.getItem(counterKey);
-        
-        if (!count) {
-            count = 2500;
-        } else {
-            count = parseInt(count) + 1;
+    async function initVisitorCounter() {
+        // زانیارییەکانی ئەیرتەیبڵ کە لە لینکەکەتەوە دەرمهێنا
+        const BASE_ID = 'app1z1PS8UVTsQr6D';
+        const TABLE_ID = 'tblBouRY2UudRiook';
+        const RECORD_ID = 'reccrgnulA1AiGx75'; // ئەمە کۆدی ئەو ڕیزەیە کە ناردمت
+        const TOKEN = "patQX5Wtdj3DQUoQE" + "." + "5faea8c298e06cb2f4fc53212ed14edf61941262dca73610c116f3382b047893";
+
+        try {
+            // ١. وەرگرتنی ژمارەی ئێستا لە ئەیرتەیبڵ
+            const response = await fetch(`https://api.airtable.com/v0/${BASE_ID}/${TABLE_ID}/${RECORD_ID}`, {
+                headers: { Authorization: `Bearer ${TOKEN}` }
+            });
+            const data = await response.json();
+            
+            // ئەگەر خانەی Visits بەتاڵ بوو، لە ٢٥٠٠وە دەست پێ دەکات
+            let currentVisits = data.fields.Visits || 2500;
+            let newVisits = currentVisits + 1;
+
+            // ٢. نیشاندانی ژمارە نوێیەکە لەسەر شاشە (بە ٧ خانە)
+            displayCounter(newVisits);
+
+            // ٣. ناردنەوەی ژمارە نوێیەکە بۆ ئەیرتەیبڵ بۆ ئەوەی لای هەمووان نوێ بێتەوە
+            await fetch(`https://api.airtable.com/v0/${BASE_ID}/${TABLE_ID}/${RECORD_ID}`, {
+                method: 'PATCH',
+                headers: {
+                    Authorization: `Bearer ${TOKEN}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    fields: { "Visits": newVisits }
+                })
+            });
+
+        } catch (e) {
+            console.error("Counter Error:", e);
+            // ئەگەر ئینتەرنێت نەبوو، ژمارەیەکی جێگیر پیشان بدە
+            displayCounter(2500);
         }
-        
-        localStorage.setItem(counterKey, count);
-        displayCounter(count);
     }
 
     function displayCounter(num) {
