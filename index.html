@@ -194,10 +194,13 @@
             animation: newsScroll 40s linear infinite;
             white-space: nowrap;
             direction: rtl;
+            /* ئەم دێڕەی خوارەوە بۆ ئایفۆن زیاد کراوە */
+            will-change: transform;
         }
 
         @keyframes newsScroll {
-            0%   { transform: translateX(100%); }
+            /* گۆڕینی 100% بۆ 100vw بۆ ئەوەی لە ئایفۆن دەرکەوێت */
+            0%   { transform: translateX(100vw); }
             100% { transform: translateX(-100%); }
         }
 
