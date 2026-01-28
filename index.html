@@ -244,7 +244,46 @@
             0% { transform: translateY(0); }
             100% { transform: translateY(-50%); } 
         } 
-    </style>
+  /* ستایلی نوێ بۆ دەوامەکان */
+.shift-selection {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.shift-btn {
+    padding: 15px 35px;
+    border: none;
+    border-radius: 20px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: 'Vazirmatn', sans-serif;
+    color: white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.shift-btn.morning {
+    background: linear-gradient(135deg, #f39c12, #e67e22);
+}
+
+.shift-btn.evening {
+    background: linear-gradient(135deg, #8e44ad, #9b59b6);
+}
+
+.shift-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+.shift-btn.active {
+    transform: scale(1.1);
+    border: 3px solid white;
+}
+  </style>
 </head>
 <body>
 
@@ -327,14 +366,25 @@
         </div>
     </div>
 
-    <div id="schedule-tab" class="semester-content">
-        <h3 style="text-align:center;">📅 خشتەی هەفتانە (جەدۆل)</h3>        
-        <div style="display: flex; gap: 8px; justify-content: center; margin-bottom: 15px; flex-wrap: wrap;">
-            <button class="tab-btn" style="background:#3498db;" onclick="setSem(1)">سمستەری ١</button>
-            <button class="tab-btn" style="background:#27ae60;" onclick="setSem(2)">سمستەری ٢</button>
-            <button class="tab-btn" style="background:#f39c12;" onclick="setSem(3)">سمستەری ٣</button>
-            <button class="tab-btn" style="background:#8e44ad;" onclick="setSem(4)">سمستەری ٤</button>
-        </div>
+<div id="schedule-tab" class="semester-content">
+    <h3 style="text-align:center;">📅 خشتەی هەفتانە (جەدۆل)</h3>
+    
+    <!-- بەشی هەڵبژاردنی دەوام: بەیانیان یان ئێوارن -->
+    <div class="shift-selection">
+        <button class="shift-btn morning" onclick="selectShift('morning')">
+            ☀️ دەوامی بەیانیان
+        </button>
+        <button class="shift-btn evening active" onclick="selectShift('evening')">
+            🌙 دەوامی ئێوارن
+        </button>
+    </div>
+    
+    <div style="display: flex; gap: 8px; justify-content: center; margin-bottom: 15px; flex-wrap: wrap;">
+        <button class="tab-btn" style="background:#3498db;" onclick="setSem(1)">سمستەری ١</button>
+        <button class="tab-btn" style="background:#27ae60;" onclick="setSem(2)">سمستەری ٢</button>
+        <button class="tab-btn" style="background:#f39c12;" onclick="setSem(3)">سمستەری ٣</button>
+        <button class="tab-btn" style="background:#8e44ad;" onclick="setSem(4)">سمستەری ٤</button>
+    </div>
         <div id="group-selection" style="display: none; gap: 15px; justify-content: center; margin-bottom: 25px;">
             <button class="tab-btn" style="background:linear-gradient(135deg, #3498db, #2980b9);" onclick="selectGroup('A')">Group A 🔵</button>
             <button class="tab-btn" style="background:linear-gradient(135deg, #27ae60, #219150);" onclick="selectGroup('B')">Group B 🟢</button>
@@ -524,7 +574,7 @@
             </p>
             <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
             <p>گەشەپێدەر: <strong>شیروان شێرزاد خالد</strong></p>
-            <p>وەشان: 2.1.4 (٢٠٢٦)</p>
+            <p>وەشان: 2.2.1 (٢٠٢٦)</p>
         </div>
     </div>
     
@@ -571,9 +621,10 @@
 <script>
     const TELEGRAM_USERNAME = "sherwan25"; 
     let currentSem = 1;
+    let currentShift = 'evening'; // دەوامی سەرەتایی ئێوارانە
 
     // --- بەشی نوێ: نوێکردنەوەی ئۆتۆماتیکی ئەپ و شکاندنی کاش ---
-    const APP_VERSION = "1.5"; // هەر کاتێک گۆڕانکاریت کرد ئەم ژمارەیە زیاد بکە (بۆ نموونە بیکە 1.3)
+    const APP_VERSION = "1.6"; // هەر کاتێک گۆڕانکاریت کرد ئەم ژمارەیە زیاد بکە
 
     function checkUpdate() {
         if ('serviceWorker' in navigator) {
@@ -621,33 +672,96 @@
         localStorage.setItem('darkMode', isDark);
     }
 
+    // فانکشنی نوێ بۆ هەڵبژاردنی دەوام
+    function selectShift(shift) {
+        currentShift = shift;
+        
+        // گۆڕینی ستایلی دوکمەکان
+        const morningBtn = document.querySelector('.shift-btn.morning');
+        const eveningBtn = document.querySelector('.shift-btn.evening');
+        
+        morningBtn.classList.remove('active');
+        eveningBtn.classList.remove('active');
+        
+        if(shift === 'morning') {
+            morningBtn.classList.add('active');
+        } else {
+            eveningBtn.classList.add('active');
+        }
+        
+        // ڕیسێت کردنی بەشەکانی تر
+        document.getElementById('group-selection').style.display = 'none';
+        document.getElementById('group-display-title').style.display = 'none';
+        document.getElementById('daysArea').innerHTML = "";
+        document.getElementById('schedule-box').style.display = 'none';
+    }
+
+    // زانیاری خشتەکان بۆ هەردوو دەوام
     const scheduleData = {
-        1: {
-            'A': {
-                1: [["١", "Logic Design", "2:00", "م. پشتیوان + هەڵكەوت"], ["٢", "English", "4:00", "م. بەرهەم"], ["٣", "IT Fundamentals", "6:00", "م.عمر+هۆگر+امین"]],
-                2: [["١", "Mathematics", "2:00", "م. سۆران"], ["٢", "Logic Design", "4:00", "م. پشتیوان"], ["٣", "IT Fundamentals", "6:00", "م. عمر"]],
-                3: [["١", "Kurdology", "2:00", "م. ڕێبین"], ["٢", "English", "4:00", "م. بەرهەم"], ["٣", "Kurdology", "6:00", "م. ڕێبین"]],
-                4: [["١", "IT Fundamentals", "2:00", "م. عمر"], ["٢", "IT Fundamentals", "4:00", "م. عمر+امین+هۆگر"]]
+        morning: {
+            1: {
+                'A': {
+                    // لێرە زانیاریەکانی دەوامی بەیانیان بۆ سمستەری ١ گرووپی A زیاد بکە
+                    // نموونە:
+                    // 1: [["١", "Logic Design", "8:00", "م. پشتیوان"], ["٢", "English", "10:00", "م. بەرهەم"]],
+                },
+                'B': {
+                    // لێرە زانیاریەکانی دەوامی بەیانیان بۆ سمستەری ١ گرووپی B زیاد بکە
+                }
             },
-            'B': {
-                1: [["١", "English", "2:00", "م. بەرهەم"], ["٢", "Logic Design", "4:00", "م. پشتیوان+هەڵكەوت"], ["٣", "IT Fundamentals", "6:00", "م.عمر+هۆگر+امین"]],
-                2: [["١", "Logic Design", "2:00", "م. پشتیوان"], ["١", "Mathematics", "4:00", "م. سۆران"], ["٣", "IT Fundamentals", "6:00", "م. عمر"]],
-                3: [["١", "English", "2:00", "م. بەرهەم"], ["٢", "Kurdology", "4:00", "م. ڕێبین"], ["٣", "Kurdology", "6:00", "م. ڕێبین"]],
-                4: [["١", "IT Fundamentals", "2:00", "م. عمر"], ["٢", "IT Fundamentals", "4:00", "م. عمر+امین+هۆگر"]]
+            2: {
+                'A': {
+                    // لێرە زانیاریەکانی دەوامی بەیانیان بۆ سمستەری ٢ گرووپی A زیاد بکە
+                },
+                'B': {
+                    // لێرە زانیاریەکانی دەوامی بەیانیان بۆ سمستەری ٢ گرووپی B زیاد بکە
+                }
+            },
+            3: {
+                'A': {
+                    // لێرە زانیاریەکانی دەوامی بەیانیان بۆ سمستەری ٣ گرووپی A زیاد بکە
+                },
+                'B': {
+                    // لێرە زانیاریەکانی دەوامی بەیانیان بۆ سمستەری ٣ گرووپی B زیاد بکە
+                }
+            },
+            4: {
+                'A': {
+                    // لێرە زانیاریەکانی دەوامی بەیانیان بۆ سمستەری ٤ گرووپی A زیاد بکە
+                },
+                'B': {
+                    // لێرە زانیاریەکانی دەوامی بەیانیان بۆ سمستەری ٤ گرووپی B زیاد بکە
+                }
             }
         },
-        3: {
-            'A': {
-                1: [["١", "Web Programming", "2:00", "م. زانیار"], ["٢", "O.O.P", "4:00", "م. علی"]],
-                2: [["١", "Database Management", "2:00", "م. محمد + امین"], ["٢", "Web Programming", "4:00", "م. زانیار + گۆران"]],
-                3: [["١", "Database", "2:00", "م. محمد"], ["٢", "O.O.P", "4:00", "م. علی + هۆگر + سامان"]],
-                4: [["١", "Operating System", "2:00", "م. ڕێبین"], ["٢", "Computer Network II", "4:00", "م. هەڵۆ"]]
+        evening: {
+            1: {
+                'A': {
+                    1: [["١", "Logic Design", "2:00", "م. پشتیوان + هەڵكەوت"], ["٢", "English", "4:00", "م. بەرهەم"], ["٣", "IT Fundamentals", "6:00", "م.عمر+هۆگر+امین"]],
+                    2: [["١", "Mathematics", "2:00", "م. سۆران"], ["٢", "Logic Design", "4:00", "م. پشتیوان"], ["٣", "IT Fundamentals", "6:00", "م. عمر"]],
+                    3: [["١", "Kurdology", "2:00", "م. ڕێبین"], ["٢", "English", "4:00", "م. بەرهەم"], ["٣", "Kurdology", "6:00", "م. ڕێبین"]],
+                    4: [["١", "IT Fundamentals", "2:00", "م. عمر"], ["٢", "IT Fundamentals", "4:00", "م. عمر+امین+هۆگر"]]
+                },
+                'B': {
+                    1: [["١", "English", "2:00", "م. بەرهەم"], ["٢", "Logic Design", "4:00", "م. پشتیوان+هەڵكەوت"], ["٣", "IT Fundamentals", "6:00", "م.عمر+هۆگر+امین"]],
+                    2: [["١", "Logic Design", "2:00", "م. پشتیوان"], ["٢", "Mathematics", "4:00", "م. سۆران"], ["٣", "IT Fundamentals", "6:00", "م. عمر"]],
+                    3: [["١", "English", "2:00", "م. بەرهەم"], ["٢", "Kurdology", "4:00", "م. ڕێبین"], ["٣", "Kurdology", "6:00", "م. ڕێبین"]],
+                    4: [["١", "IT Fundamentals", "2:00", "م. عمر"], ["٢", "IT Fundamentals", "4:00", "م. عمر+امین+هۆگر"]]
+                }
             },
-            'B': {
-                1: [["١", "Web Programming", "2:00", "م. زانیار"], ["٢", "O.O.P", "4:00", "م. علی"]],
-                2: [["١", "Database Management", "2:00", "م. محمد + امین"], ["٢", "Web Programming", "4:00", "م. زانیار + گۆران"]],
-                3: [["١", "Database", "2:00", "م. محمد"], ["٢", "O.O.P", "4:00", "م. علی + هۆگر + سامان"]],
-                4: [["١", "Operating System", "2:00", "م. ڕێبین"], ["٢", "Computer Network II", "4:00", "م. هەڵۆ"]]
+            3: {
+                'A': {
+                    1: [["١", "Web Programming", "2:00", "م. زانیار"], ["٢", "O.O.P", "4:00", "م. علی"]],
+                    2: [["١", "Database Management", "2:00", "م. محمد + امین"], ["٢", "Web Programming", "4:00", "م. زانیار + گۆران"]],
+                    3: [["١", "Database", "2:00", "م. محمد"], ["٢", "O.O.P", "4:00", "م. علی + هۆگر + سامان"]],
+                    4: [["١", "Operating System", "2:00", "م. ڕێبین"], ["٢", "Computer Network II", "4:00", "م. هەڵۆ"]]
+                },
+                'B': {
+                    1: [["١", "Web Programming", "2:00", "م. زانیار"], ["٢", "O.O.P", "4:00", "م. علی"]],
+                    2: [["١", "Database Management", "2:00", "م. محمد + امین"], ["٢", "Web Programming", "4:00", "م. زانیار + گۆران"]],
+                    3: [["١", "Database", "2:00", "م. محمد"], ["٢", "O.O.P", "4:00", "م. علی + هۆگر + سامان"]],
+                    4: [["١", "Operating System", "2:00", "م. ڕێبین"], ["٢", "Computer Network II", "4:00", "م. هەڵۆ"]]
+                }
             }
         }
     };
@@ -656,16 +770,22 @@
         currentSem = s;
         document.getElementById('group-selection').style.display = 'flex';
         document.getElementById('group-display-title').style.display = 'block';
-        document.getElementById('group-display-title').innerHTML = `سمستەری ${s} - <span style="color:#e67e22">گروپ هەڵبژێرە</span>`;
+        
+        const shiftText = currentShift === 'morning' ? 'بەیانیان' : 'ئێوارن';
+        document.getElementById('group-display-title').innerHTML = `سمستەری ${s} - دەوامی ${shiftText} - <span style="color:#e67e22">گروپ هەڵبژێرە</span>`;
+        
         document.getElementById('daysArea').innerHTML = "";
         document.getElementById('schedule-box').style.display = 'none';
     }
 
     function selectGroup(g) {
         const color = (g === 'A') ? '#3498db' : '#27ae60';
+        const shiftText = currentShift === 'morning' ? 'بەیانیان' : 'ئێوارن';
         const titleElement = document.getElementById('group-display-title');
         const daysArea = document.getElementById('daysArea');
-        if (titleElement) titleElement.innerHTML = `سمستەری ${currentSem} - <span style="color:${color}">گروپی ${g}</span>`;
+        
+        if (titleElement) titleElement.innerHTML = `سمستەری ${currentSem} - دەوامی ${shiftText} - <span style="color:${color}">گروپی ${g}</span>`;
+        
         if (daysArea) {
             daysArea.innerHTML = `
                 <button class="tab-btn" style="background:#8e44ad; margin:2px;" onclick="selectDay('${g}', 1, 'یەکشەممە')">یەکشەممە</button>
@@ -677,18 +797,26 @@
 
     function selectDay(g, d, dayName) {
         const color = (g === 'A') ? '#3498db' : '#27ae60';
+        const shiftText = currentShift === 'morning' ? 'بەیانیان' : 'ئێوارن';
         const titleElement = document.getElementById('group-display-title');
-        if (titleElement) titleElement.innerHTML = `سمستەری ${currentSem} - <span style="color:${color}">گروپی ${g}</span> - ${dayName}`;
+        
+        if (titleElement) titleElement.innerHTML = `سمستەری ${currentSem} - دەوامی ${shiftText} - <span style="color:${color}">گروپی ${g}</span> - ${dayName}`;
+        
         const body = document.getElementById('schedule-body');
         if (!body) return;
         body.innerHTML = '';
+        
         const subjectColors = { 
             'Logic Design': '#e74c3c', 'English': '#3498db', 'IT Fundamentals': '#2ecc71', 'Mathematics': '#f39c12',
             'Kurdology': '#9b59b6', 'Web Programming': '#1abc9c', 'O.O.P': '#34495e', 'Database Management': '#e67e22',
             'Database': '#e67e22', 'Operating System': '#e74c3c', 'Computer Network II': '#2980b9'
         };
-        if (scheduleData[currentSem] && scheduleData[currentSem][g] && scheduleData[currentSem][g][d]) {
-            scheduleData[currentSem][g][d].forEach(r => {
+        
+        // وەرگرتنی زانیاری لە scheduleData بەپێی دەوام
+        if (scheduleData[currentShift] && scheduleData[currentShift][currentSem] && 
+            scheduleData[currentShift][currentSem][g] && scheduleData[currentShift][currentSem][g][d]) {
+            
+            scheduleData[currentShift][currentSem][g][d].forEach(r => {
                 const sColor = subjectColors[r[1]] || '#00a8ff'; 
                 body.innerHTML += `<tr>
                     <td style="font-weight:bold;">${r[0]}</td>
@@ -814,14 +942,13 @@
         fetchNews();
         initVisitorCounter();
         initAutoTheme();
-        checkUpdate(); // پشکنینی نوێکاری لەکاتی کردنەوە
+        checkUpdate();
     };
 
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', function() {
             navigator.serviceWorker.register('sw.js').then(function(registration) {
                 console.log('Service Worker Registered');
-                // پشکنین بۆ ئەپدەیت کاتێک Service Worker دەدۆزرێتەوە
                 if (registration.waiting) {
                     registration.waiting.postMessage({ type: 'SKIP_WAITING' });
                     window.location.reload();
@@ -831,7 +958,6 @@
             });
         });
 
-        // ئەگەر وەشانی نوێ جێگیر بوو، ڕاستەوخۆ لاپەڕەکە نوێ بکەرەوە
         navigator.serviceWorker.addEventListener('controllerchange', () => {
             window.location.reload();
         });
