@@ -198,11 +198,20 @@
             will-change: transform;
         }
 
-        @keyframes newsScroll {
-            /* گۆڕینی 100% بۆ 100vw بۆ ئەوەی لە ئایفۆن دەرکەوێت */
-            0%   { transform: translateX(100vw); }
-            100% { transform: translateX(-100%); }
-        }
+      @keyframes newsScroll {
+    0%   { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+}
+
+.news-marquee {
+    display: inline-block;
+    animation: newsScroll 40s linear infinite;
+    -webkit-animation: newsScroll 40s linear infinite; /* بۆ ئایفۆن */
+    white-space: nowrap;
+    direction: rtl;
+    will-change: transform;
+    -webkit-transform: translate3d(0, 0, 0); /* نەرمکردنی جوڵە */
+}
 
         .news-marquee:hover {
             animation-play-state: paused;
@@ -574,7 +583,7 @@
             </p>
             <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
             <p>گەشەپێدەر: <strong>شیروان شێرزاد خالد</strong></p>
-            <p>وەشان: 2.2.1 (٢٠٢٦)</p>
+            <p>وەشان: 2.1.4 (٢٠٢٦)</p>
         </div>
     </div>
     
