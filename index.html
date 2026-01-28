@@ -66,8 +66,7 @@
             padding: 30px 20px;
             text-align: center;
             box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
+            position: relative; /* گۆڕدرا بۆ ڕێلاتیڤ بۆ ئەوەی جێگیر نەمێنێت */
             z-index: 1000;
         }
 
@@ -102,8 +101,9 @@
 
         .tabs { 
             display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;
+            position: -webkit-sticky; /* بۆ پشتگیری سەفاری */
             position: sticky;
-            top: 135px; 
+            top: 0; /* لێرەدا دەچەسپێت بە سەقفی شاشەکەوە */
             z-index: 999;
             background-color: var(--background);
             padding: 15px 0;
@@ -570,7 +570,7 @@
     let currentSem = 1;
 
     // --- بەشی نوێ: نوێکردنەوەی ئۆتۆماتیکی ئەپ و شکاندنی کاش ---
-    const APP_VERSION = "1.4"; // هەر کاتێک گۆڕانکاریت کرد ئەم ژمارەیە زیاد بکە (بۆ نموونە بیکە 1.3)
+    const APP_VERSION = "1.5"; // هەر کاتێک گۆڕانکاریت کرد ئەم ژمارەیە زیاد بکە (بۆ نموونە بیکە 1.3)
 
     function checkUpdate() {
         if ('serviceWorker' in navigator) {
