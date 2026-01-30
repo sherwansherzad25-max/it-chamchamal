@@ -334,18 +334,18 @@
 
 <div class="main-container">
     
-    <div class="sticky-news-wrapper">
-        <div style="display: flex; align-items: center; justify-content: center; direction: rtl;">
-            <div style="background: #c0392b; color: white; padding: 5px 12px; border-radius: 8px 8px 8px 8px; font-weight: bold; font-size: 0.9rem; margin-left: 10px; white-space: nowrap; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
-                🚨 ئاگاداری
-            </div>
-            <div style="background: var(--white); border: 2px solid #c0392b; border-radius: 12px; overflow: hidden; white-space: nowrap; box-shadow: 0 4px 10px rgba(0,0,0,0.1); padding: 12px 0; width: 100%;">
-                <div id="news-list" class="news-marquee">
-                    چاوەڕێ بکە... دوایین هەواڵەکان بار دەکرێن...
-                </div>
+<div class="sticky-news-wrapper">
+    <div style="display: flex; flex-direction: column; align-items: flex-start; direction: rtl; width: 100%;">
+        <div style="background: #c0392b; color: white; padding: 2px 15px; border-radius: 10px 10px 0 0; font-weight: bold; font-size: 0.85rem; width: fit-content; box-shadow: 0 -2px 5px rgba(0,0,0,0.1); margin-right: 5px;">
+            🚨 ئاگاداری گرنگ
+        </div>
+        <div style="background: var(--white); border: 2px solid #c0392b; border-radius: 0 12px 12px 12px; overflow: hidden; position: relative; box-shadow: 0 4px 10px rgba(0,0,0,0.1); padding: 10px 0; width: 100%; height: 25px;">
+            <div id="news-list" style="position: absolute; white-space: nowrap; right: 0; font-weight: bold; color: var(--text-color); font-size: 0.95rem; will-change: transform;">
+                چاوەڕێ بکە... دوایین هەواڵەکان بار دەکرێن...
             </div>
         </div>
     </div>
+</div>
 
     <div class="tabs">
         <button class="tab-btn active" onclick="showTab(event, 'home-tab')">🏠 سەرەکی</button>
@@ -583,7 +583,7 @@
         </p>
         <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
         <p>گەشەپێدەر: <strong>شیروان شێرزاد خالد</strong></p>
-        <p>وەشان: 2.1.4 (٢٠٢٦)</p>
+        <p>وەشان: 2.2.4 (٢٠٢٦)</p>
     </div>
 </div>
 
@@ -623,7 +623,7 @@
     const TELEGRAM_USERNAME = "sherwan25"; 
     let currentSem = 1;
     let currentShift = 'evening'; 
-    const APP_VERSION = "2.7"; 
+    const APP_VERSION = "2.2.4"; 
 
     const part1 = "patQX5Wtdj3DQUoQE.";
     const part2 = "5faea8c298e06cb2f4fc53212ed14edf61941262dca73610c116f3382b047893";
