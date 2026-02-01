@@ -2,9 +2,31 @@
 <html lang="ku" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="KRUnPZNhg3NP-_UojaPqUmyg0Nl_naNcoGN3c3upo-4" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="ئایتی IT">
+
+    <meta name="description" content="سایتی فەرمی بەشی IT پەیمانگای تەکنیکی چەمچەماڵ">
+    <meta name="keywords" content="IT Chamchamal, بەشی ئایتی چەمچەماڵ">
+    <meta name="author" content="Sherwan Sherzad">
+    
+    <meta property="og:title" content="بەشی IT | پەیمانگای تەکنیکی چەمچەماڵ">
+    <meta property="og:url" content="https://sherwansherzad25-max.github.io/it-chamchamal/">
     <title>بەشی IT پەیمانگای تەکنیکی چەمچەماڵ</title>
+
+    <link rel="icon" type="image/png" sizes="192x192" href="it-icon-final-192.png?v=5">
+    <link rel="apple-touch-icon" sizes="180x180" href="it-icon-final-180.png?v=5">
+    <link rel="manifest" href="manifest.json?v=5">
     <meta name="theme-color" content="#27ae60">
+
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Changa:wght@800&display=swap" rel="stylesheet">
 
@@ -39,6 +61,7 @@
             text-align: right;
             background-image: url('https://upload.wikimedia.org/wikipedia/commons/6/63/Chamchamal_city.jpg'); 
             background-size: cover; background-position: center; background-attachment: fixed;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body::before {
@@ -136,18 +159,27 @@
         .tab-btn:hover { transform: translateY(-5px); filter: brightness(1.1); }
         .tab-btn.active { background-color: var(--secondary); transform: scale(1.05); border: 2px solid white; }
 
-        /* --- Scroller (Blue Box) --- */
+        /* --- Scroller (Blue Box) - Fixed for Mobile --- */
         .scrolling-container { 
             height: 450px; overflow: hidden; position: relative; border-radius: 25px;
             background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #6a11cb 100%);
         }
         .scrolling-content { display: block; width: 100%; padding-top: 50px; animation: continuousScroll 45s linear infinite; }
         .scrolling-container:hover .scrolling-content { animation-play-state: paused; }
+        
+        /* Adjust for Mobile to prevent cutting off text */
+        @media screen and (max-width: 768px) {
+            .scrolling-container { height: 500px; /* Taller for mobile */ }
+            .scrolling-content { animation-duration: 55s; /* Slower for readability */ }
+            .scroll-item h2 { font-size: 1.5rem !important; }
+            .scroll-item p { font-size: 1.1rem !important; }
+        }
+
         .scroll-item { text-align: center; width: 100%; box-sizing: border-box; padding: 0 20px; margin-bottom: 100px; }
         @keyframes continuousScroll { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
         .highlight-menu-word { color: #f1c40f; background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 6px; border: 2px dashed #f1c40f; }
 
-        /* --- GPA Styles --- */
+        /* --- GPA Styles - Fixed Visibility --- */
         .accordion {
             background-color: var(--white); color: var(--text-color); cursor: pointer; padding: 15px; width: 100%; border: none; 
             text-align: right; outline: none; font-size: 1rem; transition: 0.4s; border-radius: 12px; margin-bottom: 10px; 
@@ -155,7 +187,12 @@
         }
         .active-accordion, .accordion:hover { background-color: #f9f9f9; }
         body.dark-mode .active-accordion { background-color: #333; }
-        .panel { padding: 0 15px; background-color: var(--white); max-height: 0; overflow: hidden; transition: max-height 0.2s ease-out; margin-bottom: 10px; }
+        
+        /* Fixed: Ensure overflow doesn't hide results */
+        .panel { 
+            padding: 0 15px; background-color: var(--white); max-height: 0; overflow: hidden; 
+            transition: max-height 0.3s ease-out; margin-bottom: 10px; 
+        }
         .gpa-input-row { display: flex; justify-content: space-between; margin: 8px 0; align-items: center; border-bottom: 1px dashed #eee; padding-bottom: 5px; }
         .gpa-input-row input { width: 60px; padding: 6px; border-radius: 8px; border: 1px solid #ccc; text-align: center; background: var(--background); color: var(--text-color); }
         .subject-badge { color: white; padding: 5px 12px; border-radius: 20px; font-size: 0.95rem; font-weight: bold; display: inline-block; }
@@ -168,7 +205,7 @@
         .timer-row { display: flex; justify-content: center; gap: 10px; margin-top: 10px; direction: ltr; }
         .timer-box { background: rgba(0,0,0,0.3); padding: 5px 10px; border-radius: 8px; font-size: 1.5rem; font-weight: 900; font-family: monospace; min-width: 40px; }
 
-        /* --- OLD STYLES FOR SCHEDULE/SEMESTERS (From your provided code) --- */
+        /* --- OLD STYLES FOR SCHEDULE/SEMESTERS (Untouched) --- */
         .shift-selection { display: flex; gap: 15px; justify-content: center; margin-bottom: 25px; flex-wrap: wrap; }
         .shift-btn { 
             padding: 15px 35px; border: none; border-radius: 20px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: all 0.3s; 
@@ -294,7 +331,7 @@
                         <p style="font-size: 1.1rem; margin-top: 15px; color: #e0e0e0;">
                             <b>بەشی زمان:</b> دەتوانیت جگە لە زمانی كوردی زمانی ئینگلیزی هەڵبژێریت<br>
                             <b>بەشی كاتی تاقیكردنەوە:</b> دەتوانیت لیرەوە كاتی تاقیكردنەوەكان بزانیت بە رۆژ و خولەك و كاتژمێر<br>
-                            <b>بەشی هەژماری نمرەكان:</b> دەتوانیت لیرە بۆ هەر بابەتێت نمرەكان كۆبكەیتەوە و ئەنجامەكەی بزانیت
+                            <b>بەشی كۆی نمرەكان:</b> دەتوانیت لیرە بۆ هەر بابەتێت نمرەكان كۆبكەیتەوە و ئەنجامەكەی بزانیت
                         </p>
                     </div>
                     <h3 style="color: #00d2ff; font-size: 1.6rem; margin-top: 25px; text-shadow: 1px 1px 3px rgba(0,0,0,0.2);">بەهیوای سەرکەوتن بۆ هەموو خوێندکاران</h3>
@@ -439,7 +476,7 @@
             </p>
             <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
             <p><span id="lang-dev">گەشەپێدەر:</span> <strong>شیروان شێرزاد خالد</strong></p>
-            <p><span id="lang-ver">وەشان:</span> 2.2.5 (٢٠٢٦)</p>
+            <p><span id="lang-ver">وەشان:</span> 2.2.6 (٢٠٢٦)</p>
         </div>
     </div>
 
@@ -480,7 +517,6 @@
     const part2 = "5faea8c298e06cb2f4fc53212ed14edf61941262dca73610c116f3382b047893";
     const FINAL_TOKEN = part1 + part2;
 
-    // Subjects & Colors for GPA
     const subjectList = {
         1: ["Logic Design", "IT Fundamentals", "Mathematics", "English", "Kurdology"],
         2: ["Database", "English II", "Network +", "Programming", "Web Design"],
@@ -493,147 +529,96 @@
         'Web Programming': '#3498db', 'O.O.P': '#9b59b6', 'Database Management': '#e67e22', 'Computer Network II': '#2ecc71', 'Operating System': '#e74c3c'
     };
     
-    // --- Combined Translations (New GPA + Old Schedule strings) ---
     const translations = {
         ku: {
             dept: "بەشی ئایتی", menu: "لیست", institute: "پەیمانگای تەکنیکی چەمچەماڵ", deptSub: "بەشی تەکنەلۆژیای زانیاری (IT)",
             home: "🏠 سەرەکی", schedule: "📅 خشتەی هەفتانە", semesters: "📚 سمستەرەکان", about: "ℹ️ دەربارە", contact: "📞 پەیوەندی (Telegram)",
-            setting: "زمان",
-            alert: "🚨 ئاگاداری گرنگ",
+            setting: "زمان", alert: "🚨 ئاگاداری گرنگ",
             welcomeTitle: "بەخێربێن خوێندکارانی ئازیزی بەشی تەکنەلۆژیای زانیاری (IT)",
             welcomeText: "ئەم وێبسایتە دروستکراوە بۆ ئەوەی تۆی خوێندکار لێی سوودمەند بیت و کارئاسانییەک بێت بۆ خوێندنی وانەکانی ڕۆژانەت بە كرتە كردن لەسەر \" لیست \" كە لە راستی بەشی سەرەوەی ویب سایتەكەدایە ئەم زانیاراینەی لای خوارەوەی تێدایە .",
-            semTitle: "بەشی سمستەرەکان:",
-            semDesc1: "١. بە کرتە کردن لەسەر مەلزەمەکان، هەموو مەلزەمەکانی وانەکەت دەست دەکەوێت.",
+            semTitle: "بەشی سمستەرەکان:", semDesc1: "١. بە کرتە کردن لەسەر مەلزەمەکان، هەموو مەلزەمەکانی وانەکەت دەست دەکەوێت.",
             semDesc2: "٢. بە کرتە کردن لەسەر بەشی پرسیار، پرسیاری ساڵانی ڕابردووت دەست دەکەوێت بۆ بەرچاوڕوونی خوێندکار.",
             semDesc3: "٣. بە کرتە کردن لەسەر بەشی فێرکاری، دەتباتە ناو پلەی لیستی یوتیوب و فێرکاری ئەو بابەتە.",
-            schTitle: "بەشی خشتەی هەفتانە:",
-            schDesc: "خشتەی وانەکانی ڕۆژانەی هەردوو دەوامی بەیانیان و ئێوارنی تێدایە بۆ هەردوو گرووپ  بەشێوەیەکی زۆر جوان ڕوونکراوەتەوە.",
-            wish: "بەهیوای سەرکەوتن بۆ هەموو خوێندکاران",
-            thanks: "سوپاس بۆ هەردوو خوێندکار", and: "و", helpers: "کە هاوکار بوون لە دروستکردنی ئەم وێبسایتەدا",
+            schTitle: "بەشی خشتەی هەفتانە:", schDesc: "خشتەی وانەکانی ڕۆژانەی هەردوو دەوامی بەیانیان و ئێوارنی تێدایە بۆ هەردوو گرووپ  بەشێوەیەکی زۆر جوان ڕوونکراوەتەوە.",
+            wish: "بەهیوای سەرکەوتن بۆ هەموو خوێندکاران", thanks: "سوپاس بۆ هەردوو خوێندکار", and: "و", helpers: "کە هاوکار بوون لە دروستکردنی ئەم وێبسایتەدا",
             schedHeader: "📅 خشتەی هەفتانە (جەدۆل)", morning: "☀️ دەوامی بەیانیان", evening: "🌙 دەوامی ئێوارن",
             semBtn1: "سمستەری ١", semBtn2: "سمستەری ٢", semBtn3: "سمستەری ٣", semBtn4: "سمستەری ٤",
             tblNo: "ژمارە", tblSub: "بابەت", tblTime: "کات", tblTeacher: "مامۆستا",
             chooseSem: "هەڵبژاردنی سمستەر", cardSem1: "📚 سمستەری یەکەم", cardSem2: "📚 سمستەری دووەم", cardSem3: "📚 سمستەری سێیەم", cardSem4: "📚 سمستەری چوارەم",
             aboutTitle: "دەربارەی پڕۆژە", aboutText: "ئەم پڕۆژەیە هەوڵێکی تایبەتە بۆ کۆکردنەوەی هەموو پێداویستییەکانی خوێندکارانی بەشی تەکنەلۆژیای زانیاری (IT) لە پەیمانگای تەکنیکی چەمچەماڵ. ئامانجی سەرەکی ئاسانکارییە بۆ گەیشتن بە زانیارییەکان بە خێراترین کات.",
-            dev: "گەشەپێدەر:", ver: "وەشان:", scan: "سکان بۆ هاوبەشکردن",
-            created: "دروستکراوە لەلایەن خوێندکار:", footerHope: "بە هیوای سود گەیاندن بە هەموو خوێندكارانی بەشی ئایتی", copy: "بەردەوام لە نوێ كردنەوەدایە", visits: "📊 ژمارەی سەردانەکان",
-            thSub: "ناوی وانە", thLec: "مەلزەمە", thQs: "پرسیار", thTut: "فێركاری",
-            btnDl: "داگرتن", btnView: "بینین", btnVid: "🎥 ڤیدیۆ",
-            menuExam: "⏳ کاتی تاقیکردنەوە", menuGpa: "🧮 هەژمارکردنی نمرە",
-            examHeader: "⏳ کاتی ماوە بۆ تاقیکردنەوەکان",
-            gpaHeader: "🧮 هەژمارکردنی نمرەکان"
+            dev: "گەشەپێدەر:", ver: "وەشان:", scan: "سکان بۆ هاوبەشکردن", created: "دروستکراوە لەلایەن خوێندکار:", footerHope: "بە هیوای سود گەیاندن بە هەموو خوێندكارانی بەشی ئایتی", copy: "بەردەوام لە نوێ كردنەوەدایە", visits: "📊 ژمارەی سەردانەکان",
+            thSub: "ناوی وانە", thLec: "مەلزەمە", thQs: "پرسیار", thTut: "فێركاری", btnDl: "داگرتن", btnView: "بینین", btnVid: "🎥 ڤیدیۆ",
+            menuExam: "⏳ کاتی تاقیکردنەوە", menuGpa: "🧮 هەژمارکردنی نمرە", examHeader: "⏳ کاتی ماوە بۆ تاقیکردنەوەکان", gpaHeader: "🧮 هەژمارکردنی نمرەکان"
         },
         en: {
             dept: "IT Department", menu: "Menu", institute: "Chamchamal Technical Institute", deptSub: "Information Technology (IT) Dept.",
-            home: "🏠 Home", schedule: "📅 Weekly Schedule", semesters: "📚 Semesters", about: "ℹ️ About", contact: "📞 Contact (Telegram)",
-            setting: "Language",
-            alert: "🚨 Important Notice",
+            home: "🏠 Home", schedule: "📅 Weekly Schedule", semesters: "📚 Semesters", about: "ℹ️ About", contact: "📞 Contact (Telegram)", setting: "Language", alert: "🚨 Important Notice",
             welcomeTitle: "Welcome dear students of Information Technology (IT)",
             welcomeText: "This website is designed to assist you in your daily studies. By clicking 'Menu' on the top right, you can access:",
-            semTitle: "Semesters Section:",
-            semDesc1: "1. Click on Lecture Notes to download course materials.",
-            semDesc2: "2. Click on Questions to see past year exam questions.",
-            semDesc3: "3. Click on Tutorials to watch YouTube playlists for subjects.",
-            schTitle: "Weekly Schedule:",
-            schDesc: "Contains daily schedules for both Morning and Evening shifts, clearly organized for both groups.",
-            wish: "Wishing success to all students",
-            thanks: "Special thanks to students", and: "and", helpers: "for their assistance in creating this website",
+            semTitle: "Semesters Section:", semDesc1: "1. Click on Lecture Notes to download course materials.",
+            semDesc2: "2. Click on Questions to see past year exam questions.", semDesc3: "3. Click on Tutorials to watch YouTube playlists for subjects.",
+            schTitle: "Weekly Schedule:", schDesc: "Contains daily schedules for both Morning and Evening shifts, clearly organized for both groups.",
+            wish: "Wishing success to all students", thanks: "Special thanks to students", and: "and", helpers: "for their assistance in creating this website",
             schedHeader: "📅 Weekly Schedule", morning: "☀️ Morning Shift", evening: "🌙 Evening Shift",
             semBtn1: "Semester 1", semBtn2: "Semester 2", semBtn3: "Semester 3", semBtn4: "Semester 4",
             tblNo: "No", tblSub: "Subject", tblTime: "Time", tblTeacher: "Teacher",
             chooseSem: "Select Semester", cardSem1: "📚 Semester 1", cardSem2: "📚 Semester 2", cardSem3: "📚 Semester 3", cardSem4: "📚 Semester 4",
             aboutTitle: "About Project", aboutText: "This project is a dedicated effort to gather all study resources for IT students at Chamchamal Technical Institute. The main goal is to provide quick access to information.",
-            dev: "Developer:", ver: "Version:", scan: "Scan to Share",
-            created: "Created by student:", footerHope: "Hoping to benefit all IT students", copy: "Continuously updated", visits: "📊 Total Visits",
-            thSub: "Subject", thLec: "Notes", thQs: "Questions", thTut: "Tutorials",
-            btnDl: "Download", btnView: "View", btnVid: "🎥 Video",
-            menuExam: "⏳ Exam Timer", menuGpa: "🧮 GPA Calculator",
-            examHeader: "⏳ Time Remaining for Exams",
-            gpaHeader: "🧮 Grade Calculation"
+            dev: "Developer:", ver: "Version:", scan: "Scan to Share", created: "Created by student:", footerHope: "Hoping to benefit all IT students", copy: "Continuously updated", visits: "📊 Total Visits",
+            thSub: "Subject", thLec: "Notes", thQs: "Questions", thTut: "Tutorials", btnDl: "Download", btnView: "View", btnVid: "🎥 Video",
+            menuExam: "⏳ Exam Timer", menuGpa: "🧮 GPA Calculator", examHeader: "⏳ Time Remaining for Exams", gpaHeader: "🧮 Grade Calculation"
         }
     };
 
     function toggleLanguage(lang) {
         currentLang = lang;
         const t = translations[lang];
-        
-        if (lang === 'en') {
-            document.body.classList.add('lang-en');
-            document.documentElement.dir = "ltr";
-        } else {
-            document.body.classList.remove('lang-en');
-            document.documentElement.dir = "rtl";
-        }
-
+        if (lang === 'en') { document.body.classList.add('lang-en'); document.documentElement.dir = "ltr"; } 
+        else { document.body.classList.remove('lang-en'); document.documentElement.dir = "rtl"; }
         const map = {
             'lang-dept': t.dept, 'lang-menu': t.menu, 'lang-institute': t.institute, 'lang-dept-sub': t.deptSub,
             'lang-home': t.home, 'lang-schedule': t.schedule, 'lang-semesters': t.semesters, 'lang-about': t.about, 'lang-contact': t.contact,
-            'lang-setting': t.setting,
-            'lang-alert': t.alert,
-            'lang-tab-home': t.home, 'lang-tab-schedule': t.schedule, 'lang-tab-semesters': t.semesters, 'lang-tab-about': t.about,
+            'lang-setting': t.setting, 'lang-alert': t.alert, 'lang-tab-home': t.home, 'lang-tab-schedule': t.schedule, 'lang-tab-semesters': t.semesters, 'lang-tab-about': t.about,
             'lang-welcome-title': t.welcomeTitle, 
             'lang-welcome-text': t.welcomeText.replace('" لیست "', '<span class="highlight-menu-word">" لیست "</span>').replace('"Menu"', '<span class="highlight-menu-word">"Menu"</span>'),
             'lang-sem-title': t.semTitle, 'lang-sem-desc1': t.semDesc1, 'lang-sem-desc2': t.semDesc2, 'lang-sem-desc3': t.semDesc3,
-            'lang-sch-title': t.schTitle, 'lang-sch-desc': t.schDesc,
-            'lang-wish': t.wish, 'lang-thanks': t.thanks, 'lang-and': t.and, 'lang-helpers': t.helpers,
+            'lang-sch-title': t.schTitle, 'lang-sch-desc': t.schDesc, 'lang-wish': t.wish, 'lang-thanks': t.thanks, 'lang-and': t.and, 'lang-helpers': t.helpers,
             'lang-sched-header': t.schedHeader, 'lang-morning': t.morning, 'lang-evening': t.evening,
             'lang-sem-btn1': t.semBtn1, 'lang-sem-btn2': t.semBtn2, 'lang-sem-btn3': t.semBtn3, 'lang-sem-btn4': t.semBtn4,
             'lang-tbl-no': t.tblNo, 'lang-tbl-sub': t.tblSub, 'lang-tbl-time': t.tblTime, 'lang-tbl-teacher': t.tblTeacher,
             'lang-choose-sem': t.chooseSem, 'lang-card-sem1': t.cardSem1, 'lang-card-sem2': t.cardSem2, 'lang-card-sem3': t.cardSem3, 'lang-card-sem4': t.cardSem4,
             'lang-about-title': t.aboutTitle, 'lang-about-text': t.aboutText, 'lang-dev': t.dev, 'lang-ver': t.ver, 'lang-scan': t.scan,
             'lang-created': t.created, 'lang-footer-hope': t.footerHope, 'lang-copy': t.copy, 'lang-visits': t.visits,
-            'lang-menu-exam': t.menuExam, 'lang-menu-gpa': t.menuGpa,
-            'lang-exam-header': t.examHeader, 'lang-gpa-header': t.gpaHeader
+            'lang-menu-exam': t.menuExam, 'lang-menu-gpa': t.menuGpa, 'lang-exam-header': t.examHeader, 'lang-gpa-header': t.gpaHeader
         };
-
-        for (let id in map) {
-            let el = document.getElementById(id);
-            if (el) {
-                if(id === 'lang-welcome-text') {
-                    el.innerHTML = map[id];
-                } else {
-                    el.innerText = map[id];
-                }
-            }
-        }
-
-        document.querySelectorAll('.th-sub').forEach(e => e.innerText = t.thSub);
-        document.querySelectorAll('.th-lec').forEach(e => e.innerText = t.thLec);
-        document.querySelectorAll('.th-qs').forEach(e => e.innerText = t.thQs);
-        document.querySelectorAll('.th-tut').forEach(e => e.innerText = t.thTut);
-        document.querySelectorAll('.btn-dl').forEach(e => e.innerText = t.btnDl);
-        document.querySelectorAll('.btn-view').forEach(e => e.innerText = t.btnView);
+        for (let id in map) { let el = document.getElementById(id); if (el) { if(id === 'lang-welcome-text') { el.innerHTML = map[id]; } else { el.innerText = map[id]; } } }
+        document.querySelectorAll('.th-sub').forEach(e => e.innerText = t.thSub); document.querySelectorAll('.th-lec').forEach(e => e.innerText = t.thLec);
+        document.querySelectorAll('.th-qs').forEach(e => e.innerText = t.thQs); document.querySelectorAll('.th-tut').forEach(e => e.innerText = t.thTut);
+        document.querySelectorAll('.btn-dl').forEach(e => e.innerText = t.btnDl); document.querySelectorAll('.btn-view').forEach(e => e.innerText = t.btnView);
         document.querySelectorAll('.btn-vid').forEach(e => e.innerText = t.btnVid);
-
         closeNav();
     }
     
     function toggleLangMenu() {
-        const menu = document.getElementById('lang-options');
-        const arrow = document.getElementById('lang-arrow');
-        if (menu.style.display === 'none') {
-            menu.style.display = 'block';
-            arrow.style.transform = 'rotate(180deg)';
-        } else {
-            menu.style.display = 'none';
-            arrow.style.transform = 'rotate(0deg)';
-        }
+        const menu = document.getElementById('lang-options'); const arrow = document.getElementById('lang-arrow');
+        if (menu.style.display === 'none') { menu.style.display = 'block'; arrow.style.transform = 'rotate(180deg)'; } 
+        else { menu.style.display = 'none'; arrow.style.transform = 'rotate(0deg)'; }
     }
 
     function openNav() { document.getElementById("mySidebar").style.width = "250px"; document.getElementById("sidebarOverlay").style.display = "block"; }
     function closeNav() { document.getElementById("mySidebar").style.width = "0"; document.getElementById("sidebarOverlay").style.display = "none"; }
 
     function showSection(id) {
-        var i, content;
-        content = document.getElementsByClassName("semester-content");
+        var i, content; content = document.getElementsByClassName("semester-content");
         for (i = 0; i < content.length; i++) { content[i].style.display = "none"; }
-        document.getElementById(id).style.display = "block";
-        window.scrollTo({top: 0, behavior: 'smooth'});
+        document.getElementById(id).style.display = "block"; window.scrollTo({top: 0, behavior: 'smooth'});
     }
 
     function checkUpdate() {
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.ready.then(reg => { reg.update(); });
+            navigator.serviceWorker.ready.then(reg => {
+                reg.update();
+            });
         }
     }
 
@@ -642,96 +627,55 @@
         window.location.reload(true);
     }
 
-    function sendToTelegram() {
-        window.open(`https://t.me/${TELEGRAM_USERNAME}`, '_blank');
-    }
+    function sendToTelegram() { window.open(`https://t.me/${TELEGRAM_USERNAME}`, '_blank'); }
 
     function showTab(evt, id) {
-        var i, content, tablinks;
-        content = document.getElementsByClassName("semester-content");
+        var i, content, tablinks; content = document.getElementsByClassName("semester-content");
         for (i = 0; i < content.length; i++) { content[i].style.display = "none"; }
         tablinks = document.getElementsByClassName("tab-btn");
         for (i = 0; i < tablinks.length; i++) { tablinks[i].classList.remove("active"); }
-        document.getElementById(id).style.display = "block";
-        evt.currentTarget.classList.add("active");
+        document.getElementById(id).style.display = "block"; evt.currentTarget.classList.add("active");
     }
 
     function openInnerSem(semId) {
         let contents = document.getElementsByClassName("inner-sem-content");
         for (let i = 0; i < contents.length; i++) { contents[i].style.display = "none"; }
-        document.getElementById(semId).style.display = "block";
-        document.getElementById(semId).scrollIntoView({ behavior: 'smooth' });
+        document.getElementById(semId).style.display = "block"; document.getElementById(semId).scrollIntoView({ behavior: 'smooth' });
     }
 
     function cycleTheme() {
-        const btn = document.getElementById('themeBtn');
-        let currentMode = localStorage.getItem('themeMode') || 'auto';
-        if (currentMode === 'auto') setTheme('dark');
-        else if (currentMode === 'dark') setTheme('light');
-        else setTheme('auto');
+        const btn = document.getElementById('themeBtn'); let currentMode = localStorage.getItem('themeMode') || 'auto';
+        if (currentMode === 'auto') setTheme('dark'); else if (currentMode === 'dark') setTheme('light'); else setTheme('auto');
     }
 
     function setTheme(mode) {
-        const body = document.body;
-        const btn = document.getElementById('themeBtn');
-        localStorage.setItem('themeMode', mode);
+        const body = document.body; const btn = document.getElementById('themeBtn'); localStorage.setItem('themeMode', mode);
         if (mode === 'auto') {
-            btn.textContent = "مۆدی ئۆتۆ 🤖";
-            const h = new Date().getHours();
-            if (h >= 18 || h < 6) body.classList.add('dark-mode');
-            else body.classList.remove('dark-mode');
-        } else if (mode === 'dark') {
-            body.classList.add('dark-mode'); btn.textContent = "مۆدی شەو 🌙";
-        } else {
-            body.classList.remove('dark-mode'); btn.textContent = "مۆدی ڕۆژ ☀️";
-        }
+            btn.textContent = "مۆدی ئۆتۆ 🤖"; const h = new Date().getHours();
+            if (h >= 18 || h < 6) body.classList.add('dark-mode'); else body.classList.remove('dark-mode');
+        } else if (mode === 'dark') { body.classList.add('dark-mode'); btn.textContent = "مۆدی شەو 🌙"; } 
+        else { body.classList.remove('dark-mode'); btn.textContent = "مۆدی ڕۆژ ☀️"; }
     }
 
-    // --- SCHEDULE LOGIC (FROM OLD CODE) ---
     function selectShift(shift) {
         currentShift = shift;
-        const morningBtn = document.querySelector('.shift-btn.morning');
-        const eveningBtn = document.querySelector('.shift-btn.evening');
-        if(morningBtn) morningBtn.classList.remove('active');
-        if(eveningBtn) eveningBtn.classList.remove('active');
-        if(shift === 'morning') morningBtn?.classList.add('active');
-        else eveningBtn?.classList.add('active');
-        document.getElementById('group-selection').style.display = 'none';
-        document.getElementById('group-display-title').style.display = 'none';
-        document.getElementById('daysArea').innerHTML = "";
-        document.getElementById('schedule-box').style.display = 'none';
+        const morningBtn = document.querySelector('.shift-btn.morning'); const eveningBtn = document.querySelector('.shift-btn.evening');
+        if(morningBtn) morningBtn.classList.remove('active'); if(eveningBtn) eveningBtn.classList.remove('active');
+        if(shift === 'morning') morningBtn?.classList.add('active'); else eveningBtn?.classList.add('active');
+        document.getElementById('group-selection').style.display = 'none'; document.getElementById('group-display-title').style.display = 'none';
+        document.getElementById('daysArea').innerHTML = ""; document.getElementById('schedule-box').style.display = 'none';
     }
 
     const scheduleData = {
         morning: { 1: { 'A': {}, 'B': {} }, 2: { 'A': {}, 'B': {} }, 3: { 'A': {}, 'B': {} }, 4: { 'A': {}, 'B': {} } },
         evening: {
             1: {
-                'A': {
-                    1: [["١", "Logic Design", "2:00", "م. پشتیوان + هەڵكەوت"], ["٢", "English", "4:00", "م. بەرهەم"], ["٣", "IT Fundamentals", "6:00", "م.عمر+هۆگر+امین"]],
-                    2: [["١", "Mathematics", "2:00", "م. سۆران"], ["٢", "Logic Design", "4:00", "م. پشتیوان"], ["٣", "IT Fundamentals", "6:00", "م. عمر"]],
-                    3: [["١", "Kurdology", "2:00", "م. ڕێبین"], ["٢", "English", "4:00", "م. بەرهەم"], ["٣", "Kurdology", "6:00", "م. ڕێبین"]],
-                    4: [["١", "IT Fundamentals", "2:00", "م. عمر"], ["٢", "IT Fundamentals", "4:00", "م. عمر+امین+هۆگر"]]
-                },
-                'B': {
-                    1: [["١", "English", "2:00", "م. بەرهەم"], ["٢", "Logic Design", "4:00", "م. پشتیوان+هەڵكەوت"], ["٣", "IT Fundamentals", "6:00", "م.عمر+هۆگر+امین"]],
-                    2: [["١", "Logic Design", "2:00", "م. پشتیوان"], ["٢", "Mathematics", "4:00", "م. سۆران"], ["٣", "IT Fundamentals", "6:00", "م. عمر"]],
-                    3: [["١", "English", "2:00", "م. بەرهەم"], ["٢", "Kurdology", "4:00", "م. ڕێبین"], ["٣", "Kurdology", "6:00", "م. ڕێبین"]],
-                    4: [["١", "IT Fundamentals", "2:00", "م. عمر"], ["٢", "IT Fundamentals", "4:00", "م. عمر+امین+هۆگر"]]
-                }
+                'A': { 1: [["١", "Logic Design", "2:00", "م. پشتیوان + هەڵكەوت"], ["٢", "English", "4:00", "م. بەرهەم"], ["٣", "IT Fundamentals", "6:00", "م.عمر+هۆگر+امین"]], 2: [["١", "Mathematics", "2:00", "م. سۆران"], ["٢", "Logic Design", "4:00", "م. پشتیوان"], ["٣", "IT Fundamentals", "6:00", "م. عمر"]], 3: [["١", "Kurdology", "2:00", "م. ڕێبین"], ["٢", "English", "4:00", "م. بەرهەم"], ["٣", "Kurdology", "6:00", "م. ڕێبین"]], 4: [["١", "IT Fundamentals", "2:00", "م. عمر"], ["٢", "IT Fundamentals", "4:00", "م. عمر+امین+هۆگر"]] },
+                'B': { 1: [["١", "English", "2:00", "م. بەرهەم"], ["٢", "Logic Design", "4:00", "م. پشتیوان+هەڵكەوت"], ["٣", "IT Fundamentals", "6:00", "م.عمر+هۆگر+امین"]], 2: [["١", "Logic Design", "2:00", "م. پشتیوان"], ["٢", "Mathematics", "4:00", "م. سۆران"], ["٣", "IT Fundamentals", "6:00", "م. عمر"]], 3: [["١", "English", "2:00", "م. بەرهەم"], ["٢", "Kurdology", "4:00", "م. ڕێبین"], ["٣", "Kurdology", "6:00", "م. ڕێبین"]], 4: [["١", "IT Fundamentals", "2:00", "م. عمر"], ["٢", "IT Fundamentals", "4:00", "م. عمر+امین+هۆگر"]] }
             },
             3: {
-                'A': {
-                    1: [["١", "Web Programming", "2:00", "م. زانیار"], ["٢", "O.O.P", "4:00", "م. علی"]],
-                    2: [["١", "Database Management", "2:00", "م. محمد + امین"], ["٢", "Web Programming", "4:00", "م. زانیار + گۆران"]],
-                    3: [["١", "Database", "2:00", "م. محمد"], ["٢", "O.O.P", "4:00", "م. علی + هۆگر + سامان"]],
-                    4: [["١", "Operating System", "2:00", "م. ڕێبین"], ["٢", "Computer Network II", "4:00", "م. هەڵۆ"]]
-                },
-                'B': {
-                    1: [["١", "Web Programming", "2:00", "م. زانیار"], ["٢", "O.O.P", "4:00", "م. علی"]],
-                    2: [["١", "Database Management", "2:00", "م. محمد + امین"], ["٢", "Web Programming", "4:00", "م. زانیار + گۆران"]],
-                    3: [["١", "Database", "2:00", "م. محمد"], ["٢", "O.O.P", "4:00", "م. علی + هۆگر + سامان"]],
-                    4: [["١", "Operating System", "2:00", "م. ڕێبین"], ["٢", "Computer Network II", "4:00", "م. هەڵۆ"]]
-                }
+                'A': { 1: [["١", "Web Programming", "2:00", "م. زانیار"], ["٢", "O.O.P", "4:00", "م. علی"]], 2: [["١", "Database Management", "2:00", "م. محمد + امین"], ["٢", "Web Programming", "4:00", "م. زانیار + گۆران"]], 3: [["١", "Database", "2:00", "م. محمد"], ["٢", "O.O.P", "4:00", "م. علی + هۆگر + سامان"]], 4: [["١", "Operating System", "2:00", "م. ڕێبین"], ["٢", "Computer Network II", "4:00", "م. هەڵۆ"]] },
+                'B': { 1: [["١", "Web Programming", "2:00", "م. زانیار"], ["٢", "O.O.P", "4:00", "م. علی"]], 2: [["١", "Database Management", "2:00", "م. محمد + امین"], ["٢", "Web Programming", "4:00", "م. زانیار + گۆران"]], 3: [["١", "Database", "2:00", "م. محمد"], ["٢", "O.O.P", "4:00", "م. علی + هۆگر + سامان"]], 4: [["١", "Operating System", "2:00", "م. ڕێبین"], ["٢", "Computer Network II", "4:00", "م. هەڵۆ"]] }
             }
         }
     };
@@ -742,19 +686,14 @@
         document.getElementById('group-display-title').style.display = 'block';
         const shiftText = currentShift === 'morning' ? (currentLang === 'en' ? 'Morning' : 'بەیانیان') : (currentLang === 'en' ? 'Evening' : 'ئێوارن');
         document.getElementById('group-display-title').innerHTML = `${translations[currentLang].semBtn1.replace('١','').replace('1','')} ${s} - ${shiftText} - <span style="color:#e67e22">${currentLang === 'en' ? 'Select Group' : 'گروپ هەڵبژێرە'}</span>`;
-        document.getElementById('daysArea').innerHTML = "";
-        document.getElementById('schedule-box').style.display = 'none';
+        document.getElementById('daysArea').innerHTML = ""; document.getElementById('schedule-box').style.display = 'none';
     }
 
     function selectGroup(g) {
         const color = (g === 'A') ? '#3498db' : '#27ae60';
         const shiftText = currentShift === 'morning' ? (currentLang === 'en' ? 'Morning' : 'بەیانیان') : (currentLang === 'en' ? 'Evening' : 'ئێوارن');
         document.getElementById('group-display-title').innerHTML = `${translations[currentLang].semBtn1.replace('١','').replace('1','')} ${currentSem} - ${shiftText} - <span style="color:${color}">Group ${g}</span>`;
-        
-        const dayNames = currentLang === 'en' ? 
-            ['Sunday', 'Monday', 'Tuesday', 'Wednesday'] : 
-            ['یەکشەممە', 'دووشەممە', 'سێشەممە', 'چوارشەممە'];
-
+        const dayNames = currentLang === 'en' ? ['Sunday', 'Monday', 'Tuesday', 'Wednesday'] : ['یەکشەممە', 'دووشەممە', 'سێشەممە', 'چوارشەممە'];
         document.getElementById('daysArea').innerHTML = `
             <button class="tab-btn" style="background:#8e44ad; margin:2px;" onclick="selectDay('${g}', 1, '${dayNames[0]}')">${dayNames[0]}</button>
             <button class="tab-btn" style="background:#2980b9; margin:2px;" onclick="selectDay('${g}', 2, '${dayNames[1]}')">${dayNames[1]}</button>
@@ -763,46 +702,26 @@
     }
 
     function selectDay(g, d, dayName) {
-        const body = document.getElementById('schedule-body');
-        if (!body) return;
-        body.innerHTML = '';
+        const body = document.getElementById('schedule-body'); if (!body) return; body.innerHTML = '';
         const color = (g === 'A') ? '#3498db' : '#27ae60';
         const shiftText = currentShift === 'morning' ? (currentLang === 'en' ? 'Morning' : 'بەیانیان') : (currentLang === 'en' ? 'Evening' : 'ئێوارن');
         document.getElementById('group-display-title').innerHTML = `${translations[currentLang].semBtn1.replace('١','').replace('1','')} ${currentSem} - ${shiftText} - <span style="color:${color}">Group ${g}</span> - ${dayName}`;
-        
-        const subjectColors = { 
-            'Logic Design': '#e74c3c', 'English': '#3498db', 'IT Fundamentals': '#2ecc71', 
-            'Mathematics': '#f39c12', 'Kurdology': '#9b59b6', 'Web Programming': '#1abc9c', 
-            'O.O.P': '#34495e', 'Database Management': '#e67e22', 'Database': '#e67e22', 
-            'Operating System': '#e74c3c', 'Computer Network II': '#2980b9' 
-        };
-
+        const subjectColors = { 'Logic Design': '#e74c3c', 'English': '#3498db', 'IT Fundamentals': '#2ecc71', 'Mathematics': '#f39c12', 'Kurdology': '#9b59b6', 'Web Programming': '#1abc9c', 'O.O.P': '#34495e', 'Database Management': '#e67e22', 'Database': '#e67e22', 'Operating System': '#e74c3c', 'Computer Network II': '#2980b9' };
         if (scheduleData[currentShift] && scheduleData[currentShift][currentSem] && scheduleData[currentShift][currentSem][g] && scheduleData[currentShift][currentSem][g][d]) {
             scheduleData[currentShift][currentSem][g][d].forEach(r => {
                 const sColor = subjectColors[r[1]] || '#00a8ff'; 
-                body.innerHTML += `<tr>
-                    <td style="font-weight:bold;">${r[0]}</td>
-                    <td><span style="background-color: ${sColor}; color: white; padding: 5px 12px; border-radius: 20px; font-weight: bold; display: inline-block;">${r[1]}</span></td>
-                    <td dir="ltr" style="font-weight: bold;">${r[2]}</td>
-                    <td style="font-size: 0.9rem;">${r[3]}</td>
-                </tr>`;
+                body.innerHTML += `<tr><td style="font-weight:bold;">${r[0]}</td><td><span style="background-color: ${sColor}; color: white; padding: 5px 12px; border-radius: 20px; font-weight: bold; display: inline-block;">${r[1]}</span></td><td dir="ltr" style="font-weight: bold;">${r[2]}</td><td style="font-size: 0.9rem;">${r[3]}</td></tr>`;
             });
             document.getElementById('schedule-box').style.display = 'block';
-        } else {
-            body.innerHTML = '<tr><td colspan="4">زانیاری نییە / No Info</td></tr>';
-        }
+        } else { body.innerHTML = '<tr><td colspan="4">زانیاری نییە / No Info</td></tr>'; }
     }
 
-    // --- News Fetcher (New Code Logic) ---
     async function fetchNews() {
-        const newsContainer = document.getElementById('news-list');
-        if (!newsContainer) return;
+        const newsContainer = document.getElementById('news-list'); if (!newsContainer) return;
         if (Notification.permission === 'default') { Notification.requestPermission(); }
         try {
             await new Promise(r => setTimeout(r, 800));
-            const response = await fetch("https://api.airtable.com/v0/app1z1PS8UVTsQr6D/tblBouRY2UudRiook", {
-                headers: { "Authorization": "Bearer " + FINAL_TOKEN, "Content-Type": "application/json" }, cache: "no-store" 
-            });
+            const response = await fetch("https://api.airtable.com/v0/app1z1PS8UVTsQr6D/tblBouRY2UudRiook", { headers: { "Authorization": "Bearer " + FINAL_TOKEN, "Content-Type": "application/json" }, cache: "no-store" });
             const data = await response.json();
             if (data.records && data.records.length > 0) {
                 const latestNews = data.records[0].fields.Title;
@@ -812,40 +731,25 @@
                     localStorage.setItem('last_news_title', latestNews);
                 } else if (!storedNews) { localStorage.setItem('last_news_title', latestNews); }
                 let html = "";
-                data.records.forEach(r => {
-                    const t = r.fields.Title || ""; const d = r.fields.Details || "";
-                    html += ` <span style="margin-left:100px; display:inline-block;"> <b>• ${t}</b> : ${d} </span> `;
-                });
+                data.records.forEach(r => { const t = r.fields.Title || ""; const d = r.fields.Details || ""; html += ` <span style="margin-left:100px; display:inline-block;"> <b>• ${t}</b> : ${d} </span> `; });
                 newsContainer.innerHTML = html + html;
             }
         } catch (e) { console.error("News Error:", e); }
     }
 
-    // --- Exam Logic (New Code) ---
     let examIntervals = [];
     async function checkExams() {
         const container = document.getElementById('exams-container');
         try {
             const r = await fetch("https://api.airtable.com/v0/app1z1PS8UVTsQr6D/Exams", { headers: { "Authorization": "Bearer "+FINAL_TOKEN }, cache: "no-store" });
-            const d = await r.json();
-            examIntervals.forEach(clearInterval); examIntervals = []; container.innerHTML = "";
-            let hasExams = false;
+            const d = await r.json(); examIntervals.forEach(clearInterval); examIntervals = []; container.innerHTML = ""; let hasExams = false;
             if (d.records && d.records.length > 0) {
                 d.records.forEach(rec => {
                     if(rec.fields.Date) {
                         const exDate = new Date(rec.fields.Date); const now = new Date();
                         if(exDate > now) {
-                            hasExams = true;
-                            const divId = "timer-" + Math.random().toString(36).substr(2, 9);
-                            container.innerHTML += `
-                            <div class="countdown-box">
-                                <h2 style="margin:0; font-size:1.2rem; color:#f1c40f;">${rec.fields.Title}</h2>
-                                <p style="margin:5px 0 10px; opacity:0.8; font-size:0.9rem;">${exDate.toLocaleString('ku-IQ')}</p>
-                                <div class="timer-row" id="${divId}">
-                                    <div class="timer-box" id="d-${divId}">00</div>: <div class="timer-box" id="h-${divId}">00</div>:
-                                    <div class="timer-box" id="m-${divId}">00</div>: <div class="timer-box" id="s-${divId}">00</div>
-                                </div>
-                            </div>`;
+                            hasExams = true; const divId = "timer-" + Math.random().toString(36).substr(2, 9);
+                            container.innerHTML += `<div class="countdown-box"><h2 style="margin:0; font-size:1.2rem; color:#f1c40f;">${rec.fields.Title}</h2><p style="margin:5px 0 10px; opacity:0.8; font-size:0.9rem;">${exDate.toLocaleString('ku-IQ')}</p><div class="timer-row" id="${divId}"><div class="timer-box" id="d-${divId}">00</div>: <div class="timer-box" id="h-${divId}">00</div>: <div class="timer-box" id="m-${divId}">00</div>: <div class="timer-box" id="s-${divId}">00</div></div></div>`;
                             startSpecificTimer(exDate, divId);
                         }
                     }
@@ -861,15 +765,10 @@
             const d = Math.floor(dist/(1000*60*60*24)); const h = Math.floor((dist%(1000*60*60*24))/(1000*60*60));
             const m = Math.floor((dist%(1000*60*60))/(1000*60)); const s = Math.floor((dist%(1000*60))/1000);
             const elD = document.getElementById(`d-${id}`);
-            if(elD) {
-                elD.innerText = d<10?"0"+d:d; document.getElementById(`h-${id}`).innerText = h<10?"0"+h:h;
-                document.getElementById(`m-${id}`).innerText = m<10?"0"+m:m; document.getElementById(`s-${id}`).innerText = s<10?"0"+s:s;
-            }
-        }, 1000);
-        examIntervals.push(int);
+            if(elD) { elD.innerText = d<10?"0"+d:d; document.getElementById(`h-${id}`).innerText = h<10?"0"+h:h; document.getElementById(`m-${id}`).innerText = m<10?"0"+m:m; document.getElementById(`s-${id}`).innerText = s<10?"0"+s:s; }
+        }, 1000); examIntervals.push(int);
     }
 
-    // --- GPA Logic (New Code - Max 50 Logic) ---
     function renderGrading() {
         const sem = document.getElementById('gpa-sem-select').value; const subjects = subjectList[sem] || [];
         const container = document.getElementById('grading-container'); container.innerHTML = "";
@@ -906,36 +805,39 @@
         if (d !== null) currentScore += d; if (a !== null) currentScore += a; if (q !== null) currentScore += q;
         if (r !== null) currentScore += r; if (m !== null) currentScore += m;
         
-        // --- MAX 50 CHECK ---
+        let msg = "";
         if (currentScore > 50) {
-             document.getElementById(`status-${idx}`).innerHTML = "<b style='color:red'>هەڵە! کۆی سەعی نابێت لە ٥٠ زیاتر بێت. دڵنیابەرەوە لە نمرەکان.</b>";
-             return;
-        }
-
-        let msg = `<div style="margin-bottom:5px;">کۆی نمرەکانت (بێ فایناڵ): <span style="color:#2980b9">${currentScore}</span></div>`;
-        let advice = [];
-        if (d === null) advice.push("ڕۆژانە"); if (a === null) advice.push("نەهاتن"); if (q === null) advice.push("کویز"); if (r === null) advice.push("ڕاپۆرت");
-
-        if (advice.length > 0) {
-            msg += `<span style="color:#e67e22">هەوڵبدە لە (${advice.join('، ')}) نمرە بهێنیت.</span>`;
-        } else if (m === null) {
-             msg += `<span style="color:#e67e22">⚠️ هەوڵبدە بۆ میدتێرم نمرەی باش بهێنیت!</span>`;
+             msg = "<b style='color:red'>هەڵە! کۆی سەعی نابێت لە ٥٠ زیاتر بێت. دڵنیابەرەوە لە نمرەکان.</b>";
         } else {
-            if (f === null) {
-                if (currentScore >= 40) msg += `<span style="color:#27ae60">١٠ نمرە بەسە لەو ٥٠ نمرەیەی فایناڵ کە ماوە، بەڵام تۆ هەوڵبدە زۆر زیاتر بهێنیت.</span>`;
-                else {
-                     let needed = 50 - currentScore;
-                     if(needed > 50) msg += `<span style="color:#c0392b">بەداخەوە، تەنانەت ئەگەر ٥٠یش بهێنیت دەرناچیت.</span>`;
-                     else msg += `<span style="color:#c0392b">بۆ دەرچوون پێویستت بە ${needed} نمرەیە لە فایناڵ.</span>`;
+            msg = `<div style="margin-bottom:5px;">کۆی نمرەکانت (بێ فایناڵ): <span style="color:#2980b9">${currentScore}</span></div>`;
+            let advice = [];
+            if (d === null) advice.push("ڕۆژانە"); if (a === null) advice.push("نەهاتن"); if (q === null) advice.push("کویز"); if (r === null) advice.push("ڕاپۆرت");
+
+            if (advice.length > 0) { msg += `<span style="color:#e67e22">هەوڵبدە لە (${advice.join('، ')}) نمرە بهێنیت.</span>`; } 
+            else if (m === null) { msg += `<span style="color:#e67e22">⚠️ هەوڵبدە بۆ میدتێرم نمرەی باش بهێنیت!</span>`; } 
+            else {
+                if (f === null) {
+                    if (currentScore >= 40) msg += `<span style="color:#27ae60">١٠ نمرە بەسە لەو ٥٠ نمرەیەی فایناڵ کە ماوە، بەڵام تۆ هەوڵبدە زۆر زیاتر بهێنیت.</span>`;
+                    else {
+                         let needed = 50 - currentScore;
+                         if(needed > 50) msg += `<span style="color:#c0392b">بەداخەوە، تەنانەت ئەگەر ٥٠یش بهێنیت دەرناچیت.</span>`;
+                         else msg += `<span style="color:#c0392b">بۆ دەرچوون پێویستت بە ${needed} نمرەیە لە فایناڵ.</span>`;
+                    }
+                } else {
+                    let finalScore = currentScore + f;
+                    msg = `<div style="margin-bottom:5px;">کۆی گشتی: <span style="color:#2c3e50">${finalScore}</span></div>`;
+                    if (finalScore >= 50) msg += `<span style="color:#27ae60">🎉 پیرۆزە دەرچوویت!</span>`;
+                    else msg += `<span style="color:#c0392b">😢 بەداخەوە کەوتویت.</span>`;
                 }
-            } else {
-                let finalScore = currentScore + f;
-                msg = `<div style="margin-bottom:5px;">کۆی گشتی: <span style="color:#2c3e50">${finalScore}</span></div>`;
-                if (finalScore >= 50) msg += `<span style="color:#27ae60">🎉 پیرۆزە دەرچوویت!</span>`;
-                else msg += `<span style="color:#c0392b">😢 بەداخەوە کەوتویت.</span>`;
             }
         }
-        document.getElementById(`status-${idx}`).innerHTML = msg; saveGrades();
+        
+        // FIXED: Show full text by updating panel height
+        const statusDiv = document.getElementById(`status-${idx}`);
+        statusDiv.innerHTML = msg;
+        let panel = statusDiv.closest('.panel');
+        if(panel.style.maxHeight) { panel.style.maxHeight = panel.scrollHeight + "px"; }
+        saveGrades();
     }
     function saveGrades() { const inputs = document.querySelectorAll('#grading-container input'); let data = {}; inputs.forEach(i => data[i.id] = i.value); localStorage.setItem('saved_grades', JSON.stringify(data)); }
     function loadGrades() { const saved = JSON.parse(localStorage.getItem('saved_grades')); if(saved) { for(let id in saved) { let el=document.getElementById(id); if(el){ el.value=saved[id]; calcSub(id.split('-')[1]); } } } }
@@ -945,9 +847,7 @@
             const res = await fetch(`https://api.airtable.com/v0/app1z1PS8UVTsQr6D/tblBouRY2UudRiook/reccrgnulA1AiGx75`, { headers: { Authorization: `Bearer ${FINAL_TOKEN}` } });
             const data = await res.json(); let n = (data.fields.Visits || 0) + 1;
             document.getElementById('visitor-counter').textContent = String(n).padStart(7, '0');
-            await fetch(`https://api.airtable.com/v0/app1z1PS8UVTsQr6D/tblBouRY2UudRiook/reccrgnulA1AiGx75`, {
-                method: 'PATCH', headers: { Authorization: `Bearer ${FINAL_TOKEN}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ fields: { "Visits": n } })
-            });
+            await fetch(`https://api.airtable.com/v0/app1z1PS8UVTsQr6D/tblBouRY2UudRiook/reccrgnulA1AiGx75`, { method: 'PATCH', headers: { Authorization: `Bearer ${FINAL_TOKEN}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ fields: { "Visits": n } }) });
         } catch (e) { console.error("Counter Error:", e); }
     }
 
