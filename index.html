@@ -223,13 +223,48 @@
         .gpa-input-row input { width: 60px; padding: 6px; border-radius: 8px; border: 1px solid #ccc; text-align: center; background: var(--background); color: var(--text-color); }
         .subject-badge { color: white; padding: 5px 12px; border-radius: 20px; font-size: 0.95rem; font-weight: bold; display: inline-block; }
 
-        /* Exam Timer */
+ /* Exam Timer Responsive Design - NEW UPDATED */
         .countdown-box {
-            background: linear-gradient(135deg, #c0392b, #8e44ad); color: white; padding: 15px; border-radius: 15px; 
-            text-align: center; margin: 15px auto; box-shadow: 0 5px 15px rgba(0,0,0,0.2); border: 2px solid rgba(255,255,255,0.2);
+            background: linear-gradient(135deg, #c0392b, #8e44ad);
+            color: white;
+            padding: 20px 10px;
+            border-radius: 20px;
+            text-align: center;
+            margin: 15px auto;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            max-width: 100%;
         }
-        .timer-row { display: flex; justify-content: center; gap: 10px; margin-top: 10px; direction: ltr; }
-        .timer-box { background: rgba(0,0,0,0.3); padding: 5px 10px; border-radius: 8px; font-size: 1.5rem; font-weight: 900; font-family: monospace; min-width: 40px; }
+        .timer-row {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            direction: ltr;
+            margin-top: 15px;
+            flex-wrap: nowrap;
+        }
+        .timer-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 60px;
+        }
+        .timer-box {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 10px 5px;
+            border-radius: 12px;
+            font-size: 1.4rem;
+            font-weight: 900;
+            font-family: monospace;
+            width: 100%;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .timer-label {
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-top: 5px;
+            color: #f1c40f;
+        }
 
         /* Schedule / Semester Styles */
         .shift-selection { display: flex; gap: 15px; justify-content: center; margin-bottom: 25px; flex-wrap: wrap; }
@@ -388,10 +423,10 @@
         </div>
     </div>
 
-    <div id="exam-tab" class="semester-content">
-        <h3 style="text-align: center; color: var(--primary);" id="lang-exam-header">⏳ کاتی ماوە بۆ تاقیکردنەوەکان</h3>
-        <div id="exams-container"></div>
-    </div>
+<div id="exam-tab" class="semester-content">
+    <h3 style="text-align: center; color: var(--primary); margin-bottom: 20px;" id="lang-exam-header">⏳ کاتی ماوە بۆ تاقیکردنەوەکان</h3>
+    <div id="exams-container"></div>
+</div>
 
     <div id="gpa-tab" class="semester-content">
         <h3 style="text-align: center; color: var(--primary);" id="lang-gpa-header">🧮 هەژمارکردنی نمرەکان</h3>
@@ -791,36 +826,88 @@
     }
 
     let examIntervals = [];
-    async function checkExams() {
-        const container = document.getElementById('exams-container');
-        try {
-            const r = await fetch("https://api.airtable.com/v0/app1z1PS8UVTsQr6D/Exams", { headers: { "Authorization": "Bearer "+FINAL_TOKEN }, cache: "no-store" });
-            const d = await r.json(); examIntervals.forEach(clearInterval); examIntervals = []; container.innerHTML = ""; let hasExams = false;
-            if (d.records && d.records.length > 0) {
-                d.records.forEach(rec => {
-                    if(rec.fields.Date) {
-                        const exDate = new Date(rec.fields.Date); const now = new Date();
-                        if(exDate > now) {
-                            hasExams = true; const divId = "timer-" + Math.random().toString(36).substr(2, 9);
-                            container.innerHTML += `<div class="countdown-box"><h2 style="margin:0; font-size:1.2rem; color:#f1c40f;">${rec.fields.Title}</h2><p style="margin:5px 0 10px; opacity:0.8; font-size:0.9rem;">${exDate.toLocaleString('ku-IQ')}</p><div class="timer-row" id="${divId}"><div class="timer-box" id="d-${divId}">00</div>: <div class="timer-box" id="h-${divId}">00</div>: <div class="timer-box" id="m-${divId}">00</div>: <div class="timer-box" id="s-${divId}">00</div></div></div>`;
-                            startSpecificTimer(exDate, divId);
-                        }
-                    }
-                });
-            }
-            if(!hasExams) container.innerHTML = "<h3 style='text-align:center;'>هیچ تاقیکردنەوەیەک نییە</h3>";
-        } catch(e){ console.error(e); }
-    }
-    function startSpecificTimer(date, id) {
-        const int = setInterval(() => {
-            const now = new Date().getTime(); const dist = date.getTime() - now;
-            if(dist < 0) { document.getElementById(id).innerHTML = "Started!"; clearInterval(int); return; }
-            const d = Math.floor(dist/(1000*60*60*24)); const h = Math.floor((dist%(1000*60*60*24))/(1000*60*60));
-            const m = Math.floor((dist%(1000*60*60))/(1000*60)); const s = Math.floor((dist%(1000*60))/1000);
-            const elD = document.getElementById(`d-${id}`);
-            if(elD) { elD.innerText = d<10?"0"+d:d; document.getElementById(`h-${id}`).innerText = h<10?"0"+h:h; document.getElementById(`m-${id}`).innerText = m<10?"0"+m:m; document.getElementById(`s-${id}`).innerText = s<10?"0"+s:s; }
-        }, 1000); examIntervals.push(int);
-    }
+async function checkExams() {
+    const container = document.getElementById('exams-container');
+    try {
+        const r = await fetch("https://api.airtable.com/v0/app1z1PS8UVTsQr6D/Exams", { 
+            headers: { "Authorization": "Bearer " + FINAL_TOKEN }, 
+            cache: "no-store" 
+        });
+        const d = await r.json();
+        
+        examIntervals.forEach(clearInterval);
+        examIntervals = [];
+        container.innerHTML = "";
+
+        let activeExams = [];
+        if (d.records && d.records.length > 0) {
+            d.records.forEach(rec => {
+                const exDate = new Date(rec.fields.Date);
+                if (exDate > new Date()) {
+                    activeExams.push({ ...rec.fields, dateObj: exDate });
+                }
+            });
+        }
+
+        // ڕیزکردن بەپێی کات (زووترین لە سەرەوە بێت)
+        activeExams.sort((a, b) => a.dateObj - b.dateObj);
+
+        if (activeExams.length > 0) {
+            activeExams.forEach(exam => {
+                const divId = "timer-" + Math.random().toString(36).substr(2, 9);
+                container.innerHTML += `
+                <div class="countdown-box">
+                    <h2 style="margin:0; font-size:1.2rem; color:#f1c40f;">${exam.Title}</h2>
+                    <p style="margin:5px 0 10px; opacity:0.9; font-size:0.85rem;">${exam.dateObj.toLocaleString('ku-IQ')}</p>
+                    <div class="timer-row">
+                        <div class="timer-unit">
+                            <div class="timer-box" id="d-${divId}">00</div>
+                            <div class="timer-label">ڕۆژ</div>
+                        </div>
+                        <div class="timer-unit">
+                            <div class="timer-box" id="h-${divId}">00</div>
+                            <div class="timer-label">کاژێر</div>
+                        </div>
+                        <div class="timer-unit">
+                            <div class="timer-box" id="m-${divId}">00</div>
+                            <div class="timer-label">خولەک</div>
+                        </div>
+                        <div class="timer-unit">
+                            <div class="timer-box" id="s-${divId}">00</div>
+                            <div class="timer-label">چرکە</div>
+                        </div>
+                    </div>
+                </div>`;
+                startSpecificTimer(exam.dateObj, divId);
+            });
+        } else {
+            container.innerHTML = "<h3 style='text-align:center; opacity:0.6;'>هیچ تاقیکردنەوەیەک نییە</h3>";
+        }
+    } catch(e) { console.error(e); }
+}
+
+function startSpecificTimer(date, id) {
+    const int = setInterval(() => {
+        const now = new Date().getTime();
+        const dist = date.getTime() - now;
+        if (dist < 0) { 
+            clearInterval(int); 
+            return; 
+        }
+        const d = Math.floor(dist / (1000 * 60 * 60 * 24));
+        const h = Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((dist % (1000 * 60)) / 1000);
+        
+        if (document.getElementById(`d-${id}`)) {
+            document.getElementById(`d-${id}`).innerText = d < 10 ? "0" + d : d;
+            document.getElementById(`h-${id}`).innerText = h < 10 ? "0" + h : h;
+            document.getElementById(`m-${id}`).innerText = m < 10 ? "0" + m : m;
+            document.getElementById(`s-${id}`).innerText = s < 10 ? "0" + s : s;
+        }
+    }, 1000);
+    examIntervals.push(int);
+}
 
     function renderGrading() {
         const sem = document.getElementById('gpa-sem-select').value; const subjects = subjectList[sem] || [];
