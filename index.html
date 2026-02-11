@@ -207,17 +207,29 @@
         }
         @keyframes pulse-btn { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
 
-        /* Sidebar */
-        .sidebar {
-            height: 100%; width: 0; position: fixed; z-index: 4000; top: 0; right: 0; 
-            background-color: var(--sidebar-bg); overflow-x: hidden; transition: 0.4s;
-            padding-top: 40px; box-shadow: -5px 0 25px rgba(0,0,0,0.2);
-            border-left: 1px solid rgba(255,255,255,0.1);
-            
-            /* --- SCROLL FIX FOR SIDEBAR --- */
-            overflow-y: auto; /* ڕێگە بە هاتنەخوارەوەی لیست دەدات */
-            padding-bottom: 50px; /* بۆشایی خوارەوە بۆ ئەوەی دوگمەکان جوان دەرکەون */
-        }
+    /* Sidebar */
+.sidebar {
+    height: 100%; /* گۆڕینی vh بۆ % باشترە بۆ زووم */
+    width: 0;
+    position: fixed;
+    z-index: 4000;
+    top: 0;
+    right: 0;
+    bottom: 0; /* ئەمە دڵنیات دەکاتەوە کە بنی لیستەکە بنی شاشەکەیە */
+    
+    background-color: var(--sidebar-bg);
+    overflow-x: hidden;
+    overflow-y: auto; /* سکرۆڵ کار دەکات */
+    
+    transition: 0.4s;
+    padding-top: 40px;
+    padding-bottom: 100px; /* بۆشایی خوارەوە */
+    
+    box-sizing: border-box; /* <--- ئەمە کلیلی چارەسەرەکەیە */
+    
+    box-shadow: -5px 0 25px rgba(0,0,0,0.2);
+    border-left: 1px solid rgba(255,255,255,0.1);
+}
         
         /* --- FLAG ANIMATION --- */
         .flag-container {
@@ -667,7 +679,7 @@
             </p>
             <hr style="border: 0; border-top: 1px solid rgba(0,0,0,0.1); margin: 30px 0;">
             <p><span id="lang-dev" style="opacity:0.7;">گەشەپێدەر:</span> <strong style="color:var(--secondary);">شیروان شێرزاد خالد</strong></p>
-            <p><span id="lang-ver" style="opacity:0.7;">وەشان:</span> <span style="background:#f1f5f9; padding:2px 8px; border-radius:6px; font-size:0.9rem;">2.2.9 (٢٠٢٦)</span></p>
+            <p><span id="lang-ver" style="opacity:0.7;">وەشان:</span> <span style="background:#f1f5f9; padding:2px 8px; border-radius:6px; font-size:0.9rem;">3.1.0 (٢٠٢٦)</span></p>
         </div>
     </div>
 
