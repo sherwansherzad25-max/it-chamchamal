@@ -190,7 +190,8 @@
 
         /* News */
         .sticky-news-wrapper {
-            position: sticky; top: 0; z-index: 2000; margin: 0;
+            /* Changed from sticky to relative to scroll away */
+            position: relative; top: 0; z-index: 2000; margin: 0;
             background: transparent; padding: 10px 15px;
         }
         #news-list { display: inline-block; white-space: nowrap; animation: tickerMove 200s linear infinite !important; }
@@ -662,7 +663,7 @@
             </p>
             <hr style="border: 0; border-top: 1px solid rgba(0,0,0,0.1); margin: 30px 0;">
             <p><span id="lang-dev" style="opacity:0.7;">گەشەپێدەر:</span> <strong style="color:var(--secondary);">شیروان شێرزاد خالد</strong></p>
-            <p><span id="lang-ver" style="opacity:0.7;">وەشان:</span> <span style="background:#f1f5f9; padding:2px 8px; border-radius:6px; font-size:0.9rem;">2.2.8 (٢٠٢٦)</span></p>
+            <p><span id="lang-ver" style="opacity:0.7;">وەشان:</span> <span style="background:#f1f5f9; padding:2px 8px; border-radius:6px; font-size:0.9rem;">2.2.9 (٢٠٢٦)</span></p>
         </div>
     </div>
 
@@ -1109,24 +1110,26 @@
         else {
             msg = `<div style="margin-bottom:5px;">کۆی سەعی (بێ فایناڵ): <span style="color:#0284c7; font-size:1.1rem;">${currentScore}</span></div>`;
             
-            // --- Missing Fields Reminder ---
+            // --- Missing Fields Reminder (SPECIFIC) ---
             let missing = [];
             if (d === null) missing.push("ڕۆژانە");
+            if (a === null) missing.push("نەهاتن"); // Check attendance too
             if (q === null) missing.push("کویز");
             if (r === null) missing.push("ڕاپۆرت و سیمینار");
             if (m === null) missing.push("میدتێرم");
 
-            if (missing.length > 0 && currentScore < 50) {
-                msg += `<div style="color:#64748b; font-size:0.8rem; margin-bottom:5px;">💡 بیرت نەچێت نمرەی (${missing.join(' و ')}) داخڵ بکەیت.</div>`;
-            }
-
             // --- Motivation Logic ---
+            if (missing.length > 0 && currentScore < 50) {
+                 msg += `<div style="color:#d97706; font-size:0.85rem; margin-top:5px; margin-bottom:5px; line-height:1.6; font-weight:bold;">💡 هەوڵبدە لە (${missing.join(' و ')}) نمرە بەدەست بهێنیت، بۆ ئەوەی بۆ فایناڵ بتوانیت نمرەت زۆر بەرز بكەیتەوە.</div>`;
+            }
+            
+            // Check Score Levels if everything is filled or score is low
             if (currentScore < 25) {
                 msg += `<br><span style="color:#ef4444; font-weight:900;">⚠️ مەترسی! نمرەی سەعیت زۆر کەمە. دەبێت لە فایناڵ هەموو هەوڵێک بدەیت تاوەکو دەربچیت.</span>`;
             } else if (currentScore >= 25 && currentScore < 35) {
-                msg += `<br><span style="color:#d97706;">باشە، بەڵام دەبێت نمرەکانت بەرزتر بکەیتەوە. دڵنیابە لەوەی هەموو بەشەکانت پڕکردۆتەوە.</span>`;
+                msg += `<br><span style="color:#d97706;">باشە، بەڵام هێشتا مەترسی هەیە.</span>`;
             } else if (currentScore >= 35 && currentScore < 50) {
-                msg += `<br><span style="color:#059669; font-weight:bold;">🌟 ئاستت زۆر نایابە! تۆ تەنها بۆ دەرچوون هەوڵ مەدە، بەڵکو بجەنگە بۆ ئەوەی بەرزترین نمرە بهێنیت لە فایناڵ.</span>`;
+                msg += `<br><span style="color:#059669; font-weight:bold;">🌟 ئاستت زۆر نایابە! تۆ تەنها بۆ دەرچوون هەوڵ مەدە، بەڵکو بجەنگە بۆ ئەوەی بەرزترین نمرە بهێنیت.</span>`;
             } else if (currentScore === 50) {
                 msg += `<br><span style="color:#10b981; font-weight:bold;">🏆 سەعی تەواو! نایابە، ئێستا تەنها فایناڵ ماوە بۆ نمرەی ١٠٠.</span>`;
             }
