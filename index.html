@@ -593,6 +593,7 @@
         <div id="group-selection" style="display: none; gap: 15px; justify-content: center; margin-bottom: 25px;">
             <button class="tab-btn" style="background:linear-gradient(135deg, #3b82f6, #2563eb); color:white;" onclick="selectGroup('A')">Group A 🔵</button>
             <button class="tab-btn" style="background:linear-gradient(135deg, #10b981, #059669); color:white;" onclick="selectGroup('B')">Group B 🟢</button>
+            <button id="btn-group-c" class="tab-btn" style="background:linear-gradient(135deg, #f59e0b, #d97706); color:white; display:none;" onclick="selectGroup('C')">Group C 🟡</button>
         </div>
         <h3 id="group-display-title" style="text-align: center; color: var(--secondary); margin-bottom: 15px; font-weight: bold; display: none;"></h3>
         <div id="daysArea" style="text-align:center; margin-bottom:20px;"></div>
@@ -665,8 +666,19 @@
         </div>
     
         <div id="sem4" class="inner-sem-content" style="display: none;">
-            <h3 style="color: #8b5cf6; border-right: 5px solid #8b5cf6; padding-right: 10px;">وانەکانی سمستەری چوارەم</h3>
-            <div class="table-container"><table><thead><tr><th class="th-sub">ناوی وانە</th><th class="th-lec">مەلزەمە</th><th class="th-qs">پرسیار</th><th class="th-tut">فێركاری</th></tr></thead><tbody><tr><td colspan="4">هێشتا زانیاری دانەنراوە</td></tr></tbody></table></div>
+            <h3 style="color: #8b5cf6; border-right: 5px solid #8b5cf6; padding-right: 10px; margin-bottom: 20px;">وانەکانی سمستەری چوارەم</h3>
+            <div class="table-container">
+                <table>
+                    <thead><tr><th class="th-sub">ناوی وانە</th><th class="th-lec">مەلزەمە</th><th class="th-qs">پرسیار</th><th class="th-tut">فێركاری</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="subject-badge" style="background-color: #3b82f6;">Web Programming II</span></td><td><a href="#" class="download-btn btn-dl">داگرتن</a></td><td><a href="#" class="download-btn old-btn btn-view">بینین</a></td><td><a href="#" class="download-btn btn-vid" style="background-color: #ef4444;">🎥 ڤیدیۆ</a></td></tr>
+                        <tr><td><span class="subject-badge" style="background-color: #8b5cf6;">Visual Programming</span></td><td><a href="#" class="download-btn btn-dl">داگرتن</a></td><td><a href="#" class="download-btn old-btn btn-view">بینین</a></td><td><a href="#" class="download-btn btn-vid" style="background-color: #ef4444;">🎥 ڤیدیۆ</a></td></tr>
+                        <tr><td><span class="subject-badge" style="background-color: #d97706;">Mobile Application</span></td><td><a href="#" class="download-btn btn-dl">داگرتن</a></td><td><a href="#" class="download-btn old-btn btn-view">بینین</a></td><td><a href="#" class="download-btn btn-vid" style="background-color: #ef4444;">🎥 ڤیدیۆ</a></td></tr>
+                        <tr><td><span class="subject-badge" style="background-color: #ef4444;">Information Security</span></td><td><a href="#" class="download-btn btn-dl">داگرتن</a></td><td><a href="#" class="download-btn old-btn btn-view">بینین</a></td><td><a href="#" class="download-btn btn-vid" style="background-color: #ef4444;">🎥 ڤیدیۆ</a></td></tr>
+                        <tr><td><span class="subject-badge" style="background-color: #10b981;">Project</span></td><td><a href="#" class="download-btn btn-dl">داگرتن</a></td><td><a href="#" class="download-btn old-btn btn-view">بینین</a></td><td><a href="#" class="download-btn btn-vid" style="background-color: #ef4444;">🎥 ڤیدیۆ</a></td></tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -679,7 +691,7 @@
             </p>
             <hr style="border: 0; border-top: 1px solid rgba(0,0,0,0.1); margin: 30px 0;">
             <p><span id="lang-dev" style="opacity:0.7;">گەشەپێدەر:</span> <strong style="color:var(--secondary);">شیروان شێرزاد خالد</strong></p>
-            <p><span id="lang-ver" style="opacity:0.7;">وەشان:</span> <span style="background:#f1f5f9; padding:2px 8px; border-radius:6px; font-size:0.9rem;">3.1.0 (٢٠٢٦)</span></p>
+            <p><span id="lang-ver" style="opacity:0.7;">وەشان:</span> <span style="background:#f1f5f9; padding:2px 8px; border-radius:6px; font-size:0.9rem;">3.1.1 (٢٠٢٦)</span></p>
         </div>
     </div>
 
@@ -755,12 +767,13 @@
         1: ["Logic Design", "IT Fundamentals", "Mathematics", "English", "Kurdology"],
         2: ["Database", "English II", "Network +", "Programming", "Web Design"],
         3: ["Web Programming", "O.O.P", "Database Management", "Computer Network II", "Operating System"],
-        4: ["Subject 1", "Subject 2", "Subject 3", "Subject 4", "Subject 5"]
+        4: ["Mobile Application", "Web Programming II", "Visual Programming", "Information Security", "Project"]
     };
     const subColors = {
         'Logic Design': '#ef4444', 'IT Fundamentals': '#10b981', 'Mathematics': '#8b5cf6', 'English': '#f59e0b', 'Kurdology': '#475569',
         'Database': '#d97706', 'English II': '#f59e0b', 'Network +': '#3b82f6', 'Programming': '#8b5cf6', 'Web Design': '#14b8a6',
-        'Web Programming': '#3b82f6', 'O.O.P': '#8b5cf6', 'Database Management': '#d97706', 'Computer Network II': '#10b981', 'Operating System': '#ef4444'
+        'Web Programming': '#3b82f6', 'O.O.P': '#8b5cf6', 'Database Management': '#d97706', 'Computer Network II': '#10b981', 'Operating System': '#ef4444',
+        'Web Programming II': '#3b82f6', 'Visual Programming': '#8b5cf6', 'Mobile Application': '#d97706', 'Information Security': '#ef4444', 'Project': '#10b981'
     };
     
     const translations = {
@@ -807,6 +820,7 @@
     function toggleLanguage(lang) {
         currentLang = lang;
         const t = translations[lang];
+        const t2 = (lang === 'en') ? translations['ku'] : translations['en']; // Alternate for placeholders/logic if needed
         if (lang === 'en') { document.body.classList.add('lang-en'); document.documentElement.dir = "ltr"; } 
         else { document.body.classList.remove('lang-en'); document.documentElement.dir = "rtl"; }
         const map = {
@@ -830,6 +844,14 @@
         document.querySelectorAll('.th-qs').forEach(e => e.innerText = t.thQs); document.querySelectorAll('.th-tut').forEach(e => e.innerText = t.thTut);
         document.querySelectorAll('.btn-dl').forEach(e => e.innerText = t.btnDl); document.querySelectorAll('.btn-view').forEach(e => e.innerText = t.btnView);
         document.querySelectorAll('.btn-vid').forEach(e => e.innerText = t.btnVid);
+        
+        // Refresh Schedule Title if visible
+        if(document.getElementById('group-display-title').style.display !== 'none') {
+             // Re-trigger group selection or just clear it to be safe
+             document.getElementById('schedule-box').style.display = 'none';
+             document.getElementById('daysArea').innerHTML = '';
+             document.getElementById('group-display-title').innerHTML = '';
+        }
         closeNav();
     }
     
@@ -910,15 +932,80 @@
     }
 
     const scheduleData = {
-        morning: { 1: { 'A': {}, 'B': {} }, 2: { 'A': {}, 'B': {} }, 3: { 'A': {}, 'B': {} }, 4: { 'A': {}, 'B': {} } },
+        morning: { 
+            2: { 
+                'A': {
+                    1: [["١", "Programming", "8:30", "م. هێشوو + هۆگر + ئاسۆ"], ["٢", "English II", "10:30", "م. خێڵان + بەرهەم"], ["٣", "Database", "12:30", "م. هەردی"]],
+                    3: [["١", "Network +", "8:30", "م. عومەر"], ["٢", "Web Design", "10:30", "م. مستەفا"]],
+                    4: [["١", "Web Design", "8:30", "م. مستەفا+ئەمین+چیناز+نمە"], ["٢", "Network +", "10:30", "م. عومەر+گۆران+شیلان+یەحیا"]]
+                }, 
+                'B': {
+                    1: [["١", "English II", "8:30", "م. خێڵان + بەرهەم"], ["٢", "Database", "10:30", "م. هەردی+ئەمین+هاوژین+نمە"], ["٣", "Programming", "12:30", "م. هێشوو + هۆگر + ئاسۆ"]],
+                    2: [["١", "Database", "8:30", "م. هەردی"], ["٢", "Programming", "10:30", "م. هێشوو"], ["٣", "English II", "12:30", "م. خێڵان"]],
+                    3: [["١", "Web Design", "8:30", "م. مستەفا"], ["٢", "Network +", "10:30", "م. عومەر"]],
+                    4: [["١", "Web Design", "10:30", "م. مستەفا+ئەمین+چیناز+نمە"], ["٢", "Network +", "12:30", "م. عومەر+گۆران+شیلان+یەحیا"]]
+                },
+                'C': {
+                    1: [["١", "Database", "8:30", "م. هەردی+ئەمین+هاوژین+نمە"], ["٢", "Programming", "10:30", "م. هێشوو + هۆگر + ئاسۆ"], ["٣", "English II", "12:30", "م. خێڵان + بەرهەم"]],
+                    2: [], 3: [],
+                    4: [["١", "Network +", "8:30", "م. عومەر+گۆران+شیلان+یەحیا"], ["٢", "Web Design", "12:30", "م. مستەفا+ئەمین+چیناز+نمە"]]
+                }
+            }, 
+            4: { 
+                'A': {
+                    1: [["١", "Web Programming II", "8:30", "م. زانیار"], ["٢", "Visual Programming", "10:30", "م. علی"], ["٣", "Project", "12:30", "-"]],
+                    2: [["١", "Web Programming II", "8:30", "م. زانیار+چیناز+گۆران+نمە"], ["٢", "Mobile Application", "10:30", "م. ڕێبین+سامان+ئەمین"], ["٣", "Visual Programming", "12:30", "م. علی+هۆگر+ئاسۆ"]],
+                    3: [["١", "Project", "8:30", "-"], ["٢", "Project", "10:30", "-"]],
+                    4: [["١", "Mobile Application", "8:30", "م. ڕێبین"], ["٢", "Information Security", "10:30", "م. هەڵۆ"]]
+                }, 
+                'B': {
+                    1: [["١", "Visual Programming", "8:30", "م. علی"], ["٢", "Web Programming II", "10:30", "م. زانیار"], ["٣", "Project", "12:30", "-"]],
+                    2: [["١", "Mobile Application", "8:30", "م. ڕێبین+سامان+ئەمین"], ["٢", "Visual Programming", "10:30", "م. علی+هۆگر+ئاسۆ"], ["٣", "Web Programming II", "12:30", "م. زانیار+گۆران+چیناز+نمە"]],
+                    3: [["١", "Project", "8:30", "-"], ["٢", "Project", "10:30", "-"]],
+                    4: [["١", "Information Security", "8:30", "م. هەڵۆ"], ["٢", "Mobile Application", "10:30", "م. ڕێبین"]]
+                },
+                'C': {
+                    2: [["١", "Visual Programming", "8:30", "م. علی+هۆگر+ئاسۆ"], ["٢", "Web Programming II", "10:30", "م. زانیار+گۆران+چیناز+نمە"], ["٣", "Mobile Application", "12:30", "م. ڕێبین+سامان+ئەمین"]],
+                    1: [], 3: [], 4: []
+                }
+            } 
+        },
         evening: {
             1: {
                 'A': { 1: [["١", "Logic Design", "2:00", "م. پشتیوان + هەڵكەوت"], ["٢", "English", "4:00", "م. بەرهەم"], ["٣", "IT Fundamentals", "6:00", "م.عمر+هۆگر+امین"]], 2: [["١", "Mathematics", "2:00", "م. سۆران"], ["٢", "Logic Design", "4:00", "م. پشتیوان"], ["٣", "IT Fundamentals", "6:00", "م. عمر"]], 3: [["١", "Kurdology", "2:00", "م. ڕێبین"], ["٢", "English", "4:00", "م. بەرهەم"], ["٣", "Kurdology", "6:00", "م. ڕێبین"]], 4: [["١", "IT Fundamentals", "2:00", "م. عمر"], ["٢", "IT Fundamentals", "4:00", "م. عمر+امین+هۆگر"]] },
                 'B': { 1: [["١", "English", "2:00", "م. بەرهەم"], ["٢", "Logic Design", "4:00", "م. پشتیوان+هەڵكەوت"], ["٣", "IT Fundamentals", "6:00", "م.عمر+هۆگر+امین"]], 2: [["١", "Logic Design", "2:00", "م. پشتیوان"], ["٢", "Mathematics", "4:00", "م. سۆران"], ["٣", "IT Fundamentals", "6:00", "م. عمر"]], 3: [["١", "English", "2:00", "م. بەرهەم"], ["٢", "Kurdology", "4:00", "م. ڕێبین"], ["٣", "Kurdology", "6:00", "م. ڕێبین"]], 4: [["١", "IT Fundamentals", "2:00", "م. عمر"], ["٢", "IT Fundamentals", "4:00", "م. عمر+امین+هۆگر"]] }
             },
+            2: {
+                'A': {
+                    1: [["١", "Web Design", "2:00", "م. مستەفا"], ["٢", "Network +", "4:00", "م. عومەر"], ["٣", "Programming", "6:00", "م. هێشوو+هۆگر+ئاسۆ"]],
+                    2: [["١", "Web Design", "2:00", "م. مستەفا+ئەمین+چیناز+نمە"], ["٢", "Programming", "4:00", "م. هێشوو"], ["٣", "Database", "6:00", "م. هەردی"]],
+                    3: [["١", "Network +", "2:00", "م. عومەر+گۆران+شیلان+یەحیا"], ["٢", "Web Design", "4:00", "م. مستەفا"]],
+                    4: [["١", "Programming", "2:00", "م. هێشوو"], ["٢", "English II", "4:00", "م. خێڵان+بەرهەم"]]
+                },
+                'B': {
+                    1: [["١", "Network +", "2:00", "م. عومەر"], ["٢", "Web Design", "4:00", "م. مستەفا"], ["٣", "Programming", "6:00", "م. هێشوو+هۆگر+ئاسۆ"]],
+                    2: [["١", "Programming", "2:00", "م. هێشوو"], ["٢", "Web Design", "4:00", "م. مستەفا+ئەمین+چیناز+نمە"], ["٣", "Database", "6:00", "م. هەردی"]],
+                    3: [["١", "Web Design", "2:00", "م. مستەفا"], ["٢", "Network +", "4:00", "م. عومەر+گۆران+شیلان+یەحیا"]],
+                    4: [["١", "English II", "2:00", "م. خێڵان+بەرهەم"], ["٢", "Programming", "4:00", "م. هێشوو"]]
+                }
+            },
             3: {
                 'A': { 1: [["١", "Web Programming", "2:00", "م. زانیار"], ["٢", "O.O.P", "4:00", "م. علی"]], 2: [["١", "Database Management", "2:00", "م. محمد + امین"], ["٢", "Web Programming", "4:00", "م. زانیار + گۆران"]], 3: [["١", "Database", "2:00", "م. محمد"], ["٢", "O.O.P", "4:00", "م. علی + هۆگر + سامان"]], 4: [["١", "Operating System", "2:00", "م. ڕێبین"], ["٢", "Computer Network II", "4:00", "م. هەڵۆ"]] },
                 'B': { 1: [["١", "Web Programming", "2:00", "م. زانیار"], ["٢", "O.O.P", "4:00", "م. علی"]], 2: [["١", "Database Management", "2:00", "م. محمد + امین"], ["٢", "Web Programming", "4:00", "م. زانیار + گۆران"]], 3: [["١", "Database", "2:00", "م. محمد"], ["٢", "O.O.P", "4:00", "م. علی + هۆگر + سامان"]], 4: [["١", "Operating System", "2:00", "م. ڕێبین"], ["٢", "Computer Network II", "4:00", "م. هەڵۆ"]] }
+            },
+            4: {
+                'A': {
+                    1: [["١", "Web Programming II", "2:00", "م. زانیار"], ["٢", "Visual Programming", "4:00", "م. علی"]],
+                    2: [["١", "Mobile Application", "2:00", "م. ڕێبین+سامان+ئەمین"], ["٢", "Visual Programming", "4:00", "م. علی+هۆگر+نمە"], ["٣", "Web Programming II", "6:00", "م. زانیار+گۆران+چیناز"]],
+                    3: [["١", "Project", "2:00", "-"], ["٢", "Project", "4:00", "-"]],
+                    4: [["١", "Mobile Application", "2:00", "م. ڕێبین"], ["٢", "Information Security", "4:00", "م. هەڵۆ"]]
+                },
+                'B': {
+                    1: [["١", "Web Programming II", "2:00", "م. زانیار"], ["٢", "Visual Programming", "4:00", "م. علی"]],
+                    2: [["١", "Web Programming II", "2:00", "م. زانیار+گۆران+چیناز"], ["٢", "Mobile Application", "4:00", "م. ڕێبین+سامان+ئەمین"], ["٣", "Visual Programming", "6:00", "م. علی+هۆگر+نمە"]],
+                    3: [["١", "Project", "2:00", "-"], ["٢", "Project", "4:00", "-"]],
+                    4: [["١", "Mobile Application", "2:00", "م. ڕێبین"], ["٢", "Information Security", "4:00", "م. هەڵۆ"]]
+                }
             }
         }
     };
@@ -927,13 +1014,26 @@
         currentSem = s;
         document.getElementById('group-selection').style.display = 'flex';
         document.getElementById('group-display-title').style.display = 'block';
+        
+        // Logic to show/hide Group C button
+        // Only show C if Morning shift AND (Sem 2 OR Sem 4)
+        const btnC = document.getElementById('btn-group-c');
+        if (currentShift === 'morning' && (currentSem === 2 || currentSem === 4)) {
+            btnC.style.display = 'inline-block';
+        } else {
+            btnC.style.display = 'none';
+        }
+
         const shiftText = currentShift === 'morning' ? (currentLang === 'en' ? 'Morning' : 'بەیانیان') : (currentLang === 'en' ? 'Evening' : 'ئێوارن');
         document.getElementById('group-display-title').innerHTML = `${translations[currentLang].semBtn1.replace('١','').replace('1','')} ${s} - ${shiftText} - <span style="color:#f59e0b">${currentLang === 'en' ? 'Select Group' : 'گروپ هەڵبژێرە'}</span>`;
         document.getElementById('daysArea').innerHTML = ""; document.getElementById('schedule-box').style.display = 'none';
     }
 
     function selectGroup(g) {
-        const color = (g === 'A') ? '#3b82f6' : '#10b981';
+        let color = '#3b82f6';
+        if (g === 'B') color = '#10b981';
+        if (g === 'C') color = '#d97706';
+        
         const shiftText = currentShift === 'morning' ? (currentLang === 'en' ? 'Morning' : 'بەیانیان') : (currentLang === 'en' ? 'Evening' : 'ئێوارن');
         document.getElementById('group-display-title').innerHTML = `${translations[currentLang].semBtn1.replace('١','').replace('1','')} ${currentSem} - ${shiftText} - <span style="color:${color}">Group ${g}</span>`;
         const dayNames = currentLang === 'en' ? ['Sunday', 'Monday', 'Tuesday', 'Wednesday'] : ['یەکشەممە', 'دووشەممە', 'سێشەممە', 'چوارشەممە'];
@@ -946,17 +1046,26 @@
 
     function selectDay(g, d, dayName) {
         const body = document.getElementById('schedule-body'); if (!body) return; body.innerHTML = '';
-        const color = (g === 'A') ? '#3b82f6' : '#10b981';
+        let color = '#3b82f6';
+        if (g === 'B') color = '#10b981';
+        if (g === 'C') color = '#d97706';
+        
         const shiftText = currentShift === 'morning' ? (currentLang === 'en' ? 'Morning' : 'بەیانیان') : (currentLang === 'en' ? 'Evening' : 'ئێوارن');
         document.getElementById('group-display-title').innerHTML = `${translations[currentLang].semBtn1.replace('١','').replace('1','')} ${currentSem} - ${shiftText} - <span style="color:${color}">Group ${g}</span> - ${dayName}`;
-        const subjectColors = { 'Logic Design': '#ef4444', 'English': '#f59e0b', 'IT Fundamentals': '#10b981', 'Mathematics': '#8b5cf6', 'Kurdology': '#475569', 'Web Programming': '#3b82f6', 'O.O.P': '#8b5cf6', 'Database Management': '#d97706', 'Database': '#d97706', 'Operating System': '#ef4444', 'Computer Network II': '#10b981' };
+        const subjectColors = { 'Logic Design': '#ef4444', 'English': '#f59e0b', 'IT Fundamentals': '#10b981', 'Mathematics': '#8b5cf6', 'Kurdology': '#475569', 'Web Programming': '#3b82f6', 'O.O.P': '#8b5cf6', 'Database Management': '#d97706', 'Database': '#d97706', 'Operating System': '#ef4444', 'Computer Network II': '#10b981', 'English II': '#f59e0b', 'Network +': '#3b82f6', 'Programming': '#8b5cf6', 'Web Design': '#14b8a6', 'Web Programming II': '#3b82f6', 'Visual Programming': '#8b5cf6', 'Mobile Application': '#d97706', 'Information Security': '#ef4444', 'Project': '#10b981' };
+        
         if (scheduleData[currentShift] && scheduleData[currentShift][currentSem] && scheduleData[currentShift][currentSem][g] && scheduleData[currentShift][currentSem][g][d]) {
-            scheduleData[currentShift][currentSem][g][d].forEach(r => {
-                const sColor = subjectColors[r[1]] || '#3b82f6'; 
-                body.innerHTML += `<tr><td style="font-weight:bold;">${r[0]}</td><td><span style="background-color: ${sColor}; color: white; padding: 5px 12px; border-radius: 20px; font-weight: bold; display: inline-block;">${r[1]}</span></td><td dir="ltr" style="font-weight: bold;">${r[2]}</td><td style="font-size: 0.9rem;">${r[3]}</td></tr>`;
-            });
+            const lessons = scheduleData[currentShift][currentSem][g][d];
+            if (lessons.length > 0) {
+                lessons.forEach(r => {
+                    const sColor = subjectColors[r[1]] || '#3b82f6'; 
+                    body.innerHTML += `<tr><td style="font-weight:bold;">${r[0]}</td><td><span style="background-color: ${sColor}; color: white; padding: 5px 12px; border-radius: 20px; font-weight: bold; display: inline-block;">${r[1]}</span></td><td dir="ltr" style="font-weight: bold;">${r[2]}</td><td style="font-size: 0.9rem;">${r[3]}</td></tr>`;
+                });
+            } else {
+                body.innerHTML = `<tr><td colspan="4">${g === 'C' ? 'گرووپی C وانەی نییە لەم ڕۆژانەدا' : 'وانە نییە / No Class'}</td></tr>`;
+            }
             document.getElementById('schedule-box').style.display = 'block';
-        } else { body.innerHTML = '<tr><td colspan="4">زانیاری نییە / No Info</td></tr>'; }
+        } else { body.innerHTML = '<tr><td colspan="4">زانیاری نییە / No Info</td></tr>'; document.getElementById('schedule-box').style.display = 'block'; }
     }
 
     function requestNotifyPermission() {
