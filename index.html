@@ -14,7 +14,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="ئایتی IT">
 
-    <meta name="description" content="سایتی فەرمی بەشی IT پەیمانگای تەکنیکی چەمچەماڵ">
+    <meta name="description" content="سایتی  بەشی IT پەیمانگای تەکنیکی چەمچەماڵ">
     <meta name="keywords" content="IT Chamchamal, بەشی ئایتی چەمچەماڵ">
     <meta name="author" content="Sherwan Sherzad">
     
@@ -290,6 +290,22 @@
         .tab-btn.active { 
             background-color: var(--secondary); color: white; 
             transform: scale(1.05); box-shadow: 0 8px 20px rgba(5, 150, 105, 0.3); 
+        }
+
+        /* --- ستایلی نوێ بۆ دوگمە چالاکەکان (داواکارییەکە) --- */
+        /* ئەمە بۆ مۆدی ڕووناک (Light Mode) */
+        .active-btn {
+            border: 3px solid #1e3a8a !important; /* چوارچێوەی شین بۆ ئەوەی بە ڕۆژ دیار بێت */
+            box-shadow: 0 0 15px rgba(30, 58, 138, 0.4) !important;
+            transform: scale(1.1) !important;
+            z-index: 10;
+            font-weight: 900 !important;
+        }
+
+        /* ئەمە بۆ مۆدی شەو (Dark Mode) - ئۆڤەرڕاید دەکات */
+        body.dark-mode .active-btn {
+            border: 3px solid #ffffff !important; /* چوارچێوەی سپی بۆ ئەوەی بە شەو دیار بێت */
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5) !important;
         }
 
         /* Scroller */
@@ -585,15 +601,15 @@
             <button class="shift-btn evening active" onclick="selectShift('evening')"><span id="lang-evening">🌙 دەوامی ئێوارن</span></button>
         </div>
         <div style="display: flex; gap: 8px; justify-content: center; margin-bottom: 15px; flex-wrap: wrap;">
-            <button class="tab-btn" style="background:#3b82f6; color:white;" onclick="setSem(1)"><span id="lang-sem-btn1">سمستەری ١</span></button>
-            <button class="tab-btn" style="background:#10b981; color:white;" onclick="setSem(2)"><span id="lang-sem-btn2">سمستەری ٢</span></button>
-            <button class="tab-btn" style="background:#f59e0b; color:white;" onclick="setSem(3)"><span id="lang-sem-btn3">سمستەری ٣</span></button>
-            <button class="tab-btn" style="background:#8b5cf6; color:white;" onclick="setSem(4)"><span id="lang-sem-btn4">سمستەری ٤</span></button>
+            <button id="btn-sem-1" class="tab-btn sem-btn" style="background:#3b82f6; color:white;" onclick="setSem(1)"><span id="lang-sem-btn1">سمستەری ١</span></button>
+            <button id="btn-sem-2" class="tab-btn sem-btn" style="background:#10b981; color:white;" onclick="setSem(2)"><span id="lang-sem-btn2">سمستەری ٢</span></button>
+            <button id="btn-sem-3" class="tab-btn sem-btn" style="background:#f59e0b; color:white;" onclick="setSem(3)"><span id="lang-sem-btn3">سمستەری ٣</span></button>
+            <button id="btn-sem-4" class="tab-btn sem-btn" style="background:#8b5cf6; color:white;" onclick="setSem(4)"><span id="lang-sem-btn4">سمستەری ٤</span></button>
         </div>
         <div id="group-selection" style="display: none; gap: 15px; justify-content: center; margin-bottom: 25px;">
-            <button class="tab-btn" style="background:linear-gradient(135deg, #3b82f6, #2563eb); color:white;" onclick="selectGroup('A')">Group A 🔵</button>
-            <button class="tab-btn" style="background:linear-gradient(135deg, #10b981, #059669); color:white;" onclick="selectGroup('B')">Group B 🟢</button>
-            <button id="btn-group-c" class="tab-btn" style="background:linear-gradient(135deg, #f59e0b, #d97706); color:white; display:none;" onclick="selectGroup('C')">Group C 🟡</button>
+            <button id="btn-grp-A" class="tab-btn grp-btn" style="background:linear-gradient(135deg, #3b82f6, #2563eb); color:white;" onclick="selectGroup('A')">Group A 🔵</button>
+            <button id="btn-grp-B" class="tab-btn grp-btn" style="background:linear-gradient(135deg, #10b981, #059669); color:white;" onclick="selectGroup('B')">Group B 🟢</button>
+            <button id="btn-grp-C" class="tab-btn grp-btn" style="background:linear-gradient(135deg, #f59e0b, #d97706); color:white; display:none;" onclick="selectGroup('C')">Group C 🟡</button>
         </div>
         <h3 id="group-display-title" style="text-align: center; color: var(--secondary); margin-bottom: 15px; font-weight: bold; display: none;"></h3>
         <div id="daysArea" style="text-align:center; margin-bottom:20px;"></div>
@@ -985,16 +1001,16 @@
             },
             2: {
                 'A': {
-                    1: [["١", "Web Design", "2:00", "م. مستەفا"], ["٢", "Network +", "4:00", "م. عومەر"], ["٣", "Programming", "6:00", "م. هێشوو+هۆگر+ئاسۆ"]],
-                    2: [["١", "Web Design", "2:00", "م. مستەفا+ئەمین+چیناز+نمە"], ["٢", "Programming", "4:00", "م. هێشوو"], ["٣", "Database", "6:00", "م. هەردی"]],
-                    3: [["١", "Network +", "2:00", "م. عومەر+گۆران+شیلان+یەحیا"], ["٢", "Web Design", "4:00", "م. مستەفا"]],
-                    4: [["١", "Programming", "2:00", "م. هێشوو"], ["٢", "English II", "4:00", "م. خێڵان+بەرهەم"]]
+                    1: [["١", "Programming", "2:00", "م. هێشوو + هۆگر + امین"], ["٢", "English", "4:00", "م. بەرهەم + خێڵان"], ["٣", "Network +", "6:00", "م.عمر"]],
+                    2: [["١", "Programming", "2:00", "م. هێشوو"], ["٢", "English", "4:00", "م. بەرهەم + خێڵان"]],
+                    3: [["١", "Network +", "2:00", "م. عمر + گۆران + شیلان"], ["٢", "Web Design", "4:00", "م. مستەفا + امین + چیناز"], ["٣", "Database", "6:00", "م. هەردی + امین + سامان"]],
+                    4: [["١", "Database", "2:00", "م. هەردی"], ["٢", "Web Design", "4:00", "م. مستەفا"]]
                 },
                 'B': {
-                    1: [["١", "Network +", "2:00", "م. عومەر"], ["٢", "Web Design", "4:00", "م. مستەفا"], ["٣", "Programming", "6:00", "م. هێشوو+هۆگر+ئاسۆ"]],
-                    2: [["١", "Programming", "2:00", "م. هێشوو"], ["٢", "Web Design", "4:00", "م. مستەفا+ئەمین+چیناز+نمە"], ["٣", "Database", "6:00", "م. هەردی"]],
-                    3: [["١", "Web Design", "2:00", "م. مستەفا"], ["٢", "Network +", "4:00", "م. عومەر+گۆران+شیلان+یەحیا"]],
-                    4: [["١", "English II", "2:00", "م. خێڵان+بەرهەم"], ["٢", "Programming", "4:00", "م. هێشوو"]]
+                    1: [["١", "English", "2:00", "م. بەرهەم + خێڵان"], ["٢", "Programming", "4:00", "م. هێشوو + هۆگر + امین"]],
+                    2: [["١", "English", "2:00", "م. بەرهەم + خێڵان"], ["٢", "Programming", "4:00", "م. هێشوو"], ["٣", "Network +", "6:00", "م. عمر"]],
+                    3: [["١", "Web Design", "2:00", "م. مستەفا + امین+ چیناز"], ["٢", "Network +", "4:00", "م. عمر + گۆران + شیلان"]],
+                    4: [["١", "Web Design", "2:00", "م. مستەفا"], ["٢", "Database", "4:00", "م. هەردی"], ["٣", "Database", "6:00", "م. هەردی + امین + سامان"]]
                 }
             },
             3: {
@@ -1020,21 +1036,35 @@
 
     function setSem(s) {
         currentSem = s;
+        
+        // ١. گۆڕینی دیزاینی دوگمەکان (Highlight)
+        document.querySelectorAll('.sem-btn').forEach(btn => btn.classList.remove('active-btn'));
+        const activeBtn = document.getElementById('btn-sem-' + s);
+        if(activeBtn) activeBtn.classList.add('active-btn');
+
+        // ٢. پیشاندانی بەشی گرووپەکان
         document.getElementById('group-selection').style.display = 'flex';
         document.getElementById('group-display-title').style.display = 'block';
         
-        // Logic to show/hide Group C button
-        // Only show C if Morning shift AND (Sem 2 OR Sem 4)
-        const btnC = document.getElementById('btn-group-c');
+        // ٣. شاردنەوە/پیشاندانی گرووپی C
+        const btnC = document.getElementById('btn-grp-C');
         if (currentShift === 'morning' && (currentSem === 2 || currentSem === 4)) {
-            btnC.style.display = 'inline-block';
+            if(btnC) btnC.style.display = 'inline-block';
         } else {
-            btnC.style.display = 'none';
+            if(btnC) btnC.style.display = 'none';
         }
 
+        // ٤. نووسینی دەقەکە (وەک ئەوەی خۆت دەتەوێت)
         const shiftText = currentShift === 'morning' ? (currentLang === 'en' ? 'Morning' : 'بەیانیان') : (currentLang === 'en' ? 'Evening' : 'ئێوارن');
+        // لێرە نووسینەکە دەنووسینەوە
         document.getElementById('group-display-title').innerHTML = `${translations[currentLang].semBtn1.replace('١','').replace('1','')} ${s} - ${shiftText} - <span style="color:#f59e0b">${currentLang === 'en' ? 'Select Group' : 'گروپ هەڵبژێرە'}</span>`;
-        document.getElementById('daysArea').innerHTML = ""; document.getElementById('schedule-box').style.display = 'none';
+        
+        // لابردنی دیزاینی گرووپەکان کاتێک سمستەر دەگۆڕدرێت
+        document.querySelectorAll('.grp-btn').forEach(btn => btn.classList.remove('active-btn'));
+        
+        // پاککردنەوەی خشتەکە
+        document.getElementById('daysArea').innerHTML = ""; 
+        document.getElementById('schedule-box').style.display = 'none';
     }
 
     function selectGroup(g) {
@@ -1042,8 +1072,16 @@
         if (g === 'B') color = '#10b981';
         if (g === 'C') color = '#d97706';
         
+        // ١. گۆڕینی دیزاینی دوگمەی گرووپ (Highlight)
+        document.querySelectorAll('.grp-btn').forEach(btn => btn.classList.remove('active-btn'));
+        const activeGrp = document.getElementById('btn-grp-' + g);
+        if(activeGrp) activeGrp.classList.add('active-btn');
+
+        // ٢. نووسینی دەقەکە (وەک ئەوەی خۆت دەتەوێت)
         const shiftText = currentShift === 'morning' ? (currentLang === 'en' ? 'Morning' : 'بەیانیان') : (currentLang === 'en' ? 'Evening' : 'ئێوارن');
+        // لێرە نووسینەکە نوێ دەکرێتەوە
         document.getElementById('group-display-title').innerHTML = `${translations[currentLang].semBtn1.replace('١','').replace('1','')} ${currentSem} - ${shiftText} - <span style="color:${color}">Group ${g}</span>`;
+        
         const dayNames = currentLang === 'en' ? ['Sunday', 'Monday', 'Tuesday', 'Wednesday'] : ['یەکشەممە', 'دووشەممە', 'سێشەممە', 'چوارشەممە'];
         document.getElementById('daysArea').innerHTML = `
             <button class="tab-btn" style="background:#8b5cf6; color:white; margin:2px;" onclick="selectDay('${g}', 1, '${dayNames[0]}')">${dayNames[0]}</button>
