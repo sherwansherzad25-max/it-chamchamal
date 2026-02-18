@@ -32,26 +32,26 @@
 
     <style>
         :root {
-            /* --- RANGAKAN (Palette) --- */
-            --primary: #1e3a8a;       /* Navy Blue - Header/Footer */
-            --secondary: #059669;     /* Emerald Green - Sidebar/Highlights */
-            --accent: #dc2626;        /* Red - Alerts */
-            --background: #f1f5f9;    /* Light Gray Blue BG */
+        
+            --primary: #1e3a8a;      
+            --secondary: #059669;  
+            --accent: #dc2626;       
+            --background: #f1f5f9;  
             --white: #ffffff;
             --text-color: #1e293b;
             --table-border: #cbd5e1;
-            --sidebar-bg: #059669;    /* Green Sidebar */
+            --sidebar-bg: #24682f;    
             --sidebar-text: #ffffff;
             --font-main: 'Vazirmatn', sans-serif;
         }
 
         body.dark-mode {
-            --background: #0f172a;    /* Dark Navy BG */
+            --background: #0f172a;   
             --white: #1e293b;
-            --primary: #172554;       /* Darker Navy */
+            --primary: #172554;      
             --text-color: #f8fafc;
             --table-border: #334155;
-            --sidebar-bg: #064e3b;    /* Dark Green */
+            --sidebar-bg: #064e3b;    
             --secondary: #10b981;
         }
 
@@ -68,9 +68,9 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* --- SIDEBAR LOCK (NEW) --- */
+
         body.sidebar-open {
-            overflow: hidden !important; /* قوفڵکردنی شاشە کاتێک لیست کراوەیە */
+            overflow: hidden !important; 
         }
 
         body::before {
@@ -80,10 +80,10 @@
         }
         body.dark-mode::before { background: rgba(15, 23, 42, 0.94); }
 
-        /* --- LOADING SCREEN (UPDATED) --- */
+
         #loading-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #059669; /* ڕەنگی سەوز بەپێی داواکاری */
+            background-color: #059669; 
             z-index: 9999; display: flex; flex-direction: column;
             align-items: center; justify-content: center;
             transition: opacity 0.5s ease-out, visibility 0.5s;
@@ -91,11 +91,11 @@
         #loading-screen.hidden { opacity: 0; visibility: hidden; }
         
         .loader-logo {
-            width: 70%; /* وێنەکە گەورە کراوە پڕ بە شاشە */
+            width: 70%; 
             max-width: 350px;
             height: auto;
             border-radius: 20px;
-            /* سێبەری کەم کراوەتەوە بۆ جوانی */
+
             filter: drop-shadow(0 0 10px rgba(0,0,0,0.2));
             animation: pulse 1.5s infinite;
         }
@@ -105,13 +105,12 @@
         }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
-        /* English Support */
+
         body.lang-en { direction: ltr; text-align: left; }
         body.lang-en .fixed-menu-btn { right: auto; left: 15px; } 
         body.lang-en .sidebar { right: auto; left: 0; }
         body.lang-en .sidebar .closebtn { right: auto; left: 25px; }
 
-        /* Header & Menu */
         .fixed-menu-btn {
             position: fixed; top: 15px; right: 15px; z-index: 3000;
             background: rgba(5, 150, 105, 0.9); backdrop-filter: blur(5px);
@@ -123,15 +122,15 @@
         .menu-icon-text { font-size: 11px; font-weight: bold; margin-top: -2px; }
 
         header {
-            /* Navy Blue Background */
+           
             background-color: var(--primary);
             padding: 20px 15px; box-shadow: 0 4px 20px rgba(30, 58, 138, 0.4);
             position: relative; display: flex; align-items: center; justify-content: space-between; 
             min-height: 110px; border-bottom-left-radius: 30px; border-bottom-right-radius: 30px;
-            overflow: hidden; /* Important for Watermark */
+            overflow: hidden; 
         }
 
-        /* --- Tiled Watermark --- */
+     
         .header-watermark, .footer-watermark {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('1.jfif');
@@ -145,9 +144,8 @@
 
         .header-titles { flex-grow: 1; text-align: center; padding-right: 10px; position: relative; z-index: 2; }
         
-        /* --- Moving Header Styles --- */
         .moving-header {
-            color: #10b981 !important; /* Green */
+            color: #10b981 !important; 
             margin: 0; font-size: 1.6rem;
             display: inline-block; 
             animation: headerJump 3s infinite ease-in-out;
@@ -161,7 +159,7 @@
         }
 
         header h2 { 
-            color: #10b981 !important; /* Green */
+            color: #10b981 !important; 
             font-size: 1.2rem; 
             margin-top: 8px; 
             font-weight: 800;
@@ -188,9 +186,8 @@
             backdrop-filter: blur(4px);
         }
 
-        /* News */
+     
         .sticky-news-wrapper {
-            /* Changed from sticky to relative to scroll away */
             position: relative; top: 0; z-index: 2000; margin: 0;
             background: transparent; padding: 10px 15px;
         }
@@ -198,7 +195,7 @@
         body.dark-mode #news-list { color: #fcd34d !important; text-shadow: 0 0 2px rgba(0,0,0,0.5); }
         @keyframes tickerMove { 0% { transform: translateX(0%); } 100% { transform: translateX(100%); } }
 
-        /* Notification Button */
+       
         .notif-btn {
             background: #f59e0b; color: #fff; border: none; padding: 4px 10px;
             border-radius: 8px; cursor: pointer; font-size: 1rem; margin-right: 8px;
@@ -207,31 +204,31 @@
         }
         @keyframes pulse-btn { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
 
-    /* Sidebar */
+
 .sidebar {
-    height: 100%; /* گۆڕینی vh بۆ % باشترە بۆ زووم */
+    height: 100%; 
     width: 0;
     position: fixed;
     z-index: 4000;
     top: 0;
     right: 0;
-    bottom: 0; /* ئەمە دڵنیات دەکاتەوە کە بنی لیستەکە بنی شاشەکەیە */
+    bottom: 0;
     
     background-color: var(--sidebar-bg);
     overflow-x: hidden;
-    overflow-y: auto; /* سکرۆڵ کار دەکات */
+    overflow-y: auto; 
     
     transition: 0.4s;
     padding-top: 40px;
-    padding-bottom: 100px; /* بۆشایی خوارەوە */
+    padding-bottom: 100px; 
     
-    box-sizing: border-box; /* <--- ئەمە کلیلی چارەسەرەکەیە */
+    box-sizing: border-box; 
     
     box-shadow: -5px 0 25px rgba(0,0,0,0.2);
     border-left: 1px solid rgba(255,255,255,0.1);
 }
         
-        /* --- FLAG ANIMATION --- */
+  
         .flag-container {
             width: 120px; height: 75px; margin: 15px auto 20px auto; 
             position: relative; z-index: 10; perspective: 1000px;
@@ -268,7 +265,7 @@
         .sidebar .closebtn { position: absolute; top: 5px; right: 20px; font-size: 36px; margin-left: 50px; color: white; }
         .sidebar-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 3500; display: none; backdrop-filter: blur(2px); }
 
-        /* Content Areas */
+     
         .main-container { max-width: 1000px; margin: -20px auto 50px auto; padding: 0 15px; position: relative; z-index: 10; }
         .tabs { display: none; }
         .semester-content {
@@ -279,7 +276,7 @@
         .semester-content.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Tab Buttons */
+  
         .tab-btn {
             padding: 12px 20px; border: none; border-radius: 16px; font-size: 1rem; font-weight: 700; cursor: pointer;
             transition: all 0.3s; color: var(--text-color); background-color: var(--white); 
@@ -292,23 +289,22 @@
             transform: scale(1.05); box-shadow: 0 8px 20px rgba(5, 150, 105, 0.3); 
         }
 
-        /* --- ستایلی نوێ بۆ دوگمە چالاکەکان (داواکارییەکە) --- */
-        /* ئەمە بۆ مۆدی ڕووناک (Light Mode) */
+
         .active-btn {
-            border: 3px solid #1e3a8a !important; /* چوارچێوەی شین بۆ ئەوەی بە ڕۆژ دیار بێت */
+            border: 3px solid #1e3a8a !important;
             box-shadow: 0 0 15px rgba(30, 58, 138, 0.4) !important;
             transform: scale(1.1) !important;
             z-index: 10;
             font-weight: 900 !important;
         }
 
-        /* ئەمە بۆ مۆدی شەو (Dark Mode) - ئۆڤەرڕاید دەکات */
+  
         body.dark-mode .active-btn {
-            border: 3px solid #ffffff !important; /* چوارچێوەی سپی بۆ ئەوەی بە شەو دیار بێت */
+            border: 3px solid #ffffff !important; 
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.5) !important;
         }
 
-        /* Scroller */
+     
         .scrolling-container { 
             height: 450px; overflow: hidden; position: relative; border-radius: 30px;
             background: linear-gradient(135deg, #059669 0%, #10b981 100%); 
@@ -328,7 +324,7 @@
         @keyframes continuousScroll { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
         .highlight-menu-word { color: #ffffff; background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 6px; border: 1px dashed rgba(255,255,255,0.5); }
 
-        /* GPA - Modern Cards & Updates */
+    
         .gpa-info-box {
             background: #dcfce7; color: #166534; padding: 12px; border-radius: 12px; margin-bottom: 20px; font-weight: bold; border: 1px solid #10b981; text-align: center;
         }
@@ -355,12 +351,12 @@
         .gpa-input-row input:focus { border-color: var(--secondary); outline: none; box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1); }
         .subject-badge { color: white; padding: 6px 14px; border-radius: 50px; font-size: 0.9rem; font-weight: 600; display: inline-block; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         
-        /* New Delete Buttons */
+     
         .clear-btns-container { display: flex; justify-content: center; margin-top: 10px; }
         .btn-clear-sub { background: #fee2e2; color: #dc2626; border: 1px solid #fecaca; padding: 6px 12px; border-radius: 8px; font-size: 0.85rem; cursor: pointer; }
         .btn-clear-sem { background: #dc2626; color: white; border: none; padding: 12px 20px; border-radius: 12px; font-weight: bold; cursor: pointer; margin-top: 20px; width: 100%; box-shadow: 0 4px 10px rgba(220, 38, 38, 0.3); }
 
-        /* Exam Timer */
+    
         .countdown-box {
             background: linear-gradient(135deg, #059669, #047857); /* Green Gradient */
             color: white; padding: 25px 15px; border-radius: 24px; text-align: center;
@@ -374,7 +370,7 @@
         }
         .timer-label { font-size: 0.8rem; font-weight: 600; margin-top: 8px; color: #d1fae5; letter-spacing: 0.5px; }
 
-        /* Schedule */
+      
         .shift-selection { display: flex; gap: 15px; justify-content: center; margin-bottom: 25px; flex-wrap: wrap; }
         .shift-btn { 
             padding: 15px 35px; border: none; border-radius: 20px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: all 0.3s; 
@@ -410,12 +406,12 @@
         .old-btn { background-color: #f59e0b; box-shadow: 0 2px 5px rgba(245, 158, 11, 0.2); }
         .download-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 10px rgba(0,0,0,0.15); filter: brightness(1.05); }
 
-        /* Footer */
+       
         footer { 
             text-align: center; padding: 30px 15px; background-color: var(--primary); color: white; 
             margin-top: 60px; border-radius: 30px 30px 0 0; position: relative; overflow: hidden;
         }
-        footer > * { position: relative; z-index: 2; } /* Ensure text is above watermark */
+        footer > * { position: relative; z-index: 2; } 
         
         .rainbow-name { 
             display: inline-block; font-size: 1.4rem; font-weight: 800; 
@@ -427,7 +423,7 @@
         .moving-text { margin-top: 10px; font-size: 0.95rem; font-weight: 600; display: block; animation: moveText 3s infinite alternate ease-in-out; }
         @keyframes moveText { from { transform: scale(1); color: #6ee7b7; } to { transform: scale(1.03); color: #fcd34d; } }
 
-        /* --- Dark Mode Overrides --- */
+       
         body.dark-mode .semester-content,
         body.dark-mode .panel {
             background-color: #000000 !important;
@@ -435,7 +431,7 @@
             border-color: #333 !important;
         }
         body.dark-mode table th {
-            background-color: #111111 !important; /* Dark header */
+            background-color: #111111 !important; 
             color: #ffffff !important;
         }
         body.dark-mode table td {
@@ -739,10 +735,10 @@
 </footer>
 
 <script>
-    // --- Automatic Notification Request on Startup ---
+
     function autoRequestNotification() {
         if (!("Notification" in window)) return;
-        // Check if permission is default (not yet asked)
+        
         if (Notification.permission === "default") {
             setTimeout(() => {
                 Notification.requestPermission().then(permission => {
@@ -753,13 +749,13 @@
                         });
                     }
                 });
-            }, 3000); // 3 seconds delay
+            }, 3000); 
         }
     }
 
     window.addEventListener('load', function() {
-        autoRequestNotification(); // Trigger notification request
-        // Fast Loading (1.2 Seconds)
+        autoRequestNotification(); 
+     
         setTimeout(function() {
             var loader = document.getElementById('loading-screen');
             if(loader) {
@@ -768,11 +764,11 @@
             }
         }, 1200);
         
-        // --- RESTORE GPA SEMESTER SELECTION ---
+     
         const savedGPASem = localStorage.getItem('gpa_selected_sem');
         if(savedGPASem) {
             document.getElementById('gpa-sem-select').value = savedGPASem;
-            renderGrading(); // Update the view based on saved selection
+            renderGrading(); 
         }
     });
 
@@ -843,7 +839,7 @@
     function toggleLanguage(lang) {
         currentLang = lang;
         const t = translations[lang];
-        const t2 = (lang === 'en') ? translations['ku'] : translations['en']; // Alternate for placeholders/logic if needed
+        const t2 = (lang === 'en') ? translations['ku'] : translations['en']; 
         if (lang === 'en') { document.body.classList.add('lang-en'); document.documentElement.dir = "ltr"; } 
         else { document.body.classList.remove('lang-en'); document.documentElement.dir = "rtl"; }
         const map = {
@@ -868,9 +864,9 @@
         document.querySelectorAll('.btn-dl').forEach(e => e.innerText = t.btnDl); document.querySelectorAll('.btn-view').forEach(e => e.innerText = t.btnView);
         document.querySelectorAll('.btn-vid').forEach(e => e.innerText = t.btnVid);
         
-        // Refresh Schedule Title if visible
+       
         if(document.getElementById('group-display-title').style.display !== 'none') {
-             // Re-trigger group selection or just clear it to be safe
+            
              document.getElementById('schedule-box').style.display = 'none';
              document.getElementById('daysArea').innerHTML = '';
              document.getElementById('group-display-title').innerHTML = '';
@@ -884,16 +880,16 @@
         else { menu.style.display = 'none'; arrow.style.transform = 'rotate(0deg)'; }
     }
 
-    /* Sidebar Logic Updated */
+  
     function openNav() { 
         document.getElementById("mySidebar").style.width = "270px"; 
         document.getElementById("sidebarOverlay").style.display = "block"; 
-        document.body.classList.add('sidebar-open'); /* Lock scroll */
+        document.body.classList.add('sidebar-open'); 
     }
     function closeNav() { 
         document.getElementById("mySidebar").style.width = "0"; 
         document.getElementById("sidebarOverlay").style.display = "none"; 
-        document.body.classList.remove('sidebar-open'); /* Unlock scroll */
+        document.body.classList.remove('sidebar-open'); 
     }
 
     function showSection(id) {
@@ -1037,16 +1033,16 @@
     function setSem(s) {
         currentSem = s;
         
-        // ١. گۆڕینی دیزاینی دوگمەکان (Highlight)
+      
         document.querySelectorAll('.sem-btn').forEach(btn => btn.classList.remove('active-btn'));
         const activeBtn = document.getElementById('btn-sem-' + s);
         if(activeBtn) activeBtn.classList.add('active-btn');
 
-        // ٢. پیشاندانی بەشی گرووپەکان
+      
         document.getElementById('group-selection').style.display = 'flex';
         document.getElementById('group-display-title').style.display = 'block';
         
-        // ٣. شاردنەوە/پیشاندانی گرووپی C
+   
         const btnC = document.getElementById('btn-grp-C');
         if (currentShift === 'morning' && (currentSem === 2 || currentSem === 4)) {
             if(btnC) btnC.style.display = 'inline-block';
@@ -1054,15 +1050,15 @@
             if(btnC) btnC.style.display = 'none';
         }
 
-        // ٤. نووسینی دەقەکە (وەک ئەوەی خۆت دەتەوێت)
+     
         const shiftText = currentShift === 'morning' ? (currentLang === 'en' ? 'Morning' : 'بەیانیان') : (currentLang === 'en' ? 'Evening' : 'ئێوارن');
-        // لێرە نووسینەکە دەنووسینەوە
+      
         document.getElementById('group-display-title').innerHTML = `${translations[currentLang].semBtn1.replace('١','').replace('1','')} ${s} - ${shiftText} - <span style="color:#f59e0b">${currentLang === 'en' ? 'Select Group' : 'گروپ هەڵبژێرە'}</span>`;
         
-        // لابردنی دیزاینی گرووپەکان کاتێک سمستەر دەگۆڕدرێت
+       
         document.querySelectorAll('.grp-btn').forEach(btn => btn.classList.remove('active-btn'));
         
-        // پاککردنەوەی خشتەکە
+    
         document.getElementById('daysArea').innerHTML = ""; 
         document.getElementById('schedule-box').style.display = 'none';
     }
@@ -1072,14 +1068,14 @@
         if (g === 'B') color = '#10b981';
         if (g === 'C') color = '#d97706';
         
-        // ١. گۆڕینی دیزاینی دوگمەی گرووپ (Highlight)
+     
         document.querySelectorAll('.grp-btn').forEach(btn => btn.classList.remove('active-btn'));
         const activeGrp = document.getElementById('btn-grp-' + g);
         if(activeGrp) activeGrp.classList.add('active-btn');
 
-        // ٢. نووسینی دەقەکە (وەک ئەوەی خۆت دەتەوێت)
+      
         const shiftText = currentShift === 'morning' ? (currentLang === 'en' ? 'Morning' : 'بەیانیان') : (currentLang === 'en' ? 'Evening' : 'ئێوارن');
-        // لێرە نووسینەکە نوێ دەکرێتەوە
+   
         document.getElementById('group-display-title').innerHTML = `${translations[currentLang].semBtn1.replace('١','').replace('1','')} ${currentSem} - ${shiftText} - <span style="color:${color}">Group ${g}</span>`;
         
         const dayNames = currentLang === 'en' ? ['Sunday', 'Monday', 'Tuesday', 'Wednesday'] : ['یەکشەممە', 'دووشەممە', 'سێشەممە', 'چوارشەممە'];
@@ -1225,12 +1221,12 @@
         examIntervals.push(int);
     }
 
-    /* GPA Logic Updated */
+  
     function renderGrading() {
         const sem = document.getElementById('gpa-sem-select').value; 
         const subjects = subjectList[sem] || [];
         
-        // Save selection to LocalStorage
+       
         localStorage.setItem('gpa_selected_sem', sem);
 
         const container = document.getElementById('grading-container'); container.innerHTML = "";
@@ -1276,7 +1272,7 @@
         
         let msg = "";
         
-        // --- Validation Step ---
+       
         if (currentScore > 50) { 
             msg = "<b style='color:#ef4444'>هەڵە! کۆی سەعی نابێت لە ٥٠ زیاتر بێت. دڵنیابەرەوە لە نمرەکان.</b>"; 
         } 
@@ -1286,20 +1282,20 @@
         else {
             msg = `<div style="margin-bottom:5px;">کۆی سەعی (بێ فایناڵ): <span style="color:#0284c7; font-size:1.1rem;">${currentScore}</span></div>`;
             
-            // --- Missing Fields Reminder (SPECIFIC) ---
+        
             let missing = [];
             if (d === null) missing.push("ڕۆژانە");
-            if (a === null) missing.push("نەهاتن"); // Check attendance too
+            if (a === null) missing.push("نەهاتن"); 
             if (q === null) missing.push("کویز");
             if (r === null) missing.push("ڕاپۆرت و سیمینار");
             if (m === null) missing.push("میدتێرم");
 
-            // --- Motivation Logic ---
+            
             if (missing.length > 0 && currentScore < 50) {
                  msg += `<div style="color:#d97706; font-size:0.85rem; margin-top:5px; margin-bottom:5px; line-height:1.6; font-weight:bold;">💡 هەوڵبدە لە (${missing.join(' و ')}) نمرە بەدەست بهێنیت، بۆ ئەوەی بۆ فایناڵ بتوانیت نمرەت زۆر بەرز بكەیتەوە.</div>`;
             }
             
-            // Check Score Levels if everything is filled or score is low
+          
             if (currentScore < 25) {
                 msg += `<br><span style="color:#ef4444; font-weight:900;">⚠️ مەترسی! نمرەی سەعیت زۆر کەمە. دەبێت لە فایناڵ هەموو هەوڵێک بدەیت تاوەکو دەربچیت.</span>`;
             } else if (currentScore >= 25 && currentScore < 35) {
@@ -1310,7 +1306,7 @@
                 msg += `<br><span style="color:#10b981; font-weight:bold;">🏆 سەعی تەواو! نایابە، ئێستا تەنها فایناڵ ماوە بۆ نمرەی ١٠٠.</span>`;
             }
 
-            // --- Final Score Calculation ---
+           
             if (f !== null) {
                 let finalScore = currentScore + f;
                 msg = `<div style="margin-bottom:5px; font-size:1.1rem;">کۆی گشتی: <span style="color:#1e293b; font-weight:900;">${finalScore}</span></div>`;
@@ -1332,7 +1328,7 @@
     }
 
     function saveGrades() { 
-        // Using a persistent key that is NOT cleared on update
+        
         const inputs = document.querySelectorAll('#grading-container input'); 
         let data = JSON.parse(localStorage.getItem('it_chamchamal_grades') || '{}');
         inputs.forEach(i => data[i.id] = i.value); 
@@ -1371,14 +1367,14 @@
         const sem = document.getElementById('gpa-sem-select').value;
         if(confirm(`دڵنیای لە سڕینەوەی هەموو نمرەکانی سمستەری ${sem}؟ (نمرەکانی سمستەرەکانی تر دەمێننەوە)`)) {
             let data = JSON.parse(localStorage.getItem('it_chamchamal_grades') || '{}');
-            // Only remove keys that match the current semester
+         
             Object.keys(data).forEach(key => {
                 if(key.includes(`-${sem}-`)) {
                     delete data[key];
                 }
             });
             localStorage.setItem('it_chamchamal_grades', JSON.stringify(data));
-            renderGrading(); // Re-render to clear inputs
+            renderGrading();
         }
     }
 
