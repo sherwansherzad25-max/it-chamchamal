@@ -1335,6 +1335,17 @@
         }
     };
 
+    function parseRow(row) {
+        let res = [], cur = '', inQ = false;
+        for (let i = 0; i < row.length; i++) {
+            if (row[i] === '"') inQ = !inQ;
+            else if (row[i] === ',' && !inQ) { res.push(cur.trim().replace(/(^"|"$)/g, '')); cur = ''; }
+            else cur += row[i];
+        }
+        res.push(cur.trim().replace(/(^"|"$)/g, ''));
+        return res;
+    }
+
     function toggleLanguage(lang) {
         currentLang = lang;
         const t = translations[lang];
@@ -1590,10 +1601,11 @@
             if (rows.length > 0 && rows[0].trim() !== "") {
                 let html = ""; let latestNewsTitle = "";
                 rows.forEach((row, index) => {
-                    const firstComma = row.indexOf(',');
-                    if(firstComma !== -1) {
-                        const t = row.substring(0, firstComma).replace(/(^"|"$)/g, '').trim();
-                        const d = row.substring(firstComma + 1).replace(/(^"|"$)/g, '').trim();
+                    if(!row.trim()) return;
+                    let parts = parseRow(row);
+                    if(parts.length >= 2) {
+                        const t = parts[0];
+                        const d = parts.slice(1).join(' - ');
                         if(index === 0) latestNewsTitle = t;
                         html += ` <span style="margin-left:100px; display:inline-block;"> <b>• ${t}</b> : ${d} </span> `;
                     }
@@ -1625,12 +1637,14 @@
             examIntervals.forEach(clearInterval); examIntervals = []; container.innerHTML = "";
             let activeExams = [];
             rows.forEach(row => {
-                let parts = row.split(',');
-                if (parts.length >= 3) {
-                    const title = parts[0].replace(/(^"|"$)/g, '').trim();
-                    const datePart = parts[1].replace(/(^"|"$)/g, '').trim();
-                    const timePart = parts[2].replace(/(^"|"$)/g, '').trim();
-                    let dateStr = datePart + " " + timePart;
+                if(!row.trim()) return;
+                let parts = parseRow(row);
+                if (parts.length >= 2) {
+                    const title = parts[0];
+                    let dateStr = parts[1];
+                    if (parts.length >= 3 && parts[2]) {
+                        dateStr += " " + parts[2];
+                    }
                     if(dateStr) {
                         let exDate = new Date(dateStr.replace(" ", "T"));
                         if (isNaN(exDate.getTime())) exDate = new Date(dateStr);
