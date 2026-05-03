@@ -165,7 +165,8 @@
             direction: rtl;
             text-align: right;
             overflow-x: hidden;
-            transition: background-color 0.4s, color 0.4s;
+            /* Smooth theme transition */
+            transition: background-color 0.6s ease-in-out, color 0.6s ease-in-out;
             -webkit-tap-highlight-color: transparent;
             background-image: url('https://upload.wikimedia.org/wikipedia/commons/6/63/Chamchamal_city.jpg');
             background-size: cover;
@@ -179,7 +180,8 @@
             background-color: var(--bg);
             opacity: 0.94;
             z-index: -1;
-            transition: background-color 0.4s;
+            /* Smooth transition */
+            transition: background-color 0.6s ease-in-out;
             backdrop-filter: blur(6px);
         }
 
@@ -219,6 +221,23 @@
         @keyframes loaderPulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.8;transform:scale(1.04)} }
         @keyframes dotBounce { 0%,80%,100%{transform:scale(0);opacity:0.3} 40%{transform:scale(1);opacity:1} }
 
+        /* ===================== TOAST NOTIFICATIONS ===================== */
+        #toast-container {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+            z-index: 99999; display: flex; flex-direction: column; gap: 10px; pointer-events: none;
+        }
+        .toast-message {
+            background: rgba(255,255,255,0.92); backdrop-filter: blur(12px);
+            border: 1.5px solid var(--secondary); color: #1a2340; padding: 12px 24px;
+            border-radius: 50px; font-size: 0.9rem; font-weight: 800;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3); display: flex; align-items: center; gap: 8px;
+            animation: toastSlideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards, toastFadeOut 0.4s ease-in 2.5s forwards;
+            font-family: var(--font);
+        }
+        body.theme-dark .toast-message { background: rgba(17,24,39,0.92); color: #e8eeff; }
+        @keyframes toastSlideUp { from { transform: translateY(100px) scale(0.9); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } }
+        @keyframes toastFadeOut { from { transform: translateY(0); opacity: 1; } to { transform: translateY(20px); opacity: 0; } }
+
         /* ===================== MENU BUTTON ===================== */
         .fixed-menu-btn {
             position: fixed; top: 15px; right: 15px; z-index: 3000;
@@ -242,10 +261,10 @@
         /* ===================== HEADER ===================== */
         header {
             background: linear-gradient(135deg, var(--header-from) 0%, var(--header-to) 100%);
-            padding: 22px 15px;
+            padding: 28px 15px; /* Added more padding */
             position: relative;
             display: flex; align-items: center; justify-content: space-between;
-            min-height: 120px;
+            min-height: 135px; /* Made slightly taller */
             border-radius: 0 0 40px 40px;
             overflow: hidden;
             box-shadow: 0 8px 40px var(--shadow-color);
@@ -383,13 +402,24 @@
         .theme-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 4999; backdrop-filter: blur(2px); }
         .theme-overlay.open { display: block; }
 
+        /* STAR BUTTONS */
+        .star-btn {
+            padding:10px; border-radius:12px; border:1.5px solid var(--border);
+            background:var(--surface2); color:var(--text); cursor:pointer;
+            font-family:var(--font); font-weight:700; font-size:0.88rem; text-align:center;
+            transition: transform 0.25s cubic-bezier(0.4,0,0.2,1), box-shadow 0.25s, background 0.25s;
+        }
+        .star-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px var(--shadow-color); border-color: var(--secondary); background: color-mix(in srgb, var(--secondary) 8%, var(--surface2)); }
+        .star-btn:active { transform: scale(0.95); }
+
         /* ===================== SIDEBAR ===================== */
         .sidebar {
             height: 100%; width: 0;
             position: fixed; z-index: 4000; top: 0; right: 0; bottom: 0;
             background: linear-gradient(180deg, var(--sidebar-bg) 0%, color-mix(in srgb, var(--sidebar-bg) 85%, black) 100%);
             overflow-x: hidden; overflow-y: auto;
-            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            /* Softer transition */
+            transition: width 0.5s cubic-bezier(0.25, 1, 0.5, 1);
             padding-top: 40px; padding-bottom: 100px;
             box-sizing: border-box;
             box-shadow: -8px 0 40px rgba(0,0,0,0.3);
@@ -470,6 +500,9 @@
             position: relative;
         }
 
+        /* Pause ticker on hover */
+        .news-scroll-area:hover #news-list { animation-play-state: paused; }
+
         #news-list {
             display: inline-block; white-space: nowrap;
             animation: tickerMove 200s linear infinite;
@@ -494,7 +527,8 @@
             box-shadow: 0 4px 24px var(--shadow-color);
             animation: fadeSlideUp 0.35s cubic-bezier(0.4,0,0.2,1);
             border: 1px solid var(--border);
-            transition: background 0.4s;
+            /* Smooth background transition */
+            transition: background 0.6s ease-in-out;
         }
         .semester-content.active { display: block; }
 
@@ -838,9 +872,9 @@
 
         /* ===================== FOOTER ===================== */
         footer {
-            text-align: center; padding: 36px 20px;
+            text-align: center; padding: 26px 20px; /* Made smaller */
             background: linear-gradient(135deg, var(--header-from), var(--header-to));
-            color: white; margin-top: 60px;
+            color: white; margin-top: 45px; /* Less space above */
             border-radius: 40px 40px 0 0;
             position: relative; overflow: hidden;
             box-shadow: 0 -8px 40px var(--shadow-color);
@@ -940,7 +974,7 @@
                 <span style="background:#059669"></span>
                 <span style="background:#f0f4ff"></span>
             </div>
-            <div class="theme-card-label">🔵 كلاسیك</div>
+            <div class="theme-card-label">🔵 ڕووکاری پیرۆزەیی</div>
         </div>
         <div class="theme-card" id="tc-dark" onclick="applyTheme('dark')">
             <div class="theme-card-preview">
@@ -948,7 +982,7 @@
                 <span style="background:#3b6cf7"></span>
                 <span style="background:#10b981"></span>
             </div>
-            <div class="theme-card-label">🌑 كارەبایی</div>
+            <div class="theme-card-label">🌑 ڕووکاری شەوانە</div>
         </div>
         <div class="theme-card" id="tc-forest" onclick="applyTheme('forest')">
             <div class="theme-card-preview">
@@ -956,7 +990,7 @@
                 <span style="background:#16a34a"></span>
                 <span style="background:#f0fdf4"></span>
             </div>
-            <div class="theme-card-label">🌿 دارستان</div>
+            <div class="theme-card-label">🌿 ڕووکاری سروشتی</div>
         </div>
         <div class="theme-card" id="tc-ocean" onclick="applyTheme('ocean')">
             <div class="theme-card-preview">
@@ -964,7 +998,7 @@
                 <span style="background:#0891b2"></span>
                 <span style="background:#faf5ff"></span>
             </div>
-            <div class="theme-card-label">💜 مۆر</div>
+            <div class="theme-card-label">💜 ڕووکاری ئەرخەوانی</div>
         </div>
         <div class="theme-card" id="tc-rose" onclick="applyTheme('rose')">
             <div class="theme-card-preview">
@@ -972,7 +1006,7 @@
                 <span style="background:#be185d"></span>
                 <span style="background:#fff1f2"></span>
             </div>
-            <div class="theme-card-label">🍷 شەرابی</div>
+            <div class="theme-card-label">🍷 ڕووکاری ئاگرین</div>
         </div>
         <div class="theme-card" id="tc-teal" onclick="applyTheme('teal')">
             <div class="theme-card-preview">
@@ -980,15 +1014,15 @@
                 <span style="background:#f59e0b"></span>
                 <span style="background:#f0fdfa"></span>
             </div>
-            <div class="theme-card-label">🩵 شینی ئاوی</div>
+            <div class="theme-card-label">🩵 ڕووکاری دەریایی</div>
         </div>
     </div>
 
     <hr style="border:0;border-top:1.5px solid var(--border);margin:16px 0;">
-    <div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:12px;font-weight:600;">ئەستێرەی ئانیمەیشن</div>
+    <div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:12px;font-weight:600;">تروسکەی ئەستێرەکان</div>
     <div style="display:flex;flex-direction:column;gap:8px;">
-        <button onclick="applyStarField(true)" style="padding:10px;border-radius:12px;border:1.5px solid var(--border);background:var(--surface2);color:var(--text);cursor:pointer;font-family:var(--font);font-weight:700;font-size:0.88rem;">✨دانان</button>
-        <button onclick="applyStarField(false)" style="padding:10px;border-radius:12px;border:1.5px solid var(--border);background:var(--surface2);color:var(--text);cursor:pointer;font-family:var(--font);font-weight:700;font-size:0.88rem;">❌ لابردن</button>
+        <button class="star-btn" onclick="applyStarField(true)">✨ چالاککردن</button>
+        <button class="star-btn" onclick="applyStarField(false)">❌ ناچالاککردن</button>
     </div>
 </div>
 
@@ -1062,7 +1096,7 @@
                 <div class="hero-badge">🎓 IT Chamchamal · 2026</div>
                 <h2 class="hero-title" id="lang-welcome-title">بەخێربێن خوێندکارانی ئازیزی بەشی تەکنەلۆژیای زانیاری (IT)</h2>
                 <p class="hero-desc" id="lang-welcome-text">
-                    بۆ گەیشتن بە هەر بەشێک، کرتەی <span class="hero-highlight">" لیست "</span> بکە لە سەرەوە، ئەم بەشانەی خوارەوەت بۆ ئامادەکراوە:
+                    بۆ گەیشتن بە هەر بەشێک، کرتەی <span class="hero-highlight">" لیست "</span> بکە لە سەرەوە. ئەم بەشانەی خوارەوەت بۆ ئامادەکراوە:
                 </p>
                 <div class="info-cards-grid">
                     <div class="info-card">
@@ -1266,6 +1300,12 @@
     <div class="rainbow-name">شیروان شێرزاد خالد</div>
     <span class="footer-tagline" id="lang-footer-hope">بە هیوای سود گەیاندن بە هەموو خوێندكارانی بەشی ئایتی</span>
     <p style="opacity:0.55;font-size:0.82rem;margin-top:14px;">© ٢٠٢٦ <span id="lang-copy">بەردەوام لە نوێ كردنەوەدایە</span></p>
+    
+    <div style="margin: 15px 0; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 12px; display: inline-block;">
+        <span style="font-size: 0.85rem; color: rgba(255,255,255,0.7);">⏳ کۆتا نوێکردنەوەی سیستەم:</span>
+        <span id="last-updated-time" style="color: #34d399; font-weight: 800; font-size: 0.9rem; margin-right: 5px;">...</span>
+    </div>
+
     <div style="margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.1);">
         <p style="font-weight:700;font-size:0.88rem;margin-bottom:8px;opacity:0.85;" id="lang-visits">📊 ژمارەی سەردانەکان</p>
         <div class="visitor-counter" id="visitor-counter">0000000</div>
@@ -1277,8 +1317,32 @@
 
 <script>
     // ============================================================
-    //  ALL ORIGINAL LOGIC — UNCHANGED
+    //  ALL ORIGINAL LOGIC + NEW ADDITIONS
     // ============================================================
+
+    // فانکشنی پیشاندانی ئاگادارکردنەوەی خێرا (Toast)
+    function showToast(message, icon = "✅") {
+        let container = document.getElementById('toast-container');
+        if (!container) {
+            container = document.createElement('div');
+            container.id = 'toast-container';
+            document.body.appendChild(container);
+        }
+        const toast = document.createElement('div');
+        toast.className = 'toast-message';
+        toast.innerHTML = `<span>${icon}</span> <span>${message}</span>`;
+        container.appendChild(toast);
+        setTimeout(() => { toast.remove(); }, 2900);
+    }
+
+    // دەرخستنی کاتی کۆتا نوێکردنەوە
+    function updateLastModified() {
+        const el = document.getElementById('last-updated-time');
+        if (el) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            el.textContent = new Date().toLocaleDateString('ku-IQ', options);
+        }
+    }
 
     function autoRequestNotification() {
         if (!("Notification" in window)) return;
@@ -1301,6 +1365,7 @@
         }, 1400);
         const savedGPASem = localStorage.getItem('gpa_selected_sem');
         if (savedGPASem) { document.getElementById('gpa-sem-select').value = savedGPASem; renderGrading(); }
+        updateLastModified();
     });
 
     const TELEGRAM_USERNAME = "sherwan25";
@@ -1451,8 +1516,14 @@
     function applyStarField(on) {
         localStorage.setItem('it_stars', on ? '1' : '0');
         const canvas = document.getElementById('starCanvas');
-        if (!on) { canvas.style.display='none'; if(starAnimId){cancelAnimationFrame(starAnimId);starAnimId=null;} return; }
+        if (!on) { 
+            canvas.style.display='none'; 
+            if(starAnimId){cancelAnimationFrame(starAnimId);starAnimId=null;} 
+            showToast('ناچالاک کرا تروسکەی ئەستێرەکان', '❌');
+            return; 
+        }
         canvas.style.display='block';
+        showToast('چالاککرا', '✨');
         startStars(canvas);
     }
 
@@ -1483,7 +1554,7 @@
     }
 
     // ============================================================
-    //  SCHEDULE DATA (unchanged from original)
+    //  SCHEDULE DATA
     // ============================================================
     const scheduleData = {
         morning:{
@@ -1686,7 +1757,24 @@
         saveGrades();
     }
 
-    function saveGrades() { const inputs=document.querySelectorAll('#grading-container input'); let data=JSON.parse(localStorage.getItem('it_chamchamal_grades')||'{}'); inputs.forEach(i=>data[i.id]=i.value); localStorage.setItem('it_chamchamal_grades',JSON.stringify(data)); }
+    function saveGrades() { 
+        const inputs = document.querySelectorAll('#grading-container input'); 
+        let data = JSON.parse(localStorage.getItem('it_chamchamal_grades') || '{}'); 
+        let changed = false;
+        
+        inputs.forEach(i => {
+            if (data[i.id] !== i.value && i.value !== "") {
+                changed = true;
+            }
+            data[i.id] = i.value;
+        });
+        
+        localStorage.setItem('it_chamchamal_grades', JSON.stringify(data)); 
+        
+        if (changed) {
+            showToast("نمرەکەت پاشەکەوت کرا", "💾");
+        }
+    }
 
     function loadGrades() { const saved=JSON.parse(localStorage.getItem('it_chamchamal_grades')||'{}'); for(let id in saved){let el=document.getElementById(id);if(el){el.value=saved[id];let p=id.split('-');if(p.length>=3)calcSub(p[1],p[2]);}} }
 
