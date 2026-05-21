@@ -1,4 +1,3 @@
-
 function showToast(message, icon = "✅") {
     let container = document.getElementById('toast-container');
     if (!container) {
@@ -48,7 +47,7 @@ window.addEventListener('load', function () {
 const TELEGRAM_USERNAME = "sherwan25";
 let currentSem = 1;
 let currentShift = 'evening';
-const APP_VERSION = "3.1";
+const APP_VERSION = "3.2";
 let currentLang = 'ku';
 
 const subjectList = {
@@ -80,7 +79,8 @@ const translations = {
         aboutTitle:"دەربارەی پڕۆژە",aboutText:"ئەم پڕۆژەیە هەوڵێکی تایبەتە بۆ کۆکردنەوەی هەموو پێداویستییەکانی خوێندکارانی بەشی تەکنەلۆژیای زانیاری (IT) لە پەیمانگای تەکنیکی چەمچەماڵ. ئامانجی سەرەکی ئاسانکارییە بۆ گەیشتن بە زانیارییەکان بە خێراترین کات.",
         dev:"گەشەپێدەر:",ver:"وەشان:",scan:"سکان بۆ هاوبەشکردن",created:"دروستکراوە لەلایەن خوێندکار:",footerHope:"بە هیوای سود گەیاندن بە هەموو خوێندكارانی بەشی ئایتی",copy:"بەردەوام لە نوێ كردنەوەدایە",visits:"📊 ژمارەی سەردانەکان",
         thSub:"ناوی وانە",thLec:"مەلزەمە",thQs:"پرسیار",thTut:"فێركاری",btnDl:"داگرتن",btnView:"بینین",btnVid:"🎥 ڤیدیۆ",
-        menuExam:"⏳ کاتی تاقیکردنەوە",menuGpa:"🧮 هەژمارکردنی نمرە",examHeader:"کاتی ماوە بۆ تاقیکردنەوەکان",gpaHeader:"هەژمارکردنی نمرەکان"
+        menuExam:"⏳ کاتی تاقیکردنەوە",menuGpa:"🧮 هەژمارکردنی نمرە",examHeader:"کاتی ماوە بۆ تاقیکردنەوەکان",gpaHeader:"هەژمارکردنی نمرەکان",
+        bnavHome:"سەرەکی",bnavSchedule:"خشتە",bnavSemesters:"سمستەر",bnavExam:"تاقیکردن",bnavGpa:"نمرە",bnavAbout:"دەربارە"
     },
     en: {
         dept:"IT Department",menu:"Menu",institute:"Chamchamal Technical Institute",deptSub:"Information Technology (IT) Dept.",
@@ -97,9 +97,19 @@ const translations = {
         aboutTitle:"About Project",aboutText:"This project gathers all study resources for IT students at Chamchamal Technical Institute. The main goal is quick access to information.",
         dev:"Developer:",ver:"Version:",scan:"Scan to Share",created:"Created by student:",footerHope:"Hoping to benefit all IT students",copy:"Continuously updated",visits:"📊 Total Visits",
         thSub:"Subject",thLec:"Notes",thQs:"Questions",thTut:"Tutorials",btnDl:"Download",btnView:"View",btnVid:"🎥 Video",
-        menuExam:"⏳ Exam Timer",menuGpa:"🧮 GPA Calculator",examHeader:"Time Remaining for Exams",gpaHeader:"Grade Calculation"
+        menuExam:"⏳ Exam Timer",menuGpa:"🧮 GPA Calculator",examHeader:"Time Remaining for Exams",gpaHeader:"Grade Calculation",
+        bnavHome:"Home",bnavSchedule:"Schedule",bnavSemesters:"Semesters",bnavExam:"Exams",bnavGpa:"Grades",bnavAbout:"About"
     }
 };
+
+// ══════════════════════════════════════════
+// BOTTOM NAV — فەنکشنی ئەکتیڤکردن
+// ══════════════════════════════════════════
+function setActiveNav(id) {
+    document.querySelectorAll('.bnav-item').forEach(btn => btn.classList.remove('active'));
+    const el = document.getElementById(id);
+    if (el) el.classList.add('active');
+}
 
 function toggleLanguage(lang) {
     currentLang = lang;
@@ -134,6 +144,13 @@ function toggleLanguage(lang) {
     document.querySelectorAll('.btn-dl').forEach(e=>e.innerText=t.btnDl);
     document.querySelectorAll('.btn-view').forEach(e=>e.innerText=t.btnView);
     document.querySelectorAll('.btn-vid').forEach(e=>e.innerText=t.btnVid);
+    // بۆتم ناڤ لەیبڵەکان
+    const lb = document.getElementById('bnav-label-home'); if(lb) lb.textContent = t.bnavHome;
+    const ls = document.getElementById('bnav-label-schedule'); if(ls) ls.textContent = t.bnavSchedule;
+    const lsm = document.getElementById('bnav-label-semesters'); if(lsm) lsm.textContent = t.bnavSemesters;
+    const le = document.getElementById('bnav-label-exam'); if(le) le.textContent = t.bnavExam;
+    const lg = document.getElementById('bnav-label-gpa'); if(lg) lg.textContent = t.bnavGpa;
+    const la = document.getElementById('bnav-label-about'); if(la) la.textContent = t.bnavAbout;
     closeNav();
 }
 
@@ -148,10 +165,19 @@ function toggleLangMenu() {
 function openNav() { document.getElementById("mySidebar").style.width="280px"; document.getElementById("sidebarOverlay").style.display="block"; document.body.classList.add('sidebar-open'); }
 function closeNav() { document.getElementById("mySidebar").style.width="0"; document.getElementById("sidebarOverlay").style.display="none"; document.body.classList.remove('sidebar-open'); }
 
+// ══════════════════════════════════════════
+// showSection — نوێکراوەتەوە بۆ بۆتم ناڤ
+// ══════════════════════════════════════════
 function showSection(id) {
     document.querySelectorAll(".semester-content").forEach(el => el.style.display = "none");
     document.getElementById(id).style.display = "block";
-    window.scrollTo({top:0,behavior:'smooth'});
+    window.scrollTo({top: 0, behavior: 'smooth'});
+    const map = {
+        'home-tab':'bnav-home','schedule-tab':'bnav-schedule',
+        'semesters-tab':'bnav-semesters','exam-tab':'bnav-exam',
+        'gpa-tab':'bnav-gpa','about-tab':'bnav-about'
+    };
+    if (map[id]) setActiveNav(map[id]);
 }
 
 function checkUpdate() { if ('serviceWorker' in navigator) { navigator.serviceWorker.ready.then(reg => reg.update()); } }
@@ -169,7 +195,6 @@ function openInnerSem(semId) {
     document.getElementById(semId).scrollIntoView({behavior:'smooth'});
 }
 
-
 const THEMES = ['classic','dark','forest','ocean','rose','teal'];
 
 function applyTheme(name) {
@@ -184,16 +209,15 @@ function applyTheme(name) {
 function openThemePanel() { document.getElementById('themePanel').classList.add('open'); document.getElementById('themeOverlay').classList.add('open'); }
 function closeThemePanel() { document.getElementById('themePanel').classList.remove('open'); document.getElementById('themeOverlay').classList.remove('open'); }
 
-
 let starAnimId = null;
 function applyStarField(on) {
     localStorage.setItem('it_stars', on ? '1' : '0');
     const canvas = document.getElementById('starCanvas');
-    if (!on) { 
-        canvas.style.display='none'; 
-        if(starAnimId){cancelAnimationFrame(starAnimId);starAnimId=null;} 
+    if (!on) {
+        canvas.style.display='none';
+        if(starAnimId){cancelAnimationFrame(starAnimId);starAnimId=null;}
         showToast('ناچالاک کرا تروسکەی ئەستێرەکان', '❌');
-        return; 
+        return;
     }
     canvas.style.display='block';
     showToast('چالاککرا', '✨');
@@ -225,7 +249,6 @@ function startStars(canvas) {
     }
     draw();
 }
-
 
 const scheduleData = {
     morning:{
@@ -428,23 +451,16 @@ function calcSub(sem,idx) {
     saveGrades();
 }
 
-function saveGrades() { 
-    const inputs = document.querySelectorAll('#grading-container input'); 
-    let data = JSON.parse(localStorage.getItem('it_chamchamal_grades') || '{}'); 
+function saveGrades() {
+    const inputs = document.querySelectorAll('#grading-container input');
+    let data = JSON.parse(localStorage.getItem('it_chamchamal_grades') || '{}');
     let changed = false;
-    
     inputs.forEach(i => {
-        if (data[i.id] !== i.value && i.value !== "") {
-            changed = true;
-        }
+        if (data[i.id] !== i.value && i.value !== "") { changed = true; }
         data[i.id] = i.value;
     });
-    
-    localStorage.setItem('it_chamchamal_grades', JSON.stringify(data)); 
-    
-    if (changed) {
-        showToast("نمرەکەت پاشەکەوت کرا", "💾");
-    }
+    localStorage.setItem('it_chamchamal_grades', JSON.stringify(data));
+    if (changed) { showToast("نمرەکەت پاشەکەوت کرا", "💾"); }
 }
 
 function loadGrades() { const saved=JSON.parse(localStorage.getItem('it_chamchamal_grades')||'{}'); for(let id in saved){let el=document.getElementById(id);if(el){el.value=saved[id];let p=id.split('-');if(p.length>=3)calcSub(p[1],p[2]);}} }
@@ -483,10 +499,8 @@ function updateClock() {
 
 window.onload = function() {
     fetchNews(); initVisitorCounter(); checkUpdate();
-    // Apply saved theme
     const savedTheme = localStorage.getItem('it_theme') || 'classic';
     applyTheme(savedTheme);
-    // Apply saved stars
     if (localStorage.getItem('it_stars') === '1') applyStarField(true);
     checkExams(); renderGrading(); setInterval(updateClock,1000); updateClock();
 };
