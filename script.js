@@ -12,14 +12,6 @@ function showToast(message, icon = "✅") {
     setTimeout(() => { toast.remove(); }, 2900);
 }
 
-function updateLastModified() {
-    const el = document.getElementById('last-updated-time');
-    if (el) {
-        const options = { year: 'numeric', month: 'long', day: 'numeric' };
-        el.textContent = new Date().toLocaleDateString('ku-IQ', options);
-    }
-}
-
 function autoRequestNotification() {
     if (!("Notification" in window)) return;
     if (Notification.permission === "default") {
@@ -41,13 +33,12 @@ window.addEventListener('load', function () {
     }, 1400);
     const savedGPASem = localStorage.getItem('gpa_selected_sem');
     if (savedGPASem) { document.getElementById('gpa-sem-select').value = savedGPASem; renderGrading(); }
-    updateLastModified();
 });
 
 const TELEGRAM_USERNAME = "sherwan25";
 let currentSem = 1;
 let currentShift = 'evening';
-const APP_VERSION = "3.2";
+const APP_VERSION = "3.1";
 let currentLang = 'ku';
 
 const subjectList = {
@@ -68,10 +59,10 @@ const translations = {
         dept:"بەشی ئایتی",menu:"لیست",institute:"پەیمانگای تەکنیکی چەمچەماڵ",deptSub:"بەشی تەکنەلۆژیای زانیاری (IT)",
         home:"🏠 سەرەکی",schedule:"📅 خشتەی هەفتانە",semesters:"📚 سمستەرەکان",about:"ℹ️ دەربارە",contact:"📞 پەیوەندی (Telegram)",setting:"زمان",alert:"🚨 ئاگاداری",
         welcomeTitle:"بەخێربێن خوێندکارانی ئازیزی بەشی تەکنەلۆژیای زانیاری (IT)",
-        welcomeText:'ئەم وێبسایتە دروستکراوە بۆ ئەوەی تۆی خوێندکار لێی سوودمەند بیت و کارئاسانییەک بێت بۆ خوێندنی وانەکانی ڕۆژانەت بە كرتە كردن لەسەر <span class="hero-highlight">" لیست "</span> كە لە راستی بەشی سەرەوەی ویب سایتەكەدایە.',
+        welcomeText:'بۆ گەیشتن بە هەر بەشێک، کرتەی <span class="hero-highlight" style="color: #fbbf24; text-shadow: 0 0 10px rgba(251,191,36,0.4);">" لیست "</span> بکە لە سەرەوە. ئەم بەشانەی خوارەوەت بۆ ئامادەکراوە:',
         semTitle:"بەشی سمستەرەکان:",semDesc1:"مەلزەمە، پرسیار، و فێرکاری بۆ هەموو وانەکان",
         schTitle:"خشتەی هەفتانە:",schDesc:"دەوامی بەیانیان و ئێوارن بۆ هەردوو گرووپ",
-        thanks:"سوپاس بۆ هەردوو خوێندکار",and:"و",helpers:"کە هاوکار بوون لە دروستکردنی ئەم وێبسایتەدا",
+        thanks:"سوپاس بۆ <strong>(محمد اسماعیل)</strong> <span id=\"lang-and\">و</span> <strong>(محمد بێستون)</strong>",and:"و",helpers:"بۆ هاوکارییان لە دروستکردنی ئەم ویبسایتەدا",
         schedHeader:"📅 خشتەی هەفتانە (جەدۆل)",morning:"☀️ دەوامی بەیانیان",evening:"🌙 دەوامی ئێوارن",
         semBtn1:"سمستەری ١",semBtn2:"سمستەری ٢",semBtn3:"سمستەری ٣",semBtn4:"سمستەری ٤",
         tblNo:"ژمارە",tblSub:"بابەت",tblTime:"کات",tblTeacher:"مامۆستا",
@@ -79,17 +70,16 @@ const translations = {
         aboutTitle:"دەربارەی پڕۆژە",aboutText:"ئەم پڕۆژەیە هەوڵێکی تایبەتە بۆ کۆکردنەوەی هەموو پێداویستییەکانی خوێندکارانی بەشی تەکنەلۆژیای زانیاری (IT) لە پەیمانگای تەکنیکی چەمچەماڵ. ئامانجی سەرەکی ئاسانکارییە بۆ گەیشتن بە زانیارییەکان بە خێراترین کات.",
         dev:"گەشەپێدەر:",ver:"وەشان:",scan:"سکان بۆ هاوبەشکردن",created:"دروستکراوە لەلایەن خوێندکار:",footerHope:"بە هیوای سود گەیاندن بە هەموو خوێندكارانی بەشی ئایتی",copy:"بەردەوام لە نوێ كردنەوەدایە",visits:"📊 ژمارەی سەردانەکان",
         thSub:"ناوی وانە",thLec:"مەلزەمە",thQs:"پرسیار",thTut:"فێركاری",btnDl:"داگرتن",btnView:"بینین",btnVid:"🎥 ڤیدیۆ",
-        menuExam:"⏳ کاتی تاقیکردنەوە",menuGpa:"🧮 هەژمارکردنی نمرە",examHeader:"کاتی ماوە بۆ تاقیکردنەوەکان",gpaHeader:"هەژمارکردنی نمرەکان",
-        bnavHome:"سەرەکی",bnavSchedule:"خشتە",bnavSemesters:"سمستەر",bnavExam:"تاقیکردن",bnavGpa:"نمرە",bnavAbout:"دەربارە"
+        menuExam:"⏳ کاتی تاقیکردنەوە",menuGpa:"🧮 هەژمارکردنی نمرە",examHeader:"کاتی ماوە بۆ تاقیکردنەوەکان",gpaHeader:"هەژمارکردنی نمرەکان"
     },
     en: {
         dept:"IT Department",menu:"Menu",institute:"Chamchamal Technical Institute",deptSub:"Information Technology (IT) Dept.",
         home:"🏠 Home",schedule:"📅 Weekly Schedule",semesters:"📚 Semesters",about:"ℹ️ About",contact:"📞 Contact (Telegram)",setting:"Language",alert:"🚨 Notice",
         welcomeTitle:"Welcome to IT Department – Chamchamal Technical Institute",
-        welcomeText:'This website is designed to assist IT students. Click <span class="hero-highlight">"Menu"</span> in the top-right corner to access all sections.',
+        welcomeText:'Click <span class="hero-highlight" style="color: #fbbf24; text-shadow: 0 0 10px rgba(251,191,36,0.4);">" Menu "</span> above to access any section. The following sections are available:',
         semTitle:"Semesters:",semDesc1:"Lecture notes, past questions, and tutorial videos for all subjects",
         schTitle:"Weekly Schedule:",schDesc:"Morning and Evening shift timetables for both groups",
-        thanks:"Special thanks to students",and:"and",helpers:"for their help building this website",
+        thanks:"Special thanks to",and:"and",helpers:"for their help building this website",
         schedHeader:"📅 Weekly Schedule",morning:"☀️ Morning Shift",evening:"🌙 Evening Shift",
         semBtn1:"Semester 1",semBtn2:"Semester 2",semBtn3:"Semester 3",semBtn4:"Semester 4",
         tblNo:"No",tblSub:"Subject",tblTime:"Time",tblTeacher:"Teacher",
@@ -97,19 +87,9 @@ const translations = {
         aboutTitle:"About Project",aboutText:"This project gathers all study resources for IT students at Chamchamal Technical Institute. The main goal is quick access to information.",
         dev:"Developer:",ver:"Version:",scan:"Scan to Share",created:"Created by student:",footerHope:"Hoping to benefit all IT students",copy:"Continuously updated",visits:"📊 Total Visits",
         thSub:"Subject",thLec:"Notes",thQs:"Questions",thTut:"Tutorials",btnDl:"Download",btnView:"View",btnVid:"🎥 Video",
-        menuExam:"⏳ Exam Timer",menuGpa:"🧮 GPA Calculator",examHeader:"Time Remaining for Exams",gpaHeader:"Grade Calculation",
-        bnavHome:"Home",bnavSchedule:"Schedule",bnavSemesters:"Semesters",bnavExam:"Exams",bnavGpa:"Grades",bnavAbout:"About"
+        menuExam:"⏳ Exam Timer",menuGpa:"🧮 GPA Calculator",examHeader:"Time Remaining for Exams",gpaHeader:"Grade Calculation"
     }
 };
-
-// ══════════════════════════════════════════
-// BOTTOM NAV — فەنکشنی ئەکتیڤکردن
-// ══════════════════════════════════════════
-function setActiveNav(id) {
-    document.querySelectorAll('.bnav-item').forEach(btn => btn.classList.remove('active'));
-    const el = document.getElementById(id);
-    if (el) el.classList.add('active');
-}
 
 function toggleLanguage(lang) {
     currentLang = lang;
@@ -144,13 +124,6 @@ function toggleLanguage(lang) {
     document.querySelectorAll('.btn-dl').forEach(e=>e.innerText=t.btnDl);
     document.querySelectorAll('.btn-view').forEach(e=>e.innerText=t.btnView);
     document.querySelectorAll('.btn-vid').forEach(e=>e.innerText=t.btnVid);
-    // بۆتم ناڤ لەیبڵەکان
-    const lb = document.getElementById('bnav-label-home'); if(lb) lb.textContent = t.bnavHome;
-    const ls = document.getElementById('bnav-label-schedule'); if(ls) ls.textContent = t.bnavSchedule;
-    const lsm = document.getElementById('bnav-label-semesters'); if(lsm) lsm.textContent = t.bnavSemesters;
-    const le = document.getElementById('bnav-label-exam'); if(le) le.textContent = t.bnavExam;
-    const lg = document.getElementById('bnav-label-gpa'); if(lg) lg.textContent = t.bnavGpa;
-    const la = document.getElementById('bnav-label-about'); if(la) la.textContent = t.bnavAbout;
     closeNav();
 }
 
@@ -165,19 +138,16 @@ function toggleLangMenu() {
 function openNav() { document.getElementById("mySidebar").style.width="280px"; document.getElementById("sidebarOverlay").style.display="block"; document.body.classList.add('sidebar-open'); }
 function closeNav() { document.getElementById("mySidebar").style.width="0"; document.getElementById("sidebarOverlay").style.display="none"; document.body.classList.remove('sidebar-open'); }
 
-// ══════════════════════════════════════════
-// showSection — نوێکراوەتەوە بۆ بۆتم ناڤ
-// ══════════════════════════════════════════
 function showSection(id) {
     document.querySelectorAll(".semester-content").forEach(el => el.style.display = "none");
     document.getElementById(id).style.display = "block";
-    window.scrollTo({top: 0, behavior: 'smooth'});
-    const map = {
-        'home-tab':'bnav-home','schedule-tab':'bnav-schedule',
-        'semesters-tab':'bnav-semesters','exam-tab':'bnav-exam',
-        'gpa-tab':'bnav-gpa','about-tab':'bnav-about'
-    };
-    if (map[id]) setActiveNav(map[id]);
+    window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function setActiveNav(id) {
+    document.querySelectorAll('.bnav-item').forEach(el => el.classList.remove('active'));
+    const el = document.getElementById(id);
+    if(el) el.classList.add('active');
 }
 
 function checkUpdate() { if ('serviceWorker' in navigator) { navigator.serviceWorker.ready.then(reg => reg.update()); } }
@@ -213,11 +183,11 @@ let starAnimId = null;
 function applyStarField(on) {
     localStorage.setItem('it_stars', on ? '1' : '0');
     const canvas = document.getElementById('starCanvas');
-    if (!on) {
-        canvas.style.display='none';
-        if(starAnimId){cancelAnimationFrame(starAnimId);starAnimId=null;}
+    if (!on) { 
+        canvas.style.display='none'; 
+        if(starAnimId){cancelAnimationFrame(starAnimId);starAnimId=null;} 
         showToast('ناچالاک کرا تروسکەی ئەستێرەکان', '❌');
-        return;
+        return; 
     }
     canvas.style.display='block';
     showToast('چالاککرا', '✨');
@@ -451,16 +421,23 @@ function calcSub(sem,idx) {
     saveGrades();
 }
 
-function saveGrades() {
-    const inputs = document.querySelectorAll('#grading-container input');
-    let data = JSON.parse(localStorage.getItem('it_chamchamal_grades') || '{}');
+function saveGrades() { 
+    const inputs = document.querySelectorAll('#grading-container input'); 
+    let data = JSON.parse(localStorage.getItem('it_chamchamal_grades') || '{}'); 
     let changed = false;
+    
     inputs.forEach(i => {
-        if (data[i.id] !== i.value && i.value !== "") { changed = true; }
+        if (data[i.id] !== i.value && i.value !== "") {
+            changed = true;
+        }
         data[i.id] = i.value;
     });
-    localStorage.setItem('it_chamchamal_grades', JSON.stringify(data));
-    if (changed) { showToast("نمرەکەت پاشەکەوت کرا", "💾"); }
+    
+    localStorage.setItem('it_chamchamal_grades', JSON.stringify(data)); 
+    
+    if (changed) {
+        showToast("نمرەکەت پاشەکەوت کرا", "💾");
+    }
 }
 
 function loadGrades() { const saved=JSON.parse(localStorage.getItem('it_chamchamal_grades')||'{}'); for(let id in saved){let el=document.getElementById(id);if(el){el.value=saved[id];let p=id.split('-');if(p.length>=3)calcSub(p[1],p[2]);}} }
@@ -499,9 +476,11 @@ function updateClock() {
 
 window.onload = function() {
     fetchNews(); initVisitorCounter(); checkUpdate();
-    const savedTheme = localStorage.getItem('it_theme') || 'classic';
+    const savedTheme = localStorage.getItem('it_theme') || 'dark';
     applyTheme(savedTheme);
-    if (localStorage.getItem('it_stars') === '1') applyStarField(true);
+    const savedStars = localStorage.getItem('it_stars');
+    if (savedStars === null || savedStars === '1') applyStarField(true);
+    else applyStarField(false);
     checkExams(); renderGrading(); setInterval(updateClock,1000); updateClock();
 };
 
