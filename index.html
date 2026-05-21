@@ -25,7 +25,6 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Changa:wght@800&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -41,7 +40,6 @@
 <div class="theme-panel" id="themePanel">
     <button class="theme-close" onclick="closeThemePanel()">✕</button>
     <h3>🎨 ڕووكاری ویبسایت</h3>
-
     <div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:14px;font-weight:600;">ڕووكار هەڵبژێرە</div>
     <div class="theme-grid">
         <div class="theme-card" id="tc-classic" onclick="applyTheme('classic')">
@@ -93,7 +91,6 @@
             <div class="theme-card-label">🩵 ڕووکاری دەریایی</div>
         </div>
     </div>
-
     <hr style="border:0;border-top:1.5px solid var(--border);margin:16px 0;">
     <div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:12px;font-weight:600;">تروسکەی ئەستێرەکان</div>
     <div style="display:flex;flex-direction:column;gap:8px;">
@@ -110,12 +107,12 @@
         <h2 style="margin:0;color:white;font-weight:900;font-size:1.2rem;" id="lang-dept">بەشی ئایتی</h2>
         <p style="color:rgba(255,255,255,0.6);font-size:0.78rem;margin-top:4px;">پەیمانگای تەکنیکی چەمچەماڵ</p>
     </div>
-    <a href="#" onclick="showSection('home-tab'); closeNav()"><span id="lang-home">🏠 سەرەکی</span></a>
-    <a href="#" onclick="showSection('schedule-tab'); closeNav()"><span id="lang-schedule">١ · 📅 خشتەی هەفتانە</span></a>
-    <a href="#" onclick="showSection('semesters-tab'); closeNav()"><span id="lang-semesters">٢ · 📚 سمستەرەکان</span></a>
-    <a href="#" onclick="showSection('exam-tab'); closeNav(); checkExams();"><span id="lang-menu-exam">٣ · ⏳ کاتی تاقیکردنەوە</span></a>
-    <a href="#" onclick="showSection('gpa-tab'); closeNav()"><span id="lang-menu-gpa">٤ · 🧮 هەژمارکردنی نمرە</span></a>
-    <a href="#" onclick="showSection('about-tab'); closeNav()"><span id="lang-about">٥ · ℹ️ دەربارە</span></a>
+    <a href="#" onclick="showSection('home-tab'); setActiveNav('bnav-home'); closeNav()"><span id="lang-home">🏠 سەرەکی</span></a>
+    <a href="#" onclick="showSection('schedule-tab'); setActiveNav('bnav-schedule'); closeNav()"><span id="lang-schedule">١ · 📅 خشتەی هەفتانە</span></a>
+    <a href="#" onclick="showSection('semesters-tab'); setActiveNav('bnav-semesters'); closeNav()"><span id="lang-semesters">٢ · 📚 سمستەرەکان</span></a>
+    <a href="#" onclick="showSection('exam-tab'); setActiveNav('bnav-exam'); closeNav(); checkExams();"><span id="lang-menu-exam">٣ · ⏳ کاتی تاقیکردنەوە</span></a>
+    <a href="#" onclick="showSection('gpa-tab'); setActiveNav('bnav-gpa'); closeNav()"><span id="lang-menu-gpa">٤ · 🧮 هەژمارکردنی نمرە</span></a>
+    <a href="#" onclick="showSection('about-tab'); setActiveNav('bnav-about'); closeNav()"><span id="lang-about">٥ · ℹ️ دەربارە</span></a>
     <a href="#" onclick="toggleLangMenu()" style="justify-content:space-between;">
         <span>🌐 <span id="lang-setting">زمان</span></span>
         <span id="lang-arrow" style="font-size:0.75rem;transition:transform 0.3s;">▼</span>
@@ -158,43 +155,43 @@
 </div>
 
 <div class="main-container">
-
     <div id="home-tab" class="semester-content active">
         <div class="hero-card">
             <div class="hero-inner">
                 <div class="hero-badge">🎓 IT Chamchamal · 2026</div>
                 <h2 class="hero-title" id="lang-welcome-title">بەخێربێن خوێندکارانی ئازیزی بەشی تەکنەلۆژیای زانیاری (IT)</h2>
-               <div style="background: rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.15); border-radius: 14px; padding: 14px; margin-bottom: 16px; backdrop-filter: blur(8px);">
-            <div style="color: #fbbf24; font-weight: 800; font-size: 0.95rem; margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
-                <span>📱</span> دابەزاندن وەک ئەپلیکەیشن (App)
-            </div>
-            <div style="color: rgba(255,255,255,0.9); font-size: 0.85rem; line-height: 1.7;">
-                <div style="margin-bottom: 8px;">
-                    <span style="font-size: 1rem;">🤖</span> <strong>بۆ ئەندرۆید:</strong> لە سەرەوەی وێبگەڕەکە کرتە لە سێ خاڵەکە (⋮) بکە، پاشان بژاردەی <strong style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 6px; font-size: 0.75rem;">Add to Home screen</strong> هەڵبژێرە.
+                
+                <div style="background: rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.15); border-radius: 14px; padding: 14px; margin-bottom: 16px; backdrop-filter: blur(8px);">
+                    <div style="color: #fbbf24; font-weight: 800; font-size: 0.95rem; margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
+                        <span>📱</span> دابەزاندن وەک ئەپلیکەیشن (App)
+                    </div>
+                    <div style="color: rgba(255,255,255,0.9); font-size: 0.85rem; line-height: 1.7;">
+                        <div style="margin-bottom: 8px;">
+                            <span style="font-size: 1rem;">🤖</span> <strong>بۆ ئەندرۆید:</strong> لە سەرەوەی وێبگەڕەکە کرتە لە سێ خاڵەکە (⋮) بکە، پاشان بژاردەی <strong style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 6px; font-size: 0.75rem;">Add to Home screen</strong> هەڵبژێرە.
+                        </div>
+                        <div>
+                            <span style="font-size: 1rem;">🍎</span> <strong>بۆ ئایفۆن:</strong> لە خوارەوەی شاشەکە کرتە لە نیشانەی شەیر ( <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:text-bottom;"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg> ) بکە، پاشان بژاردەی <strong style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 6px; font-size: 0.75rem;">Add to Home Screen</strong> هەڵبژێرە.
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <span style="font-size: 1rem;">🍎</span> <strong>بۆ ئایفۆن:</strong> لە خوارەوەی شاشەکە کرتە لە نیشانەی شەیر ( <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:text-bottom;"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg> ) بکە، پاشان بژاردەی <strong style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 6px; font-size: 0.75rem;">Add to Home Screen</strong> هەڵبژێرە.
-                </div>
-            </div>
-        </div>
-        <p class="hero-desc" id="lang-welcome-text">
-            بۆ گەیشتن بە هەر بەشێک، کرتەی <span class="hero-highlight" style="color: #fbbf24; text-shadow: 0 0 10px rgba(251,191,36,0.4);">" لیست "</span> بکە لە سەرەوە. ئەم بەشانەی خوارەوەت بۆ ئامادەکراوە:
-        </p>
-             
+
+                <p class="hero-desc" id="lang-welcome-text">
+                    بۆ گەیشتن بە هەر بەشێک، کرتەی <span class="hero-highlight" style="color: #fbbf24; text-shadow: 0 0 10px rgba(251,191,36,0.4);">" لیست "</span> بکە لە سەرەوە. ئەم بەشانەی خوارەوەت بۆ ئامادەکراوە:
+                </p>
                 <div class="info-cards-grid">
-                    <div class="info-card" onclick="showSection('schedule-tab'); setActiveNav('bnav-schedule')">
+                    <div class="info-card">
                         <div class="info-card-icon">📅</div>
                         <div><div class="info-card-title">١ · خشتەی هەفتانە</div><p>وانەکانی ڕۆژانە بۆ هەردوو دەوام</p></div>
                     </div>
-                    <div class="info-card" onclick="showSection('semesters-tab'); setActiveNav('bnav-semesters')">
+                    <div class="info-card">
                         <div class="info-card-icon">📚</div>
                         <div><div class="info-card-title">٢ · سمستەرەکان</div><p>مەلزەمە، پرسیار، فێرکاری</p></div>
                     </div>
-                    <div class="info-card" onclick="showSection('exam-tab'); setActiveNav('bnav-exam'); checkExams()">
+                    <div class="info-card">
                         <div class="info-card-icon">⏳</div>
                         <div><div class="info-card-title">٣ · کاتی تاقیکردنەوە</div><p>کاتژمێری ماوەی تاقیکردنەوە</p></div>
                     </div>
-                    <div class="info-card" onclick="showSection('gpa-tab'); setActiveNav('bnav-gpa')">
+                    <div class="info-card">
                         <div class="info-card-icon">🧮</div>
                         <div><div class="info-card-title">٤ · هەژمارکردنی نمرە</div><p>کۆی نمرەکانت بزانە</p></div>
                     </div>
@@ -358,7 +355,7 @@
             </p>
             <hr class="about-divider">
             <p class="about-meta"><span id="lang-dev">گەشەپێدەر:</span> <strong>شیروان شێرزاد خالد</strong></p>
-            <p class="about-meta" style="margin-top:8px;"><span id="lang-ver">وەشان:</span> <span class="version-badge">3.2.0 (٢٠٢٦)</span></p>
+            <p class="about-meta" style="margin-top:8px;"><span id="lang-ver">وەشان:</span> <span class="version-badge">4.1.6 (٢٠٢٦)</span></p>
         </div>
     </div>
 
@@ -376,11 +373,6 @@
     <div class="rainbow-name">شیروان شێرزاد خالد</div>
     <span class="footer-tagline" id="lang-footer-hope">بە هیوای سود گەیاندن بە هەموو خوێندكارانی بەشی ئایتی</span>
     <p style="opacity:0.55;font-size:0.82rem;margin-top:14px;">© ٢٠٢٦ <span id="lang-copy">بەردەوام لە نوێ كردنەوەدایە</span></p>
-    
-    <div style="margin: 15px 0; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 12px; display: inline-block;">
-        <span style="font-size: 0.85rem; color: rgba(255,255,255,0.7);">⏳ کۆتا نوێکردنەوەی سیستەم:</span>
-        <span id="last-updated-time" style="color: #34d399; font-weight: 800; font-size: 0.9rem; margin-right: 5px;">...</span>
-    </div>
 
     <div style="margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.1);">
         <p style="font-weight:700;font-size:0.88rem;margin-bottom:8px;opacity:0.85;" id="lang-visits">📊 ژمارەی سەردانەکان</p>
@@ -388,62 +380,45 @@
     </div>
 </footer>
 
-<canvas id="starCanvas" style="position:fixed;inset:0;pointer-events:none;z-index:0;"></canvas>
-
-<!-- ═══════════════════════════════════════
-     BOTTOM NAVIGATION BAR — زیادکرا
-═══════════════════════════════════════ -->
-<nav class="bottom-nav" id="bottomNav" aria-label="Navigation">
-
-    <button class="bnav-item active" id="bnav-home"
-            onclick="showSection('home-tab'); setActiveNav('bnav-home')"
-            aria-label="سەرەکی">
+<nav class="bottom-nav">
+    <button class="bnav-item active" id="bnav-home" onclick="showSection('home-tab'); setActiveNav('bnav-home')" aria-label="سەرەکی">
         <span class="bnav-icon">🏠</span>
         <span class="bnav-label" id="bnav-label-home">سەرەکی</span>
         <span class="bnav-dot"></span>
     </button>
-
-    <button class="bnav-item" id="bnav-schedule"
-            onclick="showSection('schedule-tab'); setActiveNav('bnav-schedule')"
-            aria-label="خشتە">
+    
+    <button class="bnav-item" id="bnav-schedule" onclick="showSection('schedule-tab'); setActiveNav('bnav-schedule')" aria-label="خشتە">
         <span class="bnav-icon">📅</span>
         <span class="bnav-label" id="bnav-label-schedule">خشتە</span>
         <span class="bnav-dot"></span>
     </button>
 
-    <button class="bnav-item" id="bnav-semesters"
-            onclick="showSection('semesters-tab'); setActiveNav('bnav-semesters')"
-            aria-label="سمستەر">
+    <button class="bnav-item" id="bnav-semesters" onclick="showSection('semesters-tab'); setActiveNav('bnav-semesters')" aria-label="سمستەر">
         <span class="bnav-icon">📚</span>
         <span class="bnav-label" id="bnav-label-semesters">سمستەر</span>
         <span class="bnav-dot"></span>
     </button>
 
-    <button class="bnav-item" id="bnav-exam"
-            onclick="showSection('exam-tab'); setActiveNav('bnav-exam'); checkExams()"
-            aria-label="تاقیکردنەوە">
+    <button class="bnav-item" id="bnav-exam" onclick="showSection('exam-tab'); setActiveNav('bnav-exam'); checkExams()" aria-label="تاقیکردنەوە">
         <span class="bnav-icon">⏳</span>
-        <span class="bnav-label" id="bnav-label-exam">تاقیکردن</span>
+        <span class="bnav-label" id="bnav-label-exam">كاتی تاقیکردنەوە</span>
         <span class="bnav-dot"></span>
     </button>
 
-    <button class="bnav-item" id="bnav-gpa"
-            onclick="showSection('gpa-tab'); setActiveNav('bnav-gpa')"
-            aria-label="نمرە">
+    <button class="bnav-item" id="bnav-gpa" onclick="showSection('gpa-tab'); setActiveNav('bnav-gpa')" aria-label="نمرە">
         <span class="bnav-icon">🧮</span>
         <span class="bnav-label" id="bnav-label-gpa">نمرە</span>
         <span class="bnav-dot"></span>
     </button>
 
-    <button class="bnav-item" id="bnav-about"
-            onclick="showSection('about-tab'); setActiveNav('bnav-about')"
-            aria-label="دەربارە">
+    <button class="bnav-item" id="bnav-about" onclick="showSection('about-tab'); setActiveNav('bnav-about')" aria-label="دەربارە">
         <span class="bnav-icon">ℹ️</span>
         <span class="bnav-label" id="bnav-label-about">دەربارە</span>
         <span class="bnav-dot"></span>
     </button>
-
 </nav>
+
+<canvas id="starCanvas" style="position:fixed;inset:0;pointer-events:none;z-index:0;"></canvas>
 
 <script src="script.js"></script>
 
