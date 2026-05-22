@@ -1,15 +1,21 @@
+function triggerHaptic() {
+    try { if (navigator && navigator.vibrate) { navigator.vibrate(15); } } catch(e){}
+}
+
 function showToast(message, icon = "✅") {
-    let container = document.getElementById('toast-container');
-    if (!container) {
-        container = document.createElement('div');
-        container.id = 'toast-container';
-        document.body.appendChild(container);
-    }
-    const toast = document.createElement('div');
-    toast.className = 'toast-message';
-    toast.innerHTML = `<span>${icon}</span> <span>${message}</span>`;
-    container.appendChild(toast);
-    setTimeout(() => { toast.remove(); }, 2900);
+    try {
+        let container = document.getElementById('toast-container');
+        if (!container) {
+            container = document.createElement('div');
+            container.id = 'toast-container';
+            document.body.appendChild(container);
+        }
+        const toast = document.createElement('div');
+        toast.className = 'toast-message';
+        toast.innerHTML = `<span>${icon}</span> <span>${message}</span>`;
+        container.appendChild(toast);
+        setTimeout(() => { toast.remove(); }, 2900);
+    } catch(e){}
 }
 
 function autoRequestNotification() {
@@ -25,15 +31,13 @@ function autoRequestNotification() {
     }
 }
 
-window.addEventListener('load', function () {
-    autoRequestNotification();
-    setTimeout(function () {
-        var loader = document.getElementById('loading-screen');
-        if (loader) { loader.classList.add('hidden'); setTimeout(() => loader.style.display = 'none', 500); }
-    }, 1400);
-    const savedGPASem = localStorage.getItem('gpa_selected_sem');
-    if (savedGPASem) { document.getElementById('gpa-sem-select').value = savedGPASem; renderGrading(); }
-});
+function forceHideLoader() {
+    var loader = document.getElementById('loading-screen');
+    if (loader) {
+        loader.classList.add('hidden');
+        setTimeout(() => loader.style.display = 'none', 500);
+    }
+}
 
 const TELEGRAM_USERNAME = "sherwan25";
 let currentSem = 1;
@@ -128,6 +132,7 @@ function toggleLanguage(lang) {
 }
 
 function toggleLangMenu() {
+    triggerHaptic();
     const menu = document.getElementById('lang-options');
     const arrow = document.getElementById('lang-arrow');
     const open = menu.style.display !== 'flex';
@@ -135,10 +140,11 @@ function toggleLangMenu() {
     arrow.style.transform = open ? 'rotate(180deg)' : 'rotate(0)';
 }
 
-function openNav() { document.getElementById("mySidebar").style.width="280px"; document.getElementById("sidebarOverlay").style.display="block"; document.body.classList.add('sidebar-open'); }
+function openNav() { triggerHaptic(); document.getElementById("mySidebar").style.width="280px"; document.getElementById("sidebarOverlay").style.display="block"; document.body.classList.add('sidebar-open'); }
 function closeNav() { document.getElementById("mySidebar").style.width="0"; document.getElementById("sidebarOverlay").style.display="none"; document.body.classList.remove('sidebar-open'); }
 
 function showSection(id) {
+    triggerHaptic();
     document.querySelectorAll(".semester-content").forEach(el => el.style.display = "none");
     document.getElementById(id).style.display = "block";
     window.scrollTo({top:0,behavior:'smooth'});
@@ -154,43 +160,59 @@ function checkUpdate() { if ('serviceWorker' in navigator) { navigator.serviceWo
 if (localStorage.getItem("app_version") !== APP_VERSION) { localStorage.setItem("app_version",APP_VERSION); window.location.reload(true); }
 
 function showTab(evt, id) {
+    triggerHaptic();
     document.querySelectorAll(".semester-content").forEach(el=>el.style.display="none");
     document.querySelectorAll(".tab-btn").forEach(el=>el.classList.remove("active"));
     document.getElementById(id).style.display="block"; evt.currentTarget.classList.add("active");
 }
 
 function openInnerSem(semId) {
+    triggerHaptic();
     document.querySelectorAll(".inner-sem-content").forEach(el=>el.style.display="none");
     document.getElementById(semId).style.display="block";
     document.getElementById(semId).scrollIntoView({behavior:'smooth'});
 }
 
 const THEMES = ['classic','dark','forest','ocean','rose','teal'];
+const themeHeaderColors = {
+    'classic': '#1e3a8a',
+    'dark': '#0d1830',
+    'forest': '#15803d',
+    'ocean': '#6d28d9',
+    'rose': '#9f1239',
+    'teal': '#0f766e'
+};
 
-function applyTheme(name) {
+function applyTheme(name, isLoad = false) {
+    if(!isLoad) triggerHaptic();
     THEMES.forEach(t => document.body.classList.remove('theme-'+t));
     if (name !== 'classic') document.body.classList.add('theme-'+name);
     localStorage.setItem('it_theme', name);
     document.querySelectorAll('.theme-card').forEach(c => c.classList.remove('active'));
     const tc = document.getElementById('tc-'+name);
     if (tc) tc.classList.add('active');
+    let metaThemeColor = document.querySelector('meta[name="theme-color"]');
+    if (metaThemeColor) {
+        metaThemeColor.setAttribute('content', themeHeaderColors[name] || '#1e3a8a');
+    }
 }
 
-function openThemePanel() { document.getElementById('themePanel').classList.add('open'); document.getElementById('themeOverlay').classList.add('open'); }
+function openThemePanel() { triggerHaptic(); document.getElementById('themePanel').classList.add('open'); document.getElementById('themeOverlay').classList.add('open'); }
 function closeThemePanel() { document.getElementById('themePanel').classList.remove('open'); document.getElementById('themeOverlay').classList.remove('open'); }
 
 let starAnimId = null;
-function applyStarField(on) {
+function applyStarField(on, isLoad = false) {
     localStorage.setItem('it_stars', on ? '1' : '0');
     const canvas = document.getElementById('starCanvas');
+    if (!canvas) return;
     if (!on) { 
         canvas.style.display='none'; 
         if(starAnimId){cancelAnimationFrame(starAnimId);starAnimId=null;} 
-        showToast('ناچالاک کرا تروسکەی ئەستێرەکان', '❌');
+        if(!isLoad) showToast('ناچالاک کرا تروسکەی ئەستێرەکان', '❌');
         return; 
     }
     canvas.style.display='block';
-    showToast('چالاککرا', '✨');
+    if(!isLoad) showToast('چالاککرا', '✨');
     startStars(canvas);
 }
 
@@ -234,6 +256,7 @@ const scheduleData = {
 };
 
 function setSem(s) {
+    triggerHaptic();
     currentSem = s;
     document.querySelectorAll('.sem-btn').forEach(b=>b.classList.remove('active-btn'));
     const ab = document.getElementById('btn-sem-'+s); if(ab) ab.classList.add('active-btn');
@@ -249,6 +272,7 @@ function setSem(s) {
 }
 
 function selectShift(shift) {
+    triggerHaptic();
     currentShift = shift;
     document.querySelector('.shift-btn.morning')?.classList.remove('active');
     document.querySelector('.shift-btn.evening')?.classList.remove('active');
@@ -260,6 +284,7 @@ function selectShift(shift) {
 }
 
 function selectGroup(g) {
+    triggerHaptic();
     const colors = {A:'#3b82f6',B:'#10b981',C:'#f59e0b'};
     document.querySelectorAll('.grp-btn').forEach(b=>b.classList.remove('active-btn'));
     const ag = document.getElementById('btn-grp-'+g); if(ag) ag.classList.add('active-btn');
@@ -271,6 +296,7 @@ function selectGroup(g) {
 }
 
 function selectDay(g, d, dayName) {
+    triggerHaptic();
     const body = document.getElementById('schedule-body'); if(!body) return; body.innerHTML='';
     const colors = {A:'#3b82f6',B:'#10b981',C:'#f59e0b'};
     const shiftText = currentShift==='morning'?(currentLang==='en'?'Morning':'بەیانیان'):(currentLang==='en'?'Evening':'ئێوارن');
@@ -320,7 +346,7 @@ async function fetchNews() {
                 localStorage.setItem('last_news_title',latestTitle);
             } else if(!stored) localStorage.setItem('last_news_title',latestTitle);
         } else nc.innerHTML="هیچ هەواڵێکی نوێ نییە.";
-    } catch(e) { console.error(e); }
+    } catch(e) {}
 }
 setInterval(fetchNews, 60000);
 
@@ -363,7 +389,7 @@ async function checkExams() {
                 startSpecificTimer(exam.dateObj,divId);
             });
         } else { container.innerHTML="<h3 style='text-align:center;opacity:0.5;color:var(--text);'>هیچ تاقیکردنەوەیەک نییە</h3>"; }
-    } catch(e) { console.error(e); }
+    } catch(e) {}
 }
 
 function startSpecificTimer(date,id) {
@@ -389,7 +415,7 @@ function renderGrading() {
     loadGrades();
 }
 
-function toggleAccordion(btn) { btn.classList.toggle("active-accordion"); var p=btn.nextElementSibling; p.style.maxHeight=p.style.maxHeight?null:p.scrollHeight+"px"; }
+function toggleAccordion(btn) { triggerHaptic(); btn.classList.toggle("active-accordion"); var p=btn.nextElementSibling; p.style.maxHeight=p.style.maxHeight?null:p.scrollHeight+"px"; }
 
 function calcSub(sem,idx, isLoading = false) {
     const getVal=id=>{const el=document.getElementById(id);let v=el.value;if(v==="")return null;if(v<0){el.value=0;return 0;}return parseFloat(v);};
@@ -397,6 +423,8 @@ function calcSub(sem,idx, isLoading = false) {
     let current=0;
     if(d!==null)current+=d;if(a!==null)current+=a;if(q!==null)current+=q;if(r!==null)current+=r;if(m!==null)current+=m;
     let msg="";
+    let hasReached25 = false;
+    let hasReached50Final = false;
     if(current>50) msg="<b style='color:#ef4444'>هەڵە! کۆی سەعی نابێت لە ٥٠ زیاتر بێت.</b>";
     else if(f!==null&&f>50) msg="<b style='color:#ef4444'>هەڵە! نمرەی فایناڵ نابێت لە ٥٠ زیاتر بێت.</b>";
     else {
@@ -405,87 +433,170 @@ function calcSub(sem,idx, isLoading = false) {
         if(d===null)missing.push("ڕۆژانە");if(a===null)missing.push("نەهاتن");if(q===null)missing.push("کویز");if(r===null)missing.push("ڕاپۆرت");if(m===null)missing.push("میدتێرم");
         if(missing.length>0&&current<50) msg+=`<div style="color:#d97706;font-size:0.82rem;margin-top:4px;font-weight:600;">💡 هەوڵبدە لە (${missing.join(' و ')}) نمرە بەدەست بهێنیت</div>`;
         if(current<25) msg+=`<br><span style="color:#ef4444;font-weight:800;">⚠️ مەترسی! نمرەی سەعیت زۆر کەمە.</span>`;
-        else if(current<35) msg+=`<br><span style="color:#d97706;">باشە، بەڵام هێشتا مەترسی هەیە.</span>`;
-        else if(current<50) msg+=`<br><span style="color:#059669;font-weight:700;">🌟 ئاستت نایابە!</span>`;
-        else msg+=`<br><span style="color:#10b981;font-weight:700;">🏆 سەعی تەواو! تەنها فایناڵ ماوە.</span>`;
+        else if(current<35) { msg+=`<br><span style="color:#d97706;">باشە، بەڵام هێشتا مەترسی هەیە.</span>`; if(current >= 25) hasReached25 = true; }
+        else if(current<50) { msg+=`<br><span style="color:#059669;font-weight:700;">🌟 ئاستت نایابە!</span>`; if(current >= 25) hasReached25 = true; }
+        else { msg+=`<br><span style="color:#10b981;font-weight:700;">🏆 سەعی تەواو! تەنها فایناڵ ماوە.</span>`; if(current >= 25) hasReached25 = true; }
         if(f!==null) {
             let final=current+f;
             msg=`<div style="font-size:1.1rem;margin-bottom:6px;">کۆی گشتی: <span style="color:var(--text);font-weight:900;">${final}</span></div>`;
             if(final>100) msg+=`<span style="color:#ef4444">هەڵە! لە ١٠٠ تێپەڕی کرد.</span>`;
-            else if(final>=50) { msg+=`<span style="color:#10b981;font-weight:700;">🎉 پیرۆزە دەرچوویت!</span>`; if(final>=85) msg+=` <span style="color:#f59e0b">ئاستێکی بەرز!</span>`; }
+            else if(final>=50) { msg+=`<span style="color:#10b981;font-weight:700;">🎉 پیرۆزە دەرچوویت!</span>`; if(final>=85) msg+=` <span style="color:#f59e0b">ئاستێکی بەرز!</span>`; hasReached50Final = true; }
             else msg+=`<span style="color:#ef4444">😢 بەداخەوە کەوتویت.</span>`;
         }
     }
-    const sd=document.getElementById(`status-${sem}-${idx}`); sd.innerHTML=msg;
-    const p=sd.closest('.panel'); if(p.style.maxHeight) p.style.maxHeight=p.scrollHeight+"px";
-    
-    // لێرەدا ڕێگری دەکەین لەوەی کاتی لۆدبوون نامەکە دەربکات
+    const sd=document.getElementById(`status-${sem}-${idx}`); 
+    if(sd) { sd.innerHTML=msg; }
+    if(sd) { const p=sd.closest('.panel'); if(p && p.style.maxHeight) p.style.maxHeight=p.scrollHeight+"px"; }
     if (!isLoading) {
         saveGrades();
+        const lastScore25 = sessionStorage.getItem(`confetti_25_${sem}_${idx}`);
+        const lastScore50 = sessionStorage.getItem(`confetti_50_${sem}_${idx}`);
+        if (hasReached50Final && lastScore50 !== 'true') {
+            triggerConfetti('big');
+            sessionStorage.setItem(`confetti_50_${sem}_${idx}`, 'true');
+        } else if (hasReached25 && !hasReached50Final && lastScore25 !== 'true') {
+            triggerConfetti('small');
+            sessionStorage.setItem(`confetti_25_${sem}_${idx}`, 'true');
+        }
+        if (!hasReached25) sessionStorage.removeItem(`confetti_25_${sem}_${idx}`);
+        if (!hasReached50Final) sessionStorage.removeItem(`confetti_50_${sem}_${idx}`);
     }
+}
+
+function triggerConfetti(type) {
+    try {
+        if (typeof confetti === 'function') {
+            triggerHaptic(); 
+            if (type === 'small') {
+                confetti({ particleCount: 80, spread: 60, origin: { y: 0.8 }, colors: ['#34d399', '#fcd34d'] });
+            } else if (type === 'big') {
+                var duration = 2000; var end = Date.now() + duration;
+                (function frame() {
+                    confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#3b82f6', '#10b981', '#f59e0b'] });
+                    confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#3b82f6', '#10b981', '#f59e0b'] });
+                    if (Date.now() < end) requestAnimationFrame(frame);
+                }());
+            }
+        }
+    } catch(e){}
 }
 
 function saveGrades() { 
-    const inputs = document.querySelectorAll('#grading-container input'); 
-    let data = JSON.parse(localStorage.getItem('it_chamchamal_grades') || '{}'); 
-    let changed = false;
-    
-    inputs.forEach(i => {
-        if (data[i.id] !== i.value && i.value !== "") {
-            changed = true;
-        }
-        data[i.id] = i.value;
-    });
-    
-    localStorage.setItem('it_chamchamal_grades', JSON.stringify(data)); 
-    
-    if (changed) {
-        showToast("نمرەکەت پاشەکەوت کرا", "💾");
-    }
+    try {
+        const inputs = document.querySelectorAll('#grading-container input'); 
+        let data = JSON.parse(localStorage.getItem('it_chamchamal_grades') || '{}'); 
+        let changed = false;
+        inputs.forEach(i => {
+            if (data[i.id] !== i.value && i.value !== "") { changed = true; }
+            data[i.id] = i.value;
+        });
+        localStorage.setItem('it_chamchamal_grades', JSON.stringify(data)); 
+        if (changed) showToast("نمرەکەت پاشەکەوت کرا", "💾");
+    } catch(e){}
 }
 
-function loadGrades() { const saved=JSON.parse(localStorage.getItem('it_chamchamal_grades')||'{}'); for(let id in saved){let el=document.getElementById(id);if(el){el.value=saved[id];let p=id.split('-');if(p.length>=3)calcSub(p[1],p[2], true);}} }
+function loadGrades() { 
+    try {
+        const saved=JSON.parse(localStorage.getItem('it_chamchamal_grades')||'{}'); 
+        for(let id in saved){
+            let el=document.getElementById(id);
+            if(el){
+                el.value=saved[id];
+                let p=id.split('-');
+                if(p.length>=3) calcSub(p[1],p[2], true);
+            }
+        } 
+    } catch(e){}
+}
 
 function clearSubject(sem,idx) {
     if(!confirm("دڵنیای لە سڕینەوەی نمرەکانی ئەم بابەتە؟")) return;
-    let data=JSON.parse(localStorage.getItem('it_chamchamal_grades')||'{}');
-    ['daily','attend','quiz','report','mid','final'].forEach(f=>{let id=`${f}-${sem}-${idx}`;if(document.getElementById(id))document.getElementById(id).value="";delete data[id];});
-    localStorage.setItem('it_chamchamal_grades',JSON.stringify(data));
-    document.getElementById(`status-${sem}-${idx}`).innerHTML="تکایە نمرەکانت داخڵ بکە...";
+    try {
+        let data=JSON.parse(localStorage.getItem('it_chamchamal_grades')||'{}');
+        ['daily','attend','quiz','report','mid','final'].forEach(f=>{let id=`${f}-${sem}-${idx}`;if(document.getElementById(id))document.getElementById(id).value="";delete data[id];});
+        localStorage.setItem('it_chamchamal_grades',JSON.stringify(data));
+        document.getElementById(`status-${sem}-${idx}`).innerHTML="تکایە نمرەکانت داخڵ بکە...";
+        sessionStorage.removeItem(`confetti_25_${sem}_${idx}`);
+        sessionStorage.removeItem(`confetti_50_${sem}_${idx}`);
+    } catch(e){}
 }
 
 function resetSemesterGrades() {
     const sem=document.getElementById('gpa-sem-select').value;
     if(!confirm(`دڵنیای لە سڕینەوەی هەموو نمرەکانی سمستەری ${sem}؟`)) return;
-    let data=JSON.parse(localStorage.getItem('it_chamchamal_grades')||'{}');
-    Object.keys(data).forEach(k=>{if(k.includes(`-${sem}-`))delete data[k];});
-    localStorage.setItem('it_chamchamal_grades',JSON.stringify(data));
-    renderGrading();
+    try {
+        let data=JSON.parse(localStorage.getItem('it_chamchamal_grades')||'{}');
+        Object.keys(data).forEach(k=>{if(k.includes(`-${sem}-`))delete data[k];});
+        localStorage.setItem('it_chamchamal_grades',JSON.stringify(data));
+        renderGrading();
+    } catch(e){}
+}
+
+function animateValue(obj, start, end, duration) {
+    if(!obj) return;
+    let startTimestamp = null;
+    const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        const current = Math.floor(progress * (end - start) + start);
+        obj.textContent = String(current).padStart(7, '0');
+        if (progress < 1) {
+            window.requestAnimationFrame(step);
+        } else {
+            obj.textContent = String(end).padStart(7, '0');
+        }
+    };
+    window.requestAnimationFrame(step);
 }
 
 async function initVisitorCounter() {
+    const counterEl = document.getElementById('visitor-counter');
+    if(!counterEl) return;
     try {
         const res=await fetch('https://api.counterapi.dev/v1/itchamchamal/visits/up');
         const data=await res.json();
         let n=(data.count||0)+2651;
-        document.getElementById('visitor-counter').textContent=String(n).padStart(7,'0');
-    } catch(e) { document.getElementById('visitor-counter').textContent=String(2651).padStart(7,'0'); }
+        animateValue(counterEl, 0, n, 1500);
+    } catch(e) { 
+        animateValue(counterEl, 0, 2651, 1500);
+    }
 }
 
 function updateClock() {
-    const now=new Date(); let h=now.getHours(); const m=String(now.getMinutes()).padStart(2,'0'); const s=String(now.getSeconds()).padStart(2,'0');
-    const ap=h>=12?'PM':'AM'; h=h%12||12;
-    const el=document.getElementById('liveClock'); if(el) el.textContent=`${h}:${m}:${s} ${ap}`;
+    try {
+        const now=new Date(); let h=now.getHours(); const m=String(now.getMinutes()).padStart(2,'0'); const s=String(now.getSeconds()).padStart(2,'0');
+        const ap=h>=12?'PM':'AM'; h=h%12||12;
+        const el=document.getElementById('liveClock'); if(el) el.textContent=`${h}:${m}:${s} ${ap}`;
+    } catch(e){}
 }
 
-window.onload = function() {
-    fetchNews(); initVisitorCounter(); checkUpdate();
-    const savedTheme = localStorage.getItem('it_theme') || 'dark';
-    applyTheme(savedTheme);
-    const savedStars = localStorage.getItem('it_stars');
-    if (savedStars === null || savedStars === '1') applyStarField(true);
-    else applyStarField(false);
-    checkExams(); renderGrading(); setInterval(updateClock,1000); updateClock();
-};
+window.addEventListener('load', function () {
+    setTimeout(forceHideLoader, 1400);
+    try { autoRequestNotification(); } catch(e){}
+    try { fetchNews(); } catch(e){}
+    try { initVisitorCounter(); } catch(e){}
+    try { checkUpdate(); } catch(e){}
+    try {
+        const savedGPASem = localStorage.getItem('gpa_selected_sem');
+        if (savedGPASem) { 
+            const sel = document.getElementById('gpa-sem-select');
+            if(sel) sel.value = savedGPASem; 
+        }
+        renderGrading();
+    } catch(e){}
+    try {
+        const savedTheme = localStorage.getItem('it_theme') || 'classic';
+        applyTheme(savedTheme, true); 
+    } catch(e){}
+    try {
+        const savedStars = localStorage.getItem('it_stars');
+        if (savedStars === null || savedStars === '1') applyStarField(true, true);
+        else applyStarField(false, true);
+    } catch(e){}
+    try { checkExams(); } catch(e){}
+    try { setInterval(updateClock,1000); updateClock(); } catch(e){}
+});
 
-if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js').catch(err=>console.log('SW Failed',err)); }
+if ('serviceWorker' in navigator) { 
+    navigator.serviceWorker.register('sw.js').catch(err=>console.log('SW Failed',err)); 
+}
