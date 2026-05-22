@@ -391,7 +391,7 @@ function renderGrading() {
 
 function toggleAccordion(btn) { btn.classList.toggle("active-accordion"); var p=btn.nextElementSibling; p.style.maxHeight=p.style.maxHeight?null:p.scrollHeight+"px"; }
 
-function calcSub(sem,idx) {
+function calcSub(sem,idx, isLoading = false) {
     const getVal=id=>{const el=document.getElementById(id);let v=el.value;if(v==="")return null;if(v<0){el.value=0;return 0;}return parseFloat(v);};
     const d=getVal(`daily-${sem}-${idx}`),a=getVal(`attend-${sem}-${idx}`),q=getVal(`quiz-${sem}-${idx}`),r=getVal(`report-${sem}-${idx}`),m=getVal(`mid-${sem}-${idx}`),f=getVal(`final-${sem}-${idx}`);
     let current=0;
@@ -418,7 +418,11 @@ function calcSub(sem,idx) {
     }
     const sd=document.getElementById(`status-${sem}-${idx}`); sd.innerHTML=msg;
     const p=sd.closest('.panel'); if(p.style.maxHeight) p.style.maxHeight=p.scrollHeight+"px";
-    saveGrades();
+    
+    // لێرەدا ڕێگری دەکەین لەوەی کاتی لۆدبوون نامەکە دەربکات
+    if (!isLoading) {
+        saveGrades();
+    }
 }
 
 function saveGrades() { 
@@ -440,7 +444,7 @@ function saveGrades() {
     }
 }
 
-function loadGrades() { const saved=JSON.parse(localStorage.getItem('it_chamchamal_grades')||'{}'); for(let id in saved){let el=document.getElementById(id);if(el){el.value=saved[id];let p=id.split('-');if(p.length>=3)calcSub(p[1],p[2]);}} }
+function loadGrades() { const saved=JSON.parse(localStorage.getItem('it_chamchamal_grades')||'{}'); for(let id in saved){let el=document.getElementById(id);if(el){el.value=saved[id];let p=id.split('-');if(p.length>=3)calcSub(p[1],p[2], true);}} }
 
 function clearSubject(sem,idx) {
     if(!confirm("دڵنیای لە سڕینەوەی نمرەکانی ئەم بابەتە؟")) return;
