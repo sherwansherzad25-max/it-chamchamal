@@ -1,5 +1,10 @@
+// فەنکشنی لەرینەوەی مۆبایل
 function triggerHaptic() {
-    try { if (navigator && navigator.vibrate) { navigator.vibrate(15); } } catch(e){}
+    try {
+        if (navigator && navigator.vibrate) {
+            navigator.vibrate(15);
+        }
+    } catch(e){}
 }
 
 function showToast(message, icon = "✅") {
@@ -151,6 +156,7 @@ function showSection(id) {
 }
 
 function setActiveNav(id) {
+    triggerHaptic();
     document.querySelectorAll('.bnav-item').forEach(el => el.classList.remove('active'));
     const el = document.getElementById(id);
     if(el) el.classList.add('active');
@@ -191,6 +197,7 @@ function applyTheme(name, isLoad = false) {
     document.querySelectorAll('.theme-card').forEach(c => c.classList.remove('active'));
     const tc = document.getElementById('tc-'+name);
     if (tc) tc.classList.add('active');
+    
     let metaThemeColor = document.querySelector('meta[name="theme-color"]');
     if (metaThemeColor) {
         metaThemeColor.setAttribute('content', themeHeaderColors[name] || '#1e3a8a');
@@ -425,6 +432,7 @@ function calcSub(sem,idx, isLoading = false) {
     let msg="";
     let hasReached25 = false;
     let hasReached50Final = false;
+
     if(current>50) msg="<b style='color:#ef4444'>هەڵە! کۆی سەعی نابێت لە ٥٠ زیاتر بێت.</b>";
     else if(f!==null&&f>50) msg="<b style='color:#ef4444'>هەڵە! نمرەی فایناڵ نابێت لە ٥٠ زیاتر بێت.</b>";
     else {
@@ -432,10 +440,12 @@ function calcSub(sem,idx, isLoading = false) {
         let missing=[];
         if(d===null)missing.push("ڕۆژانە");if(a===null)missing.push("نەهاتن");if(q===null)missing.push("کویز");if(r===null)missing.push("ڕاپۆرت");if(m===null)missing.push("میدتێرم");
         if(missing.length>0&&current<50) msg+=`<div style="color:#d97706;font-size:0.82rem;margin-top:4px;font-weight:600;">💡 هەوڵبدە لە (${missing.join(' و ')}) نمرە بەدەست بهێنیت</div>`;
+        
         if(current<25) msg+=`<br><span style="color:#ef4444;font-weight:800;">⚠️ مەترسی! نمرەی سەعیت زۆر کەمە.</span>`;
         else if(current<35) { msg+=`<br><span style="color:#d97706;">باشە، بەڵام هێشتا مەترسی هەیە.</span>`; if(current >= 25) hasReached25 = true; }
         else if(current<50) { msg+=`<br><span style="color:#059669;font-weight:700;">🌟 ئاستت نایابە!</span>`; if(current >= 25) hasReached25 = true; }
         else { msg+=`<br><span style="color:#10b981;font-weight:700;">🏆 سەعی تەواو! تەنها فایناڵ ماوە.</span>`; if(current >= 25) hasReached25 = true; }
+        
         if(f!==null) {
             let final=current+f;
             msg=`<div style="font-size:1.1rem;margin-bottom:6px;">کۆی گشتی: <span style="color:var(--text);font-weight:900;">${final}</span></div>`;
@@ -446,11 +456,14 @@ function calcSub(sem,idx, isLoading = false) {
     }
     const sd=document.getElementById(`status-${sem}-${idx}`); 
     if(sd) { sd.innerHTML=msg; }
+    
     if(sd) { const p=sd.closest('.panel'); if(p && p.style.maxHeight) p.style.maxHeight=p.scrollHeight+"px"; }
+    
     if (!isLoading) {
         saveGrades();
         const lastScore25 = sessionStorage.getItem(`confetti_25_${sem}_${idx}`);
         const lastScore50 = sessionStorage.getItem(`confetti_50_${sem}_${idx}`);
+        
         if (hasReached50Final && lastScore50 !== 'true') {
             triggerConfetti('big');
             sessionStorage.setItem(`confetti_50_${sem}_${idx}`, 'true');
@@ -458,6 +471,7 @@ function calcSub(sem,idx, isLoading = false) {
             triggerConfetti('small');
             sessionStorage.setItem(`confetti_25_${sem}_${idx}`, 'true');
         }
+        
         if (!hasReached25) sessionStorage.removeItem(`confetti_25_${sem}_${idx}`);
         if (!hasReached50Final) sessionStorage.removeItem(`confetti_50_${sem}_${idx}`);
     }
@@ -486,10 +500,12 @@ function saveGrades() {
         const inputs = document.querySelectorAll('#grading-container input'); 
         let data = JSON.parse(localStorage.getItem('it_chamchamal_grades') || '{}'); 
         let changed = false;
+        
         inputs.forEach(i => {
             if (data[i.id] !== i.value && i.value !== "") { changed = true; }
             data[i.id] = i.value;
         });
+        
         localStorage.setItem('it_chamchamal_grades', JSON.stringify(data)); 
         if (changed) showToast("نمرەکەت پاشەکەوت کرا", "💾");
     } catch(e){}
@@ -532,6 +548,7 @@ function resetSemesterGrades() {
     } catch(e){}
 }
 
+// ئەنیمەیشنی ژمارەکان لەم بەشەدایە
 function animateValue(obj, start, end, duration) {
     if(!obj) return;
     let startTimestamp = null;
@@ -556,6 +573,7 @@ async function initVisitorCounter() {
         const res=await fetch('https://api.counterapi.dev/v1/itchamchamal/visits/up');
         const data=await res.json();
         let n=(data.count||0)+2651;
+        // خولانەوەی ژمارەکە
         animateValue(counterEl, 0, n, 1500);
     } catch(e) { 
         animateValue(counterEl, 0, 2651, 1500);
