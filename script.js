@@ -1,4 +1,3 @@
-// فەنکشنی لەرینەوەی مۆبایل
 function triggerHaptic() {
     try {
         if (navigator && navigator.vibrate) {
@@ -47,7 +46,7 @@ function forceHideLoader() {
 const TELEGRAM_USERNAME = "sherwan25";
 let currentSem = 1;
 let currentShift = 'evening';
-const APP_VERSION = "3.1";
+const APP_VERSION = "3.2";
 let currentLang = 'ku';
 
 const subjectList = {
@@ -219,7 +218,7 @@ function applyStarField(on, isLoad = false) {
         return; 
     }
     canvas.style.display='block';
-    if(!isLoad) showToast('چالاککرا', '✨');
+    if(!isLoad) showToast('چالاككرا', '✨');
     startStars(canvas);
 }
 
@@ -273,7 +272,7 @@ function setSem(s) {
     if (currentShift==='morning' && (currentSem===2||currentSem===4)) { if(btnC) btnC.style.display='inline-block'; }
     else { if(btnC) btnC.style.display='none'; }
     const shiftText = currentShift==='morning' ? (currentLang==='en'?'Morning':'بەیانیان') : (currentLang==='en'?'Evening':'ئێوارن');
-    document.getElementById('group-display-title').innerHTML = `سمستەر ${s} - ${shiftText} - <span style="color:var(--secondary)">${currentLang==='en'?'Select Group':'گروپ هەڵبژێرە'}</span>`;
+    document.getElementById('group-display-title').innerHTML = `سمستەر ${s} - ${shiftText} - <span style="color:var(--secondary)">${currentLang==='en'?'Select Group':'گرووپ هەڵبژێرە'}</span>`;
     document.querySelectorAll('.grp-btn').forEach(b=>b.classList.remove('active-btn'));
     document.getElementById('daysArea').innerHTML=""; document.getElementById('schedule-box').style.display='none';
 }
@@ -548,7 +547,6 @@ function resetSemesterGrades() {
     } catch(e){}
 }
 
-// ئەنیمەیشنی ژمارەکان لەم بەشەدایە
 function animateValue(obj, start, end, duration) {
     if(!obj) return;
     let startTimestamp = null;
@@ -573,7 +571,6 @@ async function initVisitorCounter() {
         const res=await fetch('https://api.counterapi.dev/v1/itchamchamal/visits/up');
         const data=await res.json();
         let n=(data.count||0)+2651;
-        // خولانەوەی ژمارەکە
         animateValue(counterEl, 0, n, 1500);
     } catch(e) { 
         animateValue(counterEl, 0, 2651, 1500);
@@ -617,4 +614,236 @@ window.addEventListener('load', function () {
 
 if ('serviceWorker' in navigator) { 
     navigator.serviceWorker.register('sw.js').catch(err=>console.log('SW Failed',err)); 
+}
+
+
+let todayGender = null;
+let todayGroup = null;
+let todayShiftSel = null;
+
+function selectGender(g) {
+    triggerHaptic();
+    todayGender = g;
+    ['male','female'].forEach(x => {
+        const b = document.getElementById('gbtn-'+x);
+        if(!b) return;
+        b.style.background = x===g ? 'rgba(255,255,255,0.35)' : 'rgba(255,255,255,0.1)';
+        b.style.border = x===g ? '2px solid white' : '2px solid rgba(255,255,255,0.3)';
+        b.style.transform = x===g ? 'scale(1.03)' : 'scale(1)';
+    });
+}
+
+function selectTodayGroup(g) {
+    triggerHaptic();
+    todayGroup = g;
+    ['A','B','C'].forEach(x => {
+        const b = document.getElementById('tgbtn-'+x);
+        if(!b) return;
+        b.style.background = x===g ? 'rgba(255,255,255,0.35)' : 'rgba(255,255,255,0.1)';
+        b.style.border = x===g ? '2px solid white' : '2px solid rgba(255,255,255,0.3)';
+        b.style.transform = x===g ? 'scale(1.03)' : 'scale(1)';
+    });
+}
+
+function selectTodayShift(s) {
+    triggerHaptic();
+    todayShiftSel = s;
+    ['morning','evening'].forEach(x => {
+        const b = document.getElementById('tsbtn-'+x);
+        if(!b) return;
+        b.style.background = x===s ? 'rgba(255,255,255,0.35)' : 'rgba(255,255,255,0.1)';
+        b.style.border = x===s ? '2px solid white' : '2px solid rgba(255,255,255,0.3)';
+        b.style.transform = x===s ? 'scale(1.03)' : 'scale(1)';
+    });
+}
+
+function saveTodayProfile() {
+    const name = document.getElementById('today-name')?.value?.trim();
+    const sem  = document.getElementById('today-sem')?.value;
+
+    if(!name)          { showToast('تکایە ناوت بنووسە', '⚠️'); return; }
+    if(!todayGender)   { showToast('تکایە ڕەگەزت دیاری بکە', '⚠️'); return; }
+    if(!todayGroup)    { showToast('تکایە گرووپت هەڵبژێرە', '⚠️'); return; }
+    if(!todayShiftSel) { showToast('تکایە دەوامت هەڵبژێرە', '⚠️'); return; }
+
+    const profile = { name, gender: todayGender, sem, group: todayGroup, shift: todayShiftSel };
+    localStorage.setItem('today_profile', JSON.stringify(profile));
+    showToast('زانیارییەکانت پاشەکەوت کرا! ✨', '✅');
+    renderTodayMain();
+}
+
+function resetTodayProfile() {
+    triggerHaptic();
+    localStorage.removeItem('today_profile');
+    document.getElementById('today-setup').style.display = 'block';
+    document.getElementById('today-main').style.display  = 'none';
+    todayGender = null; todayGroup = null; todayShiftSel = null;
+
+    ['male','female'].forEach(x => {
+        const b = document.getElementById('gbtn-'+x);
+        if(b) { b.style.background='rgba(255,255,255,0.1)'; b.style.border='2px solid rgba(255,255,255,0.3)'; b.style.transform='scale(1)'; }
+    });
+    ['A','B','C'].forEach(x => {
+        const b = document.getElementById('tgbtn-'+x);
+        if(b) { b.style.background='rgba(255,255,255,0.1)'; b.style.border='2px solid rgba(255,255,255,0.3)'; b.style.transform='scale(1)'; }
+    });
+    ['morning','evening'].forEach(x => {
+        const b = document.getElementById('tsbtn-'+x);
+        if(b) { b.style.background='rgba(255,255,255,0.1)'; b.style.border='2px solid rgba(255,255,255,0.3)'; b.style.transform='scale(1)'; }
+    });
+}
+
+function getTodayGreeting(name, gender) {
+    const h = new Date().getHours();
+    let timeWord, emoji;
+    if      (h >= 5  && h < 12) { timeWord =  'بەیانی باش';    emoji = '🌤️'; }
+    else if (h >= 12 && h < 17) { timeWord =  'نیوەڕۆت باش'; emoji = '☀️'; }
+    else if (h >= 17 && h < 21) { timeWord =  'ئێوارەت باش';  emoji = '🌇'; }
+    else                         { timeWord =  'شەوت باش';    emoji = '🌙'; }
+
+    const title = gender === 'male' ? 'کاک' : 'خاتوو';
+    return { greeting: `${timeWord}، ${title} ${name}!`, emoji };
+}
+
+function getTodayDayIndex() {
+    const jsDay = new Date().getDay(); // 0=Sun,1=Mon,2=Tue,3=Wed,4=Thu,5=Fri,6=Sat
+    const map = { 0:1, 1:2, 2:3, 3:4 };
+    return map[jsDay] !== undefined ? map[jsDay] : null;
+}
+
+function getTodayDayName(jsDay) {
+    const names = { 0:'یەکشەممە', 1:'دووشەممە', 2:'سێشەممە', 3:'چوارشەممە', 4:'پێنجشەممە', 5:'هەینی', 6:'شەممە' };
+    return names[jsDay] || '';
+}
+
+function renderTodayMain() {
+    const stored = localStorage.getItem('today_profile');
+    if(!stored) {
+        document.getElementById('today-setup').style.display = 'block';
+        document.getElementById('today-main').style.display  = 'none';
+        return;
+    }
+    const p = JSON.parse(stored);
+    document.getElementById('today-setup').style.display = 'none';
+    document.getElementById('today-main').style.display  = 'block';
+
+    const { greeting, emoji } = getTodayGreeting(p.name, p.gender);
+    const shiftLabel = p.shift === 'morning' ? 'دەوامی بەیانیان ☀️' : 'دەوامی ئێوارن 🌙';
+    const greetBox = document.getElementById('today-greeting-box');
+    if(greetBox) {
+        greetBox.style.background = 'linear-gradient(135deg, var(--primary), var(--secondary))';
+        greetBox.innerHTML = `
+            <div style="font-size:2.2rem;margin-bottom:8px;">${emoji}</div>
+            <div style="color:white;font-size:1.18rem;font-weight:900;margin-bottom:6px;line-height:1.4;">${greeting}</div>
+            <div style="color:rgba(255,255,255,0.72);font-size:0.82rem;font-weight:600;">سمستەری ${p.sem} &nbsp;·&nbsp; Group ${p.group} &nbsp;·&nbsp; ${shiftLabel}</div>
+        `;
+    }
+
+    const box    = document.getElementById('today-schedule-box');
+    if(!box) return;
+    const jsDay  = new Date().getDay();
+    const dayName = getTodayDayName(jsDay);
+    const dayIdx  = getTodayDayIndex();
+
+    if(dayIdx === null) {
+        box.innerHTML = `
+        <div style="text-align:center;padding:32px 20px;background:var(--surface);border-radius:20px;border:1.5px solid var(--border);">
+            <div style="font-size:2.4rem;margin-bottom:12px;">🎉</div>
+            <div style="font-weight:900;font-size:1.12rem;color:var(--text);margin-bottom:8px;">${dayName} — ئەمڕؤ پشووە بەخۆشی بەسەری بەرە!</div>
+            <div style="color:var(--text-muted);font-size:0.88rem;line-height:1.6;">ئەمڕۆ وانە نییە، ئیستراحەت بکە 😎</div>
+        </div>`;
+        return;
+    }
+
+    const todayColors = {
+        'Logic Design':'#ef4444','IT Fundamentals':'#10b981','Mathematics':'#8b5cf6',
+        'English':'#f59e0b','Kurdology':'#475569','Database':'#d97706','English II':'#f59e0b',
+        'Network +':'#3b82f6','Programming':'#8b5cf6','Web Design':'#14b8a6',
+        'Web Programming':'#3b82f6','O.O.P':'#8b5cf6','Database Management':'#d97706',
+        'Computer Network II':'#10b981','Operating System':'#ef4444',
+        'Web Programming II':'#3b82f6','Visual Programming':'#8b5cf6',
+        'Mobile Application':'#d97706','Information Security':'#ef4444','Project':'#10b981'
+    };
+
+    const lessons = scheduleData[p.shift]?.[parseInt(p.sem)]?.[p.group]?.[dayIdx];
+    const now     = new Date();
+
+    let html = `
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+        <span style="background:linear-gradient(135deg,var(--primary),var(--secondary));color:white;padding:5px 16px;border-radius:20px;font-size:0.85rem;font-weight:700;">📅 ${dayName}</span>
+        <span style="color:var(--text-muted);font-size:0.82rem;font-weight:600;">وانەکانی ئەمڕۆ</span>
+    </div>`;
+
+    if(!lessons || lessons.length === 0) {
+        html += `
+        <div style="text-align:center;padding:26px;background:var(--surface);border-radius:16px;border:1.5px dashed var(--border);">
+            <div style="font-size:1.8rem;margin-bottom:8px;">📭</div>
+            <div style="color:var(--text-muted);font-weight:700;">ئەمڕۆ وانەی نییە بۆ گرووپ ${p.group}</div>
+        </div>`;
+    } else {
+        lessons.forEach(r => {
+            const timeParts = r[2].split(':');
+            const lessonStart = new Date();
+            lessonStart.setHours(parseInt(timeParts[0]), parseInt(timeParts[1] || 0), 0, 0);
+            const lessonEnd   = new Date(lessonStart.getTime() + 2 * 60 * 60 * 1000); // ٢ کاتژمێر
+
+            const isNow  = now >= lessonStart && now < lessonEnd;
+            const isPast = now >= lessonEnd;
+            const c = todayColors[r[1]] || '#3b82f6';
+
+            html += `
+            <div style="
+                background:var(--surface);
+                border-radius:16px;
+                border:1.5px solid ${isNow ? c : 'var(--border)'};
+                padding:14px 16px;
+                margin-bottom:10px;
+                display:flex;
+                align-items:center;
+                gap:14px;
+                ${isNow  ? 'box-shadow:0 0 0 3px '+c+'28;' : ''}
+                ${isPast ? 'opacity:0.52;'                  : ''}
+                transition:all 0.3s;
+            ">
+                <div style="
+                    width:50px;height:50px;
+                    border-radius:14px;
+                    background:${c}1a;
+                    display:flex;align-items:center;justify-content:center;
+                    flex-shrink:0;
+                ">
+                    <span style="color:${c};font-weight:900;font-size:0.8rem;" dir="ltr">${r[2]}</span>
+                </div>
+                <div style="flex:1;min-width:0;">
+                    <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:4px;">
+                        <span style="background:${c};color:white;padding:4px 12px;border-radius:20px;font-size:0.82rem;font-weight:700;white-space:nowrap;">${r[1]}</span>
+                        ${isNow  ? '<span style="background:#10b981;color:white;padding:3px 9px;border-radius:10px;font-size:0.72rem;font-weight:700;">⬤ ئێستا</span>' : ''}
+                        ${isPast ? '<span style="background:var(--surface2);color:var(--text-muted);padding:3px 9px;border-radius:10px;font-size:0.72rem;border:1px solid var(--border);">تەواوبوو</span>' : ''}
+                    </div>
+                    <div style="font-size:0.78rem;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${r[3]}</div>
+                </div>
+            </div>`;
+        });
+    }
+
+    box.innerHTML = html;
+}
+
+function initTodayTab() {
+    const stored = localStorage.getItem('today_profile');
+    if(stored) {
+        const p = JSON.parse(stored);
+        const nameEl = document.getElementById('today-name');
+        const semEl  = document.getElementById('today-sem');
+        if(nameEl) nameEl.value = p.name  || '';
+        if(semEl)  semEl.value  = p.sem   || '1';
+        if(p.gender) selectGender(p.gender);
+        if(p.group)  selectTodayGroup(p.group);
+        if(p.shift)  selectTodayShift(p.shift);
+      
+        renderTodayMain();
+    } else {
+        document.getElementById('today-setup').style.display = 'block';
+        document.getElementById('today-main').style.display  = 'none';
+    }
 }
