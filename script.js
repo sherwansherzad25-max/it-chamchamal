@@ -358,44 +358,100 @@ setInterval(fetchNews, 60000);
 
 let examIntervals=[];
 async function checkExams() {
-    const container=document.getElementById('exams-container');
-    const url="https://docs.google.com/spreadsheets/d/e/2PACX-1vS2j8Z4JmuZ2Fq75MNmQ1siz3l9djVQqaIQhk9R9SrSbBx94k3zRfQHeuDpTx_SBW8ZYaWB0Bvxor7M/pub?output=csv&gid=1091649278";
+    const container = document.getElementById('exams-container');
+    const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS2j8Z4JmuZ2Fq75MNmQ1siz3l9djVQqaIQhk9R9SrSbBx94k3zRfQHeuDpTx_SBW8ZYaWB0Bvxor7M/pub?output=csv&gid=1091649278";
     try {
-        const r=await fetch(url,{cache:"no-store"});
-        const csvText=await r.text();
-        const rows=csvText.split(/\r?\n/).slice(1);
-        examIntervals.forEach(clearInterval); examIntervals=[]; container.innerHTML="";
-        let activeExams=[];
-        rows.forEach(row=>{
-            let columns=row.split(',');
-            if(columns.length>=2) {
-                let title=columns[0].replace(/(^"|"$)/g,'').trim();
-                let dateVal=columns[1].replace(/(^"|"$)/g,'').trim();
-                let timeVal=columns.length>=3&&columns[2].trim()!==""?columns[2].replace(/(^"|"$)/g,'').trim():"12:00 AM";
-                if(title&&dateVal) {
-                    let dParts=dateVal.split(/[-\/]/);
-                    if(dParts.length===3) {
-                        if(dParts[2].length===4) dateVal=`${dParts[2]}-${dParts[1].padStart(2,'0')}-${dParts[0].padStart(2,'0')}`;
-                        else if(dParts[0].length===4) dateVal=`${dParts[0]}-${dParts[1].padStart(2,'0')}-${dParts[2].padStart(2,'0')}`;
+        const r = await fetch(url, { cache: "no-store" });
+        const csvText = await r.text();
+        const rows = csvText.split(/\r?\n/).slice(1);
+        
+        examIntervals.forEach(clearInterval); 
+        examIntervals = []; 
+        if(container) container.innerHTML = "";
+        
+        let activeExams = [];
+        rows.forEach(row => {
+            let columns = row.split(',');
+            if(columns.length >= 2) {
+                let title = columns[0].replace(/(^"|"$)/g, '').trim();
+                let dateVal = columns[1].replace(/(^"|"$)/g, '').trim();
+                let timeVal = columns.length >= 3 && columns[2].trim() !== "" ? columns[2].replace(/(^"|"$)/g, '').trim() : "12:00 AM";
+                if(title && dateVal) {
+                    let dParts = dateVal.split(/[-\/]/);
+                    if(dParts.length === 3) {
+                        if(dParts[2].length === 4) dateVal = `${dParts[2]}-${dParts[1].padStart(2, '0')}-${dParts[0].padStart(2, '0')}`;
+                        else if(dParts[0].length === 4) dateVal = `${dParts[0]}-${dParts[1].padStart(2, '0')}-${dParts[2].padStart(2, '0')}`;
                     }
-                    let isPM=timeVal.toUpperCase().includes('PM'); let isAM=timeVal.toUpperCase().includes('AM');
-                    let cleanTime=timeVal.replace(/AM|PM/i,'').trim(); let tParts=cleanTime.split(':');
-                    let h=parseInt(tParts[0]||"0",10); let m=(tParts[1]||"00").padStart(2,'0'); let s=(tParts[2]||"00").padStart(2,'0');
-                    if(isPM&&h<12) h+=12; if(isAM&&h===12) h=0;
-                    let exDate=new Date(`${dateVal}T${h.toString().padStart(2,'0')}:${m}:${s}`);
-                    if(!isNaN(exDate.getTime())&&exDate>new Date()) activeExams.push({Title:title,dateObj:exDate});
+                    let isPM = timeVal.toUpperCase().includes('PM'); 
+                    let isAM = timeVal.toUpperCase().includes('AM');
+                    let cleanTime = timeVal.replace(/AM|PM/i, '').trim(); 
+                    let tParts = cleanTime.split(':');
+                    let h = parseInt(tParts[0] || "0", 10); 
+                    let m = (tParts[1] || "00").padStart(2, '0'); 
+                    let s = (tParts[2] || "00").padStart(2, '0');
+                    if(isPM && h < 12) h += 12; 
+                    if(isAM && h === 12) h = 0;
+                    let exDate = new Date(`${dateVal}T${h.toString().padStart(2, '0')}:${m}:${s}`);
+                    
+                    if(!isNaN(exDate.getTime()) && exDate > new Date()) activeExams.push({ Title: title, dateObj: exDate });
                 }
             }
         });
-        activeExams.sort((a,b)=>a.dateObj-b.dateObj);
-        if(activeExams.length>0) {
-            activeExams.forEach(exam=>{
-                const divId="timer-"+Math.random().toString(36).substr(2,9);
-                container.innerHTML+=`<div class="countdown-box"><h2 style="margin:0;font-size:1.05rem;color:#fbbf24;">${exam.Title}</h2><p style="margin:5px 0 8px;opacity:0.8;font-size:0.78rem;">${exam.dateObj.toLocaleString('ku-IQ')}</p><div class="timer-row"><div class="timer-unit"><div class="timer-box" id="d-${divId}">00</div><div class="timer-label">ڕۆژ</div></div><div class="timer-unit"><div class="timer-box" id="h-${divId}">00</div><div class="timer-label">کاژێر</div></div><div class="timer-unit"><div class="timer-box" id="m-${divId}">00</div><div class="timer-label">خولەک</div></div><div class="timer-unit"><div class="timer-box" id="s-${divId}">00</div><div class="timer-label">چرکە</div></div></div></div>`;
-                startSpecificTimer(exam.dateObj,divId);
+        
+        activeExams.sort((a, b) => a.dateObj - b.dateObj);
+        
+        if(activeExams.length > 0) {
+            activeExams.forEach(exam => {
+                const divId = "timer-" + Math.random().toString(36).substr(2, 9);
+                if(container) {
+                    container.innerHTML += `<div class="countdown-box"><h2 style="margin:0;font-size:1.05rem;color:#fbbf24;">${exam.Title}</h2><p style="margin:5px 0 8px;opacity:0.8;font-size:0.78rem;">${exam.dateObj.toLocaleString('ku-IQ')}</p><div class="timer-row"><div class="timer-unit"><div class="timer-box" id="d-${divId}">00</div><div class="timer-label">ڕۆژ</div></div><div class="timer-unit"><div class="timer-box" id="h-${divId}">00</div><div class="timer-label">کاژێر</div></div><div class="timer-unit"><div class="timer-box" id="m-${divId}">00</div><div class="timer-label">خولەک</div></div><div class="timer-unit"><div class="timer-box" id="s-${divId}">00</div><div class="timer-label">چرکە</div></div></div></div>`;
+                    startSpecificTimer(exam.dateObj, divId);
+                }
             });
-        } else { container.innerHTML="<h3 style='text-align:center;opacity:0.5;color:var(--text);'>هیچ تاقیکردنەوەیەک نییە</h3>"; }
-    } catch(e) {}
+        } else { 
+            if(container) container.innerHTML = "<h3 style='text-align:center;opacity:0.5;color:var(--text);'>هیچ تاقیکردنەوەیەک نییە</h3>"; 
+        }
+
+        let todayTab = document.getElementById('today-tab');
+        if (todayTab) {
+            let alertContainer = document.getElementById('today-exam-alerts');
+            if (!alertContainer) {
+                alertContainer = document.createElement('div');
+                alertContainer.id = 'today-exam-alerts';
+                alertContainer.style.margin = "0 15px 15px 15px";
+                let header = todayTab.querySelector('.section-header');
+                if (header && header.nextSibling) {
+                    todayTab.insertBefore(alertContainer, header.nextSibling);
+                } else {
+                    todayTab.prepend(alertContainer);
+                }
+            }
+            
+            if (activeExams.length > 0) {
+                let alertsHTML = '';
+                activeExams.forEach(exam => {
+                    const diffTime = Math.abs(exam.dateObj - new Date());
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                    let timeText = diffDays === 1 ? "سبەی" : diffDays === 0 ? "ئەمڕۆ" : `ماوە: ${diffDays} ڕۆژ`;
+                    
+                    alertsHTML += `
+                    <div style="background: linear-gradient(135deg, #dc2626, #991b1b); color: white; padding: 12px 16px; border-radius: 12px; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4); border: 1px solid rgba(255,255,255,0.15);">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <span style="font-size: 1.5rem;">⚠️</span>
+                            <div>
+                                <div style="font-weight: 900; font-size: 0.95rem;">ئاگاداری تاقیکردنەوە: ${exam.Title}</div>
+                                <div style="font-size: 0.82rem; opacity: 0.9; font-weight: 600;">${timeText}</div>
+                            </div>
+                        </div>
+                    </div>`;
+                });
+                alertContainer.innerHTML = alertsHTML;
+            } else {
+                alertContainer.innerHTML = '';
+            }
+        }
+        
+    } catch(e) { console.error("Error fetching exams:", e); }
 }
 
 function startSpecificTimer(date,id) {
