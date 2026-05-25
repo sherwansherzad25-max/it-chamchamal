@@ -49,7 +49,6 @@ let currentShift = 'evening';
 const APP_VERSION = "3.2";
 let currentLang = 'ku';
 
-// گۆڕاوەکان بۆ سیستەمی پشووی کۆتایی ساڵ
 let isEndOfYear = false;
 let endOfYearMessage = "";
 
@@ -71,8 +70,8 @@ const translations = {
     ku: {
         dept:"بەشی ئایتی",menu:"لیست",institute:"پەیمانگای تەکنیکی چەمچەماڵ",deptSub:"بەشی تەکنەلۆژیای زانیاری (IT)",
         home:"🏠 سەرەکی",schedule:"📅 خشتەی هەفتانە",semesters:"📚 سمستەرەکان",about:"ℹ️ دەربارە",contact:"📞 پەیوەندی (Telegram)",setting:"زمان",alert:"🚨 ئاگاداری",
-        welcomeTitle:"بەخێربێن خوێندکارانی ئازیزی بەشی تەکنەلۆژیای زانیاری (IT)",
-        welcomeText:'بۆ گەیشتن بە هەر بەشێک، کرتەی <span class="hero-highlight" style="color: #fbbf24; text-shadow: 0 0 10px rgba(251,191,36,0.4);">" لیست "</span> بکە لە سەرەوە. ئەم بەشانەی خوارەوەت بۆ ئامادەکراوە:',
+        welcomeTitle:"بەخێربێن خوێندکارانی بەشی تەکنەلۆژیای زانیاری (IT)",
+        welcomeText:'بۆ گەیشتن بە هەر بەشێک، کرتەی <span class="hero-highlight" style="color: #fbbf24; text-shadow: 0 0 10px rgba(251,191,36,0.4);">" لیست "</span> بکە لە سەرەوە. ئەم بەشانەت بۆ ئامادەکراوە:',
         semTitle:"بەشی سمستەرەکان:",semDesc1:"مەلزەمە، پرسیار، و فێرکاری بۆ هەموو وانەکان",
         schTitle:"خشتەی هەفتانە:",schDesc:"دەوامی بەیانیان و ئێوارن بۆ هەردوو گرووپ",
         thanks:"سوپاس بۆ <strong>(محمد اسماعیل)</strong> <span id=\"lang-and\">و</span> <strong>(محمد بێستون)</strong>",and:"و",helpers:"بۆ هاوکارییان لە دروستکردنی ئەم ویبسایتەدا",
@@ -85,11 +84,9 @@ const translations = {
         thSub:"ناوی وانە",thLec:"مەلزەمە",thQs:"پرسیار",thTut:"فێركاری",btnDl:"داگرتن",btnView:"بینین",btnVid:"🎥 ڤیدیۆ",
         menuExam:"⏳ کاتی تاقیکردنەوە",menuGpa:"🧮 هەژمارکردنی نمرە",examHeader:"کاتی ماوە بۆ تاقیکردنەوەکان",gpaHeader:"هەژمارکردنی نمرەکان",
         c1t:"ئەمڕۆی من",c1d:"وانە و کاتەکانی ئەمڕۆت",c2t:"١ · خشتەی هەفتانە",c2d:"وانەکانی ڕۆژانە بۆ هەردوو دەوام",
-        c3t:"٢ · سمستەرەکان",c3d:"مەلزەمە، پرسیاری ساڵانی پێشوو بۆ بەرچاو ڕوونی، و فێرکاری ڤیدیۆیی وانەکان",
+        c3t:"٢ · سمستەرەکان",c3d:"مەلزەمە، پرسیار و فێرکاری ڤیدیۆیی",
         c4t:"٣ · کاتی تاقیکردنەوە",c4d:"کاتژمێری ماوەی تاقیکردنەوە",c5t:"٤ · هەژمارکردنی نمرە",c5d:"کۆی نمرەکانت بزانە",
-        c6t:"٥ · دەربارە",c6d:"زانیاری لەسەر گەشەپێدەر و وەشان",
-        c7t:"٦ · ڕووکار و دیزاین",c7d:"گۆڕینی ڕەنگەکان و تروسکەی ئەستێرە",
-        c8t:"٧ · زمانەکان",c8d:"پشتگیری هەردوو زمانی کوردی و ئینگلیزی",
+        c7t:"٥ · ڕووکار و دیزاین",c7d:"گۆڕینی ڕەنگ و تروسکەی ئەستێرە",
         navHome:"سەرەکی",navToday:"ئەمڕۆی من",navSch:"خشتە",navSem:"سمستەر",navExm:"كاتی تاقیکردنەوە",navGpa:"نمرە",navAbt:"دەربارە",
         tSetupT:"ئەمڕۆی من",tSetupD:"تکایە زانیارییەکانت بنووسە تا وانەکانی ئەمڕۆت بۆ ئامادە بکەم:",
         tNameL:"ناوت:",tNameP:"ناوت بنووسە...",tGenL:"ڕەگەز:",tSemL:"سمستەر:",tGrpL:"گرووپ:",tShiftL:"دەوام:",
@@ -99,7 +96,7 @@ const translations = {
         dept:"IT Department",menu:"Menu",institute:"Chamchamal Technical Institute",deptSub:"Information Technology (IT) Dept.",
         home:"🏠 Home",schedule:"📅 Weekly Schedule",semesters:"📚 Semesters",about:"ℹ️ About",contact:"📞 Contact (Telegram)",setting:"Language",alert:"🚨 Notice",
         welcomeTitle:"Welcome to IT Department – Chamchamal Technical Institute",
-        welcomeText:'Click <span class="hero-highlight" style="color: #fbbf24; text-shadow: 0 0 10px rgba(251,191,36,0.4);">" Menu "</span> above to access any section. The following sections are available:',
+        welcomeText:'Click <span class="hero-highlight" style="color: #fbbf24; text-shadow: 0 0 10px rgba(251,191,36,0.4);">" Menu "</span> above to access any section. Available sections:',
         semTitle:"Semesters:",semDesc1:"Lecture notes, past questions, and tutorial videos for all subjects",
         schTitle:"Weekly Schedule:",schDesc:"Morning and Evening shift timetables for both groups",
         thanks:"Special thanks to",and:"and",helpers:"for their help building this website",
@@ -112,11 +109,9 @@ const translations = {
         thSub:"Subject",thLec:"Notes",thQs:"Questions",thTut:"Tutorials",btnDl:"Download",btnView:"View",btnVid:"🎥 Video",
         menuExam:"⏳ Exam Timer",menuGpa:"🧮 GPA Calculator",examHeader:"Time Remaining for Exams",gpaHeader:"Grade Calculation",
         c1t:"My Today",c1d:"Today's classes and times",c2t:"1 · Weekly Schedule",c2d:"Daily classes for both shifts",
-        c3t:"2 · Semesters",c3d:"Notes, past questions for clarity, and video tutorials",
+        c3t:"2 · Semesters",c3d:"Notes, past questions and video tutorials",
         c4t:"3 · Exam Time",c4d:"Remaining exam countdown",c5t:"4 · GPA Calculator",c5d:"Calculate your total grades",
-        c6t:"5 · About",c6d:"Developer info and app version",
-        c7t:"6 · Themes & Design",c7d:"Change colors and star animations",
-        c8t:"7 · Languages",c8d:"Supports both Kurdish and English",
+        c7t:"5 · Themes & Design",c7d:"Change colors and star animations",
         navHome:"Home",navToday:"My Today",navSch:"Schedule",navSem:"Semester",navExm:"Exams",navGpa:"Grades",navAbt:"About",
         tSetupT:"My Today",tSetupD:"Please enter your info to prepare today's classes:",
         tNameL:"Name:",tNameP:"Enter your name...",tGenL:"Gender:",tSemL:"Semester:",tGrpL:"Group:",tShiftL:"Shift:",
@@ -134,8 +129,7 @@ function toggleLanguage(lang) {
         'lang-dept':t.dept,'lang-menu':t.menu,'lang-institute':t.institute,'lang-dept-sub':t.deptSub,
         'lang-home':t.home,'lang-schedule':t.schedule,'lang-semesters':t.semesters,'lang-about':t.about,'lang-contact':t.contact,
         'lang-setting':t.setting,'lang-alert':t.alert,
-        'lang-welcome-title':t.welcomeTitle,'lang-sem-title':t.semTitle,'lang-sem-desc1':t.semDesc1,
-        'lang-sch-title':t.schTitle,'lang-sch-desc':t.schDesc,'lang-thanks':t.thanks,'lang-and':t.and,'lang-helpers':t.helpers,
+        'lang-welcome-title':t.welcomeTitle,
         'lang-sched-header':t.schedHeader,'lang-morning':t.morning,'lang-evening':t.evening,
         'lang-sem-btn1':t.semBtn1,'lang-sem-btn2':t.semBtn2,'lang-sem-btn3':t.semBtn3,'lang-sem-btn4':t.semBtn4,
         'lang-tbl-no':t.tblNo,'lang-tbl-sub':t.tblSub,'lang-tbl-time':t.tblTime,'lang-tbl-teacher':t.tblTeacher,
@@ -143,8 +137,9 @@ function toggleLanguage(lang) {
         'lang-about-title':t.aboutTitle,'lang-dev':t.dev,'lang-ver':t.ver,'lang-scan':t.scan,
         'lang-created':t.created,'lang-footer-hope':t.footerHope,'lang-copy':t.copy,'lang-visits':t.visits,
         'lang-menu-exam':t.menuExam,'lang-menu-gpa':t.menuGpa,'lang-exam-header':t.examHeader,'lang-gpa-header':t.gpaHeader,
-        'lang-c1-t':t.c1t,'lang-c1-d':t.c1d,'lang-c2-t':t.c2t,'lang-c2-d':t.c2d,'lang-c3-t':t.c3t,'lang-c3-d':t.c3d,'lang-c4-t':t.c4t,'lang-c4-d':t.c4d,
-        'lang-c5-t':t.c5t,'lang-c5-d':t.c5d,
+        'lang-c1-t':t.c1t,'lang-c1-d':t.c1d,'lang-c2-t':t.c2t,'lang-c2-d':t.c2d,
+        'lang-c3-t':t.c3t,'lang-c3-d':t.c3d,'lang-c4-t':t.c4t,'lang-c4-d':t.c4d,'lang-c5-t':t.c5t,'lang-c5-d':t.c5d,
+        'lang-c7-t':t.c7t,'lang-c7-d':t.c7d,
         'bnav-label-home':t.navHome,'bnav-label-today':t.navToday,'bnav-label-schedule':t.navSch,'bnav-label-semesters':t.navSem,'bnav-label-exam':t.navExm,'bnav-label-gpa':t.navGpa,'bnav-label-about':t.navAbt,
         'lang-today-setup-title':t.tSetupT,'lang-today-setup-desc':t.tSetupD,'lang-today-name-lbl':t.tNameL,'lang-today-gen-lbl':t.tGenL,
         'lang-today-sem-lbl':t.tSemL,'lang-today-grp-lbl':t.tGrpL,'lang-today-shift-lbl':t.tShiftL,
@@ -154,8 +149,7 @@ function toggleLanguage(lang) {
 
     for (let id in map) {
         let el = document.getElementById(id); if (!el) continue;
-        if (['lang-welcome-text','lang-about-text'].includes(id)) el.innerHTML = (id==='lang-about-text'?t.aboutText:t.welcomeText);
-        else el.innerText = map[id];
+        el.innerText = map[id];
     }
     
     const el2 = document.getElementById('lang-welcome-text'); if(el2) el2.innerHTML = t.welcomeText;
@@ -237,11 +231,8 @@ function applyTheme(name, isLoad = false) {
     document.querySelectorAll('.theme-card').forEach(c => c.classList.remove('active'));
     const tc = document.getElementById('tc-'+name);
     if (tc) tc.classList.add('active');
-    
     let metaThemeColor = document.querySelector('meta[name="theme-color"]');
-    if (metaThemeColor) {
-        metaThemeColor.setAttribute('content', themeHeaderColors[name] || '#1e3a8a');
-    }
+    if (metaThemeColor) metaThemeColor.setAttribute('content', themeHeaderColors[name] || '#1e3a8a');
 }
 
 function openThemePanel() { triggerHaptic(); document.getElementById('themePanel').classList.add('open'); document.getElementById('themeOverlay').classList.add('open'); }
@@ -289,7 +280,6 @@ function startStars(canvas) {
     draw();
 }
 
-// خشتەی هەفتانە بە تەواوی وەک خۆت هێشتوومەتەوە
 const scheduleData = {
     morning:{
         2:{'A':{1:[["١","Programming","8:30","م. هێشوو + هۆگر + ئاسۆ"],["٢","English II","10:30","م. خێڵان + بەرهەم"],["٣","Database","12:30","م. هەردی"]],2:[["١","Programming","8:30","م. هێشوو"],["٢","English II","10:30","م. خێڵان"],["٣","Database","12:30","م. هەردی"]],3:[["١","Network +","8:30","م. عومەر"],["٢","Web Design","10:30","م. مستەفا"]],4:[["١","Web Design","8:30","م. مستەفا+ئەمین+چیناز+نمە"],["٢","Network +","10:30","م. عومەر+گۆران+شیلان+یەحیا"]]},'B':{1:[["١","English II","8:30","م. خێڵان + بەرهەم"],["٢","Database","10:30","م. هەردی+ئەمین+هاوژین+نمە"],["٣","Programming","12:30","م. هێشوو + هۆگر + ئاسۆ"]],2:[["١","Database","8:30","م. هەردی"],["٢","Programming","10:30","م. هێشوو"],["٣","English II","12:30","م. خێڵان"]],3:[["١","Web Design","8:30","م. مستەفا"],["٢","Network +","10:30","م. عومەر"]],4:[["١","Web Design","10:30","م. مستەفا+ئەمین+چیناز+نمە"],["٢","Network +","12:30","م. عومەر+گۆران+شیلان+یەحیا"]]},'C':{1:[["١","Database","8:30","م. هەردی+ئەمین+هاوژین+نمە"],["٢","Programming","10:30","م. هێشوو + هۆگر + ئاسۆ"],["٣","English II","12:30","م. خێڵان + بەرهەم"]],2:[],3:[],4:[["١","Network +","8:30","م. عومەر+گۆران+شیلان+یەحیا"],["٢","Web Design","12:30","م. مستەفا+ئەمین+چیناز+نمە"]]}},
@@ -398,7 +388,6 @@ async function fetchNews() {
 }
 setInterval(fetchNews, 60000);
 
-// سیستەمی پشووی کۆتایی ساڵ لە ڕێگەی گۆگڵ شیت
 async function fetchEndOfYear() {
     const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS2j8Z4JmuZ2Fq75MNmQ1siz3l9djVQqaIQhk9R9SrSbBx94k3zRfQHeuDpTx_SBW8ZYaWB0Bvxor7M/pub?gid=1624891721&single=true&output=csv";
     try {
@@ -412,23 +401,13 @@ async function fetchEndOfYear() {
                 const key = rows[0].substring(0, firstComma).trim();
                 const boolVal = rows[0].substring(firstComma + 1, secondComma).trim();
                 let msg = rows[0].substring(secondComma + 1).trim();
-                
-                if(msg.startsWith('"') && msg.endsWith('"')) {
-                    msg = msg.substring(1, msg.length - 1);
-                }
-                if(key === 'EndOfYear' && boolVal.toUpperCase() === 'TRUE') {
-                    isEndOfYear = true;
-                    endOfYearMessage = msg;
-                } else {
-                    isEndOfYear = false;
-                }
+                if(msg.startsWith('"') && msg.endsWith('"')) msg = msg.substring(1, msg.length - 1);
+                if(key === 'EndOfYear' && boolVal.toUpperCase() === 'TRUE') { isEndOfYear = true; endOfYearMessage = msg; }
+                else isEndOfYear = false;
             }
         }
-        
         const todayMain = document.getElementById('today-main');
-        if (todayMain && todayMain.style.display === 'block') {
-            renderTodayMain();
-        }
+        if (todayMain && todayMain.style.display === 'block') renderTodayMain();
     } catch(e) {}
 }
 
@@ -468,7 +447,6 @@ async function checkExams() {
                     if(isPM && h < 12) h += 12; 
                     if(isAM && h === 12) h = 0;
                     let exDate = new Date(`${dateVal}T${h.toString().padStart(2, '0')}:${m}:${s}`);
-                    
                     if(!isNaN(exDate.getTime()) && exDate > new Date()) activeExams.push({ Title: title, dateObj: exDate });
                 }
             }
@@ -489,6 +467,7 @@ async function checkExams() {
             if(container) container.innerHTML = `<h3 style='text-align:center;opacity:0.5;color:var(--text);'>${currentLang==='en'?'No upcoming exams':'هیچ تاقیکردنەوەیەک نییە'}</h3>`; 
         }
 
+        // ✅ ئاگاداری بچووک لە تابی ئەمڕۆی من — لە خوارەوەی جەدۆل
         let alertContainer = document.getElementById('today-exam-alerts');
         if (alertContainer) {
             if (activeExams.length > 0) {
@@ -496,18 +475,25 @@ async function checkExams() {
                 activeExams.forEach(exam => {
                     const diffTime = Math.abs(exam.dateObj - new Date());
                     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                    let timeText = diffDays === 1 ? (currentLang==='en'?"Tomorrow":"سبەی") : diffDays === 0 ? (currentLang==='en'?"Today":"ئەمڕۆ") : (currentLang==='en'?`Remaining: ${diffDays} days`:`ماوە: ${diffDays} ڕۆژ`);
-                    let alertWord = currentLang==='en'?"Exam Alert:":"ئاگاداری تاقیکردنەوە:";
-                    
+                    let timeText = diffDays === 1
+                        ? (currentLang==='en'?"Tomorrow":"سبەی")
+                        : diffDays === 0
+                            ? (currentLang==='en'?"Today":"ئەمڕۆ")
+                            : (currentLang==='en'?`${diffDays} days left`:`ماوە: ${diffDays} ڕۆژ`);
+
+                    // ✅ ئاگاداری کومپاکت و بچووک
                     alertsHTML += `
-                    <div style="background: linear-gradient(135deg, #dc2626, #991b1b); color: white; padding: 12px 16px; border-radius: 12px; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4); border: 1px solid rgba(255,255,255,0.15);">
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <span style="font-size: 1.5rem;">⚠️</span>
-                            <div>
-                                <div style="font-weight: 900; font-size: 0.95rem;">${alertWord} ${exam.Title}</div>
-                                <div style="font-size: 0.82rem; opacity: 0.9; font-weight: 600;">${timeText}</div>
-                            </div>
-                        </div>
+                    <div style="
+                        display:flex;align-items:center;gap:8px;
+                        background:rgba(220,38,38,0.08);
+                        border:1px solid rgba(220,38,38,0.25);
+                        border-radius:10px;padding:8px 12px;
+                        margin-bottom:6px;
+                    ">
+                        <span style="font-size:0.9rem;flex-shrink:0;">⚠️</span>
+                        <span style="color:#dc2626;font-weight:700;font-size:0.78rem;flex-shrink:0;">${currentLang==='en'?'Exam:':'تاقیکردنەوە:'}</span>
+                        <span style="font-weight:600;font-size:0.78rem;color:var(--text);flex:1;">${exam.Title}</span>
+                        <span style="background:#dc2626;color:white;padding:2px 8px;border-radius:20px;font-size:0.7rem;font-weight:700;flex-shrink:0;white-space:nowrap;">${timeText}</span>
                     </div>`;
                 });
                 alertContainer.innerHTML = alertsHTML;
@@ -579,22 +565,14 @@ function calcSub(sem,idx, isLoading = false) {
     }
     const sd=document.getElementById(`status-${sem}-${idx}`); 
     if(sd) { sd.innerHTML=msg; }
-    
     if(sd) { const p=sd.closest('.panel'); if(p && p.style.maxHeight) p.style.maxHeight=p.scrollHeight+"px"; }
     
     if (!isLoading) {
         saveGrades();
         const lastScore25 = sessionStorage.getItem(`confetti_25_${sem}_${idx}`);
         const lastScore50 = sessionStorage.getItem(`confetti_50_${sem}_${idx}`);
-        
-        if (hasReached50Final && lastScore50 !== 'true') {
-            triggerConfetti('big');
-            sessionStorage.setItem(`confetti_50_${sem}_${idx}`, 'true');
-        } else if (hasReached25 && !hasReached50Final && lastScore25 !== 'true') {
-            triggerConfetti('small');
-            sessionStorage.setItem(`confetti_25_${sem}_${idx}`, 'true');
-        }
-        
+        if (hasReached50Final && lastScore50 !== 'true') { triggerConfetti('big'); sessionStorage.setItem(`confetti_50_${sem}_${idx}`, 'true'); }
+        else if (hasReached25 && !hasReached50Final && lastScore25 !== 'true') { triggerConfetti('small'); sessionStorage.setItem(`confetti_25_${sem}_${idx}`, 'true'); }
         if (!hasReached25) sessionStorage.removeItem(`confetti_25_${sem}_${idx}`);
         if (!hasReached50Final) sessionStorage.removeItem(`confetti_50_${sem}_${idx}`);
     }
@@ -604,9 +582,8 @@ function triggerConfetti(type) {
     try {
         if (typeof confetti === 'function') {
             triggerHaptic(); 
-            if (type === 'small') {
-                confetti({ particleCount: 80, spread: 60, origin: { y: 0.8 }, colors: ['#34d399', '#fcd34d'] });
-            } else if (type === 'big') {
+            if (type === 'small') { confetti({ particleCount: 80, spread: 60, origin: { y: 0.8 }, colors: ['#34d399', '#fcd34d'] }); }
+            else if (type === 'big') {
                 var duration = 2000; var end = Date.now() + duration;
                 (function frame() {
                     confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#3b82f6', '#10b981', '#f59e0b'] });
@@ -623,12 +600,7 @@ function saveGrades() {
         const inputs = document.querySelectorAll('#grading-container input'); 
         let data = JSON.parse(localStorage.getItem('it_chamchamal_grades') || '{}'); 
         let changed = false;
-        
-        inputs.forEach(i => {
-            if (data[i.id] !== i.value && i.value !== "") { changed = true; }
-            data[i.id] = i.value;
-        });
-        
+        inputs.forEach(i => { if (data[i.id] !== i.value && i.value !== "") { changed = true; } data[i.id] = i.value; });
         localStorage.setItem('it_chamchamal_grades', JSON.stringify(data)); 
         if (changed) showToast(currentLang==='en'?"Grades saved":"نمرەکەت پاشەکەوت کرا", "💾");
     } catch(e){}
@@ -639,11 +611,7 @@ function loadGrades() {
         const saved=JSON.parse(localStorage.getItem('it_chamchamal_grades')||'{}'); 
         for(let id in saved){
             let el=document.getElementById(id);
-            if(el){
-                el.value=saved[id];
-                let p=id.split('-');
-                if(p.length>=3) calcSub(p[1],p[2], true);
-            }
+            if(el){ el.value=saved[id]; let p=id.split('-'); if(p.length>=3) calcSub(p[1],p[2], true); }
         } 
     } catch(e){}
 }
@@ -681,11 +649,8 @@ function animateValue(obj, start, end, duration) {
         const progress = Math.min((timestamp - startTimestamp) / duration, 1);
         const current = Math.floor(progress * (end - start) + start);
         obj.textContent = String(current).padStart(7, '0');
-        if (progress < 1) {
-            window.requestAnimationFrame(step);
-        } else {
-            obj.textContent = String(end).padStart(7, '0');
-        }
+        if (progress < 1) { window.requestAnimationFrame(step); }
+        else { obj.textContent = String(end).padStart(7, '0'); }
     };
     window.requestAnimationFrame(step);
 }
@@ -698,9 +663,7 @@ async function initVisitorCounter() {
         const data=await res.json();
         let n=(data.count||0)+2651;
         animateValue(counterEl, 0, n, 1500);
-    } catch(e) { 
-        animateValue(counterEl, 0, 2651, 1500);
-    }
+    } catch(e) { animateValue(counterEl, 0, 2651, 1500); }
 }
 
 function updateClock() {
@@ -720,10 +683,7 @@ window.addEventListener('load', function () {
     try { checkUpdate(); } catch(e){}
     try {
         const savedGPASem = localStorage.getItem('gpa_selected_sem');
-        if (savedGPASem) { 
-            const sel = document.getElementById('gpa-sem-select');
-            if(sel) sel.value = savedGPASem; 
-        }
+        if (savedGPASem) { const sel = document.getElementById('gpa-sem-select'); if(sel) sel.value = savedGPASem; }
         renderGrading();
     } catch(e){}
     try {
@@ -743,6 +703,7 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js').catch(err=>console.log('SW Failed',err)); 
 }
 
+// ======================== تابی ئەمڕۆی من ========================
 
 let todayGender = null;
 let todayGroup = null;
@@ -787,12 +748,10 @@ function selectTodayShift(s) {
 function saveTodayProfile() {
     const name = document.getElementById('today-name')?.value?.trim();
     const sem  = document.getElementById('today-sem')?.value;
-
     if(!name)          { showToast(currentLang==='en'?'Please enter your name':'تکایە ناوت بنووسە', '⚠️'); return; }
     if(!todayGender)   { showToast(currentLang==='en'?'Please select gender':'تکایە ڕەگەزت دیاری بکە', '⚠️'); return; }
     if(!todayGroup)    { showToast(currentLang==='en'?'Please select group':'تکایە گرووپت هەڵبژێرە', '⚠️'); return; }
     if(!todayShiftSel) { showToast(currentLang==='en'?'Please select shift':'تکایە دەوامت هەڵبژێرە', '⚠️'); return; }
-
     const profile = { name, gender: todayGender, sem, group: todayGroup, shift: todayShiftSel };
     localStorage.setItem('today_profile', JSON.stringify(profile));
     showToast(currentLang==='en'?'Profile Saved! ✨':'زانیارییەکانت پاشەکەوت کرا! ✨', '✅');
@@ -805,7 +764,6 @@ function resetTodayProfile() {
     document.getElementById('today-setup').style.display = 'block';
     document.getElementById('today-main').style.display  = 'none';
     todayGender = null; todayGroup = null; todayShiftSel = null;
-
     ['male','female'].forEach(x => {
         const b = document.getElementById('gbtn-'+x);
         if(b) { b.style.background='rgba(255,255,255,0.1)'; b.style.border='2px solid rgba(255,255,255,0.3)'; b.style.transform='scale(1)'; }
@@ -823,26 +781,25 @@ function resetTodayProfile() {
 function getTodayGreeting(name, gender) {
     const h = new Date().getHours();
     let timeWord, emoji;
-    
     if (currentLang === 'en') {
-        if      (h >= 5  && h < 12) { timeWord =  'Good Morning';    emoji = '🌤️'; }
-        else if (h >= 12 && h < 17) { timeWord =  'Good Afternoon';  emoji = '☀️'; }
-        else if (h >= 17 && h < 21) { timeWord =  'Good Evening';    emoji = '🌇'; }
-        else                        { timeWord =  'Good Night';      emoji = '🌙'; }
+        if      (h >= 5  && h < 12) { timeWord = 'Good Morning';   emoji = '🌤️'; }
+        else if (h >= 12 && h < 17) { timeWord = 'Good Afternoon'; emoji = '☀️'; }
+        else if (h >= 17 && h < 21) { timeWord = 'Good Evening';   emoji = '🌇'; }
+        else                        { timeWord = 'Good Night';     emoji = '🌙'; }
         const title = gender === 'male' ? 'Mr.' : 'Ms.'; 
         return { greeting: `${timeWord}, ${title} ${name}!`, emoji };
     } else {
-        if      (h >= 5  && h < 12) { timeWord =  'بەیانی باش';    emoji = '🌤️'; }
-        else if (h >= 12 && h < 17) { timeWord =  'نیوەڕۆت باش'; emoji = '☀️'; }
-        else if (h >= 17 && h < 21) { timeWord =  'ئێوارەت باش';  emoji = '🌇'; }
-        else                        { timeWord =  'شەوت باش';    emoji = '🌙'; }
+        if      (h >= 5  && h < 12) { timeWord = 'بەیانی باش';    emoji = '🌤️'; }
+        else if (h >= 12 && h < 17) { timeWord = 'نیوەڕۆت باش';  emoji = '☀️'; }
+        else if (h >= 17 && h < 21) { timeWord = 'ئێوارەت باش';  emoji = '🌇'; }
+        else                        { timeWord = 'شەوت باش';     emoji = '🌙'; }
         const title = gender === 'male' ? 'کاک' : 'خاتوو';
         return { greeting: `${timeWord}، ${title} ${name}!`, emoji };
     }
 }
 
 function getTodayDayIndex() {
-    const jsDay = new Date().getDay(); // 0=Sun,1=Mon,2=Tue,3=Wed,4=Thu,5=Fri,6=Sat
+    const jsDay = new Date().getDay();
     const map = { 0:1, 1:2, 2:3, 3:4 };
     return map[jsDay] !== undefined ? map[jsDay] : null;
 }
@@ -869,7 +826,9 @@ function renderTodayMain() {
     document.getElementById('today-main').style.display  = 'block';
 
     const { greeting, emoji } = getTodayGreeting(p.name, p.gender);
-    const shiftLabel = p.shift === 'morning' ? (currentLang==='en'?'Morning Shift ☀️':'دەوامی بەیانیان ☀️') : (currentLang==='en'?'Evening Shift 🌙':'دەوامی ئێوارن 🌙');
+    const shiftLabel = p.shift === 'morning'
+        ? (currentLang==='en'?'Morning Shift ☀️':'دەوامی بەیانیان ☀️')
+        : (currentLang==='en'?'Evening Shift 🌙':'دەوامی ئێوارن 🌙');
     const greetBox = document.getElementById('today-greeting-box');
     
     if(greetBox) {
@@ -882,10 +841,9 @@ function renderTodayMain() {
         `;
     }
 
-    const box    = document.getElementById('today-schedule-box');
+    const box = document.getElementById('today-schedule-box');
     if(!box) return;
     
-    // جێبەجێکردنی نامەی پشووی کۆتایی ساڵ
     if (isEndOfYear) {
         box.innerHTML = `
         <div style="text-align:center;padding:32px 20px;background:var(--surface);border-radius:20px;border:1.5px solid var(--border);">
@@ -895,7 +853,7 @@ function renderTodayMain() {
         return;
     }
 
-    const jsDay  = new Date().getDay();
+    const jsDay   = new Date().getDay();
     const dayName = getTodayDayName(jsDay);
     const dayIdx  = getTodayDayIndex();
 
@@ -936,11 +894,10 @@ function renderTodayMain() {
             <div style="color:var(--text-muted);font-weight:700;">${currentLang==='en'?`No classes today for Group ${p.group}`:`ئەمڕۆ وانەی نییە بۆ گرووپ ${p.group}`}</div>
         </div>`;
     } else {
-        let lblNow = currentLang==='en'?"⬤ NOW":"⬤ ئێستا"; 
+        let lblNow  = currentLang==='en'?"⬤ NOW":"⬤ ئێستا"; 
         let lblPast = currentLang==='en'?"Done":"تەواوبوو";
 
         lessons.forEach(r => {
-            // چارەسەرکردنی کێشەی کاتەکان (٢ی شەو)
             const cleanTime = r[2].replace(/AM|PM/i, '').trim();
             const timeParts = cleanTime.split(':');
             const lessonStart = new Date();
@@ -948,43 +905,29 @@ function renderTodayMain() {
             let m = parseInt(timeParts[1] || "0", 10);
             let isPM = r[2].toUpperCase().includes('PM');
             let isAM = r[2].toUpperCase().includes('AM');
-
             if (isPM && h < 12) h += 12;
             if (isAM && h === 12) h = 0;
-
             if (!isPM && !isAM) {
                 if (p.shift === 'evening' && h < 12) h += 12;
                 if (p.shift === 'morning' && h > 0 && h <= 5) h += 12;
             }
-
             lessonStart.setHours(h, m, 0, 0);
-            const lessonEnd   = new Date(lessonStart.getTime() + 2 * 60 * 60 * 1000); // ٢ کاتژمێر
-
+            const lessonEnd = new Date(lessonStart.getTime() + 2 * 60 * 60 * 1000);
             const isNow  = now >= lessonStart && now < lessonEnd;
             const isPast = now >= lessonEnd;
             const c = todayColors[r[1]] || '#3b82f6';
 
             html += `
             <div style="
-                background:var(--surface);
-                border-radius:16px;
+                background:var(--surface);border-radius:16px;
                 border:1.5px solid ${isNow ? c : 'var(--border)'};
-                padding:14px 16px;
-                margin-bottom:10px;
-                display:flex;
-                align-items:center;
-                gap:14px;
+                padding:14px 16px;margin-bottom:10px;
+                display:flex;align-items:center;gap:14px;
                 ${isNow  ? 'box-shadow:0 0 0 3px '+c+'28;' : ''}
-                ${isPast ? 'opacity:0.52;'                  : ''}
+                ${isPast ? 'opacity:0.52;' : ''}
                 transition:all 0.3s;
             ">
-                <div style="
-                    width:50px;height:50px;
-                    border-radius:14px;
-                    background:${c}1a;
-                    display:flex;align-items:center;justify-content:center;
-                    flex-shrink:0;
-                ">
+                <div style="width:50px;height:50px;border-radius:14px;background:${c}1a;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
                     <span style="color:${c};font-weight:900;font-size:0.8rem;" dir="ltr">${r[2]}</span>
                 </div>
                 <div style="flex:1;min-width:0;">
@@ -1013,7 +956,6 @@ function initTodayTab() {
         if(p.gender) selectGender(p.gender);
         if(p.group)  selectTodayGroup(p.group);
         if(p.shift)  selectTodayShift(p.shift);
-      
         renderTodayMain();
     } else {
         document.getElementById('today-setup').style.display = 'block';
