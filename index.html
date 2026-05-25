@@ -95,66 +95,44 @@
 
     function draw(){
         ctx.clearRect(0, 0, W, H);
-
         particles.forEach(p => {
             p.twinkle += 0.04;
             p.opacity = Math.max(0.05, Math.min(0.75, p.opacity + Math.sin(p.twinkle) * 0.015));
             p.y -= p.speed;
             p.x += p.drift;
             if(p.rotation !== undefined) p.rotation += p.rotSpeed;
-
-            if(p.y < -30) {
-                p.y = H + 10;
-                p.x = Math.random() * W;
-                p.text = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
-            }
+            if(p.y < -30) { p.y = H + 10; p.x = Math.random() * W; p.text = codeSnippets[Math.floor(Math.random() * codeSnippets.length)]; }
             if(p.x < -30) p.x = W + 10;
             if(p.x > W + 30) p.x = -10;
-
             ctx.save();
             if(p.type === 'code'){
-                ctx.translate(p.x, p.y);
-                ctx.rotate(p.rotation || 0);
+                ctx.translate(p.x, p.y); ctx.rotate(p.rotation || 0);
                 ctx.font = `700 ${p.size}px 'Courier New', monospace`;
                 ctx.fillStyle = p.color + p.opacity + ')';
-                ctx.shadowColor = p.color + '0.4)';
-                ctx.shadowBlur = 8;
+                ctx.shadowColor = p.color + '0.4)'; ctx.shadowBlur = 8;
                 ctx.fillText(p.text, -p.size, p.size/2);
             } else if(p.type === 'star'){
-                ctx.translate(p.x, p.y);
-                ctx.rotate(p.twinkle * 0.3);
+                ctx.translate(p.x, p.y); ctx.rotate(p.twinkle * 0.3);
                 ctx.fillStyle = p.color + p.opacity + ')';
-                ctx.shadowColor = p.color + '0.5)';
-                ctx.shadowBlur = 10;
-                const s = p.size * 0.6;
-                ctx.beginPath();
+                ctx.shadowColor = p.color + '0.5)'; ctx.shadowBlur = 10;
+                const s = p.size * 0.6; ctx.beginPath();
                 for(let j = 0; j < 4; j++){
                     const angle = (j * Math.PI/2);
                     ctx.lineTo(Math.cos(angle)*s, Math.sin(angle)*s);
                     ctx.lineTo(Math.cos(angle+Math.PI/4)*s*0.35, Math.sin(angle+Math.PI/4)*s*0.35);
                 }
-                ctx.closePath();
-                ctx.fill();
+                ctx.closePath(); ctx.fill();
             } else {
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+                ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
                 ctx.fillStyle = p.color + p.opacity + ')';
-                ctx.shadowColor = p.color + '0.4)';
-                ctx.shadowBlur = 6;
-                ctx.fill();
+                ctx.shadowColor = p.color + '0.4)'; ctx.shadowBlur = 6; ctx.fill();
             }
             ctx.restore();
         });
-
         animId = requestAnimationFrame(draw);
     }
     draw();
-
-    window.addEventListener('load', function(){
-        setTimeout(function(){
-            cancelAnimationFrame(animId);
-        }, 2500);
-    });
+    window.addEventListener('load', function(){ setTimeout(function(){ cancelAnimationFrame(animId); }, 2500); });
 })();
 </script>
 
@@ -166,58 +144,34 @@
     <div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:14px;font-weight:600;">ڕووكار هەڵبژێرە</div>
     <div class="theme-grid">
         <div class="theme-card" id="tc-classic" onclick="applyTheme('classic')">
-            <div class="theme-card-preview">
-                <span style="background:#1e3a8a"></span>
-                <span style="background:#059669"></span>
-                <span style="background:#f0f4ff"></span>
-            </div>
+            <div class="theme-card-preview"><span style="background:#1e3a8a"></span><span style="background:#059669"></span><span style="background:#f0f4ff"></span></div>
             <div class="theme-card-label">🔵 ڕووکاری پیرۆزەیی</div>
         </div>
         <div class="theme-card" id="tc-dark" onclick="applyTheme('dark')">
-            <div class="theme-card-preview">
-                <span style="background:#0b0f1e"></span>
-                <span style="background:#3b6cf7"></span>
-                <span style="background:#10b981"></span>
-            </div>
+            <div class="theme-card-preview"><span style="background:#0b0f1e"></span><span style="background:#3b6cf7"></span><span style="background:#10b981"></span></div>
             <div class="theme-card-label">🌑 ڕووکاری شەوانە</div>
         </div>
         <div class="theme-card" id="tc-forest" onclick="applyTheme('forest')">
-            <div class="theme-card-preview">
-                <span style="background:#166534"></span>
-                <span style="background:#16a34a"></span>
-                <span style="background:#f0fdf4"></span>
-            </div>
+            <div class="theme-card-preview"><span style="background:#166534"></span><span style="background:#16a34a"></span><span style="background:#f0fdf4"></span></div>
             <div class="theme-card-label">🌿 ڕووکاری سروشتی</div>
         </div>
         <div class="theme-card" id="tc-ocean" onclick="applyTheme('ocean')">
-            <div class="theme-card-preview">
-                <span style="background:#6d28d9"></span>
-                <span style="background:#0891b2"></span>
-                <span style="background:#faf5ff"></span>
-            </div>
+            <div class="theme-card-preview"><span style="background:#6d28d9"></span><span style="background:#0891b2"></span><span style="background:#faf5ff"></span></div>
             <div class="theme-card-label">💜 ڕووکاری ئەرخەوانی</div>
         </div>
         <div class="theme-card" id="tc-rose" onclick="applyTheme('rose')">
-            <div class="theme-card-preview">
-                <span style="background:#9f1239"></span>
-                <span style="background:#be185d"></span>
-                <span style="background:#fff1f2"></span>
-            </div>
+            <div class="theme-card-preview"><span style="background:#9f1239"></span><span style="background:#be185d"></span><span style="background:#fff1f2"></span></div>
             <div class="theme-card-label">🍷 ڕووکاری ئاگرین</div>
         </div>
         <div class="theme-card" id="tc-teal" onclick="applyTheme('teal')">
-            <div class="theme-card-preview">
-                <span style="background:#115e59"></span>
-                <span style="background:#f59e0b"></span>
-                <span style="background:#f0fdfa"></span>
-            </div>
+            <div class="theme-card-preview"><span style="background:#115e59"></span><span style="background:#f59e0b"></span><span style="background:#f0fdfa"></span></div>
             <div class="theme-card-label">🩵 ڕووکاری دەریایی</div>
         </div>
     </div>
     <hr style="border:0;border-top:1.5px solid var(--border);margin:16px 0;">
     <div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:12px;font-weight:600;">تروسکەی ئەستێرەکان</div>
     <div style="display:flex;flex-direction:column;gap:8px;">
-        <button class="star-btn" onclick="applyStarField(true)">✨ چالاککردن</button>
+        <button class="star-btn" onclick="applyStarField(true)">✨ چالاككردن</button>
         <button class="star-btn" onclick="applyStarField(false)">❌ ناچالاككردن</button>
     </div>
 </div>
@@ -279,72 +233,54 @@
 </div>
 
 <div class="main-container">
+
+    <!-- ===================== تابی سەرەکی (کورتکراوە) ===================== -->
     <div id="home-tab" class="semester-content active">
         <div class="hero-card">
             <div class="hero-inner">
                 <div class="hero-badge">🎓 IT Chamchamal · 2026</div>
-                <h2 class="hero-title" id="lang-welcome-title">بەخێربێن خوێندکارانی ئازیزی بەشی تەکنەلۆژیای زانیاری (IT)</h2>
-                
-                <div style="background: rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.15); border-radius: 14px; padding: 14px; margin-bottom: 16px; backdrop-filter: blur(8px);">
-                    <div style="color: #fbbf24; font-weight: 800; font-size: 0.95rem; margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
-                        <span>📱</span> دابەزاندن وەک ئەپلیکەیشن (App)
+                <h2 class="hero-title" id="lang-welcome-title">بەخێربێن خوێندکارانی بەشی تەکنەلۆژیای زانیاری (IT)</h2>
+
+                <p class="hero-desc" id="lang-welcome-text">
+                    بۆ گەیشتن بە هەر بەشێک، کرتەی <span class="hero-highlight" style="color:#fbbf24;text-shadow:0 0 10px rgba(251,191,36,0.4);">" لیست "</span> بکە لە سەرەوە. ئەم بەشانەت بۆ ئامادەکراوە:
+                </p>
+
+                <div class="info-cards-grid">
+                    <div class="info-card">
+                        <div class="info-card-icon">⭐</div>
+                        <div><div class="info-card-title" id="lang-c1-t">ئەمڕۆی من</div><p id="lang-c1-d">وانە و کاتەکانی ئەمڕۆت</p></div>
                     </div>
-                    <div style="color: rgba(255,255,255,0.9); font-size: 0.85rem; line-height: 1.7;">
-                        <div style="margin-bottom: 8px;">
-                            <span style="font-size: 1rem;">🤖</span> <strong>بۆ ئەندرۆید:</strong> لە سەرەوەی وێبگەڕەکە (گۆگڵ كرۆم) کرتە لە سێ خاڵەکە (⋮) بکە، پاشان بژاردەی <strong style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 6px; font-size: 0.75rem;">Add to Home screen</strong> هەڵبژێرە.
-                        </div>
-                        <div>
-                            <span style="font-size: 1rem;">🍎</span> <strong>بۆ ئایفۆن:</strong> لە (سەفاری) خوارەوەی شاشەکە کرتە لە نیشانەی شەیر ( <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:text-bottom;"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg> ) بکە، پاشان بژاردەی <strong style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 6px; font-size: 0.75rem;">Add to Home Screen</strong> هەڵبژێرە.
-                        </div>
+                    <div class="info-card">
+                        <div class="info-card-icon">📅</div>
+                        <div><div class="info-card-title" id="lang-c2-t">١ · خشتەی هەفتانە</div><p id="lang-c2-d">وانەکانی ڕۆژانە بۆ هەردوو دەوام</p></div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-icon">📚</div>
+                        <div><div class="info-card-title" id="lang-c3-t">٢ · سمستەرەکان</div><p id="lang-c3-d">مەلزەمە، پرسیار و فێرکاری ڤیدیۆیی</p></div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-icon">⏳</div>
+                        <div><div class="info-card-title" id="lang-c4-t">٣ · کاتی تاقیکردنەوە</div><p id="lang-c4-d">کاتژمێری ماوەی تاقیکردنەوە</p></div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-icon">🧮</div>
+                        <div><div class="info-card-title" id="lang-c5-t">٤ · هەژمارکردنی نمرە</div><p id="lang-c5-d">کۆی نمرەکانت بزانە</p></div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-icon">🎨</div>
+                        <div><div class="info-card-title" id="lang-c7-t">٥ · ڕووکار و دیزاین</div><p id="lang-c7-d">گۆڕینی ڕەنگ و تروسکەی ئەستێرە</p></div>
                     </div>
                 </div>
 
-                <p class="hero-desc" id="lang-welcome-text">
-                    بۆ گەیشتن بە هەر بەشێک، کرتەی <span class="hero-highlight" style="color: #fbbf24; text-shadow: 0 0 10px rgba(251,191,36,0.4);">" لیست "</span> بکە لە سەرەوە. ئەم بەشانەی خوارەوەت بۆ ئامادەکراوە:
-                </p>
-              <div class="info-cards-grid">
-    <div class="info-card">
-        <div class="info-card-icon">⭐</div>
-        <div><div class="info-card-title" id="lang-c1-t">ئەمڕۆی من</div><p id="lang-c1-d">وانە و کاتەکانی ئەمڕۆت</p></div>
-    </div>
-    <div class="info-card">
-        <div class="info-card-icon">📅</div>
-        <div><div class="info-card-title" id="lang-c2-t">١ · خشتەی هەفتانە</div><p id="lang-c2-d">وانەکانی ڕۆژانە بۆ هەردوو دەوام</p></div>
-    </div>
-    <div class="info-card">
-        <div class="info-card-icon">📚</div>
-        <div><div class="info-card-title" id="lang-c3-t">٢ · سمستەرەکان</div><p id="lang-c3-d">مەلزەمە، پرسیاری ساڵانی پێشوو بۆ بەرچاو ڕوونی، و فێرکاری ڤیدیۆیی وانەکان</p></div>
-    </div>
-    <div class="info-card">
-        <div class="info-card-icon">⏳</div>
-        <div><div class="info-card-title" id="lang-c4-t">٣ · کاتی تاقیکردنەوە</div><p id="lang-c4-d">کاتژمێری ماوەی تاقیکردنەوە</p></div>
-    </div>
-    <div class="info-card">
-        <div class="info-card-icon">🧮</div>
-        <div><div class="info-card-title" id="lang-c5-t">٤ · هەژمارکردنی نمرە</div><p id="lang-c5-d">کۆی نمرەکانت بزانە</p></div>
-    </div>
-    <div class="info-card">
-        <div class="info-card-icon">ℹ️</div>
-        <div><div class="info-card-title" id="lang-c6-t">٥ · دەربارە</div><p id="lang-c6-d">زانیاری لەسەر گەشەپێدەر و وەشان</p></div>
-    </div>
-    <div class="info-card">
-        <div class="info-card-icon">🎨</div>
-        <div><div class="info-card-title" id="lang-c7-t">٦ · ڕووکار و دیزاین</div><p id="lang-c7-d">گۆڕینی ڕەنگەکان و تروسکەی ئەستێرە</p></div>
-    </div>
-    <div class="info-card">
-        <div class="info-card-icon">🌐</div>
-        <div><div class="info-card-title" id="lang-c8-t">٧ · زمانەکان</div><p id="lang-c8-d">پشتگیری هەردوو زمانی کوردی و ئینگلیزی</p></div>
-    </div>
-</div>
                 <div class="hero-thanks">
                     <p id="lang-thanks">سوپاس بۆ <strong>(محمد اسماعیل)</strong> <span id="lang-and">و</span> <strong>(محمد بێستون)</strong> — <span id="lang-helpers" style="opacity:0.8;font-size:0.8rem;">بۆ هاوکارییان لە دروستکردنی ئەم ویبسایتەدا</span></p>
                 </div>
             </div>
         </div>
     </div>
+    <!-- ===================================================================== -->
 
     <div id="today-tab" class="semester-content">
-        <div id="today-exam-alerts" style="margin: 0 15px 15px 15px;"></div>
 
         <div id="today-setup" style="display:none;">
             <div class="section-header">
@@ -401,6 +337,8 @@
         <div id="today-main" style="display:none;">
             <div id="today-greeting-box" style="border-radius:20px;padding:22px;margin-bottom:16px;text-align:center;"></div>
             <div id="today-schedule-box"></div>
+            <!-- ✅ ئاگاداری تاقیکردنەوە لە خوارەوەی جەدۆل -->
+            <div id="today-exam-alerts" style="margin-top:12px;"></div>
             <button onclick="resetTodayProfile()" style="margin-top:16px;width:100%;padding:12px;border-radius:14px;background:transparent;border:1.5px solid var(--border);color:var(--text-muted);font-family:var(--font);font-size:0.88rem;cursor:pointer;font-weight:600;"><span id="lang-btn-editt">⚙️ گۆڕینی زانیارییەکان</span></button>
         </div>
 
@@ -490,7 +428,7 @@
                 <table>
                     <thead><tr><th class="th-sub">ناوی وانە</th><th class="th-lec">مەلزەمە</th><th class="th-qs">پرسیار</th><th class="th-tut">فێركاری</th></tr></thead>
                     <tbody>
-                        <tr><td><span class="subject-badge" style="background:#ef4444;">Logic Design</span></td><td><a href="https://drive.google.com/drive/folders/16v8Zf_xiCYPCkcPib7bIS_ah4hk6dDPj" target="_blank" class="download-btn btn-dl">داگرتن</a></td><td><a href="https://drive.google.com/drive/folders/1w4lv3S1wskIFRmJzgrR3m_Vib2SzklOv" target="_blank" class="download-btn old-btn btn-view">بینین</a></td><td><a href="https://www.youtube.com/playlist?list=PLCfnFVb0wrYroYmhAU2fJR9nD8TqUjSy0" target="_blank" class="download-btn btn-vid btn-vid">🎥 ڤیدیۆ</a></td></tr>
+                        <tr><td><span class="subject-badge" style="background:#ef4444;">Logic Design</span></td><td><a href="https://drive.google.com/drive/folders/16v8Zf_xiCYPCkcPib7bIS_ah4hk6dDPj" target="_blank" class="download-btn btn-dl">داگرتن</a></td><td><a href="https://drive.google.com/drive/folders/1w4lv3S1wskIFRmJzgrR3m_Vib2SzklOv" target="_blank" class="download-btn old-btn btn-view">بینین</a></td><td><a href="https://www.youtube.com/playlist?list=PLCfnFVb0wrYroYmhAU2fJR9nD8TqUjSy0" target="_blank" class="download-btn btn-vid">🎥 ڤیدیۆ</a></td></tr>
                         <tr><td><span class="subject-badge" style="background:#10b981;">IT Fundamentals</span></td><td><a href="https://drive.google.com/drive/folders/1MUimiqD30yYTs1U53IVkb2B4lZn8Q5Dx" target="_blank" class="download-btn btn-dl">داگرتن</a></td><td><a href="https://drive.google.com/drive/folders/1dqo6IA60wMPzrD-tpE92e_NPb1x9MlGY" target="_blank" class="download-btn old-btn btn-view">بینین</a></td><td><a href="https://www.youtube.com/playlist?list=PLCfnFVb0wrYrrG8eEF0VjVu5bctbCZfGf" target="_blank" class="download-btn btn-vid">🎥 ڤیدیۆ</a></td></tr>
                         <tr><td><span class="subject-badge" style="background:#8b5cf6;">Mathematics</span></td><td><a href="https://drive.google.com/drive/folders/15oJqsrWSfqplqdO2XPV88UmI0mpsK7Tv" target="_blank" class="download-btn btn-dl">داگرتن</a></td><td><a href="https://drive.google.com/drive/folders/1txr0hJgSoTuRse6Zj7ARdxDWIPtjcI8C" target="_blank" class="download-btn old-btn btn-view">بینین</a></td><td><a href="https://www.youtube.com/playlist?list=PLCfnFVb0wrYoBgOnmKoAf1t8CqbS4dcQh" target="_blank" class="download-btn btn-vid">🎥 ڤیدیۆ</a></td></tr>
                         <tr><td><span class="subject-badge" style="background:#f59e0b;">English</span></td><td><a href="https://drive.google.com/drive/folders/1D9DL2xHQRVJYSFlQB6BUDStWt_qKF0QI" target="_blank" class="download-btn btn-dl">داگرتن</a></td><td><a href="https://drive.google.com/drive/folders/1s2q2r18eHAAwEwvagR2r0d0WjIR2_ZVe" target="_blank" class="download-btn old-btn btn-view">بینین</a></td><td><a href="#" class="download-btn btn-vid">🎥 ڤیدیۆ</a></td></tr>
@@ -553,9 +491,7 @@
         <div class="about-card">
             <div class="about-icon">ℹ️</div>
             <h2 id="lang-about-title">دەربارەی پڕۆژە</h2>
-            <p id="lang-about-text">
-                ئەم پڕۆژەیە هەوڵێکی تایبەتە بۆ کۆکردنەوەی هەموو پێداویستییەکانی خوێندکارانی بەشی تەکنەلۆژیای زانیاری (IT) لە پەیمانگای تەکنیکی چەمچەماڵ. ئامانجی سەرەکی ئاسانکارییە بۆ گەیشتن بە زانیارییەکان بە خێراترین کات.
-            </p>
+            <p id="lang-about-text">ئەم پڕۆژەیە هەوڵێکی تایبەتە بۆ کۆکردنەوەی هەموو پێداویستییەکانی خوێندکارانی بەشی تەکنەلۆژیای زانیاری (IT) لە پەیمانگای تەکنیکی چەمچەماڵ. ئامانجی سەرەکی ئاسانکارییە بۆ گەیشتن بە زانیارییەکان بە خێراترین کات.</p>
             <hr class="about-divider">
             <p class="about-meta"><span id="lang-dev">گەشەپێدەر:</span> <strong>شیروان شێرزاد خالد</strong></p>
             <p class="about-meta" style="margin-top:8px;"><span id="lang-ver">وەشان:</span> <span class="version-badge">3.2.0 (٢٠٢٦)</span></p>
@@ -576,7 +512,6 @@
     <div class="rainbow-name">شیروان شێرزاد خالد</div>
     <span class="footer-tagline" id="lang-footer-hope">بە هیوای سود گەیاندن بە هەموو خوێندكارانی بەشی ئایتی</span>
     <p style="opacity:0.55;font-size:0.82rem;margin-top:14px;">© ٢٠٢٦ <span id="lang-copy">بەردەوام لە نوێ كردنەوەدایە</span></p>
-
     <div style="margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.1);">
         <p style="font-weight:700;font-size:0.88rem;margin-bottom:8px;opacity:0.85;" id="lang-visits">📊 ژمارەی سەردانەکان</p>
         <div class="visitor-counter" id="visitor-counter">0000000</div>
@@ -589,37 +524,31 @@
         <span class="bnav-label" id="bnav-label-home">سەرەکی</span>
         <span class="bnav-dot"></span>
     </button>
-
     <button class="bnav-item" id="bnav-today" onclick="showSection('today-tab'); setActiveNav('bnav-today'); initTodayTab()" aria-label="ئەمڕۆی من">
         <span class="bnav-icon">⭐</span>
         <span class="bnav-label" id="bnav-label-today">ئەمڕۆی من</span>
         <span class="bnav-dot"></span>
     </button>
-    
     <button class="bnav-item" id="bnav-schedule" onclick="showSection('schedule-tab'); setActiveNav('bnav-schedule')" aria-label="خشتە">
         <span class="bnav-icon">📅</span>
-        <span class="bnav-label" id="bnav-label-schedule">خشتە</span>
+        <span class="bnav-label" id="bnav-label-schedule">ی هەفتانەخشتە</span>
         <span class="bnav-dot"></span>
     </button>
-
     <button class="bnav-item" id="bnav-semesters" onclick="showSection('semesters-tab'); setActiveNav('bnav-semesters')" aria-label="سمستەر">
         <span class="bnav-icon">📚</span>
-        <span class="bnav-label" id="bnav-label-semesters">سمستەر</span>
+        <span class="bnav-label" id="bnav-label-semesters">سمستەرەکان</span>
         <span class="bnav-dot"></span>
     </button>
-
     <button class="bnav-item" id="bnav-exam" onclick="showSection('exam-tab'); setActiveNav('bnav-exam'); checkExams()" aria-label="تاقیکردنەوە">
         <span class="bnav-icon">⏳</span>
         <span class="bnav-label" id="bnav-label-exam">كاتی تاقیکردنەوە</span>
         <span class="bnav-dot"></span>
     </button>
-
     <button class="bnav-item" id="bnav-gpa" onclick="showSection('gpa-tab'); setActiveNav('bnav-gpa')" aria-label="نمرە">
         <span class="bnav-icon">🧮</span>
         <span class="bnav-label" id="bnav-label-gpa">نمرە</span>
         <span class="bnav-dot"></span>
     </button>
-
     <button class="bnav-item" id="bnav-about" onclick="showSection('about-tab'); setActiveNav('bnav-about')" aria-label="دەربارە">
         <span class="bnav-icon">ℹ️</span>
         <span class="bnav-label" id="bnav-label-about">دەربارە</span>
