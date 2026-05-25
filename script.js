@@ -49,12 +49,17 @@ let currentShift = 'evening';
 const APP_VERSION = "3.2";
 let currentLang = 'ku';
 
+// گۆڕاوەکان بۆ سیستەمی پشووی کۆتایی ساڵ
+let isEndOfYear = false;
+let endOfYearMessage = "";
+
 const subjectList = {
     1: ["Logic Design","IT Fundamentals","Mathematics","English","Kurdology"],
     2: ["Database","English II","Network +","Programming","Web Design"],
     3: ["Web Programming","O.O.P","Database Management","Computer Network II","Operating System"],
     4: ["Mobile Application","Web Programming II","Visual Programming","Information Security","Project"]
 };
+
 const subColors = {
     'Logic Design':'#ef4444','IT Fundamentals':'#10b981','Mathematics':'#8b5cf6','English':'#f59e0b','Kurdology':'#475569',
     'Database':'#d97706','English II':'#f59e0b','Network +':'#3b82f6','Programming':'#8b5cf6','Web Design':'#14b8a6',
@@ -78,7 +83,17 @@ const translations = {
         aboutTitle:"دەربارەی پڕۆژە",aboutText:"ئەم پڕۆژەیە هەوڵێکی تایبەتە بۆ کۆکردنەوەی هەموو پێداویستییەکانی خوێندکارانی بەشی تەکنەلۆژیای زانیاری (IT) لە پەیمانگای تەکنیکی چەمچەماڵ. ئامانجی سەرەکی ئاسانکارییە بۆ گەیشتن بە زانیارییەکان بە خێراترین کات.",
         dev:"گەشەپێدەر:",ver:"وەشان:",scan:"سکان بۆ هاوبەشکردن",created:"دروستکراوە لەلایەن خوێندکار:",footerHope:"بە هیوای سود گەیاندن بە هەموو خوێندكارانی بەشی ئایتی",copy:"بەردەوام لە نوێ كردنەوەدایە",visits:"📊 ژمارەی سەردانەکان",
         thSub:"ناوی وانە",thLec:"مەلزەمە",thQs:"پرسیار",thTut:"فێركاری",btnDl:"داگرتن",btnView:"بینین",btnVid:"🎥 ڤیدیۆ",
-        menuExam:"⏳ کاتی تاقیکردنەوە",menuGpa:"🧮 هەژمارکردنی نمرە",examHeader:"کاتی ماوە بۆ تاقیکردنەوەکان",gpaHeader:"هەژمارکردنی نمرەکان"
+        menuExam:"⏳ کاتی تاقیکردنەوە",menuGpa:"🧮 هەژمارکردنی نمرە",examHeader:"کاتی ماوە بۆ تاقیکردنەوەکان",gpaHeader:"هەژمارکردنی نمرەکان",
+        c1t:"ئەمڕۆی من",c1d:"وانە و کاتەکانی ئەمڕۆت",c2t:"١ · خشتەی هەفتانە",c2d:"وانەکانی ڕۆژانە بۆ هەردوو دەوام",
+        c3t:"٢ · سمستەرەکان",c3d:"مەلزەمە، پرسیاری ساڵانی پێشوو بۆ بەرچاو ڕوونی، و فێرکاری ڤیدیۆیی وانەکان",
+        c4t:"٣ · کاتی تاقیکردنەوە",c4d:"کاتژمێری ماوەی تاقیکردنەوە",c5t:"٤ · هەژمارکردنی نمرە",c5d:"کۆی نمرەکانت بزانە",
+        c6t:"٥ · دەربارە",c6d:"زانیاری لەسەر گەشەپێدەر و وەشان",
+        c7t:"٦ · ڕووکار و دیزاین",c7d:"گۆڕینی ڕەنگەکان و تروسکەی ئەستێرە",
+        c8t:"٧ · زمانەکان",c8d:"پشتگیری هەردوو زمانی کوردی و ئینگلیزی",
+        navHome:"سەرەکی",navToday:"ئەمڕۆی من",navSch:"خشتە",navSem:"سمستەر",navExm:"كاتی تاقیکردنەوە",navGpa:"نمرە",navAbt:"دەربارە",
+        tSetupT:"ئەمڕۆی من",tSetupD:"تکایە زانیارییەکانت بنووسە تا وانەکانی ئەمڕۆت بۆ ئامادە بکەم:",
+        tNameL:"ناوت:",tNameP:"ناوت بنووسە...",tGenL:"ڕەگەز:",tSemL:"سمستەر:",tGrpL:"گرووپ:",tShiftL:"دەوام:",
+        bMale:"👨 کوڕ",bFem:"👧 کچ",bMorn:"☀️ بەیانیان",bEve:"🌙 ئێوارن",bSaveT:"✅ پاشەکەوتکردن و بینینی ئەمڕۆ",bEditT:"⚙️ گۆڕینی زانیارییەکان"
     },
     en: {
         dept:"IT Department",menu:"Menu",institute:"Chamchamal Technical Institute",deptSub:"Information Technology (IT) Dept.",
@@ -95,7 +110,17 @@ const translations = {
         aboutTitle:"About Project",aboutText:"This project gathers all study resources for IT students at Chamchamal Technical Institute. The main goal is quick access to information.",
         dev:"Developer:",ver:"Version:",scan:"Scan to Share",created:"Created by student:",footerHope:"Hoping to benefit all IT students",copy:"Continuously updated",visits:"📊 Total Visits",
         thSub:"Subject",thLec:"Notes",thQs:"Questions",thTut:"Tutorials",btnDl:"Download",btnView:"View",btnVid:"🎥 Video",
-        menuExam:"⏳ Exam Timer",menuGpa:"🧮 GPA Calculator",examHeader:"Time Remaining for Exams",gpaHeader:"Grade Calculation"
+        menuExam:"⏳ Exam Timer",menuGpa:"🧮 GPA Calculator",examHeader:"Time Remaining for Exams",gpaHeader:"Grade Calculation",
+        c1t:"My Today",c1d:"Today's classes and times",c2t:"1 · Weekly Schedule",c2d:"Daily classes for both shifts",
+        c3t:"2 · Semesters",c3d:"Notes, past questions for clarity, and video tutorials",
+        c4t:"3 · Exam Time",c4d:"Remaining exam countdown",c5t:"4 · GPA Calculator",c5d:"Calculate your total grades",
+        c6t:"5 · About",c6d:"Developer info and app version",
+        c7t:"6 · Themes & Design",c7d:"Change colors and star animations",
+        c8t:"7 · Languages",c8d:"Supports both Kurdish and English",
+        navHome:"Home",navToday:"My Today",navSch:"Schedule",navSem:"Semester",navExm:"Exams",navGpa:"Grades",navAbt:"About",
+        tSetupT:"My Today",tSetupD:"Please enter your info to prepare today's classes:",
+        tNameL:"Name:",tNameP:"Enter your name...",tGenL:"Gender:",tSemL:"Semester:",tGrpL:"Group:",tShiftL:"Shift:",
+        bMale:"👨 Male",bFem:"👧 Female",bMorn:"☀️ Morning",bEve:"🌙 Evening",bSaveT:"✅ Save & View Today",bEditT:"⚙️ Change Information"
     }
 };
 
@@ -104,6 +129,7 @@ function toggleLanguage(lang) {
     const t = translations[lang];
     if (lang === 'en') { document.body.classList.add('lang-en'); document.documentElement.dir = "ltr"; }
     else { document.body.classList.remove('lang-en'); document.documentElement.dir = "rtl"; }
+    
     const map = {
         'lang-dept':t.dept,'lang-menu':t.menu,'lang-institute':t.institute,'lang-dept-sub':t.deptSub,
         'lang-home':t.home,'lang-schedule':t.schedule,'lang-semesters':t.semesters,'lang-about':t.about,'lang-contact':t.contact,
@@ -116,15 +142,26 @@ function toggleLanguage(lang) {
         'lang-choose-sem':t.chooseSem,'lang-card-sem1':t.cardSem1,'lang-card-sem2':t.cardSem2,'lang-card-sem3':t.cardSem3,'lang-card-sem4':t.cardSem4,
         'lang-about-title':t.aboutTitle,'lang-dev':t.dev,'lang-ver':t.ver,'lang-scan':t.scan,
         'lang-created':t.created,'lang-footer-hope':t.footerHope,'lang-copy':t.copy,'lang-visits':t.visits,
-        'lang-menu-exam':t.menuExam,'lang-menu-gpa':t.menuGpa,'lang-exam-header':t.examHeader,'lang-gpa-header':t.gpaHeader
+        'lang-menu-exam':t.menuExam,'lang-menu-gpa':t.menuGpa,'lang-exam-header':t.examHeader,'lang-gpa-header':t.gpaHeader,
+        'lang-c1-t':t.c1t,'lang-c1-d':t.c1d,'lang-c2-t':t.c2t,'lang-c2-d':t.c2d,'lang-c3-t':t.c3t,'lang-c3-d':t.c3d,'lang-c4-t':t.c4t,'lang-c4-d':t.c4d,
+        'lang-c5-t':t.c5t,'lang-c5-d':t.c5d,
+        'bnav-label-home':t.navHome,'bnav-label-today':t.navToday,'bnav-label-schedule':t.navSch,'bnav-label-semesters':t.navSem,'bnav-label-exam':t.navExm,'bnav-label-gpa':t.navGpa,'bnav-label-about':t.navAbt,
+        'lang-today-setup-title':t.tSetupT,'lang-today-setup-desc':t.tSetupD,'lang-today-name-lbl':t.tNameL,'lang-today-gen-lbl':t.tGenL,
+        'lang-today-sem-lbl':t.tSemL,'lang-today-grp-lbl':t.tGrpL,'lang-today-shift-lbl':t.tShiftL,
+        'lang-btn-male':t.bMale,'lang-btn-female':t.bFem,'lang-btn-morn':t.bMorn,'lang-btn-eve':t.bEve,
+        'lang-btn-savet':t.bSaveT,'lang-btn-editt':t.bEditT
     };
+
     for (let id in map) {
         let el = document.getElementById(id); if (!el) continue;
         if (['lang-welcome-text','lang-about-text'].includes(id)) el.innerHTML = (id==='lang-about-text'?t.aboutText:t.welcomeText);
         else el.innerText = map[id];
     }
+    
     const el2 = document.getElementById('lang-welcome-text'); if(el2) el2.innerHTML = t.welcomeText;
     const el3 = document.getElementById('lang-about-text'); if(el3) el3.innerText = t.aboutText;
+    const inp = document.getElementById('today-name'); if(inp) inp.placeholder = t.tNameP;
+
     document.querySelectorAll('.th-sub').forEach(e=>e.innerText=t.thSub);
     document.querySelectorAll('.th-lec').forEach(e=>e.innerText=t.thLec);
     document.querySelectorAll('.th-qs').forEach(e=>e.innerText=t.thQs);
@@ -132,6 +169,10 @@ function toggleLanguage(lang) {
     document.querySelectorAll('.btn-dl').forEach(e=>e.innerText=t.btnDl);
     document.querySelectorAll('.btn-view').forEach(e=>e.innerText=t.btnView);
     document.querySelectorAll('.btn-vid').forEach(e=>e.innerText=t.btnVid);
+    
+    const todayMain = document.getElementById('today-main');
+    if (todayMain && todayMain.style.display === 'block') { renderTodayMain(); }
+    
     closeNav();
 }
 
@@ -141,7 +182,7 @@ function toggleLangMenu() {
     const arrow = document.getElementById('lang-arrow');
     const open = menu.style.display !== 'flex';
     menu.style.display = open ? 'flex' : 'none';
-    arrow.style.transform = open ? 'rotate(180deg)' : 'rotate(0)';
+    if(arrow) arrow.style.transform = open ? 'rotate(180deg)' : 'rotate(0)';
 }
 
 function openNav() { triggerHaptic(); document.getElementById("mySidebar").style.width="280px"; document.getElementById("sidebarOverlay").style.display="block"; document.body.classList.add('sidebar-open'); }
@@ -214,11 +255,11 @@ function applyStarField(on, isLoad = false) {
     if (!on) { 
         canvas.style.display='none'; 
         if(starAnimId){cancelAnimationFrame(starAnimId);starAnimId=null;} 
-        if(!isLoad) showToast('ناچالاک کرا تروسکەی ئەستێرەکان', '❌');
+        if(!isLoad) showToast(currentLang==='en'?'Stars Disabled':'ناچالاک کرا تروسکەی ئەستێرەکان', '❌');
         return; 
     }
     canvas.style.display='block';
-    if(!isLoad) showToast('چالاككرا', '✨');
+    if(!isLoad) showToast(currentLang==='en'?'Stars Enabled':'چالاككرا', '✨');
     startStars(canvas);
 }
 
@@ -248,6 +289,7 @@ function startStars(canvas) {
     draw();
 }
 
+// خشتەی هەفتانە بە تەواوی وەک خۆت هێشتوومەتەوە
 const scheduleData = {
     morning:{
         2:{'A':{1:[["١","Programming","8:30","م. هێشوو + هۆگر + ئاسۆ"],["٢","English II","10:30","م. خێڵان + بەرهەم"],["٣","Database","12:30","م. هەردی"]],2:[["١","Programming","8:30","م. هێشوو"],["٢","English II","10:30","م. خێڵان"],["٣","Database","12:30","م. هەردی"]],3:[["١","Network +","8:30","م. عومەر"],["٢","Web Design","10:30","م. مستەفا"]],4:[["١","Web Design","8:30","م. مستەفا+ئەمین+چیناز+نمە"],["٢","Network +","10:30","م. عومەر+گۆران+شیلان+یەحیا"]]},'B':{1:[["١","English II","8:30","م. خێڵان + بەرهەم"],["٢","Database","10:30","م. هەردی+ئەمین+هاوژین+نمە"],["٣","Programming","12:30","م. هێشوو + هۆگر + ئاسۆ"]],2:[["١","Database","8:30","م. هەردی"],["٢","Programming","10:30","م. هێشوو"],["٣","English II","12:30","م. خێڵان"]],3:[["١","Web Design","8:30","م. مستەفا"],["٢","Network +","10:30","م. عومەر"]],4:[["١","Web Design","10:30","م. مستەفا+ئەمین+چیناز+نمە"],["٢","Network +","12:30","م. عومەر+گۆران+شیلان+یەحیا"]]},'C':{1:[["١","Database","8:30","م. هەردی+ئەمین+هاوژین+نمە"],["٢","Programming","10:30","م. هێشوو + هۆگر + ئاسۆ"],["٣","English II","12:30","م. خێڵان + بەرهەم"]],2:[],3:[],4:[["١","Network +","8:30","م. عومەر+گۆران+شیلان+یەحیا"],["٢","Web Design","12:30","م. مستەفا+ئەمین+چیناز+نمە"]]}},
@@ -315,16 +357,16 @@ function selectDay(g, d, dayName) {
                 const sc = subjectColors[r[1]]||'#3b82f6';
                 body.innerHTML += `<tr><td style="font-weight:800;">${r[0]}</td><td><span style="background:${sc};color:white;padding:5px 14px;border-radius:20px;font-weight:700;display:inline-block;">${r[1]}</span></td><td dir="ltr" style="font-weight:700;">${r[2]}</td><td style="font-size:0.88rem;color:var(--text-muted);">${r[3]}</td></tr>`;
             });
-        } else { body.innerHTML = `<tr><td colspan="4" style="color:var(--text-muted);">${g==='C'?'گرووپی C وانەی نییە لەم ڕۆژانەدا':'وانە نییە / No Class'}</td></tr>`; }
+        } else { body.innerHTML = `<tr><td colspan="4" style="color:var(--text-muted);">${g==='C'?(currentLang==='en'?'No classes for Group C':'گرووپی C وانەی نییە لەم ڕۆژانەدا'):(currentLang==='en'?'No Class':'وانە نییە / No Class')}</td></tr>`; }
         document.getElementById('schedule-box').style.display='block';
-    } else { body.innerHTML='<tr><td colspan="4" style="color:var(--text-muted);">زانیاری نییە / No Info</td></tr>'; document.getElementById('schedule-box').style.display='block'; }
+    } else { body.innerHTML=`<tr><td colspan="4" style="color:var(--text-muted);">${currentLang==='en'?'No Info':'زانیاری نییە'}</td></tr>`; document.getElementById('schedule-box').style.display='block'; }
 }
 
 function requestNotifyPermission() {
-    if (!('Notification' in window)) { alert("مۆبایلەکەت پشتگیری نۆتیفیکەیشن ناکات"); return; }
+    if (!('Notification' in window)) { alert(currentLang==='en'?"Device doesn't support notifications":"مۆبایلەکەت پشتگیری نۆتیفیکەیشن ناکات"); return; }
     Notification.requestPermission().then(p=>{
-        if(p==="granted") { new Notification("سەرکەوتوو بوو!",{body:"ئێستا ئاگادارییەکانت پێ دەگات",icon:"it-icon-final-192.png"}); }
-        else alert("تکایە لە ڕێکخستنەکان ڕێگە بە نۆتیفیکەیشن بدە.");
+        if(p==="granted") { new Notification(currentLang==='en'?"Success!":"سەرکەوتوو بوو!",{body:currentLang==='en'?"You will receive alerts now":"ئێستا ئاگادارییەکانت پێ دەگات",icon:"it-icon-final-192.png"}); }
+        else alert(currentLang==='en'?"Please allow notifications in settings.":"تکایە لە ڕێکخستنەکان ڕێگە بە نۆتیفیکەیشن بدە.");
     });
 }
 
@@ -351,10 +393,44 @@ async function fetchNews() {
                 else new Notification("ئاگاداری نوێ | IT",{body:latestTitle,icon:"it-icon-final-192.png"});
                 localStorage.setItem('last_news_title',latestTitle);
             } else if(!stored) localStorage.setItem('last_news_title',latestTitle);
-        } else nc.innerHTML="هیچ هەواڵێکی نوێ نییە.";
+        } else nc.innerHTML=currentLang==='en'?"No new alerts.":"هیچ هەواڵێکی نوێ نییە.";
     } catch(e) {}
 }
 setInterval(fetchNews, 60000);
+
+// سیستەمی پشووی کۆتایی ساڵ لە ڕێگەی گۆگڵ شیت
+async function fetchEndOfYear() {
+    const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS2j8Z4JmuZ2Fq75MNmQ1siz3l9djVQqaIQhk9R9SrSbBx94k3zRfQHeuDpTx_SBW8ZYaWB0Bvxor7M/pub?gid=1624891721&single=true&output=csv";
+    try {
+        const r = await fetch(url, { cache: "no-store" });
+        const text = await r.text();
+        const rows = text.split(/\r?\n/);
+        if (rows.length > 0) {
+            const firstComma = rows[0].indexOf(',');
+            const secondComma = rows[0].indexOf(',', firstComma + 1);
+            if (firstComma !== -1 && secondComma !== -1) {
+                const key = rows[0].substring(0, firstComma).trim();
+                const boolVal = rows[0].substring(firstComma + 1, secondComma).trim();
+                let msg = rows[0].substring(secondComma + 1).trim();
+                
+                if(msg.startsWith('"') && msg.endsWith('"')) {
+                    msg = msg.substring(1, msg.length - 1);
+                }
+                if(key === 'EndOfYear' && boolVal.toUpperCase() === 'TRUE') {
+                    isEndOfYear = true;
+                    endOfYearMessage = msg;
+                } else {
+                    isEndOfYear = false;
+                }
+            }
+        }
+        
+        const todayMain = document.getElementById('today-main');
+        if (todayMain && todayMain.style.display === 'block') {
+            renderTodayMain();
+        }
+    } catch(e) {}
+}
 
 let examIntervals=[];
 async function checkExams() {
@@ -404,42 +480,31 @@ async function checkExams() {
             activeExams.forEach(exam => {
                 const divId = "timer-" + Math.random().toString(36).substr(2, 9);
                 if(container) {
-                    container.innerHTML += `<div class="countdown-box"><h2 style="margin:0;font-size:1.05rem;color:#fbbf24;">${exam.Title}</h2><p style="margin:5px 0 8px;opacity:0.8;font-size:0.78rem;">${exam.dateObj.toLocaleString('ku-IQ')}</p><div class="timer-row"><div class="timer-unit"><div class="timer-box" id="d-${divId}">00</div><div class="timer-label">ڕۆژ</div></div><div class="timer-unit"><div class="timer-box" id="h-${divId}">00</div><div class="timer-label">کاژێر</div></div><div class="timer-unit"><div class="timer-box" id="m-${divId}">00</div><div class="timer-label">خولەک</div></div><div class="timer-unit"><div class="timer-box" id="s-${divId}">00</div><div class="timer-label">چرکە</div></div></div></div>`;
+                    let lblDay = currentLang==='en'?"Days":"ڕۆژ", lblHr = currentLang==='en'?"Hrs":"کاژێر", lblMin = currentLang==='en'?"Min":"خولەک", lblSec = currentLang==='en'?"Sec":"چرکە";
+                    container.innerHTML += `<div class="countdown-box"><h2 style="margin:0;font-size:1.05rem;color:#fbbf24;">${exam.Title}</h2><p style="margin:5px 0 8px;opacity:0.8;font-size:0.78rem;">${exam.dateObj.toLocaleString(currentLang==='en'?'en-US':'ku-IQ')}</p><div class="timer-row"><div class="timer-unit"><div class="timer-box" id="d-${divId}">00</div><div class="timer-label">${lblDay}</div></div><div class="timer-unit"><div class="timer-box" id="h-${divId}">00</div><div class="timer-label">${lblHr}</div></div><div class="timer-unit"><div class="timer-box" id="m-${divId}">00</div><div class="timer-label">${lblMin}</div></div><div class="timer-unit"><div class="timer-box" id="s-${divId}">00</div><div class="timer-label">${lblSec}</div></div></div></div>`;
                     startSpecificTimer(exam.dateObj, divId);
                 }
             });
         } else { 
-            if(container) container.innerHTML = "<h3 style='text-align:center;opacity:0.5;color:var(--text);'>هیچ تاقیکردنەوەیەک نییە</h3>"; 
+            if(container) container.innerHTML = `<h3 style='text-align:center;opacity:0.5;color:var(--text);'>${currentLang==='en'?'No upcoming exams':'هیچ تاقیکردنەوەیەک نییە'}</h3>`; 
         }
 
-        let todayTab = document.getElementById('today-tab');
-        if (todayTab) {
-            let alertContainer = document.getElementById('today-exam-alerts');
-            if (!alertContainer) {
-                alertContainer = document.createElement('div');
-                alertContainer.id = 'today-exam-alerts';
-                alertContainer.style.margin = "0 15px 15px 15px";
-                let header = todayTab.querySelector('.section-header');
-                if (header && header.nextSibling) {
-                    todayTab.insertBefore(alertContainer, header.nextSibling);
-                } else {
-                    todayTab.prepend(alertContainer);
-                }
-            }
-            
+        let alertContainer = document.getElementById('today-exam-alerts');
+        if (alertContainer) {
             if (activeExams.length > 0) {
                 let alertsHTML = '';
                 activeExams.forEach(exam => {
                     const diffTime = Math.abs(exam.dateObj - new Date());
                     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                    let timeText = diffDays === 1 ? "سبەی" : diffDays === 0 ? "ئەمڕۆ" : `ماوە: ${diffDays} ڕۆژ`;
+                    let timeText = diffDays === 1 ? (currentLang==='en'?"Tomorrow":"سبەی") : diffDays === 0 ? (currentLang==='en'?"Today":"ئەمڕۆ") : (currentLang==='en'?`Remaining: ${diffDays} days`:`ماوە: ${diffDays} ڕۆژ`);
+                    let alertWord = currentLang==='en'?"Exam Alert:":"ئاگاداری تاقیکردنەوە:";
                     
                     alertsHTML += `
                     <div style="background: linear-gradient(135deg, #dc2626, #991b1b); color: white; padding: 12px 16px; border-radius: 12px; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4); border: 1px solid rgba(255,255,255,0.15);">
                         <div style="display: flex; align-items: center; gap: 12px;">
                             <span style="font-size: 1.5rem;">⚠️</span>
                             <div>
-                                <div style="font-weight: 900; font-size: 0.95rem;">ئاگاداری تاقیکردنەوە: ${exam.Title}</div>
+                                <div style="font-weight: 900; font-size: 0.95rem;">${alertWord} ${exam.Title}</div>
                                 <div style="font-size: 0.82rem; opacity: 0.9; font-weight: 600;">${timeText}</div>
                             </div>
                         </div>
@@ -470,9 +535,10 @@ function renderGrading() {
     const subjects=subjectList[sem]||[];
     localStorage.setItem('gpa_selected_sem',sem);
     const container=document.getElementById('grading-container'); container.innerHTML="";
+    let lblDaily = currentLang==='en'?"Daily":"ڕۆژانە", lblAtt = currentLang==='en'?"Absence":"نەهاتن", lblQuiz = currentLang==='en'?"Quiz":"کویز", lblRep = currentLang==='en'?"Report/Seminar":"ڕاپۆرت و سیمینار", lblMid = currentLang==='en'?"Midterm":"میدتێرم", lblFin = currentLang==='en'?"Final":"فایناڵ", lblStat = currentLang==='en'?"Please enter grades...":"تکایە نمرەکانت داخڵ بکە...", lblDel = currentLang==='en'?"🗑️ Clear this subject":"🗑️ سڕینەوەی ئەم بابەتە";
     subjects.forEach((sub,idx)=>{
         const color=subColors[sub]||'#3b82f6';
-        container.innerHTML+=`<div class="grade-item"><button class="accordion" onclick="toggleAccordion(this)"><span class="subject-badge" style="background:${color};">${sub}</span><span id="score-${sem}-${idx}" style="font-size:0.78rem;opacity:0.5;">▼</span></button><div class="panel"><div class="gpa-input-row"><label>ڕۆژانە</label><input type="number" min="0" max="50" id="daily-${sem}-${idx}" oninput="calcSub('${sem}',${idx})"></div><div class="gpa-input-row"><label>نەهاتن</label><input type="number" min="0" max="50" id="attend-${sem}-${idx}" oninput="calcSub('${sem}',${idx})"></div><div class="gpa-input-row"><label>کویز</label><input type="number" min="0" max="50" id="quiz-${sem}-${idx}" oninput="calcSub('${sem}',${idx})"></div><div class="gpa-input-row"><label>ڕاپۆرت و سیمینار</label><input type="number" min="0" max="50" id="report-${sem}-${idx}" oninput="calcSub('${sem}',${idx})"></div><div class="gpa-input-row"><label>میدتێرم</label><input type="number" min="0" max="50" id="mid-${sem}-${idx}" oninput="calcSub('${sem}',${idx})"></div><div class="gpa-input-row" style="border-top:1px solid var(--border);"><label style="color:${color};font-weight:800;">فایناڵ</label><input type="number" min="0" max="50" id="final-${sem}-${idx}" oninput="calcSub('${sem}',${idx})"></div><div id="status-${sem}-${idx}" style="text-align:center;padding:12px;font-size:0.88rem;font-weight:600;color:var(--text-muted);background:var(--surface2);margin:10px 0;border-radius:12px;line-height:1.7;border:1px solid var(--border);">تکایە نمرەکانت داخڵ بکە...</div><div class="clear-btns-container"><button class="btn-clear-sub" onclick="clearSubject('${sem}',${idx})">🗑️ سڕینەوەی ئەم بابەتە</button></div></div></div>`;
+        container.innerHTML+=`<div class="grade-item"><button class="accordion" onclick="toggleAccordion(this)"><span class="subject-badge" style="background:${color};">${sub}</span><span id="score-${sem}-${idx}" style="font-size:0.78rem;opacity:0.5;">▼</span></button><div class="panel"><div class="gpa-input-row"><label>${lblDaily}</label><input type="number" min="0" max="50" id="daily-${sem}-${idx}" oninput="calcSub('${sem}',${idx})"></div><div class="gpa-input-row"><label>${lblAtt}</label><input type="number" min="0" max="50" id="attend-${sem}-${idx}" oninput="calcSub('${sem}',${idx})"></div><div class="gpa-input-row"><label>${lblQuiz}</label><input type="number" min="0" max="50" id="quiz-${sem}-${idx}" oninput="calcSub('${sem}',${idx})"></div><div class="gpa-input-row"><label>${lblRep}</label><input type="number" min="0" max="50" id="report-${sem}-${idx}" oninput="calcSub('${sem}',${idx})"></div><div class="gpa-input-row"><label>${lblMid}</label><input type="number" min="0" max="50" id="mid-${sem}-${idx}" oninput="calcSub('${sem}',${idx})"></div><div class="gpa-input-row" style="border-top:1px solid var(--border);"><label style="color:${color};font-weight:800;">${lblFin}</label><input type="number" min="0" max="50" id="final-${sem}-${idx}" oninput="calcSub('${sem}',${idx})"></div><div id="status-${sem}-${idx}" style="text-align:center;padding:12px;font-size:0.88rem;font-weight:600;color:var(--text-muted);background:var(--surface2);margin:10px 0;border-radius:12px;line-height:1.7;border:1px solid var(--border);">${lblStat}</div><div class="clear-btns-container"><button class="btn-clear-sub" onclick="clearSubject('${sem}',${idx})">${lblDel}</button></div></div></div>`;
     });
     loadGrades();
 }
@@ -488,25 +554,27 @@ function calcSub(sem,idx, isLoading = false) {
     let hasReached25 = false;
     let hasReached50Final = false;
 
-    if(current>50) msg="<b style='color:#ef4444'>هەڵە! کۆی سەعی نابێت لە ٥٠ زیاتر بێت.</b>";
-    else if(f!==null&&f>50) msg="<b style='color:#ef4444'>هەڵە! نمرەی فایناڵ نابێت لە ٥٠ زیاتر بێت.</b>";
+    if(current>50) msg=currentLang==='en'?"<b style='color:#ef4444'>Error! Score exceeds 50.</b>":"<b style='color:#ef4444'>هەڵە! کۆی سەعی نابێت لە ٥٠ زیاتر بێت.</b>";
+    else if(f!==null&&f>50) msg=currentLang==='en'?"<b style='color:#ef4444'>Error! Final exceeds 50.</b>":"<b style='color:#ef4444'>هەڵە! نمرەی فایناڵ نابێت لە ٥٠ زیاتر بێت.</b>";
     else {
-        msg=`<div style="margin-bottom:5px;">کۆی سەعی (بێ فایناڵ): <span style="color:var(--primary);font-size:1.1rem;font-weight:800;">${current}</span></div>`;
+        let lblTotal = currentLang==='en'?"Total (No Final):":"کۆی سەعی (بێ فایناڵ):";
+        msg=`<div style="margin-bottom:5px;">${lblTotal} <span style="color:var(--primary);font-size:1.1rem;font-weight:800;">${current}</span></div>`;
         let missing=[];
-        if(d===null)missing.push("ڕۆژانە");if(a===null)missing.push("نەهاتن");if(q===null)missing.push("کویز");if(r===null)missing.push("ڕاپۆرت");if(m===null)missing.push("میدتێرم");
-        if(missing.length>0&&current<50) msg+=`<div style="color:#d97706;font-size:0.82rem;margin-top:4px;font-weight:600;">💡 هەوڵبدە لە (${missing.join(' و ')}) نمرە بەدەست بهێنیت</div>`;
+        if(d===null)missing.push(currentLang==='en'?"Daily":"ڕۆژانە");if(a===null)missing.push(currentLang==='en'?"Absence":"نەهاتن");if(q===null)missing.push(currentLang==='en'?"Quiz":"کویز");if(r===null)missing.push(currentLang==='en'?"Report":"ڕاپۆرت");if(m===null)missing.push(currentLang==='en'?"Midterm":"میدتێرم");
+        if(missing.length>0&&current<50) msg+=`<div style="color:#d97706;font-size:0.82rem;margin-top:4px;font-weight:600;">💡 ${currentLang==='en'?'Try getting marks in':'هەوڵبدە لە'} (${missing.join(currentLang==='en'?' and ':' و ')}) ${currentLang==='en'?'':'نمرە بەدەست بهێنیت'}</div>`;
         
-        if(current<25) msg+=`<br><span style="color:#ef4444;font-weight:800;">⚠️ مەترسی! نمرەی سەعیت زۆر کەمە.</span>`;
-        else if(current<35) { msg+=`<br><span style="color:#d97706;">باشە، بەڵام هێشتا مەترسی هەیە.</span>`; if(current >= 25) hasReached25 = true; }
-        else if(current<50) { msg+=`<br><span style="color:#059669;font-weight:700;">🌟 ئاستت نایابە!</span>`; if(current >= 25) hasReached25 = true; }
-        else { msg+=`<br><span style="color:#10b981;font-weight:700;">🏆 سەعی تەواو! تەنها فایناڵ ماوە.</span>`; if(current >= 25) hasReached25 = true; }
+        if(current<25) msg+=`<br><span style="color:#ef4444;font-weight:800;">⚠️ ${currentLang==='en'?'Danger! Score is very low.':'مەترسی! نمرەی سەعیت زۆر کەمە.'}</span>`;
+        else if(current<35) { msg+=`<br><span style="color:#d97706;">${currentLang==='en'?'Good, but still at risk.':'باشە، بەڵام هێشتا مەترسی هەیە.'}</span>`; if(current >= 25) hasReached25 = true; }
+        else if(current<50) { msg+=`<br><span style="color:#059669;font-weight:700;">🌟 ${currentLang==='en'?'Excellent!':'ئاستت نایابە!'}</span>`; if(current >= 25) hasReached25 = true; }
+        else { msg+=`<br><span style="color:#10b981;font-weight:700;">🏆 ${currentLang==='en'?'Perfect effort! Only final left.':'سەعی تەواو! تەنها فایناڵ ماوە.'}</span>`; if(current >= 25) hasReached25 = true; }
         
         if(f!==null) {
             let final=current+f;
-            msg=`<div style="font-size:1.1rem;margin-bottom:6px;">کۆی گشتی: <span style="color:var(--text);font-weight:900;">${final}</span></div>`;
-            if(final>100) msg+=`<span style="color:#ef4444">هەڵە! لە ١٠٠ تێپەڕی کرد.</span>`;
-            else if(final>=50) { msg+=`<span style="color:#10b981;font-weight:700;">🎉 پیرۆزە دەرچوویت!</span>`; if(final>=85) msg+=` <span style="color:#f59e0b">ئاستێکی بەرز!</span>`; hasReached50Final = true; }
-            else msg+=`<span style="color:#ef4444">😢 بەداخەوە کەوتویت.</span>`;
+            let lblFinTotal = currentLang==='en'?"Overall Score:":"کۆی گشتی:";
+            msg=`<div style="font-size:1.1rem;margin-bottom:6px;">${lblFinTotal} <span style="color:var(--text);font-weight:900;">${final}</span></div>`;
+            if(final>100) msg+=`<span style="color:#ef4444">${currentLang==='en'?'Error! Exceeds 100.':'هەڵە! لە ١٠٠ تێپەڕی کرد.'}</span>`;
+            else if(final>=50) { msg+=`<span style="color:#10b981;font-weight:700;">🎉 ${currentLang==='en'?'Congrats, you passed!':'پیرۆزە دەرچوویت!'}</span>`; if(final>=85) msg+=` <span style="color:#f59e0b">${currentLang==='en'?'High Level!':'ئاستێکی بەرز!'}</span>`; hasReached50Final = true; }
+            else msg+=`<span style="color:#ef4444">😢 ${currentLang==='en'?'Unfortunately, you failed.':'بەداخەوە کەوتویت.'}</span>`;
         }
     }
     const sd=document.getElementById(`status-${sem}-${idx}`); 
@@ -562,7 +630,7 @@ function saveGrades() {
         });
         
         localStorage.setItem('it_chamchamal_grades', JSON.stringify(data)); 
-        if (changed) showToast("نمرەکەت پاشەکەوت کرا", "💾");
+        if (changed) showToast(currentLang==='en'?"Grades saved":"نمرەکەت پاشەکەوت کرا", "💾");
     } catch(e){}
 }
 
@@ -581,12 +649,13 @@ function loadGrades() {
 }
 
 function clearSubject(sem,idx) {
-    if(!confirm("دڵنیای لە سڕینەوەی نمرەکانی ئەم بابەتە؟")) return;
+    let msg = currentLang==='en'?"Are you sure you want to clear grades for this subject?":"دڵنیای لە سڕینەوەی نمرەکانی ئەم بابەتە؟";
+    if(!confirm(msg)) return;
     try {
         let data=JSON.parse(localStorage.getItem('it_chamchamal_grades')||'{}');
         ['daily','attend','quiz','report','mid','final'].forEach(f=>{let id=`${f}-${sem}-${idx}`;if(document.getElementById(id))document.getElementById(id).value="";delete data[id];});
         localStorage.setItem('it_chamchamal_grades',JSON.stringify(data));
-        document.getElementById(`status-${sem}-${idx}`).innerHTML="تکایە نمرەکانت داخڵ بکە...";
+        document.getElementById(`status-${sem}-${idx}`).innerHTML=currentLang==='en'?"Please enter grades...":"تکایە نمرەکانت داخڵ بکە...";
         sessionStorage.removeItem(`confetti_25_${sem}_${idx}`);
         sessionStorage.removeItem(`confetti_50_${sem}_${idx}`);
     } catch(e){}
@@ -594,7 +663,8 @@ function clearSubject(sem,idx) {
 
 function resetSemesterGrades() {
     const sem=document.getElementById('gpa-sem-select').value;
-    if(!confirm(`دڵنیای لە سڕینەوەی هەموو نمرەکانی سمستەری ${sem}؟`)) return;
+    let msg = currentLang==='en'?`Are you sure you want to clear all grades for semester ${sem}?`:`دڵنیای لە سڕینەوەی هەموو نمرەکانی سمستەری ${sem}؟`;
+    if(!confirm(msg)) return;
     try {
         let data=JSON.parse(localStorage.getItem('it_chamchamal_grades')||'{}');
         Object.keys(data).forEach(k=>{if(k.includes(`-${sem}-`))delete data[k];});
@@ -645,6 +715,7 @@ window.addEventListener('load', function () {
     setTimeout(forceHideLoader, 1400);
     try { autoRequestNotification(); } catch(e){}
     try { fetchNews(); } catch(e){}
+    try { fetchEndOfYear(); } catch(e){}
     try { initVisitorCounter(); } catch(e){}
     try { checkUpdate(); } catch(e){}
     try {
@@ -717,14 +788,14 @@ function saveTodayProfile() {
     const name = document.getElementById('today-name')?.value?.trim();
     const sem  = document.getElementById('today-sem')?.value;
 
-    if(!name)          { showToast('تکایە ناوت بنووسە', '⚠️'); return; }
-    if(!todayGender)   { showToast('تکایە ڕەگەزت دیاری بکە', '⚠️'); return; }
-    if(!todayGroup)    { showToast('تکایە گرووپت هەڵبژێرە', '⚠️'); return; }
-    if(!todayShiftSel) { showToast('تکایە دەوامت هەڵبژێرە', '⚠️'); return; }
+    if(!name)          { showToast(currentLang==='en'?'Please enter your name':'تکایە ناوت بنووسە', '⚠️'); return; }
+    if(!todayGender)   { showToast(currentLang==='en'?'Please select gender':'تکایە ڕەگەزت دیاری بکە', '⚠️'); return; }
+    if(!todayGroup)    { showToast(currentLang==='en'?'Please select group':'تکایە گرووپت هەڵبژێرە', '⚠️'); return; }
+    if(!todayShiftSel) { showToast(currentLang==='en'?'Please select shift':'تکایە دەوامت هەڵبژێرە', '⚠️'); return; }
 
     const profile = { name, gender: todayGender, sem, group: todayGroup, shift: todayShiftSel };
     localStorage.setItem('today_profile', JSON.stringify(profile));
-    showToast('زانیارییەکانت پاشەکەوت کرا! ✨', '✅');
+    showToast(currentLang==='en'?'Profile Saved! ✨':'زانیارییەکانت پاشەکەوت کرا! ✨', '✅');
     renderTodayMain();
 }
 
@@ -752,13 +823,22 @@ function resetTodayProfile() {
 function getTodayGreeting(name, gender) {
     const h = new Date().getHours();
     let timeWord, emoji;
-    if      (h >= 5  && h < 12) { timeWord =  'بەیانی باش';    emoji = '🌤️'; }
-    else if (h >= 12 && h < 17) { timeWord =  'نیوەڕۆت باش'; emoji = '☀️'; }
-    else if (h >= 17 && h < 21) { timeWord =  'ئێوارەت باش';  emoji = '🌇'; }
-    else                         { timeWord =  'شەوت باش';    emoji = '🌙'; }
-
-    const title = gender === 'male' ? 'کاک' : 'خاتوو';
-    return { greeting: `${timeWord}، ${title} ${name}!`, emoji };
+    
+    if (currentLang === 'en') {
+        if      (h >= 5  && h < 12) { timeWord =  'Good Morning';    emoji = '🌤️'; }
+        else if (h >= 12 && h < 17) { timeWord =  'Good Afternoon';  emoji = '☀️'; }
+        else if (h >= 17 && h < 21) { timeWord =  'Good Evening';    emoji = '🌇'; }
+        else                        { timeWord =  'Good Night';      emoji = '🌙'; }
+        const title = gender === 'male' ? 'Mr.' : 'Ms.'; 
+        return { greeting: `${timeWord}, ${title} ${name}!`, emoji };
+    } else {
+        if      (h >= 5  && h < 12) { timeWord =  'بەیانی باش';    emoji = '🌤️'; }
+        else if (h >= 12 && h < 17) { timeWord =  'نیوەڕۆت باش'; emoji = '☀️'; }
+        else if (h >= 17 && h < 21) { timeWord =  'ئێوارەت باش';  emoji = '🌇'; }
+        else                        { timeWord =  'شەوت باش';    emoji = '🌙'; }
+        const title = gender === 'male' ? 'کاک' : 'خاتوو';
+        return { greeting: `${timeWord}، ${title} ${name}!`, emoji };
+    }
 }
 
 function getTodayDayIndex() {
@@ -768,8 +848,13 @@ function getTodayDayIndex() {
 }
 
 function getTodayDayName(jsDay) {
-    const names = { 0:'یەکشەممە', 1:'دووشەممە', 2:'سێشەممە', 3:'چوارشەممە', 4:'پێنجشەممە', 5:'هەینی', 6:'شەممە' };
-    return names[jsDay] || '';
+    if (currentLang === 'en') {
+        const names = { 0:'Sunday', 1:'Monday', 2:'Tuesday', 3:'Wednesday', 4:'Thursday', 5:'Friday', 6:'Saturday' };
+        return names[jsDay] || '';
+    } else {
+        const names = { 0:'یەکشەممە', 1:'دووشەممە', 2:'سێشەممە', 3:'چوارشەممە', 4:'پێنجشەممە', 5:'هەینی', 6:'شەممە' };
+        return names[jsDay] || '';
+    }
 }
 
 function renderTodayMain() {
@@ -784,19 +869,32 @@ function renderTodayMain() {
     document.getElementById('today-main').style.display  = 'block';
 
     const { greeting, emoji } = getTodayGreeting(p.name, p.gender);
-    const shiftLabel = p.shift === 'morning' ? 'دەوامی بەیانیان ☀️' : 'دەوامی ئێوارن 🌙';
+    const shiftLabel = p.shift === 'morning' ? (currentLang==='en'?'Morning Shift ☀️':'دەوامی بەیانیان ☀️') : (currentLang==='en'?'Evening Shift 🌙':'دەوامی ئێوارن 🌙');
     const greetBox = document.getElementById('today-greeting-box');
+    
     if(greetBox) {
+        let lblSem = currentLang==='en'?"Semester":"سمستەری";
         greetBox.style.background = 'linear-gradient(135deg, var(--primary), var(--secondary))';
         greetBox.innerHTML = `
             <div style="font-size:2.2rem;margin-bottom:8px;">${emoji}</div>
             <div style="color:white;font-size:1.18rem;font-weight:900;margin-bottom:6px;line-height:1.4;">${greeting}</div>
-            <div style="color:rgba(255,255,255,0.72);font-size:0.82rem;font-weight:600;">سمستەری ${p.sem} &nbsp;·&nbsp; Group ${p.group} &nbsp;·&nbsp; ${shiftLabel}</div>
+            <div style="color:rgba(255,255,255,0.72);font-size:0.82rem;font-weight:600;">${lblSem} ${p.sem} &nbsp;·&nbsp; Group ${p.group} &nbsp;·&nbsp; ${shiftLabel}</div>
         `;
     }
 
     const box    = document.getElementById('today-schedule-box');
     if(!box) return;
+    
+    // جێبەجێکردنی نامەی پشووی کۆتایی ساڵ
+    if (isEndOfYear) {
+        box.innerHTML = `
+        <div style="text-align:center;padding:32px 20px;background:var(--surface);border-radius:20px;border:1.5px solid var(--border);">
+            <div style="font-size:2.8rem;margin-bottom:12px;">🎉</div>
+            <div style="color:var(--text);font-size:1.05rem;line-height:1.7;font-weight:700;">${endOfYearMessage}</div>
+        </div>`;
+        return;
+    }
+
     const jsDay  = new Date().getDay();
     const dayName = getTodayDayName(jsDay);
     const dayIdx  = getTodayDayIndex();
@@ -805,8 +903,8 @@ function renderTodayMain() {
         box.innerHTML = `
         <div style="text-align:center;padding:32px 20px;background:var(--surface);border-radius:20px;border:1.5px solid var(--border);">
             <div style="font-size:2.4rem;margin-bottom:12px;">🎉</div>
-            <div style="font-weight:900;font-size:1.12rem;color:var(--text);margin-bottom:8px;">${dayName} — ئەمڕؤ پشووە بەخۆشی بەسەری بەرە!</div>
-            <div style="color:var(--text-muted);font-size:0.88rem;line-height:1.6;">ئەمڕۆ وانە نییە، ئیستراحەت بکە 😎</div>
+            <div style="font-weight:900;font-size:1.12rem;color:var(--text);margin-bottom:8px;">${dayName} — ${currentLang==='en'?"It's a holiday, enjoy!":"ئەمڕؤ پشووە بەخۆشی بەسەری بەرە!"}</div>
+            <div style="color:var(--text-muted);font-size:0.88rem;line-height:1.6;">${currentLang==='en'?"No classes today, take a rest 😎":"ئەمڕۆ وانە نییە، ئیستراحەت بکە 😎"}</div>
         </div>`;
         return;
     }
@@ -823,24 +921,43 @@ function renderTodayMain() {
 
     const lessons = scheduleData[p.shift]?.[parseInt(p.sem)]?.[p.group]?.[dayIdx];
     const now     = new Date();
+    let lblTodayClass = currentLang==='en'?"Today's Classes":"وانەکانی ئەمڕۆ";
 
     let html = `
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
         <span style="background:linear-gradient(135deg,var(--primary),var(--secondary));color:white;padding:5px 16px;border-radius:20px;font-size:0.85rem;font-weight:700;">📅 ${dayName}</span>
-        <span style="color:var(--text-muted);font-size:0.82rem;font-weight:600;">وانەکانی ئەمڕۆ</span>
+        <span style="color:var(--text-muted);font-size:0.82rem;font-weight:600;">${lblTodayClass}</span>
     </div>`;
 
     if(!lessons || lessons.length === 0) {
         html += `
         <div style="text-align:center;padding:26px;background:var(--surface);border-radius:16px;border:1.5px dashed var(--border);">
             <div style="font-size:1.8rem;margin-bottom:8px;">📭</div>
-            <div style="color:var(--text-muted);font-weight:700;">ئەمڕۆ وانەی نییە بۆ گرووپ ${p.group}</div>
+            <div style="color:var(--text-muted);font-weight:700;">${currentLang==='en'?`No classes today for Group ${p.group}`:`ئەمڕۆ وانەی نییە بۆ گرووپ ${p.group}`}</div>
         </div>`;
     } else {
+        let lblNow = currentLang==='en'?"⬤ NOW":"⬤ ئێستا"; 
+        let lblPast = currentLang==='en'?"Done":"تەواوبوو";
+
         lessons.forEach(r => {
-            const timeParts = r[2].split(':');
+            // چارەسەرکردنی کێشەی کاتەکان (٢ی شەو)
+            const cleanTime = r[2].replace(/AM|PM/i, '').trim();
+            const timeParts = cleanTime.split(':');
             const lessonStart = new Date();
-            lessonStart.setHours(parseInt(timeParts[0]), parseInt(timeParts[1] || 0), 0, 0);
+            let h = parseInt(timeParts[0] || "0", 10);
+            let m = parseInt(timeParts[1] || "0", 10);
+            let isPM = r[2].toUpperCase().includes('PM');
+            let isAM = r[2].toUpperCase().includes('AM');
+
+            if (isPM && h < 12) h += 12;
+            if (isAM && h === 12) h = 0;
+
+            if (!isPM && !isAM) {
+                if (p.shift === 'evening' && h < 12) h += 12;
+                if (p.shift === 'morning' && h > 0 && h <= 5) h += 12;
+            }
+
+            lessonStart.setHours(h, m, 0, 0);
             const lessonEnd   = new Date(lessonStart.getTime() + 2 * 60 * 60 * 1000); // ٢ کاتژمێر
 
             const isNow  = now >= lessonStart && now < lessonEnd;
@@ -873,8 +990,8 @@ function renderTodayMain() {
                 <div style="flex:1;min-width:0;">
                     <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:4px;">
                         <span style="background:${c};color:white;padding:4px 12px;border-radius:20px;font-size:0.82rem;font-weight:700;white-space:nowrap;">${r[1]}</span>
-                        ${isNow  ? '<span style="background:#10b981;color:white;padding:3px 9px;border-radius:10px;font-size:0.72rem;font-weight:700;">⬤ ئێستا</span>' : ''}
-                        ${isPast ? '<span style="background:var(--surface2);color:var(--text-muted);padding:3px 9px;border-radius:10px;font-size:0.72rem;border:1px solid var(--border);">تەواوبوو</span>' : ''}
+                        ${isNow  ? `<span style="background:#10b981;color:white;padding:3px 9px;border-radius:10px;font-size:0.72rem;font-weight:700;">${lblNow}</span>` : ''}
+                        ${isPast ? `<span style="background:var(--surface2);color:var(--text-muted);padding:3px 9px;border-radius:10px;font-size:0.72rem;border:1px solid var(--border);">${lblPast}</span>` : ''}
                     </div>
                     <div style="font-size:0.78rem;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${r[3]}</div>
                 </div>
