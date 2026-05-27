@@ -70,6 +70,7 @@ const translations = {
     ku: {
         dept:"بەشی ئایتی",menu:"لیست",institute:"پەیمانگای تەکنیکی چەمچەماڵ",deptSub:"بەشی تەکنەلۆژیای زانیاری (IT)",
         home:"🏠 سەرەکی",schedule:"📅 خشتەی هەفتانە",semesters:"📚 سمستەرەکان",about:"ℹ️ دەربارە",contact:"📞 پەیوەندی (Telegram)",setting:"زمان",alert:"🚨 ئاگاداری",
+        sideTheme: "🎨 ڕووکار و دیزاین",
         welcomeTitle:"بەخێربێن خوێندکارانی بەشی تەکنەلۆژیای زانیاری (IT)",
         welcomeText:'بۆ گەیشتن بە هەر بەشێک، کرتەی <span class="hero-highlight" style="color: #fbbf24; text-shadow: 0 0 10px rgba(251,191,36,0.4);">" لیست "</span> بکە لە سەرەوە. ئەم بەشانەت بۆ ئامادەکراوە:',
         semTitle:"بەشی سمستەرەکان:",semDesc1:"مەلزەمە، پرسیار، و فێرکاری بۆ هەموو وانەکان",
@@ -95,6 +96,7 @@ const translations = {
     en: {
         dept:"IT Department",menu:"Menu",institute:"Chamchamal Technical Institute",deptSub:"Information Technology (IT) Dept.",
         home:"🏠 Home",schedule:"📅 Weekly Schedule",semesters:"📚 Semesters",about:"ℹ️ About",contact:"📞 Contact (Telegram)",setting:"Language",alert:"🚨 Notice",
+        sideTheme: "🎨 Themes & Design",
         welcomeTitle:"Welcome to IT Department – Chamchamal Technical Institute",
         welcomeText:'Click <span class="hero-highlight" style="color: #fbbf24; text-shadow: 0 0 10px rgba(251,191,36,0.4);">" Menu "</span> above to access any section. Available sections:',
         semTitle:"Semesters:",semDesc1:"Lecture notes, past questions, and tutorial videos for all subjects",
@@ -128,7 +130,7 @@ function toggleLanguage(lang) {
     const map = {
         'lang-dept':t.dept,'lang-menu':t.menu,'lang-institute':t.institute,'lang-dept-sub':t.deptSub,
         'lang-home':t.home,'lang-schedule':t.schedule,'lang-semesters':t.semesters,'lang-about':t.about,'lang-contact':t.contact,
-        'lang-setting':t.setting,'lang-alert':t.alert,
+        'lang-setting':t.setting,'lang-alert':t.alert,'lang-side-theme':t.sideTheme,
         'lang-welcome-title':t.welcomeTitle,
         'lang-sched-header':t.schedHeader,'lang-morning':t.morning,'lang-evening':t.evening,
         'lang-sem-btn1':t.semBtn1,'lang-sem-btn2':t.semBtn2,'lang-sem-btn3':t.semBtn3,'lang-sem-btn4':t.semBtn4,
@@ -379,8 +381,26 @@ async function fetchNews() {
             nc.innerHTML=html+html;
             const stored=localStorage.getItem('last_news_title');
             if(stored!==latestTitle && Notification.permission==="granted") {
-                if('serviceWorker' in navigator) { navigator.serviceWorker.ready.then(reg=>reg.showNotification("ئاگاداری نوێ | IT",{body:latestTitle,icon:"it-icon-final-192.png",tag:'news-alert'})); }
-                else new Notification("ئاگاداری نوێ | IT",{body:latestTitle,icon:"it-icon-final-192.png"});
+                let alertMsg = (latestTitle.includes('تاقیکردنەوە') || latestTitle.includes('تاقیكردنەوە'))
+                    ? "كاتی تاقیكردنەوە دانراوە، سەردانی ویب سایتەكە بكە"
+                    : "ویب سایتەكە ئەپدەیت كرایەوە، سەردانی بكە";
+                
+                if('serviceWorker' in navigator) { 
+                    navigator.serviceWorker.ready.then(reg => {
+                        reg.showNotification("ئاگاداری نوێ | IT Chamchamal", {
+                            body: alertMsg + "\n" + latestTitle, 
+                            icon: "it-icon-final-192.png", 
+                            badge: "it-icon-final-192.png",
+                            tag: 'news-alert',
+                            vibrate: [200, 100, 200]
+                        });
+                    }); 
+                } else {
+                    new Notification("ئاگاداری نوێ | IT Chamchamal", {
+                        body: alertMsg + "\n" + latestTitle, 
+                        icon: "it-icon-final-192.png"
+                    });
+                }
                 localStorage.setItem('last_news_title',latestTitle);
             } else if(!stored) localStorage.setItem('last_news_title',latestTitle);
         } else nc.innerHTML=currentLang==='en'?"No new alerts.":"هیچ هەواڵێکی نوێ نییە.";
@@ -675,7 +695,7 @@ function updateClock() {
 }
 
 window.addEventListener('load', function () {
-    setTimeout(forceHideLoader, 1400);
+    setTimeout(forceHideLoader, 4000);
     try { autoRequestNotification(); } catch(e){}
     try { fetchNews(); } catch(e){}
     try { fetchEndOfYear(); } catch(e){}
