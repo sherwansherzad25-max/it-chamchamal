@@ -17,7 +17,7 @@
     <meta property="og:title" content="بەشی IT | پەیمانگای تەکنیکی چەمچەماڵ">
     <meta property="og:url" content="https://sherwansherzad25-max.github.io/it-chamchamal/">
     <title>بەشی IT پەیمانگای تەکنیکی چەمچەماڵ</title>
-    
+
     <link rel="icon" type="image/png" sizes="192x192" href="it-icon-final-192.png?v=5">
     <link rel="apple-touch-icon" sizes="180x180" href="it-icon-final-180.png?v=5">
     <link rel="manifest" href="manifest.json?v=5">
@@ -30,48 +30,30 @@
 <body>
 
 <div id="loading-screen" style="background:linear-gradient(160deg,#0a0e1a 0%,#0f1e3d 40%,#0a1628 70%,#071020 100%);overflow:hidden;">
-
-    <!-- بەک گراوند کانڤاس -->
     <canvas id="loader-canvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;"></canvas>
-
-    <!-- ڕینگە گەسترەوەکان -->
     <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2;pointer-events:none;">
         <div class="ld-ring ld-ring1"></div>
         <div class="ld-ring ld-ring2"></div>
         <div class="ld-ring ld-ring3"></div>
     </div>
-
-    <!-- گلۆ دۆتەکان -->
     <div class="ld-glow ld-glow1"></div>
     <div class="ld-glow ld-glow2"></div>
-
-    <!-- ناوەرۆکی سەرەکی -->
     <div style="position:relative;z-index:5;display:flex;flex-direction:column;align-items:center;gap:0;">
-
-        <!-- لۆگۆ کارت -->
         <div class="ld-logo-wrap">
             <img src="it-icon-final-192.png" alt="IT Logo" class="ld-logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
             <div class="ld-logo-fallback" style="display:none;">IT</div>
         </div>
-
-        <!-- ناوی برەندی -->
         <div class="ld-brand">IT Chamchamal</div>
         <div class="ld-sub">پەیمانگای تەکنیکی چەمچەماڵ</div>
-
-        <!-- بارێکی بارکردن -->
         <div class="ld-bar-wrap">
             <div class="ld-bar-fill"></div>
         </div>
-
-        <!-- خالەکانی بچووک -->
         <div class="ld-dots">
             <span class="ld-dot"></span>
             <span class="ld-dot"></span>
             <span class="ld-dot"></span>
         </div>
     </div>
-
-    <!-- وەشانی کۆتایی -->
     <div class="ld-version">v3.2 · 2026</div>
 </div>
 
@@ -81,73 +63,28 @@
     if(!canvas) return;
     const ctx = canvas.getContext('2d');
     let W, H, pts = [], animId;
-
-    function resize(){
-        W = canvas.width = window.innerWidth;
-        H = canvas.height = window.innerHeight;
-    }
+    function resize(){ W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
     resize();
     window.addEventListener('resize', resize);
-
     const snippets = ['01','10','{}','</>','=>','if','fn','IT','++','&&','::','[]','AI'];
     for(let i = 0; i < 100; i++){
-        pts.push({
-            x: Math.random() * (W || 400),
-            y: Math.random() * (H || 800),
-            r: Math.random() * 1.3 + 0.2,
-            s: Math.random() * 0.28 + 0.06,
-            o: Math.random() * 0.55 + 0.08,
-            t: Math.random() * Math.PI * 2,
-            isCode: Math.random() > 0.65,
-            txt: snippets[Math.floor(Math.random() * snippets.length)],
-            sz: Math.random() * 4 + 7,
-            dx: (Math.random() - 0.5) * 0.18,
-        });
+        pts.push({ x:Math.random()*(W||400), y:Math.random()*(H||800), r:Math.random()*1.3+0.2, s:Math.random()*0.28+0.06, o:Math.random()*0.55+0.08, t:Math.random()*Math.PI*2, isCode:Math.random()>0.65, txt:snippets[Math.floor(Math.random()*snippets.length)], sz:Math.random()*4+7, dx:(Math.random()-0.5)*0.18 });
     }
-
     function draw(){
-        ctx.clearRect(0, 0, W, H);
-        pts.forEach(p => {
-            p.t += 0.025;
-            p.o = Math.max(0.04, Math.min(0.65, p.o + Math.sin(p.t) * 0.01));
-            p.y -= p.s;
-            p.x += p.dx;
-            if(p.y < -15) { p.y = H + 5; p.x = Math.random() * W; }
-            if(p.x < -15) p.x = W + 5;
-            if(p.x > W + 15) p.x = -5;
-
+        ctx.clearRect(0,0,W,H);
+        pts.forEach(p=>{
+            p.t+=0.025; p.o=Math.max(0.04,Math.min(0.65,p.o+Math.sin(p.t)*0.01)); p.y-=p.s; p.x+=p.dx;
+            if(p.y<-15){p.y=H+5;p.x=Math.random()*W;}
+            if(p.x<-15)p.x=W+5; if(p.x>W+15)p.x=-5;
             ctx.save();
-            if(p.isCode){
-                ctx.translate(p.x, p.y);
-                ctx.rotate(Math.sin(p.t * 0.3) * 0.25);
-                ctx.font = `900 ${p.sz * 1.6}px 'Courier New', monospace`;
-                const g = Math.random() > 0.5;
-                ctx.fillStyle = g
-                    ? `rgba(16,185,129,${p.o * 1.5})`
-                    : `rgba(99,179,237,${p.o * 1.3})`;
-                ctx.shadowColor = g ? 'rgba(16,185,129,0.6)' : 'rgba(99,179,237,0.5)';
-                ctx.shadowBlur = 12;
-                ctx.fillText(p.txt, 0, 0);
-            } else {
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.r * 1.5, 0, Math.PI * 2);
-                const isGreen = Math.random() > 0.4;
-                ctx.fillStyle = isGreen
-                    ? `rgba(16,185,129,${p.o * 1.2})`
-                    : `rgba(147,197,253,${p.o * 1.1})`;
-                ctx.shadowColor = isGreen ? 'rgba(16,185,129,0.8)' : 'rgba(147,197,253,0.6)';
-                ctx.shadowBlur = 10;
-                ctx.fill();
-            }
+            if(p.isCode){ ctx.translate(p.x,p.y); ctx.rotate(Math.sin(p.t*0.3)*0.25); ctx.font=`900 ${p.sz*1.6}px 'Courier New',monospace`; const g=Math.random()>0.5; ctx.fillStyle=g?`rgba(16,185,129,${p.o*1.5})`:`rgba(99,179,237,${p.o*1.3})`; ctx.shadowColor=g?'rgba(16,185,129,0.6)':'rgba(99,179,237,0.5)'; ctx.shadowBlur=12; ctx.fillText(p.txt,0,0); }
+            else{ ctx.beginPath(); ctx.arc(p.x,p.y,p.r*1.5,0,Math.PI*2); const isGreen=Math.random()>0.4; ctx.fillStyle=isGreen?`rgba(16,185,129,${p.o*1.2})`:`rgba(147,197,253,${p.o*1.1})`; ctx.shadowColor=isGreen?'rgba(16,185,129,0.8)':'rgba(147,197,253,0.6)'; ctx.shadowBlur=10; ctx.fill(); }
             ctx.restore();
         });
-        animId = requestAnimationFrame(draw);
+        animId=requestAnimationFrame(draw);
     }
     draw();
-
-    window.addEventListener('load', function(){
-        setTimeout(function(){ cancelAnimationFrame(animId); }, 4200);
-    });
+    window.addEventListener('load',function(){ setTimeout(function(){cancelAnimationFrame(animId);},4200); });
 })();
 </script>
 
@@ -182,6 +119,22 @@
             <div class="theme-card-preview"><span style="background:#115e59"></span><span style="background:#f59e0b"></span><span style="background:#f0fdfa"></span></div>
             <div class="theme-card-label">🩵 ڕووکاری دەریایی</div>
         </div>
+       <div class="theme-card" id="tc-aurora" onclick="applyTheme('aurora')">
+    <div class="theme-card-preview"><span style="background:#1a0533"></span><span style="background:#3d1278"></span><span style="background:#00d4aa"></span></div>
+    <div class="theme-card-label">🌌 شەپۆلی ئۆرۆرا</div>
+</div>
+<div class="theme-card" id="tc-sunset" onclick="applyTheme('sunset')">
+    <div class="theme-card-preview"><span style="background:#c2410c"></span><span style="background:#dc2626"></span><span style="background:#fef9ed"></span></div>
+    <div class="theme-card-label">🌅 خۆرئاوابوونی زێڕین</div>
+</div>
+<div class="theme-card" id="tc-cyber" onclick="applyTheme('cyber')">
+    <div class="theme-card-preview"><span style="background:#050510"></span><span style="background:#00fff0"></span><span style="background:#ff00aa"></span></div>
+    <div class="theme-card-label">⚡ تەکنەلۆژیای داهاتوو</div>
+</div>
+<div class="theme-card" id="tc-golden" onclick="applyTheme('golden')">
+    <div class="theme-card-preview"><span style="background:#78350f"></span><span style="background:#ca8a04"></span><span style="background:#fdfaf3"></span></div>
+    <div class="theme-card-label">✨ ڕەونەقی زێڕ</div>
+</div>
     </div>
     <hr style="border:0;border-top:1.5px solid var(--border);margin:16px 0;">
     <div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:12px;font-weight:600;">تروسکەی ئەستێرەکان</div>
@@ -250,17 +203,14 @@
 
 <div class="main-container">
 
-    <!-- ===================== تابی سەرەکی ===================== -->
     <div id="home-tab" class="semester-content active">
         <div class="hero-card">
             <div class="hero-inner">
                 <div class="hero-badge">🎓 IT Chamchamal · 2026</div>
-               <h2 class="hero-title" id="lang-welcome-title" style="text-align: center;">بەخێربێن خوێندکارانی بەشی تەکنەلۆژیای زانیاری (IT)</h2>
-
-<p class="hero-desc" id="lang-welcome-text" style="text-align: center;">
-    بۆ گەیشتن بە هەر بەشێک، کرتەی <span class="hero-highlight" style="color:#0b6442;text-shadow:0 0 15px rgba(7, 92, 88, 0.4);">" لیست "</span> بکە لە سەرەوە. ئەم بەشانەت بۆ ئامادەکراوە:
-</p>
-
+                <h2 class="hero-title" id="lang-welcome-title" style="text-align:center;">بەخێربێن خوێندکارانی بەشی تەکنەلۆژیای زانیاری (IT)</h2>
+                <p class="hero-desc" id="lang-welcome-text" style="text-align:center;">
+                    بۆ گەیشتن بە هەر بەشێک، کرتەی <span class="hero-highlight" style="color:#0b6442;text-shadow:0 0 15px rgba(7,92,88,0.4);">" لیست "</span> بکە لە سەرەوە. ئەم بەشانەت بۆ ئامادەکراوە:
+                </p>
                 <div class="info-cards-grid">
                     <div class="info-card">
                         <div class="info-card-icon">⭐</div>
@@ -287,17 +237,14 @@
                         <div><div class="info-card-title" id="lang-c7-t">٥ · ڕووکار و دیزاین</div><p id="lang-c7-d">گۆڕینی ڕەنگ و تروسکەی ئەستێرە</p></div>
                     </div>
                 </div>
-
                 <div class="hero-thanks">
                     <p id="lang-thanks">سوپاس بۆ <strong>(محمد اسماعیل)</strong> <span id="lang-and">و</span> <strong>(محمد بێستون)</strong> — <span id="lang-helpers" style="opacity:0.8;font-size:0.8rem;">بۆ هاوکارییان لە دروستکردنی ئەم ویبسایتەدا</span></p>
                 </div>
             </div>
         </div>
     </div>
-    <!-- ===================================================================== -->
 
     <div id="today-tab" class="semester-content">
-
         <div id="today-setup" style="display:none;">
             <div class="section-header">
                 <div class="section-header-icon">⭐</div>
@@ -305,12 +252,10 @@
             </div>
             <div style="background:linear-gradient(135deg,var(--primary),var(--secondary));border-radius:20px;padding:24px;color:white;margin-bottom:18px;">
                 <p id="lang-today-setup-desc" style="font-size:0.88rem;opacity:0.85;margin-bottom:18px;line-height:1.7;">تکایە زانیارییەکانت بنووسە تا وانەکانی ئەمڕۆت بۆ ئامادە بکەم:</p>
-
                 <div style="margin-bottom:14px;">
                     <label id="lang-today-name-lbl" style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:6px;opacity:0.85;">ناوت:</label>
                     <input type="text" id="today-name" placeholder="ناوت بنووسە..." style="width:100%;padding:11px 14px;border-radius:12px;border:1.5px solid rgba(255,255,255,0.3);background:rgba(255,255,255,0.12);color:white;font-family:var(--font);font-size:0.92rem;font-weight:600;outline:none;">
                 </div>
-
                 <div style="margin-bottom:14px;">
                     <label id="lang-today-gen-lbl" style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:6px;opacity:0.85;">ڕەگەز:</label>
                     <div style="display:flex;gap:10px;">
@@ -318,7 +263,6 @@
                         <button onclick="selectGender('female')" id="gbtn-female" style="flex:1;padding:11px;border-radius:12px;border:2px solid rgba(255,255,255,0.3);background:rgba(255,255,255,0.1);color:white;font-family:var(--font);font-weight:700;cursor:pointer;transition:all 0.2s;font-size:0.9rem;"><span id="lang-btn-female">👧 کچ</span></button>
                     </div>
                 </div>
-
                 <div style="margin-bottom:14px;">
                     <label id="lang-today-sem-lbl" style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:6px;opacity:0.85;">سمستەر:</label>
                     <select id="today-sem" style="width:100%;padding:11px 14px;border-radius:12px;border:1.5px solid rgba(255,255,255,0.3);background:rgba(255,255,255,0.12);color:white;font-family:var(--font);font-size:0.92rem;font-weight:600;outline:none;">
@@ -328,7 +272,6 @@
                         <option value="4" style="color:#000;">سمستەری ٤</option>
                     </select>
                 </div>
-
                 <div style="margin-bottom:14px;">
                     <label id="lang-today-grp-lbl" style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:6px;opacity:0.85;">گرووپ:</label>
                     <div style="display:flex;gap:10px;">
@@ -337,7 +280,6 @@
                         <button onclick="selectTodayGroup('C')" id="tgbtn-C" style="flex:1;padding:11px;border-radius:12px;border:2px solid rgba(255,255,255,0.3);background:rgba(255,255,255,0.1);color:white;font-family:var(--font);font-weight:700;cursor:pointer;transition:all 0.2s;">Group C</button>
                     </div>
                 </div>
-
                 <div style="margin-bottom:18px;">
                     <label id="lang-today-shift-lbl" style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:6px;opacity:0.85;">دەوام:</label>
                     <div style="display:flex;gap:10px;">
@@ -345,19 +287,15 @@
                         <button onclick="selectTodayShift('evening')" id="tsbtn-evening" style="flex:1;padding:11px;border-radius:12px;border:2px solid rgba(255,255,255,0.3);background:rgba(255,255,255,0.1);color:white;font-family:var(--font);font-weight:700;cursor:pointer;transition:all 0.2s;"><span id="lang-btn-eve">🌙 ئێوارن</span></button>
                     </div>
                 </div>
-
                 <button onclick="saveTodayProfile()" style="width:100%;padding:14px;border-radius:14px;background:rgba(255,255,255,0.22);border:2px solid rgba(255,255,255,0.5);color:white;font-family:var(--font);font-weight:900;font-size:1rem;cursor:pointer;transition:all 0.2s;"><span id="lang-btn-savet">✅ پاشەکەوتکردن و بینینی ئەمڕۆ</span></button>
             </div>
         </div>
-
         <div id="today-main" style="display:none;">
             <div id="today-greeting-box" style="border-radius:20px;padding:22px;margin-bottom:16px;text-align:center;"></div>
             <div id="today-schedule-box"></div>
-            <!-- ✅ ئاگاداری تاقیکردنەوە لە خوارەوەی جەدۆل -->
             <div id="today-exam-alerts" style="margin-top:12px;"></div>
             <button onclick="resetTodayProfile()" style="margin-top:16px;width:100%;padding:12px;border-radius:14px;background:transparent;border:1.5px solid var(--border);color:var(--text-muted);font-family:var(--font);font-size:0.88rem;cursor:pointer;font-weight:600;"><span id="lang-btn-editt">⚙️ گۆڕینی زانیارییەکان</span></button>
         </div>
-
     </div>
 
     <div id="exam-tab" class="semester-content">
