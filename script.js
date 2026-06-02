@@ -188,6 +188,10 @@ function showSection(id) {
     triggerHaptic();
     document.querySelectorAll(".semester-content").forEach(el => el.style.display = "none");
     document.getElementById(id).style.display = "block";
+
+    if (id === 'schedule-tab') initScheduleTab();
+    if (id === 'today-tab') initTodayTab();
+
     window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -300,6 +304,64 @@ const scheduleData = {
     }
 };
 
+function initScheduleTab() {
+    const stored = localStorage.getItem('today_profile');
+    const schedTab = document.getElementById('schedule-tab');
+
+    const oldUI = schedTab.querySelectorAll('.shift-selection, .sem-btn-row, #group-selection');
+
+    let setupContainer = document.getElementById('sched-setup-container');
+    if (!setupContainer) {
+        setupContainer = document.createElement('div');
+        setupContainer.id = 'sched-setup-container';
+        const header = schedTab.querySelector('.section-header');
+        header.parentNode.insertBefore(setupContainer, header.nextSibling);
+    }
+
+    if (stored) {
+        setupContainer.style.display = 'none';
+        oldUI.forEach(el => el.style.display = 'none');
+
+        const p = JSON.parse(stored);
+        renderScheduleDays(p.sem, p.shift, p.group);
+    } else {
+        oldUI.forEach(el => el.style.display = 'none');
+        document.getElementById('daysArea').innerHTML = '';
+        document.getElementById('schedule-box').style.display = 'none';
+        document.getElementById('group-display-title').style.display = 'none';
+
+        const setupForm = document.getElementById('today-setup');
+        setupForm.style.display = 'block';
+        setupContainer.appendChild(setupForm);
+        setupContainer.style.display = 'block';
+    }
+}
+
+function renderScheduleDays(sem, shift, group) {
+    currentSem = sem;
+    currentShift = shift;
+    
+    document.getElementById('group-display-title').style.display = 'block';
+
+    const shiftText = shift==='morning' ? (currentLang==='en'?'Morning':'بەیانیان') : (currentLang==='en'?'Evening':'ئێوارن');
+    const colors = {A:'#3b82f6',B:'#10b981',C:'#f59e0b'};
+    
+    document.getElementById('group-display-title').innerHTML = 
+        `${shiftText} - سمستەری ${sem} - <span style="color:${colors[group]}">گرووپی ${group}</span>`;
+
+    const dn = currentLang==='en'?['Sunday','Monday','Tuesday','Wednesday']:['یەکشەممە','دووشەممە','سێشەممە','چوارشەممە'];
+    const dayColors = ['#8b5cf6','#3b82f6','#10b981','#d97706'];
+
+    document.getElementById('daysArea').innerHTML = dn.map((n,i)=>
+        `<button class="tab-btn" style="background:${dayColors[i]};color:white;border:none;margin:4px;" onclick="selectDay('${group}',${i+1},'${n}')">${n}</button>`
+    ).join('');
+
+    document.getElementById('daysArea').innerHTML += `<br><button onclick="resetTodayProfile();" style="margin-top:16px;padding:10px 20px;border-radius:14px;background:transparent;border:1.5px solid var(--border);color:var(--text-muted);font-family:var(--font);font-size:0.85rem;cursor:pointer;font-weight:600;">⚙️ گۆڕینی زانیارییەکان</button>`;
+
+    document.getElementById('schedule-box').style.display = 'none';
+    document.getElementById('schedule-body').innerHTML = '';
+}
+
 function setSem(s) {
     triggerHaptic();
     currentSem = s;
@@ -345,7 +407,9 @@ function selectDay(g, d, dayName) {
     const body = document.getElementById('schedule-body'); if(!body) return; body.innerHTML='';
     const colors = {A:'#3b82f6',B:'#10b981',C:'#f59e0b'};
     const shiftText = currentShift==='morning'?(currentLang==='en'?'Morning':'بەیانیان'):(currentLang==='en'?'Evening':'ئێوارن');
-    document.getElementById('group-display-title').innerHTML = `سمستەر ${currentSem} - ${shiftText} - <span style="color:${colors[g]}">Group ${g}</span> - ${dayName}`;
+    
+    document.getElementById('group-display-title').innerHTML = `${shiftText} - سمستەری ${currentSem} - <span style="color:${colors[g]}">گرووپی ${g}</span> - ڕۆژی ${dayName}`;
+    
     const subjectColors={'Logic Design':'#ef4444','English':'#f59e0b','IT Fundamentals':'#10b981','Mathematics':'#8b5cf6','Kurdology':'#475569','Web Programming':'#3b82f6','O.O.P':'#8b5cf6','Database Management':'#d97706','Database':'#d97706','Operating System':'#ef4444','Computer Network II':'#10b981','English II':'#f59e0b','Network +':'#3b82f6','Programming':'#8b5cf6','Web Design':'#14b8a6','Web Programming II':'#3b82f6','Visual Programming':'#8b5cf6','Mobile Application':'#d97706','Information Security':'#ef4444','Project':'#10b981'};
     if (scheduleData[currentShift]?.[currentSem]?.[g]?.[d]) {
         const lessons = scheduleData[currentShift][currentSem][g][d];
@@ -846,11 +910,20 @@ function saveTodayProfile() {
     if(!todayGender)   { showToast(currentLang==='en'?'Please select gender':'تکایە ڕەگەزت دیاری بکە', '⚠️'); return; }
     if(!todayGroup)    { showToast(currentLang==='en'?'Please select group':'تکایە گرووپت هەڵبژێرە', '⚠️'); return; }
     if(!todayShiftSel) { showToast(currentLang==='en'?'Please select shift':'تکایە دەوامت هەڵبژێرە', '⚠️'); return; }
+    
     const profile = { name, gender: todayGender, sem, group: todayGroup, shift: todayShiftSel };
     localStorage.setItem('today_profile', JSON.stringify(profile));
+    
     showToast(currentLang==='en'?'Profile Saved! ✨':'زانیارییەکانت پاشەکەوت کرا! ✨', '✅');
-    renderTodayMain();
-    scheduleClassAlerts();
+    
+    setTimeout(() => {
+        if (document.getElementById('schedule-tab').style.display === 'block') {
+            initScheduleTab();
+        } else {
+            renderTodayMain();
+        }
+        scheduleClassAlerts();
+    }, 600);
 }
 
 function resetTodayProfile() {
@@ -858,8 +931,7 @@ function resetTodayProfile() {
     localStorage.removeItem('today_profile');
     classAlertTimeouts.forEach(clearTimeout);
     classAlertTimeouts = [];
-    document.getElementById('today-setup').style.display = 'block';
-    document.getElementById('today-main').style.display  = 'none';
+    
     todayGender = null; todayGroup = null; todayShiftSel = null;
     ['male','female'].forEach(x => {
         const b = document.getElementById('gbtn-'+x);
@@ -873,6 +945,13 @@ function resetTodayProfile() {
         const b = document.getElementById('tsbtn-'+x);
         if(b) { b.style.background='rgba(255,255,255,0.1)'; b.style.border='2px solid rgba(255,255,255,0.3)'; b.style.transform='scale(1)'; }
     });
+
+    if (document.getElementById('schedule-tab').style.display === 'block') {
+        initScheduleTab();
+    } else {
+        document.getElementById('today-setup').style.display = 'block';
+        document.getElementById('today-main').style.display  = 'none';
+    }
 }
 
 function getTodayGreeting(name, gender) {
@@ -1043,6 +1122,11 @@ function renderTodayMain() {
 }
 
 function initTodayTab() {
+    const setupForm = document.getElementById('today-setup');
+    const todayTab = document.getElementById('today-tab');
+    const todayMain = document.getElementById('today-main');
+    todayTab.insertBefore(setupForm, todayMain);
+
     const stored = localStorage.getItem('today_profile');
     if(stored) {
         const p = JSON.parse(stored);
