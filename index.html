@@ -26,14 +26,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Changa:wght@800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-
-    <!-- ستایلی زیاتی بۆ AI chat slideUp animation -->
-    <style>
-        @keyframes slideUp {
-            from { transform: translateY(100%); }
-            to   { transform: translateY(0); }
-        }
-    </style>
 </head>
 <body>
 
@@ -127,22 +119,22 @@
             <div class="theme-card-preview"><span style="background:#115e59"></span><span style="background:#f59e0b"></span><span style="background:#f0fdfa"></span></div>
             <div class="theme-card-label">🩵 ڕووکاری دەریایی</div>
         </div>
-        <div class="theme-card" id="tc-aurora" onclick="applyTheme('aurora')">
-            <div class="theme-card-preview"><span style="background:#1a0533"></span><span style="background:#3d1278"></span><span style="background:#00d4aa"></span></div>
-            <div class="theme-card-label">🌌 شەپۆلی ئۆرۆرا</div>
-        </div>
-        <div class="theme-card" id="tc-sunset" onclick="applyTheme('sunset')">
-            <div class="theme-card-preview"><span style="background:#c2410c"></span><span style="background:#dc2626"></span><span style="background:#fef9ed"></span></div>
-            <div class="theme-card-label">🌅 خۆرئاوابوونی زێڕین</div>
-        </div>
-        <div class="theme-card" id="tc-cyber" onclick="applyTheme('cyber')">
-            <div class="theme-card-preview"><span style="background:#050510"></span><span style="background:#00fff0"></span><span style="background:#ff00aa"></span></div>
-            <div class="theme-card-label">⚡ تەکنەلۆژیای داهاتوو</div>
-        </div>
-        <div class="theme-card" id="tc-golden" onclick="applyTheme('golden')">
-            <div class="theme-card-preview"><span style="background:#78350f"></span><span style="background:#ca8a04"></span><span style="background:#fdfaf3"></span></div>
-            <div class="theme-card-label">✨ ڕەونەقی زێڕ</div>
-        </div>
+       <div class="theme-card" id="tc-aurora" onclick="applyTheme('aurora')">
+    <div class="theme-card-preview"><span style="background:#1a0533"></span><span style="background:#3d1278"></span><span style="background:#00d4aa"></span></div>
+    <div class="theme-card-label">🌌 شەپۆلی ئۆرۆرا</div>
+</div>
+<div class="theme-card" id="tc-sunset" onclick="applyTheme('sunset')">
+    <div class="theme-card-preview"><span style="background:#c2410c"></span><span style="background:#dc2626"></span><span style="background:#fef9ed"></span></div>
+    <div class="theme-card-label">🌅 خۆرئاوابوونی زێڕین</div>
+</div>
+<div class="theme-card" id="tc-cyber" onclick="applyTheme('cyber')">
+    <div class="theme-card-preview"><span style="background:#050510"></span><span style="background:#00fff0"></span><span style="background:#ff00aa"></span></div>
+    <div class="theme-card-label">⚡ تەکنەلۆژیای داهاتوو</div>
+</div>
+<div class="theme-card" id="tc-golden" onclick="applyTheme('golden')">
+    <div class="theme-card-preview"><span style="background:#78350f"></span><span style="background:#ca8a04"></span><span style="background:#fdfaf3"></span></div>
+    <div class="theme-card-label">✨ ڕەونەقی زێڕ</div>
+</div>
     </div>
     <hr style="border:0;border-top:1.5px solid var(--border);margin:16px 0;">
     <div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:12px;font-weight:600;">تروسکەی ئەستێرەکان</div>
@@ -166,9 +158,7 @@
     <a href="#" onclick="showSection('semesters-tab'); setActiveNav('bnav-semesters'); closeNav()"><span id="lang-semesters">٢ · 📚 سمستەرەکان</span></a>
     <a href="#" onclick="showSection('exam-tab'); setActiveNav('bnav-exam'); closeNav(); checkExams();"><span id="lang-menu-exam">٣ · ⏳ کاتی تاقیکردنەوە</span></a>
     <a href="#" onclick="showSection('gpa-tab'); setActiveNav('bnav-gpa'); closeNav()"><span id="lang-menu-gpa">٤ · 🧮 هەژمارکردنی نمرە</span></a>
-    <!-- ✅ زیادکراو: لینکی AI -->
-    <a href="#" onclick="showSection('ai-chat-tab'); setActiveNav('bnav-ai'); closeNav()" style="color:#fbbf24;"><span id="lang-side-ai">٥ · 🤖 یاریدەری زیرەک (AI)</span></a>
-    <a href="#" onclick="showSection('about-tab'); setActiveNav('bnav-about'); closeNav()"><span id="lang-about">٦ · ℹ️ دەربارە</span></a>
+    <a href="#" onclick="showSection('about-tab'); setActiveNav('bnav-about'); closeNav()"><span id="lang-about">٥ · ℹ️ دەربارە</span></a>
     <a href="#" onclick="openThemePanel(); closeNav()"><span id="lang-side-theme">🎨 ڕووکار و دیزاین</span></a>
     <a href="#" onclick="toggleLangMenu()" style="justify-content:space-between;">
         <span>🌐 <span id="lang-setting">زمان</span></span>
@@ -245,11 +235,6 @@
                     <div class="info-card">
                         <div class="info-card-icon">🎨</div>
                         <div><div class="info-card-title" id="lang-c7-t">٥ · ڕووکار و دیزاین</div><p id="lang-c7-d">گۆڕینی ڕەنگ و تروسکەی ئەستێرە</p></div>
-                    </div>
-                    <!-- ✅ زیادکراو: کارتی AI -->
-                    <div class="info-card" onclick="showSection('ai-chat-tab'); setActiveNav('bnav-ai');" style="cursor:pointer;border-color:var(--secondary);grid-column:1/-1;">
-                        <div class="info-card-icon">🤖</div>
-                        <div><div class="info-card-title" id="lang-c8-t" style="color:var(--secondary);">٦ · یاریدەری زیرەک (AI)</div><p id="lang-c8-d">پرسیارەکانت بکە — AI وەڵامت دەداتەوە</p></div>
                     </div>
                 </div>
                 <div class="hero-thanks">
@@ -456,15 +441,6 @@
         </div>
     </div>
 
-    <!-- ✅ زیادکراو: تابی AI Chat -->
-    <div id="ai-chat-tab" class="semester-content">
-        <div class="section-header">
-            <div class="section-header-icon">🤖</div>
-            <h3>یاریدەری زیرەک (AI)</h3>
-        </div>
-        <!-- initAIChat() ناوەڕۆکەکە لێرە دروست دەکات -->
-    </div>
-
     <div id="about-tab" class="semester-content">
         <div class="about-card">
             <div class="about-icon">ℹ️</div>
@@ -496,7 +472,6 @@
     </div>
 </footer>
 
-<!-- ✅ زیادکراو: دوگمەی AI لە bottom nav -->
 <nav class="bottom-nav">
     <button class="bnav-item active" id="bnav-home" onclick="showSection('home-tab'); setActiveNav('bnav-home')" aria-label="سەرەکی">
         <span class="bnav-icon">🏠</span>
@@ -520,17 +495,12 @@
     </button>
     <button class="bnav-item" id="bnav-exam" onclick="showSection('exam-tab'); setActiveNav('bnav-exam'); checkExams()" aria-label="تاقیکردنەوە">
         <span class="bnav-icon">⏳</span>
-        <span class="bnav-label" id="bnav-label-exam">تاقیکردنەوە</span>
+        <span class="bnav-label" id="bnav-label-exam">كاتی تاقیکردنەوە</span>
         <span class="bnav-dot"></span>
     </button>
     <button class="bnav-item" id="bnav-gpa" onclick="showSection('gpa-tab'); setActiveNav('bnav-gpa')" aria-label="نمرە">
         <span class="bnav-icon">🧮</span>
         <span class="bnav-label" id="bnav-label-gpa">نمرە</span>
-        <span class="bnav-dot"></span>
-    </button>
-    <button class="bnav-item" id="bnav-ai" onclick="showSection('ai-chat-tab'); setActiveNav('bnav-ai')" aria-label="AI">
-        <span class="bnav-icon">🤖</span>
-        <span class="bnav-label" id="bnav-label-ai">زیرەک</span>
         <span class="bnav-dot"></span>
     </button>
     <button class="bnav-item" id="bnav-about" onclick="showSection('about-tab'); setActiveNav('bnav-about')" aria-label="دەربارە">
