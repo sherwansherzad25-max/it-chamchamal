@@ -1240,7 +1240,6 @@ function aiAddBubble(html, role) {
     return d;
 }
 
-// ئەم فەنکشنە بەتەواوی چاککراوە بۆ کارکردن لەگەڵ Groq بەبێ هیچ کێشەیەک
 async function aiSendMsg() {
     if(aiIsLoading || !aiProfile) return;
     const inp = document.getElementById('ai-input');
@@ -1257,26 +1256,13 @@ async function aiSendMsg() {
     const thinking = aiAddBubble('<em style="opacity:0.6;font-size:12px;">لە بیرکردنەوەدایە... 🤖</em>', 'bot');
 
     const subs = (AI_SUBJECTS[parseInt(aiProfile.sem)] || []).join(', ');
-    const shiftLabel = aiProfile.shift === 'morning' ? 'بەیانیان' : 'ئێوارن';
-    const title = aiProfile.gender === 'male' ? 'کاک' : 'خاتوو';
+    const systemPrompt = `تۆ یاریدەری زیرەکی بەشی IT پەیمانگای تەکنیکی چەمچەماڵیت. بە کوردییەکی پاراو وەڵامی خوێندکار ${aiProfile.name} بدەرەوە.`;
 
-    const systemPrompt = `تۆ یاریدەری زیرەکی تایبەت بە خوێندکارانی بەشی IT پەیمانگای تەکنیکی چەمچەماڵیت.
-ناوی خوێندکار: ${title} ${aiProfile.name}
-سمستەر: ${aiProfile.sem}
-وانەکان: ${subs}
-پێویستە بە کوردییەکی پاراو و ڕوون وەڵام بدەیتەوە. یارمەتی خوێندکارەکە بدە لە وانەکانی.`;
-
-    const GROQ_API_KEY = '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'; 
-
-    let formattedMessages = [
-        { role: 'system', content: systemPrompt },
-        ...aiMessages
-    ];
+    // کلیلەکەت لێرە دابنێ
+    const GROQ_API_KEY = ''; 
 
     try {
-        const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent('https://api.groq.com/openai/v1/chat/completions');
-        
-        const res = await fetch(proxyUrl, {
+        const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
             method: 'POST',
             headers: { 
                 'Content-Type': 'application/json',
@@ -1284,36 +1270,26 @@ async function aiSendMsg() {
             },
             body: JSON.stringify({
                 model: 'llama3-70b-8192',
-                messages: formattedMessages,
-                temperature: 0.7,
-                max_tokens: 800
+                messages: [{ role: 'system', content: systemPrompt }, ...aiMessages],
+                temperature: 0.7
             })
         });
 
-        const data = await res.json();
+        const data = await response.json();
         
-        if (data.error) {
-            throw new Error(data.error.message || "هەڵەیەک لە سێرڤەرەوە هەیە");
-        }
+        if (data.error) throw new Error(data.error.message);
 
         const reply = data.choices[0].message.content;
         aiMessages.push({ role: 'assistant', content: reply });
         
-        if(thinking) {
-            const bbl = thinking.querySelector('div');
-            let formattedReply = reply.replace(/\n/g, '<br>');
-            formattedReply = formattedReply.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-            if(bbl) bbl.innerHTML = formattedReply;
-        }
+        const bbl = thinking.querySelector('div');
+        if(bbl) bbl.innerHTML = reply.replace(/\n/g, '<br>');
+        
     } catch(e) {
-        if(thinking) {
-            const bbl = thinking.querySelector('div');
-            if(bbl) bbl.innerHTML = `<span style="color:#ef4444;font-weight:bold;">⚠️ کێشەیەک ڕووی دا:</span><br><br><span style="font-size:12px;opacity:0.8;font-family:sans-serif;" dir="ltr">${e.message}</span>`;
-        }
+        const bbl = thinking.querySelector('div');
+        if(bbl) bbl.innerHTML = `<span style="color:#ef4444;">⚠️ هەڵە: ${e.message}</span>`;
     }
 
     aiIsLoading = false;
     if(sendBtn) sendBtn.disabled = false;
-    const msgs = document.getElementById('ai-msgs');
-    if(msgs) msgs.scrollTop = msgs.scrollHeight;
 }
