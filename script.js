@@ -71,6 +71,7 @@ const translations = {
         dept:"بەشی ئایتی",menu:"لیست",institute:"پەیمانگای تەکنیکی چەمچەماڵ",deptSub:"بەشی تەکنەلۆژیای زانیاری (IT)",
         home:"🏠 سەرەکی",schedule:"📅 خشتەی هەفتانە",semesters:"📚 سمستەرەکان",about:"ℹ️ دەربارە",contact:"📞 پەیوەندی (Telegram)",setting:"زمان",alert:"🚨 ئاگاداری",
         sideTheme: "🎨 ڕووکار و دیزاین",
+        sideAI: "🤖 یاریدەری زیرەک (AI)",
         welcomeTitle:"بەخێربێن خوێندکارانی بەشی تەکنەلۆژیای زانیاری (IT)",
         welcomeText:'بۆ گەیشتن بە هەر بەشێک، کرتەی <span class="hero-highlight" style="color: #fbbf24; text-shadow: 0 0 10px rgba(251,191,36,0.4);">" لیست "</span> بکە لە سەرەوە. ئەم بەشانەت بۆ ئامادەکراوە:',
         semTitle:"بەشی سمستەرەکان:",semDesc1:"مەلزەمە، پرسیار، و فێرکاری بۆ هەموو وانەکان",
@@ -88,7 +89,8 @@ const translations = {
         c3t:"٢ · سمستەرەکان",c3d:"مەلزەمە، پرسیار و فێرکاری ڤیدیۆیی",
         c4t:"٣ · کاتی تاقیکردنەوە",c4d:"کاتژمێری ماوەی تاقیکردنەوە",c5t:"٤ · هەژمارکردنی نمرە",c5d:"کۆی نمرەکانت بزانە",
         c7t:"٥ · ڕووکار و دیزاین",c7d:"گۆڕینی ڕەنگ و تروسکەی ئەستێرە",
-        navHome:"سەرەکی",navToday:"ئەمڕۆی من",navSch:"خشتە",navSem:"سمستەر",navExm:"كاتی تاقیکردنەوە",navGpa:"نمرە",navAbt:"دەربارە",
+        c8t:"٦ · یاریدەری زیرەک",c8d:"پرسیارەکانت بکە — AI وەڵامت دەداتەوە",
+        navHome:"سەرەکی",navToday:"ئەمڕۆی من",navSch:"خشتە",navSem:"سمستەر",navExm:"كاتی تاقیکردنەوە",navGpa:"نمرە",navAbt:"دەربارە",navAI:"زیرەک",
         tSetupT:"ئەمڕۆی من",tSetupD:"تکایە زانیارییەکانت بنووسە تا وانەکانی ئەمڕۆت بۆ ئامادە بکەم:",
         tNameL:"ناوت:",tNameP:"ناوت بنووسە...",tGenL:"ڕەگەز:",tSemL:"سمستەر:",tGrpL:"گرووپ:",tShiftL:"دەوام:",
         bMale:"👨 کوڕ",bFem:"👧 کچ",bMorn:"☀️ بەیانیان",bEve:"🌙 ئێوارن",bSaveT:"✅ پاشەکەوتکردن و بینینی ئەمڕۆ",bEditT:"⚙️ گۆڕینی زانیارییەکان"
@@ -97,6 +99,7 @@ const translations = {
         dept:"IT Department",menu:"Menu",institute:"Chamchamal Technical Institute",deptSub:"Information Technology (IT) Dept.",
         home:"🏠 Home",schedule:"📅 Weekly Schedule",semesters:"📚 Semesters",about:"ℹ️ About",contact:"📞 Contact (Telegram)",setting:"Language",alert:"🚨 Notice",
         sideTheme: "🎨 Themes & Design",
+        sideAI: "🤖 AI Assistant",
         welcomeTitle:"Welcome to IT Department – Chamchamal Technical Institute",
         welcomeText:'Click <span class="hero-highlight" style="color: #fbbf24; text-shadow: 0 0 10px rgba(251,191,36,0.4);">" Menu "</span> above to access any section. Available sections:',
         semTitle:"Semesters:",semDesc1:"Lecture notes, past questions, and tutorial videos for all subjects",
@@ -114,7 +117,8 @@ const translations = {
         c3t:"2 · Semesters",c3d:"Notes, past questions and video tutorials",
         c4t:"3 · Exam Time",c4d:"Remaining exam countdown",c5t:"4 · GPA Calculator",c5d:"Calculate your total grades",
         c7t:"5 · Themes & Design",c7d:"Change colors and star animations",
-        navHome:"Home",navToday:"My Today",navSch:"Schedule",navSem:"Semester",navExm:"Exams",navGpa:"Grades",navAbt:"About",
+        c8t:"6 · AI Assistant",c8d:"Ask questions — AI answers you",
+        navHome:"Home",navToday:"My Today",navSch:"Schedule",navSem:"Semester",navExm:"Exams",navGpa:"Grades",navAbt:"About",navAI:"AI",
         tSetupT:"My Today",tSetupD:"Please enter your info to prepare today's classes:",
         tNameL:"Name:",tNameP:"Enter your name...",tGenL:"Gender:",tSemL:"Semester:",tGrpL:"Group:",tShiftL:"Shift:",
         bMale:"👨 Male",bFem:"👧 Female",bMorn:"☀️ Morning",bEve:"🌙 Evening",bSaveT:"✅ Save & View Today",bEditT:"⚙️ Change Information"
@@ -130,7 +134,7 @@ function toggleLanguage(lang) {
     const map = {
         'lang-dept':t.dept,'lang-menu':t.menu,'lang-institute':t.institute,'lang-dept-sub':t.deptSub,
         'lang-home':t.home,'lang-schedule':t.schedule,'lang-semesters':t.semesters,'lang-about':t.about,'lang-contact':t.contact,
-        'lang-setting':t.setting,'lang-alert':t.alert,'lang-side-theme':t.sideTheme,
+        'lang-setting':t.setting,'lang-alert':t.alert,'lang-side-theme':t.sideTheme,'lang-side-ai':t.sideAI,
         'lang-welcome-title':t.welcomeTitle,
         'lang-sched-header':t.schedHeader,'lang-morning':t.morning,'lang-evening':t.evening,
         'lang-sem-btn1':t.semBtn1,'lang-sem-btn2':t.semBtn2,'lang-sem-btn3':t.semBtn3,'lang-sem-btn4':t.semBtn4,
@@ -141,8 +145,8 @@ function toggleLanguage(lang) {
         'lang-menu-exam':t.menuExam,'lang-menu-gpa':t.menuGpa,'lang-exam-header':t.examHeader,'lang-gpa-header':t.gpaHeader,
         'lang-c1-t':t.c1t,'lang-c1-d':t.c1d,'lang-c2-t':t.c2t,'lang-c2-d':t.c2d,
         'lang-c3-t':t.c3t,'lang-c3-d':t.c3d,'lang-c4-t':t.c4t,'lang-c4-d':t.c4d,'lang-c5-t':t.c5t,'lang-c5-d':t.c5d,
-        'lang-c7-t':t.c7t,'lang-c7-d':t.c7d,
-        'bnav-label-home':t.navHome,'bnav-label-today':t.navToday,'bnav-label-schedule':t.navSch,'bnav-label-semesters':t.navSem,'bnav-label-exam':t.navExm,'bnav-label-gpa':t.navGpa,'bnav-label-about':t.navAbt,
+        'lang-c7-t':t.c7t,'lang-c7-d':t.c7d,'lang-c8-t':t.c8t,'lang-c8-d':t.c8d,
+        'bnav-label-home':t.navHome,'bnav-label-today':t.navToday,'bnav-label-schedule':t.navSch,'bnav-label-semesters':t.navSem,'bnav-label-exam':t.navExm,'bnav-label-gpa':t.navGpa,'bnav-label-about':t.navAbt,'bnav-label-ai':t.navAI,
         'lang-today-setup-title':t.tSetupT,'lang-today-setup-desc':t.tSetupD,'lang-today-name-lbl':t.tNameL,'lang-today-gen-lbl':t.tGenL,
         'lang-today-sem-lbl':t.tSemL,'lang-today-grp-lbl':t.tGrpL,'lang-today-shift-lbl':t.tShiftL,
         'lang-btn-male':t.bMale,'lang-btn-female':t.bFem,'lang-btn-morn':t.bMorn,'lang-btn-eve':t.bEve,
@@ -191,6 +195,7 @@ function showSection(id) {
 
     if (id === 'schedule-tab') initScheduleTab();
     if (id === 'today-tab') initTodayTab();
+    if (id === 'ai-chat-tab') initAIChat();
 
     window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -307,9 +312,7 @@ const scheduleData = {
 function initScheduleTab() {
     const stored = localStorage.getItem('today_profile');
     const schedTab = document.getElementById('schedule-tab');
-
     const oldUI = schedTab.querySelectorAll('.shift-selection, .sem-btn-row, #group-selection');
-
     let setupContainer = document.getElementById('sched-setup-container');
     if (!setupContainer) {
         setupContainer = document.createElement('div');
@@ -317,11 +320,9 @@ function initScheduleTab() {
         const header = schedTab.querySelector('.section-header');
         header.parentNode.insertBefore(setupContainer, header.nextSibling);
     }
-
     if (stored) {
         setupContainer.style.display = 'none';
         oldUI.forEach(el => el.style.display = 'none');
-
         const p = JSON.parse(stored);
         renderScheduleDays(p.sem, p.shift, p.group);
     } else {
@@ -329,7 +330,6 @@ function initScheduleTab() {
         document.getElementById('daysArea').innerHTML = '';
         document.getElementById('schedule-box').style.display = 'none';
         document.getElementById('group-display-title').style.display = 'none';
-
         const setupForm = document.getElementById('today-setup');
         setupForm.style.display = 'block';
         setupContainer.appendChild(setupForm);
@@ -340,24 +340,17 @@ function initScheduleTab() {
 function renderScheduleDays(sem, shift, group) {
     currentSem = sem;
     currentShift = shift;
-    
     document.getElementById('group-display-title').style.display = 'block';
-
     const shiftText = shift==='morning' ? (currentLang==='en'?'Morning':'بەیانیان') : (currentLang==='en'?'Evening':'ئێوارن');
     const colors = {A:'#3b82f6',B:'#10b981',C:'#f59e0b'};
-    
-    document.getElementById('group-display-title').innerHTML = 
+    document.getElementById('group-display-title').innerHTML =
         `${shiftText} - سمستەری ${sem} - <span style="color:${colors[group]}">گرووپی ${group}</span>`;
-
     const dn = currentLang==='en'?['Sunday','Monday','Tuesday','Wednesday']:['یەکشەممە','دووشەممە','سێشەممە','چوارشەممە'];
     const dayColors = ['#8b5cf6','#3b82f6','#10b981','#d97706'];
-
     document.getElementById('daysArea').innerHTML = dn.map((n,i)=>
         `<button class="tab-btn" style="background:${dayColors[i]};color:white;border:none;margin:4px;" onclick="selectDay('${group}',${i+1},'${n}')">${n}</button>`
     ).join('');
-
     document.getElementById('daysArea').innerHTML += `<br><button onclick="resetTodayProfile();" style="margin-top:16px;padding:10px 20px;border-radius:14px;background:transparent;border:1.5px solid var(--border);color:var(--text-muted);font-family:var(--font);font-size:0.85rem;cursor:pointer;font-weight:600;">⚙️ گۆڕینی زانیارییەکان</button>`;
-
     document.getElementById('schedule-box').style.display = 'none';
     document.getElementById('schedule-body').innerHTML = '';
 }
@@ -407,9 +400,7 @@ function selectDay(g, d, dayName) {
     const body = document.getElementById('schedule-body'); if(!body) return; body.innerHTML='';
     const colors = {A:'#3b82f6',B:'#10b981',C:'#f59e0b'};
     const shiftText = currentShift==='morning'?(currentLang==='en'?'Morning':'بەیانیان'):(currentLang==='en'?'Evening':'ئێوارن');
-    
     document.getElementById('group-display-title').innerHTML = `${shiftText} - سمستەری ${currentSem} - <span style="color:${colors[g]}">گرووپی ${g}</span> - ڕۆژی ${dayName}`;
-    
     const subjectColors={'Logic Design':'#ef4444','English':'#f59e0b','IT Fundamentals':'#10b981','Mathematics':'#8b5cf6','Kurdology':'#475569','Web Programming':'#3b82f6','O.O.P':'#8b5cf6','Database Management':'#d97706','Database':'#d97706','Operating System':'#ef4444','Computer Network II':'#10b981','English II':'#f59e0b','Network +':'#3b82f6','Programming':'#8b5cf6','Web Design':'#14b8a6','Web Programming II':'#3b82f6','Visual Programming':'#8b5cf6','Mobile Application':'#d97706','Information Security':'#ef4444','Project':'#10b981'};
     if (scheduleData[currentShift]?.[currentSem]?.[g]?.[d]) {
         const lessons = scheduleData[currentShift][currentSem][g][d];
@@ -507,11 +498,9 @@ async function checkExams() {
         const r = await fetch(url, { cache: "no-store" });
         const csvText = await r.text();
         const rows = csvText.split(/\r?\n/).slice(1);
-
         examIntervals.forEach(clearInterval);
         examIntervals = [];
         if(container) container.innerHTML = "";
-
         let activeExams = [];
         rows.forEach(row => {
             let columns = row.split(',');
@@ -539,9 +528,7 @@ async function checkExams() {
                 }
             }
         });
-
         activeExams.sort((a, b) => a.dateObj - b.dateObj);
-
         if(activeExams.length > 0) {
             activeExams.forEach(exam => {
                 const divId = "timer-" + Math.random().toString(36).substr(2, 9);
@@ -554,7 +541,6 @@ async function checkExams() {
         } else {
             if(container) container.innerHTML = `<h3 style='text-align:center;opacity:0.5;color:var(--text);'>${currentLang==='en'?'No upcoming exams':'هیچ تاقیکردنەوەیەک نییە'}</h3>`;
         }
-
         let alertContainer = document.getElementById('today-exam-alerts');
         if (alertContainer) {
             if (activeExams.length > 0) {
@@ -562,31 +548,14 @@ async function checkExams() {
                 activeExams.forEach(exam => {
                     const diffTime = Math.abs(exam.dateObj - new Date());
                     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                    let timeText = diffDays === 1
-                        ? (currentLang==='en'?"Tomorrow":"سبەی")
-                        : diffDays === 0
-                            ? (currentLang==='en'?"Today":"ئەمڕۆ")
-                            : (currentLang==='en'?`${diffDays} days left`:`ماوە: ${diffDays} ڕۆژ`);
-                    alertsHTML += `
-                    <div style="
-                        display:flex;align-items:center;gap:8px;
-                        background:rgba(220,38,38,0.08);
-                        border:1px solid rgba(220,38,38,0.25);
-                        border-radius:10px;padding:8px 12px;
-                        margin-bottom:6px;
-                    ">
-                        <span style="font-size:0.9rem;flex-shrink:0;">⚠️</span>
-                        <span style="color:#dc2626;font-weight:700;font-size:0.78rem;flex-shrink:0;">${currentLang==='en'?'Exam:':'تاقیکردنەوە:'}</span>
-                        <span style="font-weight:600;font-size:0.78rem;color:var(--text);flex:1;">${exam.Title}</span>
-                        <span style="background:#dc2626;color:white;padding:2px 8px;border-radius:20px;font-size:0.7rem;font-weight:700;flex-shrink:0;white-space:nowrap;">${timeText}</span>
-                    </div>`;
+                    let timeText = diffDays === 1 ? (currentLang==='en'?"Tomorrow":"سبەی") : diffDays === 0 ? (currentLang==='en'?"Today":"ئەمڕۆ") : (currentLang==='en'?`${diffDays} days left`:`ماوە: ${diffDays} ڕۆژ`);
+                    alertsHTML += `<div style="display:flex;align-items:center;gap:8px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.25);border-radius:10px;padding:8px 12px;margin-bottom:6px;"><span style="font-size:0.9rem;flex-shrink:0;">⚠️</span><span style="color:#dc2626;font-weight:700;font-size:0.78rem;flex-shrink:0;">${currentLang==='en'?'Exam:':'تاقیکردنەوە:'}</span><span style="font-weight:600;font-size:0.78rem;color:var(--text);flex:1;">${exam.Title}</span><span style="background:#dc2626;color:white;padding:2px 8px;border-radius:20px;font-size:0.7rem;font-weight:700;flex-shrink:0;white-space:nowrap;">${timeText}</span></div>`;
                 });
                 alertContainer.innerHTML = alertsHTML;
             } else {
                 alertContainer.innerHTML = '';
             }
         }
-
     } catch(e) { console.error("Error fetching exams:", e); }
 }
 
@@ -624,7 +593,6 @@ function calcSub(sem,idx, isLoading = false) {
     let msg="";
     let hasReached25 = false;
     let hasReached50Final = false;
-
     if(current>50) msg=currentLang==='en'?"<b style='color:#ef4444'>Error! Score exceeds 50.</b>":"<b style='color:#ef4444'>هەڵە! کۆی سەعی نابێت لە ٥٠ زیاتر بێت.</b>";
     else if(f!==null&&f>50) msg=currentLang==='en'?"<b style='color:#ef4444'>Error! Final exceeds 50.</b>":"<b style='color:#ef4444'>هەڵە! نمرەی فایناڵ نابێت لە ٥٠ زیاتر بێت.</b>";
     else {
@@ -633,12 +601,10 @@ function calcSub(sem,idx, isLoading = false) {
         let missing=[];
         if(d===null)missing.push(currentLang==='en'?"Daily":"ڕۆژانە");if(a===null)missing.push(currentLang==='en'?"Absence":"نەهاتن");if(q===null)missing.push(currentLang==='en'?"Quiz":"کویز");if(r===null)missing.push(currentLang==='en'?"Report":"ڕاپۆرت");if(m===null)missing.push(currentLang==='en'?"Midterm":"میدتێرم");
         if(missing.length>0&&current<50) msg+=`<div style="color:#d97706;font-size:0.82rem;margin-top:4px;font-weight:600;">💡 ${currentLang==='en'?'Try getting marks in':'هەوڵبدە لە'} (${missing.join(currentLang==='en'?' and ':' و ')}) ${currentLang==='en'?'':'نمرە بەدەست بهێنیت'}</div>`;
-
         if(current<25) msg+=`<br><span style="color:#ef4444;font-weight:800;">⚠️ ${currentLang==='en'?'Danger! Score is very low.':'مەترسی! نمرەی سەعیت زۆر کەمە.'}</span>`;
         else if(current<35) { msg+=`<br><span style="color:#d97706;">${currentLang==='en'?'Good, but still at risk.':'باشە، بەڵام هێشتا مەترسی هەیە.'}</span>`; if(current >= 25) hasReached25 = true; }
         else if(current<50) { msg+=`<br><span style="color:#059669;font-weight:700;">🌟 ${currentLang==='en'?'Excellent!':'ئاستت نایابە!'}</span>`; if(current >= 25) hasReached25 = true; }
         else { msg+=`<br><span style="color:#10b981;font-weight:700;">🏆 ${currentLang==='en'?'Perfect effort! Only final left.':'سەعی تەواو! تەنها فایناڵ ماوە.'}</span>`; if(current >= 25) hasReached25 = true; }
-
         if(f!==null) {
             let final=current+f;
             let lblFinTotal = currentLang==='en'?"Overall Score:":"کۆی گشتی:";
@@ -651,7 +617,6 @@ function calcSub(sem,idx, isLoading = false) {
     const sd=document.getElementById(`status-${sem}-${idx}`);
     if(sd) { sd.innerHTML=msg; }
     if(sd) { const p=sd.closest('.panel'); if(p && p.style.maxHeight) p.style.maxHeight=p.scrollHeight+"px"; }
-
     if (!isLoading) {
         saveGrades();
         const lastScore25 = sessionStorage.getItem(`confetti_25_${sem}_${idx}`);
@@ -764,17 +729,13 @@ let classAlertTimeouts = [];
 function scheduleClassAlerts() {
     classAlertTimeouts.forEach(clearTimeout);
     classAlertTimeouts = [];
-
     const stored = localStorage.getItem('today_profile');
     if (!stored) return;
     const p = JSON.parse(stored);
-
     const dayIdx = getTodayDayIndex();
     if (dayIdx === null) return;
-
     const lessons = scheduleData[p.shift]?.[parseInt(p.sem)]?.[p.group]?.[dayIdx];
     if (!lessons || lessons.length === 0) return;
-
     lessons.forEach(r => {
         const cleanTime = r[2].replace(/AM|PM/i, '').trim();
         const timeParts = cleanTime.split(':');
@@ -784,53 +745,28 @@ function scheduleClassAlerts() {
         const isAM = r[2].toUpperCase().includes('AM');
         if (isPM && h < 12) h += 12;
         if (isAM && h === 12) h = 0;
-        if (!isPM && !isAM) {
-            if (p.shift === 'evening' && h < 12) h += 12;
-        }
-
+        if (!isPM && !isAM) { if (p.shift === 'evening' && h < 12) h += 12; }
         const alertTime = new Date();
         alertTime.setHours(h, m - 5, 0, 0);
-
         const now = new Date();
         const diff = alertTime.getTime() - now.getTime();
-
         if (diff > 0) {
-            const timeout = setTimeout(() => {
-                sendClassNotification(r[1], r[2]);
-            }, diff);
+            const timeout = setTimeout(() => { sendClassNotification(r[1], r[2]); }, diff);
             classAlertTimeouts.push(timeout);
         }
     });
 }
 
 function sendClassNotification(subjectName, classTime) {
-    showToast(
-        currentLang === 'en'
-            ? `⏰ 5 min left: ${subjectName}`
-            : `⏰ ٥ خولەک ماوە: ${subjectName}`,
-        '📚'
-    );
-
+    showToast(currentLang === 'en' ? `⏰ 5 min left: ${subjectName}` : `⏰ ٥ خولەک ماوە: ${subjectName}`, '📚');
     if (Notification.permission === 'granted') {
         const title = currentLang === 'en' ? '⏰ Class in 5 Minutes!' : '⏰ ٥ خولەک ماوە بۆ وانەکەت!';
-        const body  = currentLang === 'en'
-            ? `${subjectName} starts at ${classTime}`
-            : `${subjectName} — دەستپێدەکات لە کاتی ${classTime}`;
-
+        const body  = currentLang === 'en' ? `${subjectName} starts at ${classTime}` : `${subjectName} — دەستپێدەکات لە کاتی ${classTime}`;
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.ready.then(reg => {
-                reg.showNotification(title, {
-                    body:    body,
-                    icon:    'it-icon-final-192.png',
-                    badge:   'it-icon-final-192.png',
-                    tag:     'class-alert-' + subjectName,
-                    vibrate: [200, 100, 200, 100, 200],
-                    requireInteraction: true
-                });
+                reg.showNotification(title, { body, icon: 'it-icon-final-192.png', badge: 'it-icon-final-192.png', tag: 'class-alert-' + subjectName, vibrate: [200, 100, 200, 100, 200], requireInteraction: true });
             });
-        } else {
-            new Notification(title, { body: body, icon: 'it-icon-final-192.png' });
-        }
+        } else { new Notification(title, { body, icon: 'it-icon-final-192.png' }); }
     }
 }
 
@@ -846,10 +782,7 @@ window.addEventListener('load', function () {
         if (savedGPASem) { const sel = document.getElementById('gpa-sem-select'); if(sel) sel.value = savedGPASem; }
         renderGrading();
     } catch(e){}
-    try {
-        const savedTheme = localStorage.getItem('it_theme') || 'classic';
-        applyTheme(savedTheme, true);
-    } catch(e){}
+    try { const savedTheme = localStorage.getItem('it_theme') || 'classic'; applyTheme(savedTheme, true); } catch(e){}
     try {
         const savedStars = localStorage.getItem('it_stars');
         if (savedStars === null || savedStars === '1') applyStarField(true, true);
@@ -871,8 +804,7 @@ function selectGender(g) {
     triggerHaptic();
     todayGender = g;
     ['male','female'].forEach(x => {
-        const b = document.getElementById('gbtn-'+x);
-        if(!b) return;
+        const b = document.getElementById('gbtn-'+x); if(!b) return;
         b.style.background = x===g ? 'rgba(255,255,255,0.35)' : 'rgba(255,255,255,0.1)';
         b.style.border = x===g ? '2px solid white' : '2px solid rgba(255,255,255,0.3)';
         b.style.transform = x===g ? 'scale(1.03)' : 'scale(1)';
@@ -883,8 +815,7 @@ function selectTodayGroup(g) {
     triggerHaptic();
     todayGroup = g;
     ['A','B','C'].forEach(x => {
-        const b = document.getElementById('tgbtn-'+x);
-        if(!b) return;
+        const b = document.getElementById('tgbtn-'+x); if(!b) return;
         b.style.background = x===g ? 'rgba(255,255,255,0.35)' : 'rgba(255,255,255,0.1)';
         b.style.border = x===g ? '2px solid white' : '2px solid rgba(255,255,255,0.3)';
         b.style.transform = x===g ? 'scale(1.03)' : 'scale(1)';
@@ -895,8 +826,7 @@ function selectTodayShift(s) {
     triggerHaptic();
     todayShiftSel = s;
     ['morning','evening'].forEach(x => {
-        const b = document.getElementById('tsbtn-'+x);
-        if(!b) return;
+        const b = document.getElementById('tsbtn-'+x); if(!b) return;
         b.style.background = x===s ? 'rgba(255,255,255,0.35)' : 'rgba(255,255,255,0.1)';
         b.style.border = x===s ? '2px solid white' : '2px solid rgba(255,255,255,0.3)';
         b.style.transform = x===s ? 'scale(1.03)' : 'scale(1)';
@@ -910,18 +840,12 @@ function saveTodayProfile() {
     if(!todayGender)   { showToast(currentLang==='en'?'Please select gender':'تکایە ڕەگەزت دیاری بکە', '⚠️'); return; }
     if(!todayGroup)    { showToast(currentLang==='en'?'Please select group':'تکایە گرووپت هەڵبژێرە', '⚠️'); return; }
     if(!todayShiftSel) { showToast(currentLang==='en'?'Please select shift':'تکایە دەوامت هەڵبژێرە', '⚠️'); return; }
-    
     const profile = { name, gender: todayGender, sem, group: todayGroup, shift: todayShiftSel };
     localStorage.setItem('today_profile', JSON.stringify(profile));
-    
     showToast(currentLang==='en'?'Profile Saved! ✨':'زانیارییەکانت پاشەکەوت کرا! ✨', '✅');
-    
     setTimeout(() => {
-        if (document.getElementById('schedule-tab').style.display === 'block') {
-            initScheduleTab();
-        } else {
-            renderTodayMain();
-        }
+        if (document.getElementById('schedule-tab').style.display === 'block') { initScheduleTab(); }
+        else { renderTodayMain(); }
         scheduleClassAlerts();
     }, 600);
 }
@@ -931,27 +855,12 @@ function resetTodayProfile() {
     localStorage.removeItem('today_profile');
     classAlertTimeouts.forEach(clearTimeout);
     classAlertTimeouts = [];
-    
     todayGender = null; todayGroup = null; todayShiftSel = null;
-    ['male','female'].forEach(x => {
-        const b = document.getElementById('gbtn-'+x);
-        if(b) { b.style.background='rgba(255,255,255,0.1)'; b.style.border='2px solid rgba(255,255,255,0.3)'; b.style.transform='scale(1)'; }
-    });
-    ['A','B','C'].forEach(x => {
-        const b = document.getElementById('tgbtn-'+x);
-        if(b) { b.style.background='rgba(255,255,255,0.1)'; b.style.border='2px solid rgba(255,255,255,0.3)'; b.style.transform='scale(1)'; }
-    });
-    ['morning','evening'].forEach(x => {
-        const b = document.getElementById('tsbtn-'+x);
-        if(b) { b.style.background='rgba(255,255,255,0.1)'; b.style.border='2px solid rgba(255,255,255,0.3)'; b.style.transform='scale(1)'; }
-    });
-
-    if (document.getElementById('schedule-tab').style.display === 'block') {
-        initScheduleTab();
-    } else {
-        document.getElementById('today-setup').style.display = 'block';
-        document.getElementById('today-main').style.display  = 'none';
-    }
+    ['male','female'].forEach(x => { const b = document.getElementById('gbtn-'+x); if(b) { b.style.background='rgba(255,255,255,0.1)'; b.style.border='2px solid rgba(255,255,255,0.3)'; b.style.transform='scale(1)'; } });
+    ['A','B','C'].forEach(x => { const b = document.getElementById('tgbtn-'+x); if(b) { b.style.background='rgba(255,255,255,0.1)'; b.style.border='2px solid rgba(255,255,255,0.3)'; b.style.transform='scale(1)'; } });
+    ['morning','evening'].forEach(x => { const b = document.getElementById('tsbtn-'+x); if(b) { b.style.background='rgba(255,255,255,0.1)'; b.style.border='2px solid rgba(255,255,255,0.3)'; b.style.transform='scale(1)'; } });
+    if (document.getElementById('schedule-tab').style.display === 'block') { initScheduleTab(); }
+    else { document.getElementById('today-setup').style.display = 'block'; document.getElementById('today-main').style.display  = 'none'; }
 }
 
 function getTodayGreeting(name, gender) {
@@ -992,87 +901,41 @@ function getTodayDayName(jsDay) {
 
 function renderTodayMain() {
     const stored = localStorage.getItem('today_profile');
-    if(!stored) {
-        document.getElementById('today-setup').style.display = 'block';
-        document.getElementById('today-main').style.display  = 'none';
-        return;
-    }
+    if(!stored) { document.getElementById('today-setup').style.display = 'block'; document.getElementById('today-main').style.display  = 'none'; return; }
     const p = JSON.parse(stored);
     document.getElementById('today-setup').style.display = 'none';
     document.getElementById('today-main').style.display  = 'block';
-
     const { greeting, emoji } = getTodayGreeting(p.name, p.gender);
-    const shiftLabel = p.shift === 'morning'
-        ? (currentLang==='en'?'Morning Shift ☀️':'دەوامی بەیانیان ☀️')
-        : (currentLang==='en'?'Evening Shift 🌙':'دەوامی ئێوارن 🌙');
+    const shiftLabel = p.shift === 'morning' ? (currentLang==='en'?'Morning Shift ☀️':'دەوامی بەیانیان ☀️') : (currentLang==='en'?'Evening Shift 🌙':'دەوامی ئێوارن 🌙');
     const greetBox = document.getElementById('today-greeting-box');
-
     if(greetBox) {
         let lblSem = currentLang==='en'?"Semester":"سمستەری";
         greetBox.style.background = 'linear-gradient(135deg, var(--primary), var(--secondary))';
-        greetBox.innerHTML = `
-            <div style="font-size:2.2rem;margin-bottom:8px;">${emoji}</div>
-            <div style="color:white;font-size:1.18rem;font-weight:900;margin-bottom:6px;line-height:1.4;">${greeting}</div>
-            <div style="color:rgba(255,255,255,0.72);font-size:0.82rem;font-weight:600;">${lblSem} ${p.sem} &nbsp;·&nbsp; Group ${p.group} &nbsp;·&nbsp; ${shiftLabel}</div>
-        `;
+        greetBox.innerHTML = `<div style="font-size:2.2rem;margin-bottom:8px;">${emoji}</div><div style="color:white;font-size:1.18rem;font-weight:900;margin-bottom:6px;line-height:1.4;">${greeting}</div><div style="color:rgba(255,255,255,0.72);font-size:0.82rem;font-weight:600;">${lblSem} ${p.sem} &nbsp;·&nbsp; Group ${p.group} &nbsp;·&nbsp; ${shiftLabel}</div>`;
     }
-
     const box = document.getElementById('today-schedule-box');
     if(!box) return;
-
     if (isEndOfYear) {
-        box.innerHTML = `
-        <div style="text-align:center;padding:32px 20px;background:var(--surface);border-radius:20px;border:1.5px solid var(--border);">
-            <div style="font-size:2.8rem;margin-bottom:12px;">🎉</div>
-            <div style="color:var(--text);font-size:1.05rem;line-height:1.7;font-weight:700;">${endOfYearMessage}</div>
-        </div>`;
+        box.innerHTML = `<div style="text-align:center;padding:32px 20px;background:var(--surface);border-radius:20px;border:1.5px solid var(--border);"><div style="font-size:2.8rem;margin-bottom:12px;">🎉</div><div style="color:var(--text);font-size:1.05rem;line-height:1.7;font-weight:700;">${endOfYearMessage}</div></div>`;
         return;
     }
-
     const jsDay   = new Date().getDay();
     const dayName = getTodayDayName(jsDay);
     const dayIdx  = getTodayDayIndex();
-
     if(dayIdx === null) {
-        box.innerHTML = `
-        <div style="text-align:center;padding:32px 20px;background:var(--surface);border-radius:20px;border:1.5px solid var(--border);">
-            <div style="font-size:2.4rem;margin-bottom:12px;">🎉</div>
-            <div style="font-weight:900;font-size:1.12rem;color:var(--text);margin-bottom:8px;">${dayName} — ${currentLang==='en'?"It's a holiday, enjoy!":"ئەمڕؤ پشووە بەخۆشی بەسەری بەرە!"}</div>
-            <div style="color:var(--text-muted);font-size:0.88rem;line-height:1.6;">${currentLang==='en'?"No classes today, take a rest 😎":"ئەمڕۆ وانە نییە، ئیستراحەت بکە 😎"}</div>
-        </div>`;
+        box.innerHTML = `<div style="text-align:center;padding:32px 20px;background:var(--surface);border-radius:20px;border:1.5px solid var(--border);"><div style="font-size:2.4rem;margin-bottom:12px;">🎉</div><div style="font-weight:900;font-size:1.12rem;color:var(--text);margin-bottom:8px;">${dayName} — ${currentLang==='en'?"It's a holiday, enjoy!":"ئەمڕؤ پشووە بەخۆشی بەسەری بەرە!"}</div><div style="color:var(--text-muted);font-size:0.88rem;line-height:1.6;">${currentLang==='en'?"No classes today, take a rest 😎":"ئەمڕۆ وانە نییە، ئیستراحەت بکە 😎"}</div></div>`;
         return;
     }
-
-    const todayColors = {
-        'Logic Design':'#ef4444','IT Fundamentals':'#10b981','Mathematics':'#8b5cf6',
-        'English':'#f59e0b','Kurdology':'#475569','Database':'#d97706','English II':'#f59e0b',
-        'Network +':'#3b82f6','Programming':'#8b5cf6','Web Design':'#14b8a6',
-        'Web Programming':'#3b82f6','O.O.P':'#8b5cf6','Database Management':'#d97706',
-        'Computer Network II':'#10b981','Operating System':'#ef4444',
-        'Web Programming II':'#3b82f6','Visual Programming':'#8b5cf6',
-        'Mobile Application':'#d97706','Information Security':'#ef4444','Project':'#10b981'
-    };
-
+    const todayColors = {'Logic Design':'#ef4444','IT Fundamentals':'#10b981','Mathematics':'#8b5cf6','English':'#f59e0b','Kurdology':'#475569','Database':'#d97706','English II':'#f59e0b','Network +':'#3b82f6','Programming':'#8b5cf6','Web Design':'#14b8a6','Web Programming':'#3b82f6','O.O.P':'#8b5cf6','Database Management':'#d97706','Computer Network II':'#10b981','Operating System':'#ef4444','Web Programming II':'#3b82f6','Visual Programming':'#8b5cf6','Mobile Application':'#d97706','Information Security':'#ef4444','Project':'#10b981'};
     const lessons = scheduleData[p.shift]?.[parseInt(p.sem)]?.[p.group]?.[dayIdx];
     const now     = new Date();
     let lblTodayClass = currentLang==='en'?"Today's Classes":"وانەکانی ئەمڕۆ";
-
-    let html = `
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
-        <span style="background:linear-gradient(135deg,var(--primary),var(--secondary));color:white;padding:5px 16px;border-radius:20px;font-size:0.85rem;font-weight:700;">📅 ${dayName}</span>
-        <span style="color:var(--text-muted);font-size:0.82rem;font-weight:600;">${lblTodayClass}</span>
-    </div>`;
-
+    let html = `<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;"><span style="background:linear-gradient(135deg,var(--primary),var(--secondary));color:white;padding:5px 16px;border-radius:20px;font-size:0.85rem;font-weight:700;">📅 ${dayName}</span><span style="color:var(--text-muted);font-size:0.82rem;font-weight:600;">${lblTodayClass}</span></div>`;
     if(!lessons || lessons.length === 0) {
-        html += `
-        <div style="text-align:center;padding:26px;background:var(--surface);border-radius:16px;border:1.5px dashed var(--border);">
-            <div style="font-size:1.8rem;margin-bottom:8px;">📭</div>
-            <div style="color:var(--text-muted);font-weight:700;">${currentLang==='en'?`No classes today for Group ${p.group}`:`ئەمڕۆ وانەی نییە بۆ گرووپ ${p.group}`}</div>
-        </div>`;
+        html += `<div style="text-align:center;padding:26px;background:var(--surface);border-radius:16px;border:1.5px dashed var(--border);"><div style="font-size:1.8rem;margin-bottom:8px;">📭</div><div style="color:var(--text-muted);font-weight:700;">${currentLang==='en'?`No classes today for Group ${p.group}`:`ئەمڕۆ وانەی نییە بۆ گرووپ ${p.group}`}</div></div>`;
     } else {
         let lblNow  = currentLang==='en'?"⬤ NOW":"⬤ ئێستا";
         let lblPast = currentLang==='en'?"Done":"تەواوبوو";
-
         lessons.forEach(r => {
             const cleanTime = r[2].replace(/AM|PM/i, '').trim();
             const timeParts = cleanTime.split(':');
@@ -1083,41 +946,15 @@ function renderTodayMain() {
             let isAM = r[2].toUpperCase().includes('AM');
             if (isPM && h < 12) h += 12;
             if (isAM && h === 12) h = 0;
-            if (!isPM && !isAM) {
-                if (p.shift === 'evening' && h < 12) h += 12;
-                if (p.shift === 'morning' && h > 0 && h <= 5) h += 12;
-            }
+            if (!isPM && !isAM) { if (p.shift === 'evening' && h < 12) h += 12; if (p.shift === 'morning' && h > 0 && h <= 5) h += 12; }
             lessonStart.setHours(h, m, 0, 0);
             const lessonEnd = new Date(lessonStart.getTime() + 2 * 60 * 60 * 1000);
             const isNow  = now >= lessonStart && now < lessonEnd;
             const isPast = now >= lessonEnd;
             const c = todayColors[r[1]] || '#3b82f6';
-
-            html += `
-            <div style="
-                background:var(--surface);border-radius:16px;
-                border:1.5px solid ${isNow ? c : 'var(--border)'};
-                padding:14px 16px;margin-bottom:10px;
-                display:flex;align-items:center;gap:14px;
-                ${isNow  ? 'box-shadow:0 0 0 3px '+c+'28;' : ''}
-                ${isPast ? 'opacity:0.52;' : ''}
-                transition:all 0.3s;
-            ">
-                <div style="width:50px;height:50px;border-radius:14px;background:${c}1a;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                    <span style="color:${c};font-weight:900;font-size:0.8rem;" dir="ltr">${r[2]}</span>
-                </div>
-                <div style="flex:1;min-width:0;">
-                    <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:4px;">
-                        <span style="background:${c};color:white;padding:4px 12px;border-radius:20px;font-size:0.82rem;font-weight:700;white-space:nowrap;">${r[1]}</span>
-                        ${isNow  ? `<span style="background:#10b981;color:white;padding:3px 9px;border-radius:10px;font-size:0.72rem;font-weight:700;">${lblNow}</span>` : ''}
-                        ${isPast ? `<span style="background:var(--surface2);color:var(--text-muted);padding:3px 9px;border-radius:10px;font-size:0.72rem;border:1px solid var(--border);">${lblPast}</span>` : ''}
-                    </div>
-                    <div style="font-size:0.78rem;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${r[3]}</div>
-                </div>
-            </div>`;
+            html += `<div style="background:var(--surface);border-radius:16px;border:1.5px solid ${isNow ? c : 'var(--border)'};padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;gap:14px;${isNow?'box-shadow:0 0 0 3px '+c+'28;':''}${isPast?'opacity:0.52;':''}transition:all 0.3s;"><div style="width:50px;height:50px;border-radius:14px;background:${c}1a;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span style="color:${c};font-weight:900;font-size:0.8rem;" dir="ltr">${r[2]}</span></div><div style="flex:1;min-width:0;"><div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:4px;"><span style="background:${c};color:white;padding:4px 12px;border-radius:20px;font-size:0.82rem;font-weight:700;white-space:nowrap;">${r[1]}</span>${isNow?`<span style="background:#10b981;color:white;padding:3px 9px;border-radius:10px;font-size:0.72rem;font-weight:700;">${lblNow}</span>`:''} ${isPast?`<span style="background:var(--surface2);color:var(--text-muted);padding:3px 9px;border-radius:10px;font-size:0.72rem;border:1px solid var(--border);">${lblPast}</span>`:''}</div><div style="font-size:0.78rem;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${r[3]}</div></div></div>`;
         });
     }
-
     box.innerHTML = html;
 }
 
@@ -1126,7 +963,6 @@ function initTodayTab() {
     const todayTab = document.getElementById('today-tab');
     const todayMain = document.getElementById('today-main');
     todayTab.insertBefore(setupForm, todayMain);
-
     const stored = localStorage.getItem('today_profile');
     if(stored) {
         const p = JSON.parse(stored);
@@ -1143,4 +979,341 @@ function initTodayTab() {
         document.getElementById('today-setup').style.display = 'block';
         document.getElementById('today-main').style.display  = 'none';
     }
+}
+
+// ============================================================
+// AI CHAT — تەنها ئەمە زیادکراوە
+// ============================================================
+
+const AI_SUBJECTS = {
+    1:['Logic Design','IT Fundamentals','Mathematics','English','Kurdology'],
+    2:['Database','English II','Network +','Programming','Web Design'],
+    3:['Web Programming','O.O.P','Database Management','Computer Network II','Operating System'],
+    4:['Web Programming II','Visual Programming','Mobile Application','Information Security','Project']
+};
+
+const AI_QTIPS = {
+    'Logic Design':['Gate چییە؟','Karnaugh Map چۆنە؟','تاقیکردنەوە ئامادەبوون'],
+    'IT Fundamentals':['Hardware vs Software','Binary چییە؟','Study tips'],
+    'Mathematics':['Derivative چۆنە؟','Matrix ڕوونکردنەوە','نموونەی تاقیکردنەوە'],
+    'English':['Grammar tips','ئامادەبوون بۆ تاقیکردنەوە','Vocabulary'],
+    'Kurdology':['پرسیاری باو','خاڵەکان چۆن دابەشن؟','ئامادەبوون'],
+    'Database':['SQL SELECT چییە؟','JOIN چۆنە؟','Normalization چییە؟'],
+    'English II':['Essay writing','Grammar','ئامادەبوون بۆ تاقیکردنەوە'],
+    'Network +':['OSI Model چییە؟','IP Address','TCP vs UDP'],
+    'Programming':['Loop چۆنە؟','Function چییە؟','Array بەکار هێنان'],
+    'Web Design':['HTML tags','CSS چۆنە؟','Responsive Design'],
+    'Web Programming':['PHP چییە؟','Session vs Cookie','Form handling'],
+    'O.O.P':['Class vs Object','Inheritance چییە؟','Polymorphism'],
+    'Database Management':['Transaction چییە؟','ACID','Stored Procedure'],
+    'Computer Network II':['Routing چۆنە؟','VLAN','Subnetting'],
+    'Operating System':['Process vs Thread','Deadlock چییە؟','Memory Management'],
+    'Web Programming II':['React vs Vue','API چییە؟','REST'],
+    'Visual Programming':['Event-driven چییە؟','C# tips','Form controls'],
+    'Mobile Application':['Flutter چییە؟','Widget','State Management'],
+    'Information Security':['CIA Triad','Encryption چییە؟','Firewall'],
+    'Project':['پڕۆژە چۆن دەستپێبکەم؟','Documentation','Presentation tips']
+};
+
+let aiProfile = null;
+let aiCurrentSub = null;
+let aiIsLoading = false;
+let aiPicks = {};
+let aiMessages = [];
+
+function initAIChat() {
+    // ئەگەر پێشتر دروستکراوە دووبارە نەدروستبکەرەوە
+    if (document.getElementById('ai-chat-inner')) return;
+
+    const tab = document.getElementById('ai-chat-tab');
+    tab.innerHTML = '';
+
+    // profile بخوێنەوە لە localStorage
+    try {
+        const raw = localStorage.getItem('today_profile');
+        if (raw) { aiProfile = JSON.parse(raw); aiPicks = {gender:aiProfile.gender,sem:aiProfile.sem,group:aiProfile.group,shift:aiProfile.shift}; }
+    } catch(e) {}
+
+    tab.innerHTML = `
+    <div id="ai-chat-inner" style="display:flex;flex-direction:column;height:calc(100vh - 200px);min-height:420px;position:relative;">
+
+      <!-- هێدەر -->
+      <div style="background:linear-gradient(135deg,var(--primary),var(--secondary));border-radius:18px;padding:14px 16px;margin-bottom:14px;display:flex;align-items:center;gap:12px;">
+        <div style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">🎓</div>
+        <div style="flex:1;">
+          <div style="color:white;font-weight:900;font-size:1rem;" id="ai-hdr-name">یاریدەری زیرەکی IT چەمچەماڵ</div>
+          <div style="color:rgba(255,255,255,0.75);font-size:0.78rem;" id="ai-hdr-sub">تۆمار بکە تا دەستپێبکەین</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.2);color:white;font-size:0.75rem;padding:3px 10px;border-radius:20px;font-weight:700;">AI</div>
+      </div>
+
+      <!-- subject bar — تەنها کاتێک تۆمارکراوە -->
+      <div id="ai-subbar" style="display:none;gap:6px;overflow-x:auto;margin-bottom:10px;scrollbar-width:none;"></div>
+
+      <!-- messages -->
+      <div id="ai-msgs" style="flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding-bottom:8px;"></div>
+
+      <!-- quick btns -->
+      <div id="ai-qbtns" style="display:none;flex-wrap:wrap;gap:5px;margin-top:8px;"></div>
+
+      <!-- input -->
+      <div style="display:flex;gap:8px;margin-top:10px;align-items:flex-end;">
+        <button id="ai-send" onclick="aiSendMsg()" disabled
+          style="width:38px;height:38px;border-radius:50%;background:var(--primary);border:none;color:white;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;opacity:0.4;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+        <textarea id="ai-input" disabled placeholder="تۆمار بکە تا چاتەکە چالاک ببێت..." rows="1"
+          style="flex:1;padding:9px 13px;border-radius:20px;border:1.5px solid var(--border);background:var(--surface2);color:var(--text);font-size:0.9rem;font-family:var(--font);resize:none;outline:none;min-height:38px;max-height:80px;overflow-y:auto;line-height:1.5;"
+          onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();aiSendMsg();}"
+          oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'"></textarea>
+      </div>
+
+      <!-- overlay فۆرم -->
+      <div id="ai-overlay" style="position:absolute;inset:0;background:rgba(0,0,0,0.5);border-radius:18px;z-index:50;display:none;align-items:flex-end;justify-content:center;">
+        <div id="ai-sheet" style="background:var(--surface);border-radius:20px 20px 0 0;width:100%;max-height:90%;overflow-y:auto;padding:18px 16px 24px;animation:slideUp 0.28s ease;">
+          <div style="font-size:14px;font-weight:800;color:var(--text);margin-bottom:4px;">📋 زانیارییەکانت بنووسە</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-bottom:14px;line-height:1.5;">تکایە فۆرمەکە پڕبکەرەوە تا باشتر هاوکاریت بکەم.</div>
+          <div style="margin-bottom:10px;">
+            <label style="font-size:12px;color:var(--text-muted);display:block;margin-bottom:4px;">ناوت:</label>
+            <input type="text" id="ai-f-name" placeholder="ناوت بنووسە..." style="width:100%;padding:8px 12px;border-radius:12px;border:1.5px solid var(--border);background:var(--surface2);color:var(--text);font-size:13px;font-family:var(--font);outline:none;">
+          </div>
+          <div style="margin-bottom:10px;">
+            <label style="font-size:12px;color:var(--text-muted);display:block;margin-bottom:4px;">ڕەگەز:</label>
+            <div style="display:flex;gap:8px;">
+              <button class="ai-pick" onclick="aiPick('gender','male',this)" style="flex:1;padding:8px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface2);color:var(--text);font-family:var(--font);cursor:pointer;font-size:13px;">👨 کوڕ</button>
+              <button class="ai-pick" onclick="aiPick('gender','female',this)" style="flex:1;padding:8px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface2);color:var(--text);font-family:var(--font);cursor:pointer;font-size:13px;">👧 کچ</button>
+            </div>
+          </div>
+          <div style="margin-bottom:10px;">
+            <label style="font-size:12px;color:var(--text-muted);display:block;margin-bottom:4px;">سمستەر:</label>
+            <div style="display:flex;gap:8px;">
+              <button class="ai-pick" onclick="aiPick('sem','1',this)" style="flex:1;padding:8px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface2);color:var(--text);font-family:var(--font);cursor:pointer;">١</button>
+              <button class="ai-pick" onclick="aiPick('sem','2',this)" style="flex:1;padding:8px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface2);color:var(--text);font-family:var(--font);cursor:pointer;">٢</button>
+              <button class="ai-pick" onclick="aiPick('sem','3',this)" style="flex:1;padding:8px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface2);color:var(--text);font-family:var(--font);cursor:pointer;">٣</button>
+              <button class="ai-pick" onclick="aiPick('sem','4',this)" style="flex:1;padding:8px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface2);color:var(--text);font-family:var(--font);cursor:pointer;">٤</button>
+            </div>
+          </div>
+          <div style="margin-bottom:10px;">
+            <label style="font-size:12px;color:var(--text-muted);display:block;margin-bottom:4px;">گرووپ:</label>
+            <div style="display:flex;gap:8px;">
+              <button class="ai-pick" onclick="aiPick('group','A',this)" style="flex:1;padding:8px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface2);color:var(--text);font-family:var(--font);cursor:pointer;">Group A</button>
+              <button class="ai-pick" onclick="aiPick('group','B',this)" style="flex:1;padding:8px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface2);color:var(--text);font-family:var(--font);cursor:pointer;">Group B</button>
+              <button class="ai-pick" onclick="aiPick('group','C',this)" style="flex:1;padding:8px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface2);color:var(--text);font-family:var(--font);cursor:pointer;">Group C</button>
+            </div>
+          </div>
+          <div style="margin-bottom:16px;">
+            <label style="font-size:12px;color:var(--text-muted);display:block;margin-bottom:4px;">دەوام:</label>
+            <div style="display:flex;gap:8px;">
+              <button class="ai-pick" onclick="aiPick('shift','morning',this)" style="flex:1;padding:8px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface2);color:var(--text);font-family:var(--font);cursor:pointer;">☀️ بەیانیان</button>
+              <button class="ai-pick" onclick="aiPick('shift','evening',this)" style="flex:1;padding:8px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface2);color:var(--text);font-family:var(--font);cursor:pointer;">🌙 ئێوارن</button>
+            </div>
+          </div>
+          <button id="ai-save-btn" onclick="aiSaveProfile()"
+            style="width:100%;padding:11px;border-radius:14px;background:var(--primary);color:white;border:none;font-size:14px;font-weight:800;cursor:pointer;font-family:var(--font);">
+            ✅ پاشەکەوتکردن و دەستپێکردن
+          </button>
+        </div>
+      </div>
+    </div>`;
+
+    if (aiProfile) {
+        aiAfterRegister();
+    } else {
+        aiAddBubble('سڵاو! 👋 خوش هاتیت بۆ یاریدەری زیرەکی IT چەمچەماڵ.', 'bot');
+        setTimeout(aiShowWarnAndForm, 600);
+    }
+}
+
+function aiShowWarnAndForm() {
+    const msgs = document.getElementById('ai-msgs');
+    if(!msgs) return;
+    const d = document.createElement('div');
+    d.style.cssText = 'align-self:flex-end;max-width:94%;';
+    d.innerHTML = `
+      <div style="background:var(--surface2);border:1.5px solid #f59e0b;border-radius:16px 16px 16px 4px;padding:12px 14px;font-size:13px;line-height:1.65;">
+        <div style="display:flex;align-items:center;gap:7px;font-weight:800;color:#b45309;margin-bottom:6px;">⚠️ تۆمارنەکراوی</div>
+        <div style="font-size:12.5px;color:var(--text-muted);margin-bottom:10px;line-height:1.6;">تا تۆمار نەکرێت ناتوانم هاوکاریت بکەم، چونکە نازانم تۆ خوێندکار لە چ سمستەرێکیت. تکایە ئەم فۆرمەت پڕبکەرەوە.</div>
+        <button onclick="aiOpenForm()" style="padding:6px 16px;border-radius:20px;background:var(--primary);color:white;border:none;font-size:12.5px;font-weight:700;cursor:pointer;font-family:var(--font);">📋 تۆمارکردن</button>
+      </div>
+      <div style="font-size:10.5px;color:var(--text-muted);padding:3px 4px;text-align:left;">${aiGetTime()}</div>`;
+    msgs.appendChild(d);
+    msgs.scrollTop = msgs.scrollHeight;
+}
+
+function aiOpenForm() {
+    const ov = document.getElementById('ai-overlay');
+    if(ov) { ov.style.display = 'flex'; setTimeout(()=>document.getElementById('ai-f-name')?.focus(), 300); }
+}
+
+function aiPick(key, val, btn) {
+    aiPicks[key] = val;
+    btn.closest('div').querySelectorAll('.ai-pick').forEach(b => {
+        b.style.background = 'var(--surface2)';
+        b.style.borderColor = 'var(--border)';
+        b.style.color = 'var(--text)';
+    });
+    btn.style.background = 'var(--primary)';
+    btn.style.borderColor = 'var(--primary)';
+    btn.style.color = 'white';
+}
+
+function aiSaveProfile() {
+    const name = document.getElementById('ai-f-name')?.value?.trim();
+    const saveBtn = document.getElementById('ai-save-btn');
+    const showErr = msg => { saveBtn.textContent = '⚠️ ' + msg; saveBtn.style.background = '#b45309'; setTimeout(()=>{ saveBtn.textContent='✅ پاشەکەوتکردن و دەستپێکردن'; saveBtn.style.background='var(--primary)'; }, 2000); };
+    if(!name)           return showErr('تکایە ناوت بنووسە');
+    if(!aiPicks.gender) return showErr('تکایە ڕەگەز هەڵبژێرە');
+    if(!aiPicks.sem)    return showErr('تکایە سمستەر هەڵبژێرە');
+    if(!aiPicks.group)  return showErr('تکایە گرووپ هەڵبژێرە');
+    if(!aiPicks.shift)  return showErr('تکایە دەوام هەڵبژێرە');
+    aiProfile = { name, gender:aiPicks.gender, sem:aiPicks.sem, group:aiPicks.group, shift:aiPicks.shift };
+    try { localStorage.setItem('today_profile', JSON.stringify(aiProfile)); } catch(e){}
+    document.getElementById('ai-overlay').style.display = 'none';
+    aiAfterRegister();
+}
+
+function aiAfterRegister() {
+    const sem = parseInt(aiProfile.sem);
+    const subs = AI_SUBJECTS[sem] || [];
+    const shiftLabel = aiProfile.shift === 'morning' ? 'بەیانیان ☀️' : 'ئێوارن 🌙';
+    const title = aiProfile.gender === 'male' ? 'کاک' : 'خاتوو';
+
+    const hdrName = document.getElementById('ai-hdr-name');
+    const hdrSub  = document.getElementById('ai-hdr-sub');
+    if(hdrName) hdrName.textContent = `یاریدەری زیرەکی IT — ${title} ${aiProfile.name}`;
+    if(hdrSub)  hdrSub.textContent  = `سمستەری ${aiProfile.sem} · گرووپ ${aiProfile.group} · ${shiftLabel}`;
+
+    const subbar = document.getElementById('ai-subbar');
+    if(subbar) {
+        subbar.style.display = 'flex';
+        subbar.innerHTML = subs.map((s,i) =>
+            `<button onclick="aiSelSub(this,'${s}')" style="flex-shrink:0;padding:4px 11px;border-radius:20px;border:1.5px solid ${i===0?'var(--primary)':'var(--border)'};background:${i===0?'var(--primary)':'var(--surface2)'};color:${i===0?'white':'var(--text-muted)'};font-size:12px;cursor:pointer;font-family:var(--font);white-space:nowrap;">${s}</button>`
+        ).join('');
+        aiCurrentSub = subs[0];
+    }
+
+    const qbtns = document.getElementById('ai-qbtns');
+    if(qbtns) { qbtns.style.display = 'flex'; aiUpdateQ(subs[0]); }
+
+    const inp = document.getElementById('ai-input');
+    const sendBtn = document.getElementById('ai-send');
+    if(inp) { inp.disabled = false; inp.placeholder = 'پرسیارەکەت بنووسە...'; }
+    if(sendBtn) { sendBtn.disabled = false; sendBtn.style.opacity = '1'; }
+
+    const h = new Date().getHours();
+    let gr, em;
+    if(h>=5&&h<12){gr='بەیانی باش';em='🌤️';}
+    else if(h>=12&&h<17){gr='نیوەڕۆت باش';em='☀️';}
+    else if(h>=17&&h<21){gr='ئێوارەت باش';em='🌇';}
+    else{gr='شەوت باش';em='🌙';}
+
+    aiAddBubble(`${em} ${gr}، ${title} <strong>${aiProfile.name}</strong>! 🎉<br><br>وانەکانی سمستەری ${aiProfile.sem}ت:<br><strong>${subs.join('، ')}</strong><br><br>کام وانەیەک پرسیارت هەیە؟ ئامادەم! 💪`, 'bot');
+}
+
+function aiSelSub(btn, sub) {
+    document.querySelectorAll('#ai-subbar button').forEach(b => {
+        b.style.background = 'var(--surface2)'; b.style.borderColor = 'var(--border)'; b.style.color = 'var(--text-muted)';
+    });
+    btn.style.background = 'var(--primary)'; btn.style.borderColor = 'var(--primary)'; btn.style.color = 'white';
+    aiCurrentSub = sub;
+    aiUpdateQ(sub);
+}
+
+function aiUpdateQ(sub) {
+    const tips = AI_QTIPS[sub] || ['پرسیار بکە','Study tips','ئامادەبوون'];
+    const qbtns = document.getElementById('ai-qbtns');
+    if(qbtns) qbtns.innerHTML = tips.map(t =>
+        `<button onclick="aiQuickAsk('${t}')" style="padding:4px 11px;border-radius:20px;border:1.5px solid var(--border);background:var(--surface2);color:var(--text-muted);font-size:12px;cursor:pointer;font-family:var(--font);">${t}</button>`
+    ).join('');
+}
+
+function aiQuickAsk(q) {
+    const inp = document.getElementById('ai-input');
+    if(inp) { inp.value = q; aiSendMsg(); }
+}
+
+function aiGetTime() {
+    const d = new Date();
+    return d.getHours().toString().padStart(2,'0') + ':' + d.getMinutes().toString().padStart(2,'0');
+}
+
+function aiAddBubble(html, role) {
+    const msgs = document.getElementById('ai-msgs');
+    if(!msgs) return null;
+    const isBot = role === 'bot';
+    const d = document.createElement('div');
+    d.style.cssText = `align-self:${isBot?'flex-end':'flex-start'};max-width:88%;display:flex;flex-direction:column;gap:3px;`;
+    const bubbleStyle = isBot
+        ? `background:var(--primary);color:white;border-radius:16px 16px 16px 4px;`
+        : `background:var(--surface2);color:var(--text);border-radius:16px 16px 4px 16px;border:1px solid var(--border);`;
+    d.innerHTML = `
+      <div style="${bubbleStyle}padding:10px 14px;font-size:13px;line-height:1.65;">${html}</div>
+      <div style="font-size:10.5px;color:var(--text-muted);padding:0 4px;text-align:${isBot?'left':'right'};">${aiGetTime()}</div>`;
+    msgs.appendChild(d);
+    msgs.scrollTop = msgs.scrollHeight;
+    return d;
+}
+
+async function aiSendMsg() {
+    if(aiIsLoading || !aiProfile) return;
+    const inp = document.getElementById('ai-input');
+    const text = inp?.value?.trim();
+    if(!text) return;
+    inp.value = ''; inp.style.height = 'auto';
+    aiIsLoading = true;
+    const sendBtn = document.getElementById('ai-send');
+    if(sendBtn) sendBtn.disabled = true;
+
+    aiAddBubble(text, 'user');
+    aiMessages.push({ role: 'user', content: text });
+
+    const thinking = aiAddBubble('<em style="opacity:0.6;font-size:12px;">دەبیریم...</em>', 'bot');
+
+    const subs = (AI_SUBJECTS[parseInt(aiProfile.sem)] || []).join(', ');
+    const shiftLabel = aiProfile.shift === 'morning' ? 'بەیانیان' : 'ئێوارن';
+    const title = aiProfile.gender === 'male' ? 'کاک' : 'خاتوو';
+
+    const systemPrompt = `تۆ یاریدەری زیرەکی تایبەت بە خوێندکارانی بەشی IT پەیمانگای تەکنیکی چەمچەماڵ، کوردستان-عێراقی.
+
+زانیاری خوێندکار:
+- ناو: ${title} ${aiProfile.name}
+- سمستەر: ${aiProfile.sem} · گرووپ: ${aiProfile.group} · دەوام: ${shiftLabel}
+- وانەکانی ئەم سمستەرە: ${subs}
+- وانەی هەڵبژێردراو: ${aiCurrentSub || subs.split(',')[0]}
+
+ئەرکەکانت:
+• بە ناوی ${title} ${aiProfile.name} بانگی بکە کاتێک گونجاوە
+• تەنها لەسەر وانەکانی سمستەری ${aiProfile.sem} تەمەرکوز بکە
+• وەڵامت کورت، ڕوون، بەسوود بێت بە کوردی سۆرانی
+• نموونە و ئیموجی بەکار بهێنە`;
+
+    try {
+        const res = await fetch('https://api.anthropic.com/v1/messages', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                model: 'claude-sonnet-4-20250514',
+                max_tokens: 1000,
+                system: systemPrompt,
+                messages: aiMessages.slice(-10)
+            })
+        });
+        const data = await res.json();
+        const reply = data.content?.[0]?.text || 'داواکاری سەرکەوتوو نەبوو.';
+        aiMessages.push({ role: 'assistant', content: reply });
+        if(thinking) {
+            const bbl = thinking.querySelector('div');
+            if(bbl) bbl.innerHTML = reply.replace(/\n/g,'<br>');
+        }
+    } catch(e) {
+        if(thinking) {
+            const bbl = thinking.querySelector('div');
+            if(bbl) bbl.textContent = 'کێشەیەک ڕووی دا. دوبارە هەوڵبدەرەوە.';
+        }
+    }
+
+    aiIsLoading = false;
+    if(sendBtn) sendBtn.disabled = false;
+    const msgs = document.getElementById('ai-msgs');
+    if(msgs) msgs.scrollTop = msgs.scrollHeight;
 }
