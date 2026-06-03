@@ -1022,13 +1022,11 @@ let aiPicks = {};
 let aiMessages = [];
 
 function initAIChat() {
-    // ئەگەر پێشتر دروستکراوە دووبارە نەدروستبکەرەوە
     if (document.getElementById('ai-chat-inner')) return;
 
     const tab = document.getElementById('ai-chat-tab');
     tab.innerHTML = '';
 
-    // profile بخوێنەوە لە localStorage
     try {
         const raw = localStorage.getItem('today_profile');
         if (raw) { aiProfile = JSON.parse(raw); aiPicks = {gender:aiProfile.gender,sem:aiProfile.sem,group:aiProfile.group,shift:aiProfile.shift}; }
@@ -1036,8 +1034,6 @@ function initAIChat() {
 
     tab.innerHTML = `
     <div id="ai-chat-inner" style="display:flex;flex-direction:column;height:calc(100vh - 200px);min-height:420px;position:relative;">
-
-      <!-- هێدەر -->
       <div style="background:linear-gradient(135deg,var(--primary),var(--secondary));border-radius:18px;padding:14px 16px;margin-bottom:14px;display:flex;align-items:center;gap:12px;">
         <div style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">🎓</div>
         <div style="flex:1;">
@@ -1046,17 +1042,9 @@ function initAIChat() {
         </div>
         <div style="background:rgba(255,255,255,0.2);color:white;font-size:0.75rem;padding:3px 10px;border-radius:20px;font-weight:700;">AI</div>
       </div>
-
-      <!-- subject bar — تەنها کاتێک تۆمارکراوە -->
       <div id="ai-subbar" style="display:none;gap:6px;overflow-x:auto;margin-bottom:10px;scrollbar-width:none;"></div>
-
-      <!-- messages -->
       <div id="ai-msgs" style="flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding-bottom:8px;"></div>
-
-      <!-- quick btns -->
       <div id="ai-qbtns" style="display:none;flex-wrap:wrap;gap:5px;margin-top:8px;"></div>
-
-      <!-- input -->
       <div style="display:flex;gap:8px;margin-top:10px;align-items:flex-end;">
         <button id="ai-send" onclick="aiSendMsg()" disabled
           style="width:38px;height:38px;border-radius:50%;background:var(--primary);border:none;color:white;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;opacity:0.4;">
@@ -1067,8 +1055,6 @@ function initAIChat() {
           onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();aiSendMsg();}"
           oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'"></textarea>
       </div>
-
-      <!-- overlay فۆرم -->
       <div id="ai-overlay" style="position:absolute;inset:0;background:rgba(0,0,0,0.5);border-radius:18px;z-index:50;display:none;align-items:flex-end;justify-content:center;">
         <div id="ai-sheet" style="background:var(--surface);border-radius:20px 20px 0 0;width:100%;max-height:90%;overflow-y:auto;padding:18px 16px 24px;animation:slideUp 0.28s ease;">
           <div style="font-size:14px;font-weight:800;color:var(--text);margin-bottom:4px;">📋 زانیارییەکانت بنووسە</div>
@@ -1254,6 +1240,7 @@ function aiAddBubble(html, role) {
     return d;
 }
 
+// ئەم فەنکشنە بەتەواوی چاککراوە بۆ کارکردن لەگەڵ Groq بەبێ هیچ کێشەیەک
 async function aiSendMsg() {
     if(aiIsLoading || !aiProfile) return;
     const inp = document.getElementById('ai-input');
@@ -1267,48 +1254,61 @@ async function aiSendMsg() {
     aiAddBubble(text, 'user');
     aiMessages.push({ role: 'user', content: text });
 
-    const thinking = aiAddBubble('<em style="opacity:0.6;font-size:12px;">دەبیریم...</em>', 'bot');
+    const thinking = aiAddBubble('<em style="opacity:0.6;font-size:12px;">لە بیرکردنەوەدایە... 🤖</em>', 'bot');
 
     const subs = (AI_SUBJECTS[parseInt(aiProfile.sem)] || []).join(', ');
     const shiftLabel = aiProfile.shift === 'morning' ? 'بەیانیان' : 'ئێوارن';
     const title = aiProfile.gender === 'male' ? 'کاک' : 'خاتوو';
 
-    const systemPrompt = `تۆ یاریدەری زیرەکی تایبەت بە خوێندکارانی بەشی IT پەیمانگای تەکنیکی چەمچەماڵ، کوردستان-عێراقی.
+    const systemPrompt = `تۆ یاریدەری زیرەکی تایبەت بە خوێندکارانی بەشی IT پەیمانگای تەکنیکی چەمچەماڵیت.
+ناوی خوێندکار: ${title} ${aiProfile.name}
+سمستەر: ${aiProfile.sem}
+وانەکان: ${subs}
+پێویستە بە کوردییەکی پاراو و ڕوون وەڵام بدەیتەوە. یارمەتی خوێندکارەکە بدە لە وانەکانی.`;
 
-زانیاری خوێندکار:
-- ناو: ${title} ${aiProfile.name}
-- سمستەر: ${aiProfile.sem} · گرووپ: ${aiProfile.group} · دەوام: ${shiftLabel}
-- وانەکانی ئەم سمستەرە: ${subs}
-- وانەی هەڵبژێردراو: ${aiCurrentSub || subs.split(',')[0]}
+    const GROQ_API_KEY = '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'; 
 
-ئەرکەکانت:
-• بە ناوی ${title} ${aiProfile.name} بانگی بکە کاتێک گونجاوە
-• تەنها لەسەر وانەکانی سمستەری ${aiProfile.sem} تەمەرکوز بکە
-• وەڵامت کورت، ڕوون، بەسوود بێت بە کوردی سۆرانی
-• نموونە و ئیموجی بەکار بهێنە`;
+    let formattedMessages = [
+        { role: 'system', content: systemPrompt },
+        ...aiMessages
+    ];
 
     try {
-        const res = await fetch('https://api.anthropic.com/v1/messages', {
+        const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent('https://api.groq.com/openai/v1/chat/completions');
+        
+        const res = await fetch(proxyUrl, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${GROQ_API_KEY}`
+            },
             body: JSON.stringify({
-                model: 'claude-sonnet-4-20250514',
-                max_tokens: 1000,
-                system: systemPrompt,
-                messages: aiMessages.slice(-10)
+                model: 'llama3-70b-8192',
+                messages: formattedMessages,
+                temperature: 0.7,
+                max_tokens: 800
             })
         });
+
         const data = await res.json();
-        const reply = data.content?.[0]?.text || 'داواکاری سەرکەوتوو نەبوو.';
+        
+        if (data.error) {
+            throw new Error(data.error.message || "هەڵەیەک لە سێرڤەرەوە هەیە");
+        }
+
+        const reply = data.choices[0].message.content;
         aiMessages.push({ role: 'assistant', content: reply });
+        
         if(thinking) {
             const bbl = thinking.querySelector('div');
-            if(bbl) bbl.innerHTML = reply.replace(/\n/g,'<br>');
+            let formattedReply = reply.replace(/\n/g, '<br>');
+            formattedReply = formattedReply.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            if(bbl) bbl.innerHTML = formattedReply;
         }
     } catch(e) {
         if(thinking) {
             const bbl = thinking.querySelector('div');
-            if(bbl) bbl.textContent = 'کێشەیەک ڕووی دا. دوبارە هەوڵبدەرەوە.';
+            if(bbl) bbl.innerHTML = `<span style="color:#ef4444;font-weight:bold;">⚠️ کێشەیەک ڕووی دا:</span><br><br><span style="font-size:12px;opacity:0.8;font-family:sans-serif;" dir="ltr">${e.message}</span>`;
         }
     }
 
