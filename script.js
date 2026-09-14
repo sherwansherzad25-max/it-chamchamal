@@ -291,18 +291,65 @@ function startStars(canvas) {
     draw();
 }
 
-const scheduleData = {
-    morning:{
-        2:{'A':{1:[["١","Programming","8:30","م. هێشوو + هۆگر + ئاسۆ"],["٢","English II","10:30","م. خێڵان + بەرهەم"],["٣","Database","12:30","م. هەردی"]],2:[["١","Programming","8:30","م. هێشوو"],["٢","English II","10:30","م. خێڵان"],["٣","Database","12:30","م. هەردی"]],3:[["١","Network +","8:30","م. عومەر"],["٢","Web Design","10:30","م. مستەفا"]],4:[["١","Web Design","8:30","م. مستەفا+ئەمین+چیناز+نمە"],["٢","Network +","10:30","م. عومەر+گۆران+شیلان+یەحیا"]]},'B':{1:[["١","English II","8:30","م. خێڵان + بەرهەم"],["٢","Database","10:30","م. هەردی+ئەمین+هاوژین+نمە"],["٣","Programming","12:30","م. هێشوو + هۆگر + ئاسۆ"]],2:[["١","Database","8:30","م. هەردی"],["٢","Programming","10:30","م. هێشوو"],["٣","English II","12:30","م. خێڵان"]],3:[["١","Web Design","8:30","م. مستەفا"],["٢","Network +","10:30","م. عومەر"]],4:[["١","Web Design","10:30","م. مستەفا+ئەمین+چیناز+نمە"],["٢","Network +","12:30","م. عومەر+گۆران+شیلان+یەحیا"]]},'C':{1:[["١","Database","8:30","م. هەردی+ئەمین+هاوژین+نمە"],["٢","Programming","10:30","م. هێشوو + هۆگر + ئاسۆ"],["٣","English II","12:30","م. خێڵان + بەرهەم"]],2:[],3:[],4:[["١","Network +","8:30","م. عومەر+گۆران+شیلان+یەحیا"],["٢","Web Design","12:30","م. مستەفا+ئەمین+چیناز+نمە"]]}},
-        4:{'A':{1:[["١","Web Programming II","8:30","م. زانیار"],["٢","Visual Programming","10:30","م. علی"],["٣","Project","12:30","-"]],2:[["١","Web Programming II","8:30","م. زانیار+چیناز+گۆران+نمە"],["٢","Mobile Application","10:30","م. ڕێبین+سامان+ئەمین"],["٣","Visual Programming","12:30","م. علی+هۆگر+ئاسۆ"]],3:[["١","Project","8:30","-"],["٢","Project","10:30","-"]],4:[["١","Mobile Application","8:30","م. ڕێبین"],["٢","Information Security","10:30","م. هەڵۆ"]]},'B':{1:[["١","Visual Programming","8:30","م. علی"],["٢","Web Programming II","10:30","م. زانیار"],["٣","Project","12:30","-"]],2:[["١","Mobile Application","8:30","م. ڕێبین+سامان+ئەمین"],["٢","Visual Programming","10:30","م. علی+هۆگر+ئاسۆ"],["٣","Web Programming II","12:30","م. زانیار+گۆران+چیناز+نمە"]],3:[["١","Project","8:30","-"],["٢","Project","10:30","-"]],4:[["١","Information Security","8:30","م. هەڵۆ"],["٢","Mobile Application","10:30","م. ڕێبین"]]},'C':{2:[["١","Visual Programming","8:30","م. علی+هۆگر+ئاسۆ"],["٢","Web Programming II","10:30","م. زانیار+گۆران+چیناز+نمە"],["٣","Mobile Application","12:30","م. ڕێبین+سامان+ئەمین"]],1:[],3:[],4:[]}}
-    },
-    evening:{
-        1:{'A':{1:[["١","Logic Design","2:00","م. پشتیوان + هەڵكەوت"],["٢","English","4:00","م. بەرهەم"],["٣","IT Fundamentals","6:00","م.عمر+هۆگر+امین"]],2:[["١","Mathematics","2:00","م. سۆران"],["٢","Logic Design","4:00","م. پشتیوان"],["٣","IT Fundamentals","6:00","م. عمر"]],3:[["١","Kurdology","2:00","م. ڕێبین"],["٢","English","4:00","م. بەرهەم"],["٣","Kurdology","6:00","م. ڕێبین"]],4:[["١","IT Fundamentals","2:00","م. عمر"],["٢","IT Fundamentals","4:00","م. عمر+امین+هۆگر"]]},'B':{1:[["١","English","2:00","م. بەرهەم"],["٢","Logic Design","4:00","م. پشتیوان+هەڵكەوت"],["٣","IT Fundamentals","6:00","م.عمر+هۆگر+امین"]],2:[["١","Logic Design","2:00","م. پشتیوان"],["٢","Mathematics","4:00","م. سۆران"],["٣","IT Fundamentals","6:00","م. عمر"]],3:[["١","English","2:00","م. بەرهەم"],["٢","Kurdology","4:00","م. ڕێبین"],["٣","Kurdology","6:00","م. ڕێبین"]],4:[["١","IT Fundamentals","2:00","م. عمر"],["٢","IT Fundamentals","4:00","م. عمر+امین+هۆگر"]]}},
-        2:{'A':{1:[["١","Programming","2:00","م. هێشوو + هۆگر + امین"],["٢","English","4:00","م. بەرهەم + خێڵان"],["٣","Network +","6:00","م.عمر"]],2:[["١","Programming","2:00","م. هێشوو"],["٢","English","4:00","م. بەرهەم + خێڵان"]],3:[["١","Network +","2:00","م. عمر + گۆران + شیلان"],["٢","Web Design","4:00","م. مستەفا + امین + چیناز"],["٣","Database","6:00","م. هەردی + امین + سامان"]],4:[["١","Database","2:00","م. هەردی"],["٢","Web Design","4:00","م. مستەفا"]]},'B':{1:[["١","English","2:00","م. بەرهەم + خێڵان"],["٢","Programming","4:00","م. هێشوو + هۆگر + امین"]],2:[["١","English","2:00","م. بەرهەم + خێڵان"],["٢","Programming","4:00","م. هێشوو"],["٣","Network +","6:00","م. عمر"]],3:[["١","Web Design","2:00","م. مستەفا + امین+ چیناز"],["٢","Network +","4:00","م. عمر + گۆران + شیلان"]],4:[["١","Web Design","2:00","م. مستەفا"],["٢","Database","4:00","م. هەردی"],["٣","Database","6:00","م. هەردی + امین + سامان"]]}},
-        3:{'A':{1:[["١","Web Programming","2:00","م. زانیار"],["٢","O.O.P","4:00","م. علی"]],2:[["١","Database Management","2:00","م. محمد + امین"],["٢","Web Programming","4:00","م. زانیار + گۆران"]],3:[["١","Database","2:00","م. محمد"],["٢","O.O.P","4:00","م. علی + هۆگر + سامان"]],4:[["١","Operating System","2:00","م. ڕێبین"],["٢","Computer Network II","4:00","م. هەڵۆ"]]},'B':{1:[["١","Web Programming","2:00","م. زانیار"],["٢","O.O.P","4:00","م. علی"]],2:[["١","Database Management","2:00","م. محمد + امین"],["٢","Web Programming","4:00","م. زانیار + گۆران"]],3:[["١","Database","2:00","م. محمد"],["٢","O.O.P","4:00","م. علی + هۆگر + سامان"]],4:[["١","Operating System","2:00","م. ڕێبین"],["٢","Computer Network II","4:00","م. هەڵۆ"]]}},
-        4:{'A':{1:[["١","Web Programming II","2:00","م. زانیار"],["٢","Visual Programming","4:00","م. علی"]],2:[["١","Mobile Application","2:00","م. ڕێبین+سامان+ئەمین"],["٢","Visual Programming","4:00","م. علی+هۆگر+نمە"],["٣","Web Programming II","6:00","م. زانیار+گۆران+چیناز"]],3:[["١","Project","2:00","-"],["٢","Project","4:00","-"]],4:[["١","Mobile Application","2:00","م. ڕێبین"],["٢","Information Security","4:00","م. هەڵۆ"]]},'B':{1:[["١","Web Programming II","2:00","م. زانیار"],["٢","Visual Programming","4:00","م. علی"]],2:[["١","Web Programming II","2:00","م. زانیار+گۆران+چیناز"],["٢","Mobile Application","4:00","م. ڕێبین+سامان+ئەمین"],["٣","Visual Programming","6:00","م. علی+هۆگر+نمە"]],3:[["١","Project","2:00","-"],["٢","Project","4:00","-"]],4:[["١","Mobile Application","2:00","م. ڕێبین"],["٢","Information Security","4:00","م. هەڵۆ"]]}}
+/* ============================================================
+   Weekly schedule data — now loaded dynamically from a Google
+   Sheet published as CSV instead of being hard-coded here.
+   CSV column order: Shift, Semester, Group, Day, No, Subject, Time, Teacher
+   ============================================================ */
+let scheduleData = {};
+
+function splitCsvLine(line) {
+    // Basic CSV splitter that also respects simple quoted fields.
+    const result = [];
+    let cur = '';
+    let inQuotes = false;
+    for (let i = 0; i < line.length; i++) {
+        const ch = line[i];
+        if (ch === '"') { inQuotes = !inQuotes; continue; }
+        if (ch === ',' && !inQuotes) { result.push(cur); cur = ''; continue; }
+        cur += ch;
     }
-};
+    result.push(cur);
+    return result;
+}
+
+async function fetchSchedule() {
+    const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS2j8Z4JmuZ2Fq75MNmQ1siz3l9djVQqaIQhk9R9SrSbBx94k3zRfQHeuDpTx_SBW8ZYaWB0Bvxor7M/pub?gid=175394541&single=true&output=csv";
+    try {
+        const r = await fetch(url, { cache: "no-store" });
+        const csvText = await r.text();
+        const rows = csvText.split(/\r?\n/).slice(1); // skip header row
+        const data = {};
+
+        rows.forEach(row => {
+            if (!row.trim()) return;
+            const cols = splitCsvLine(row).map(c => c.trim());
+            if (cols.length < 8) return;
+
+            const shift   = cols[0].toLowerCase();
+            const sem     = parseInt(cols[1], 10);
+            const group   = cols[2];
+            const day     = parseInt(cols[3], 10);
+            const no      = cols[4];
+            const subject = cols[5];
+            const time    = cols[6];
+            const teacher = cols.slice(7).join(',').trim();
+
+            if (!shift || isNaN(sem) || !group || isNaN(day) || !subject) return;
+
+            if (!data[shift]) data[shift] = {};
+            if (!data[shift][sem]) data[shift][sem] = {};
+            if (!data[shift][sem][group]) data[shift][sem][group] = {};
+            if (!data[shift][sem][group][day]) data[shift][sem][group][day] = [];
+
+            data[shift][sem][group][day].push([no, subject, time, teacher]);
+        });
+
+        scheduleData = data;
+    } catch (e) {
+        console.error("Error fetching schedule:", e);
+    }
+}
 
 function initScheduleTab() {
     const stored = localStorage.getItem('today_profile');
@@ -740,15 +787,35 @@ function animateValue(obj, start, end, duration) {
     window.requestAnimationFrame(step);
 }
 
+/* ============================================================
+   Visitor counter — now reads its count from a published Google
+   Sheet CSV, and separately "pings" an Apps Script endpoint
+   (no-cors) so that every visit increments the count in that sheet.
+   ============================================================ */
 async function initVisitorCounter() {
     const counterEl = document.getElementById('visitor-counter');
     if(!counterEl) return;
+
+    const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS2j8Z4JmuZ2Fq75MNmQ1siz3l9djVQqaIQhk9R9SrSbBx94k3zRfQHeuDpTx_SBW8ZYaWB0Bvxor7M/pub?gid=352983700&single=true&output=csv";
     try {
-        const res=await fetch('https://api.counterapi.dev/v1/itchamchamal/visits/up');
-        const data=await res.json();
-        let n=(data.count||0)+2651;
+        const r = await fetch(csvUrl, { cache: "no-store" });
+        const text = await r.text();
+        const rows = text.split(/\r?\n/);
+        let n = 0;
+        for (const row of rows) {
+            if (!row.trim()) continue;
+            const firstCell = row.split(',')[0].replace(/(^"|"$)/g, '').trim();
+            const val = parseInt(firstCell, 10);
+            if (!isNaN(val)) { n = val; break; }
+        }
         animateValue(counterEl, 0, n, 1500);
-    } catch(e) { animateValue(counterEl, 0, 2651, 1500); }
+    } catch(e) {
+        animateValue(counterEl, 0, 0, 1500);
+    }
+
+    try {
+        fetch('https://script.google.com/macros/s/AKfycbzjv4dDV6ISByYqykqTJ01w1QYhLhVvEtn7JFkox7uG-3qZ9qa5DqMNDzMCJi8qQKGVIg/exec', { mode: 'no-cors' });
+    } catch(e) {}
 }
 
 function updateClock() {
@@ -834,11 +901,12 @@ function sendClassNotification(subjectName, classTime) {
     }
 }
 
-window.addEventListener('load', function () {
+window.addEventListener('load', async function () {
     setTimeout(forceHideLoader, 4000);
     try { autoRequestNotification(); } catch(e){}
     try { fetchNews(); } catch(e){}
     try { fetchEndOfYear(); } catch(e){}
+    try { await fetchSchedule(); } catch(e){}
     try { initVisitorCounter(); } catch(e){}
     try { checkUpdate(); } catch(e){}
     try {
@@ -857,6 +925,13 @@ window.addEventListener('load', function () {
     } catch(e){}
     try { checkExams(); } catch(e){}
     try { setInterval(updateClock,1000); updateClock(); } catch(e){}
+
+    // Now that the schedule has been fetched, refresh any views that depend on it.
+    try {
+        const todayMain = document.getElementById('today-main');
+        if (todayMain && todayMain.style.display === 'block') renderTodayMain();
+        scheduleClassAlerts();
+    } catch(e){}
 });
 
 if ('serviceWorker' in navigator) {
