@@ -798,18 +798,13 @@ async function initVisitorCounter() {
     const counterEl = document.getElementById('visitor-counter');
     if(!counterEl) return;
 
-    // لینکی خوێندنەوەی ژمارەکە لە گۆگڵ شیتەوە
     const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS2j8Z4JmuZ2Fq75MNmQ1siz3l9djVQqaIQhk9R9SrSbBx94k3zRfQHeuDpTx_SBW8ZYaWB0Bvxor7M/pub?gid=352983700&single=true&output=csv";
-    
-    // لینکی نوێی Apps Script بۆ زیادکردنی سەردانەکان
     const scriptUrl = "https://script.google.com/macros/s/AKfycbzlRtpJXxMDCT7mU7hD_eXQ97NVoPm4s0xq6dnH1cb3qqX58wTtH3tw-S54fU-MrflrJQ/exec";
 
-    // ١. یەکێک زیاد بکە بۆ شیتەکە بێ ئەوەی کێشەی (CORS) دروست بکات
     try {
         fetch(scriptUrl, { mode: 'no-cors' });
     } catch(e) {}
 
-    // ٢. ژمارە نوێیەکە بخوێنەوە و پیشانی بدە
     try {
         const r = await fetch(csvUrl, { cache: "no-store" });
         const text = await r.text();
@@ -818,9 +813,17 @@ async function initVisitorCounter() {
         
         for (const row of rows) {
             if (!row.trim()) continue;
-            const firstCell = row.split(',')[0].replace(/(^"|"$)/g, '').trim();
-            const val = parseInt(firstCell, 10);
-            if (!isNaN(val)) { n = val; break; }
+            const cells = row.split(',');
+            // گەڕان بەناو هەموو خانەکاندا بۆ دۆزینەوەی ژمارەکە (ئیتر لە A بێت یان B)
+            for (const cell of cells) {
+                const cleanCell = cell.replace(/(^"|"$)/g, '').trim();
+                const val = parseInt(cleanCell, 10);
+                if (!isNaN(val) && val > 0) { 
+                    n = val; 
+                    break; 
+                }
+            }
+            if (n > 0) break;
         }
         
         animateValue(counterEl, 0, n, 1500);
@@ -828,7 +831,6 @@ async function initVisitorCounter() {
         animateValue(counterEl, 0, 0, 1500);
     }
 }
-
 function updateClock() {
     try {
         const now=new Date(); let h=now.getHours(); const m=String(now.getMinutes()).padStart(2,'0'); const s=String(now.getSeconds()).padStart(2,'0');
