@@ -798,27 +798,24 @@ async function initVisitorCounter() {
     const counterEl = document.getElementById('visitor-counter');
     if(!counterEl) return;
 
-    //Published CSV URL of the spreadsheet to read the count
+    // لینکی خوێندنەوەی ژمارەکە لە گۆگڵ شیتەوە
     const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS2j8Z4JmuZ2Fq75MNmQ1siz3l9djVQqaIQhk9R9SrSbBx94k3zRfQHeuDpTx_SBW8ZYaWB0Bvxor7M/pub?gid=352983700&single=true&output=csv";
     
-    // Apps Script URL to trigger increment logic in the Google Sheet
-    const incrementUrl = 'https://script.google.com/macros/s/AKfycbzjv4dDV6ISByYqykqTJ01w1QYhLhVvEtn7JFkox7uG-3qZ9qa5DqMNDzMCJi8qQKGVIg/exec';
+    // لینکی نوێی Apps Script بۆ زیادکردنی سەردانەکان
+    const scriptUrl = "https://script.google.com/macros/s/AKfycbwWYpuNM1JaB8eNBdT3FMg2Hjt8VsHIemplI--ouU8xm3Zj3r0o_ZclhQeOAd-bSOukdA/exec";
 
+    // ١. یەکێک زیاد بکە بۆ شیتەکە بێ ئەوەی کێشەی (CORS) دروست بکات
     try {
-        // ۱. Increment the count first (using no-cors as established)
-        fetch(incrementUrl, { mode: 'no-cors' });
-    } catch (e) {
-        console.error('Error incrementing visits:', e);
-    }
+        fetch(scriptUrl, { mode: 'no-cors' });
+    } catch(e) {}
 
+    // ٢. ژمارە نوێیەکە بخوێنەوە و پیشانی بدە
     try {
-        // ۲. Then, read the updated count via CSV
         const r = await fetch(csvUrl, { cache: "no-store" });
         const text = await r.text();
         const rows = text.split(/\r?\n/);
         let n = 0;
         
-        // Parse the CSV rows
         for (const row of rows) {
             if (!row.trim()) continue;
             const firstCell = row.split(',')[0].replace(/(^"|"$)/g, '').trim();
@@ -826,12 +823,9 @@ async function initVisitorCounter() {
             if (!isNaN(val)) { n = val; break; }
         }
         
-        // ۳. Update the display with animation
-        animateValue(counterEl, 0, n, 1500); 
-
-    } catch(e) { 
-        console.error('Error fetching visitor count:', e); 
-        animateValue(counterEl, 0, 0, 1500); // Show 0 on error
+        animateValue(counterEl, 0, n, 1500);
+    } catch(e) {
+        animateValue(counterEl, 0, 0, 1500);
     }
 }
 
