@@ -802,7 +802,7 @@ async function initVisitorCounter() {
     const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS2j8Z4JmuZ2Fq75MNmQ1siz3l9djVQqaIQhk9R9SrSbBx94k3zRfQHeuDpTx_SBW8ZYaWB0Bvxor7M/pub?gid=352983700&single=true&output=csv";
     
     // لینکی نوێی Apps Script بۆ زیادکردنی سەردانەکان
-    const scriptUrl = "https://script.google.com/macros/s/AKfycbwWYpuNM1JaB8eNBdT3FMg2Hjt8VsHIemplI--ouU8xm3Zj3r0o_ZclhQeOAd-bSOukdA/exec";
+    const scriptUrl = "https://script.google.com/macros/s/AKfycbzlRtpJXxMDCT7mU7hD_eXQ97NVoPm4s0xq6dnH1cb3qqX58wTtH3tw-S54fU-MrflrJQ/exec";
 
     // ١. یەکێک زیاد بکە بۆ شیتەکە بێ ئەوەی کێشەی (CORS) دروست بکات
     try {
