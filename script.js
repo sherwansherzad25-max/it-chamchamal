@@ -793,6 +793,7 @@ function animateValue(obj, start, end, duration) {
    (no-cors) so that every visit increments the count in that sheet.
    ============================================================ */
 // ڕێک ئەم کورتە کۆدە (Function) لە جێگەی کۆنەکە دابنێ:
+// ڕێک ئەم کورتە کۆدە (Function) لە جێگەی کۆنەکە دابنێ:
 async function initVisitorCounter() {
     const counterEl = document.getElementById('visitor-counter');
     if(!counterEl) return;
