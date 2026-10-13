@@ -236,12 +236,15 @@ tr:nth-child(even) td { background: var(--table-row-alt); }
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
 }
 .bottom-nav::-webkit-scrollbar { display: none; }
+
 .bnav-item { 
-    flex: 0 0 25%; /* دەڵێت هەر تابێک تەنها چارەکێکی شاشە بگرێت */
+    flex: 0 0 25%; 
     min-width: 25%;
-    display: flex; flex-direction: column; align-items: center; justify-content: center; 
+    display: inline-flex; 
+    flex-direction: column; align-items: center; justify-content: center; 
     background: transparent; border: none; color: var(--text-muted); cursor: pointer; 
     position: relative; transition: color 0.2s; 
     scroll-snap-align: start;
