@@ -136,15 +136,17 @@
     <span class="menu-icon-text" id="lang-menu" style="color:#fbbf24; text-shadow:0 1px 3px rgba(0,0,0,0.8);">لیست</span>
 </div>
 
-<header>
+<header style="min-height: 120px; padding: 25px 15px; position: relative;">
     <div class="header-watermark"></div>
+    
+    <!-- کاتژمێرەکە لە لای چەپی سەرەوەی هێدەرەکە بە قەبارەیەکی زۆر ڕێک -->
+    <div style="position: absolute; top: 12px; left: 15px; z-index: 10;">
+        <div id="liveClock" style="font-size: 0.7rem; padding: 4px 10px; background: rgba(255,255,255,0.18); backdrop-filter: blur(8px); color: white; border-radius: 12px; font-family: monospace; direction: ltr; border: 1px solid rgba(255,255,255,0.2);">00:00:00 PM</div>
+    </div>
+
     <div class="header-titles">
         <h1 class="moving-header" id="lang-institute">پەیمانگای تەکنیکی چەمچەماڵ</h1>
         <h2 id="lang-dept-sub">بەشی تەکنەلۆژیای زانیاری (IT)</h2>
-    </div>
-    <!-- کاتژمێرەکە خرایە ناو هێدەرەوە بە قەبارەی بچووک -->
-    <div style="position: absolute; top: 12px; left: 12px; z-index: 10;">
-        <div id="liveClock" style="font-size: 0.65rem; padding: 3px 7px; background: rgba(255,255,255,0.15); backdrop-filter: blur(5px); color: white; border-radius: 10px; font-family: monospace; direction: ltr;">00:00:00 PM</div>
     </div>
 </header>
 
