@@ -1,7 +1,9 @@
-const CACHE_NAME = 'it-chamchamal-v3.0'; // ڤێرژنەکەم گۆڕی بۆ 3.0 بۆ ئەوەی گۆڕانکارییەکان یەکسەر وەربگرێت
+const CACHE_NAME = 'it-chamchamal-v3.2'; // ڤێرژنەکەم گۆڕی بۆ 3.2 بۆ ئەوەی گۆڕانکارییەکان یەکسەر وەربگرێت
 const assets = [
   './',
   './index.html',
+  './style.css',
+  './script.js',
   './it-icon-final-192.png',
   './it-icon-final-512.png',
   './manifest.json'
