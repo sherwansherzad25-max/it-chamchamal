@@ -1,18 +1,10 @@
-// --- یارمەتیدەرەکان (Helpers) ---
-function triggerHaptic() {
-    try { if (navigator && navigator.vibrate) navigator.vibrate(15); } catch(e){}
-}
+function triggerHaptic() { try { if (navigator && navigator.vibrate) navigator.vibrate(15); } catch(e){} }
 
 function showToast(message, icon = "✅") {
     try {
         let container = document.getElementById('toast-container');
-        if (!container) {
-            container = document.createElement('div');
-            container.id = 'toast-container';
-            document.body.appendChild(container);
-        }
-        const toast = document.createElement('div');
-        toast.className = 'toast-message';
+        if (!container) { container = document.createElement('div'); container.id = 'toast-container'; document.body.appendChild(container); }
+        const toast = document.createElement('div'); toast.className = 'toast-message';
         toast.innerHTML = `<span>${icon}</span> <span>${message}</span>`;
         container.appendChild(toast);
         setTimeout(() => { toast.remove(); }, 3800);
@@ -24,9 +16,7 @@ function autoRequestNotification() {
     if (Notification.permission === "default") {
         setTimeout(() => {
             Notification.requestPermission().then(permission => {
-                if (permission === "granted") {
-                    new Notification("IT Chamchamal", { body: "ئێستا ئاگادارییەکان وەردەگریت", icon: "it-icon-final-192.png" });
-                }
+                if (permission === "granted") { new Notification("IT Chamchamal", { body: "ئێستا ئاگادارییەکان وەردەگریت", icon: "it-icon-final-192.png" }); }
             });
         }, 3000);
     }
@@ -34,13 +24,9 @@ function autoRequestNotification() {
 
 function forceHideLoader() {
     var loader = document.getElementById('loading-screen');
-    if (loader) {
-        loader.style.opacity = '0';
-        setTimeout(() => loader.style.display = 'none', 500);
-    }
+    if (loader) { loader.style.opacity = '0'; setTimeout(() => loader.style.display = 'none', 500); }
 }
 
-// --- گۆڕاوە سەرەکییەکان ---
 const TELEGRAM_USERNAME = "sherwan25";
 let currentSem = 1;
 let currentShift = 'evening';
@@ -52,48 +38,45 @@ let endOfYearMessage = "";
 const subjectList = {
     1: ["Logic Design","IT Fundamentals","Mathematics","English","Kurdology"],
     2: ["Database","English II","Network +","Programming","Web Design"],
-    3: ["Web Programming","O.O.P","Database Management","Computer Network II","Operating System"],
+    3: ["Web Programming","O.O.P","Database Management System","Computer Network II","Operating System"],
     4: ["Mobile Application","Web Programming II","Visual Programming","Information Security","Project"]
 };
 
-// --- ڕێکخستنی مینیو و بەشەکان ---
 function openNav() { triggerHaptic(); document.getElementById("mySidebar").style.width="280px"; document.getElementById("sidebarOverlay").style.display="block"; document.body.classList.add('sidebar-open'); }
 function closeNav() { document.getElementById("mySidebar").style.width="0"; document.getElementById("sidebarOverlay").style.display="none"; document.body.classList.remove('sidebar-open'); }
 
 function showSection(id) {
     triggerHaptic();
     document.querySelectorAll(".semester-content").forEach(el => el.style.display = "none");
-    const target = document.getElementById(id);
-    if(target) target.style.display = "block";
-
+    const target = document.getElementById(id); if(target) target.style.display = "block";
     if (id === 'schedule-tab') initScheduleTab();
     if (id === 'today-tab') initTodayTab();
-
     window.scrollTo({top:0,behavior:'smooth'});
 }
 
 function setActiveNav(id) {
     triggerHaptic();
     document.querySelectorAll('.bnav-item').forEach(el => el.classList.remove('active'));
-    const el = document.getElementById(id);
-    if(el) el.classList.add('active');
+    const el = document.getElementById(id); if(el) el.classList.add('active');
 }
 
 function checkUpdate() { if ('serviceWorker' in navigator) { navigator.serviceWorker.ready.then(reg => reg.update()); } }
 if (localStorage.getItem("app_version") !== APP_VERSION) { localStorage.setItem("app_version",APP_VERSION); window.location.reload(true); }
 
-// شاردنەوەی خشتەی سمستەرەکان تا کلیک دەکرێت
-function openInnerSem(semId) {
+function openInnerStage(stageId) {
     triggerHaptic();
     document.querySelectorAll(".inner-sem-content").forEach(el=>el.style.display="none");
-    const target = document.getElementById(semId);
-    if(target) {
-        target.style.display="block";
-        target.scrollIntoView({behavior:'smooth'});
-    }
+    const target = document.getElementById(stageId);
+    if(target) { target.style.display="block"; target.scrollIntoView({behavior:'smooth'}); }
 }
 
-// --- ڕووکار و ئەستێرەکان ---
+function openSemTable(tableId) {
+    triggerHaptic();
+    document.querySelectorAll(".sem-table-wrap").forEach(el=>el.style.display="none");
+    const target = document.getElementById(tableId);
+    if(target) { target.style.display="block"; target.scrollIntoView({behavior:'smooth'}); }
+}
+
 const THEMES = ['classic','dark'];
 const themeHeaderColors = { 'classic': '#1e3a8a', 'dark': '#0b0f1e' };
 
@@ -103,8 +86,7 @@ function applyTheme(name, isLoad = false) {
     if (name !== 'classic') document.body.classList.add('theme-'+name);
     localStorage.setItem('it_theme', name);
     document.querySelectorAll('.theme-card').forEach(c => c.classList.remove('active'));
-    const tc = document.getElementById('tc-'+name);
-    if (tc) tc.classList.add('active');
+    const tc = document.getElementById('tc-'+name); if (tc) tc.classList.add('active');
     let metaThemeColor = document.querySelector('meta[name="theme-color"]');
     if (metaThemeColor) metaThemeColor.setAttribute('content', themeHeaderColors[name] || '#1e3a8a');
 }
@@ -115,60 +97,43 @@ function closeThemePanel() { document.getElementById('themePanel').classList.rem
 let starAnimId = null;
 function applyStarField(on, isLoad = false) {
     localStorage.setItem('it_stars', on ? '1' : '0');
-    const canvas = document.getElementById('starCanvas');
-    if (!canvas) return;
+    const canvas = document.getElementById('starCanvas'); if (!canvas) return;
     if (!on) {
-        canvas.style.display='none';
-        if(starAnimId){cancelAnimationFrame(starAnimId);starAnimId=null;}
+        canvas.style.display='none'; if(starAnimId){cancelAnimationFrame(starAnimId);starAnimId=null;}
         if(!isLoad) showToast('تروسکەی ئەستێرەکان ناچالاک کرا', '❌');
         return;
     }
-    canvas.style.display='block';
-    if(!isLoad) showToast('تروسکەی ئەستێرەکان چالاک کرا', '✨');
+    canvas.style.display='block'; if(!isLoad) showToast('تروسکەی ئەستێرەکان چالاک کرا', '✨');
     startStars(canvas);
 }
 
 function startStars(canvas) {
-    const ctx = canvas.getContext('2d');
-    let stars = [];
+    const ctx = canvas.getContext('2d'); let stars = [];
     function resize() { canvas.width=window.innerWidth; canvas.height=window.innerHeight; }
-    resize();
-    window.addEventListener('resize', resize);
-    for (let i=0;i<120;i++) {
-        stars.push({ x:Math.random()*canvas.width, y:Math.random()*canvas.height, r:Math.random()*1.5+0.3, speed:Math.random()*0.3+0.1, opacity:Math.random() });
-    }
+    resize(); window.addEventListener('resize', resize);
+    for (let i=0;i<120;i++) stars.push({ x:Math.random()*canvas.width, y:Math.random()*canvas.height, r:Math.random()*1.5+0.3, speed:Math.random()*0.3+0.1, opacity:Math.random() });
     function draw() {
         ctx.clearRect(0,0,canvas.width,canvas.height);
         stars.forEach(s => {
-            s.opacity += (Math.random()-0.5)*0.03;
-            s.opacity = Math.max(0.1, Math.min(0.9, s.opacity));
-            ctx.beginPath();
-            ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
-            ctx.fillStyle = `rgba(200,220,255,${s.opacity})`;
-            ctx.fill();
-            s.y -= s.speed;
-            if (s.y < -5) { s.y = canvas.height+5; s.x = Math.random()*canvas.width; }
+            s.opacity += (Math.random()-0.5)*0.03; s.opacity = Math.max(0.1, Math.min(0.9, s.opacity));
+            ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2); ctx.fillStyle = `rgba(200,220,255,${s.opacity})`; ctx.fill();
+            s.y -= s.speed; if (s.y < -5) { s.y = canvas.height+5; s.x = Math.random()*canvas.width; }
         });
         starAnimId = requestAnimationFrame(draw);
     }
     draw();
 }
 
-// --- خشتەی هەفتانە (Schedule) ---
 let scheduleData = {};
-
 function splitCsvLine(line) {
-    const result = [];
-    let cur = '';
-    let inQuotes = false;
+    const result = []; let cur = ''; let inQuotes = false;
     for (let i = 0; i < line.length; i++) {
         const ch = line[i];
         if (ch === '"') { inQuotes = !inQuotes; continue; }
         if (ch === ',' && !inQuotes) { result.push(cur); cur = ''; continue; }
         cur += ch;
     }
-    result.push(cur);
-    return result;
+    result.push(cur); return result;
 }
 
 async function fetchSchedule() {
@@ -178,45 +143,30 @@ async function fetchSchedule() {
         const csvText = await r.text();
         const rows = csvText.split(/\r?\n/).slice(1);
         const data = {};
-
         rows.forEach(row => {
             if (!row.trim()) return;
             const cols = splitCsvLine(row).map(c => c.trim());
             if (cols.length < 8) return;
-
-            const shift   = cols[0].toLowerCase();
-            const sem     = parseInt(cols[1], 10);
-            const group   = cols[2];
-            const day     = parseInt(cols[3], 10);
-            const no      = cols[4];
-            const subject = cols[5];
-            const time    = cols[6];
-            const teacher = cols.slice(7).join(',').trim();
-
+            const shift = cols[0].toLowerCase(), sem = parseInt(cols[1], 10), group = cols[2], day = parseInt(cols[3], 10), no = cols[4], subject = cols[5], time = cols[6], teacher = cols.slice(7).join(',').trim();
             if (!shift || isNaN(sem) || !group || isNaN(day) || !subject) return;
-
             if (!data[shift]) data[shift] = {};
             if (!data[shift][sem]) data[shift][sem] = {};
             if (!data[shift][sem][group]) data[shift][sem][group] = {};
             if (!data[shift][sem][group][day]) data[shift][sem][group][day] = [];
-
             data[shift][sem][group][day].push([no, subject, time, teacher]);
         });
-
-        scheduleData = data;
-        scheduleClassAlerts(); // نوێکردنەوەی زەنگەکان دوای هێنانی خشتە
+        scheduleData = data; scheduleClassAlerts(); 
     } catch (e) { console.error("Error fetching schedule:", e); }
 }
 
 function initScheduleTab() {
     const stored = localStorage.getItem('today_profile');
     const schedTab = document.getElementById('schedule-tab');
-    const oldUI = schedTab.querySelectorAll('.shift-selection, .sem-btn-row, #group-selection');
+    const oldUI = schedTab.querySelectorAll('.shift-selection, .sem-btn-row, #sched-sem-row, #group-selection');
 
     let setupContainer = document.getElementById('sched-setup-container');
     if (!setupContainer) {
-        setupContainer = document.createElement('div');
-        setupContainer.id = 'sched-setup-container';
+        setupContainer = document.createElement('div'); setupContainer.id = 'sched-setup-container';
         const header = schedTab.querySelector('.section-header');
         header.parentNode.insertBefore(setupContainer, header.nextSibling);
     }
@@ -228,20 +178,18 @@ function initScheduleTab() {
         renderScheduleDays(p.sem, p.shift, p.group);
     } else {
         oldUI.forEach(el => el.style.display = 'none');
+        document.querySelector('.shift-selection').style.display = 'flex';
+        document.querySelector('.sem-btn-row').style.display = 'grid';
+        
         document.getElementById('daysArea').innerHTML = '';
         document.getElementById('schedule-box').style.display = 'none';
         document.getElementById('group-display-title').style.display = 'none';
-
-        const setupForm = document.getElementById('today-setup');
-        setupForm.style.display = 'block';
-        setupContainer.appendChild(setupForm);
-        setupContainer.style.display = 'block';
+        setupContainer.style.display = 'none';
     }
 }
 
 function renderScheduleDays(sem, shift, group) {
-    currentSem = sem;
-    currentShift = shift;
+    currentSem = sem; currentShift = shift;
     document.getElementById('group-display-title').style.display = 'block';
     const shiftText = shift==='morning' ? 'بەیانیان' : 'ئێوارن';
     document.getElementById('group-display-title').innerHTML = `${shiftText} - سمستەری ${sem} - <span style="color:var(--primary)">گرووپی ${group}</span>`;
@@ -250,36 +198,46 @@ function renderScheduleDays(sem, shift, group) {
     document.getElementById('daysArea').innerHTML = dn.map((n,i)=>
         `<button class="tab-btn" style="background:var(--primary);color:white;border:none;margin:4px;" onclick="selectDay('${group}',${i+1},'${n}')">${n}</button>`
     ).join('');
-
-    document.getElementById('daysArea').innerHTML += `<br><button onclick="resetTodayProfile();" style="margin-top:16px;padding:10px 20px;border-radius:14px;background:transparent;border:1.5px solid var(--border);color:var(--text-muted);font-family:var(--font);font-size:0.85rem;cursor:pointer;font-weight:600;">⚙️ گۆڕینی زانیارییەکان</button>`;
-
-    document.getElementById('schedule-box').style.display = 'none';
-    document.getElementById('schedule-body').innerHTML = '';
-}
-
-function setSem(s) {
-    triggerHaptic(); currentSem = s;
-    document.querySelectorAll('.sem-btn').forEach(b=>b.classList.remove('active-btn'));
-    const ab = document.getElementById('btn-sem-'+s); if(ab) ab.classList.add('active-btn');
-    document.getElementById('group-selection').style.display='flex';
-    document.getElementById('group-display-title').style.display='block';
-    const btnC = document.getElementById('btn-grp-C');
-    if (currentShift==='morning' && (currentSem===2||currentSem===4)) { if(btnC) btnC.style.display='inline-block'; }
-    else { if(btnC) btnC.style.display='none'; }
-    const shiftText = currentShift==='morning' ? 'بەیانیان' : 'ئێوارن';
-    document.getElementById('group-display-title').innerHTML = `سمستەر ${s} - ${shiftText} - <span style="color:var(--text-muted)">گرووپ هەڵبژێرە</span>`;
-    document.querySelectorAll('.grp-btn').forEach(b=>b.classList.remove('active-btn'));
-    document.getElementById('daysArea').innerHTML=""; document.getElementById('schedule-box').style.display='none';
+    document.getElementById('daysArea').innerHTML += `<br><button onclick="resetTodayProfile();" style="grid-column: span 2; margin-top:10px;padding:10px 20px;border-radius:14px;background:transparent;border:1.5px solid var(--border);color:var(--text-muted);font-family:var(--font);font-size:0.85rem;cursor:pointer;font-weight:600;">⚙️ گۆڕینی زانیارییەکان</button>`;
+    document.getElementById('schedule-box').style.display = 'none'; document.getElementById('schedule-body').innerHTML = '';
 }
 
 function selectShift(shift) {
     triggerHaptic(); currentShift = shift;
-    document.querySelector('.shift-btn.morning')?.classList.remove('active');
-    document.querySelector('.shift-btn.evening')?.classList.remove('active');
-    if(shift==='morning') document.querySelector('.shift-btn.morning')?.classList.add('active');
-    else document.querySelector('.shift-btn.evening')?.classList.add('active');
-    document.getElementById('group-selection').style.display='none';
-    document.getElementById('group-display-title').style.display='none';
+    document.querySelector('.shift-btn.morning')?.classList.remove('active'); document.querySelector('.shift-btn.evening')?.classList.remove('active');
+    if(shift==='morning') document.querySelector('.shift-btn.morning')?.classList.add('active'); else document.querySelector('.shift-btn.evening')?.classList.add('active');
+    document.getElementById('sched-sem-row').style.display='none'; document.getElementById('group-selection').style.display='none'; document.getElementById('group-display-title').style.display='none'; document.getElementById('daysArea').innerHTML=""; document.getElementById('schedule-box').style.display='none';
+}
+
+function setSchedStage(stage) {
+    triggerHaptic();
+    const semRow = document.getElementById('sched-sem-row');
+    const opt1 = document.getElementById('btn-sem-opt1');
+    const opt2 = document.getElementById('btn-sem-opt2');
+    semRow.style.display = 'flex';
+    document.getElementById('group-selection').style.display = 'none';
+    document.getElementById('daysArea').innerHTML = "";
+    document.getElementById('schedule-box').style.display = 'none';
+    document.getElementById('group-display-title').style.display = 'none';
+
+    if(stage == 1) {
+        opt1.innerText = 'سمستەری ١'; opt1.setAttribute('onclick', 'setSem(1)');
+        opt2.innerText = 'سمستەری ٢'; opt2.setAttribute('onclick', 'setSem(2)');
+    } else {
+        opt1.innerText = 'سمستەری ٣'; opt1.setAttribute('onclick', 'setSem(3)');
+        opt2.innerText = 'سمستەری ٤'; opt2.setAttribute('onclick', 'setSem(4)');
+    }
+}
+
+function setSem(s) {
+    triggerHaptic(); currentSem = s;
+    document.getElementById('group-selection').style.display='flex';
+    document.getElementById('group-display-title').style.display='block';
+    const btnC = document.getElementById('btn-grp-C');
+    if (currentShift==='morning' && (currentSem===2||currentSem===4)) { if(btnC) btnC.style.display='inline-block'; } else { if(btnC) btnC.style.display='none'; }
+    const shiftText = currentShift==='morning' ? 'بەیانیان' : 'ئێوارن';
+    document.getElementById('group-display-title').innerHTML = `سمستەر ${s} - ${shiftText} - <span style="color:var(--text-muted)">گرووپ هەڵبژێرە</span>`;
+    document.querySelectorAll('.grp-btn').forEach(b=>b.classList.remove('active-btn'));
     document.getElementById('daysArea').innerHTML=""; document.getElementById('schedule-box').style.display='none';
 }
 
@@ -298,7 +256,6 @@ function selectDay(g, d, dayName) {
     const body = document.getElementById('schedule-body'); if(!body) return; body.innerHTML='';
     const shiftText = currentShift==='morning' ? 'بەیانیان' : 'ئێوارن';
     document.getElementById('group-display-title').innerHTML = `${shiftText} - سمستەری ${currentSem} - <span style="color:var(--primary)">گرووپی ${g}</span> - ڕۆژی ${dayName}`;
-    
     if (scheduleData[currentShift]?.[currentSem]?.[g]?.[d]) {
         const lessons = scheduleData[currentShift][currentSem][g][d];
         if (lessons.length>0) {
@@ -310,7 +267,6 @@ function selectDay(g, d, dayName) {
     } else { body.innerHTML=`<tr><td colspan="4" style="color:var(--text-muted);">زانیاری نییە</td></tr>`; document.getElementById('schedule-box').style.display='block'; }
 }
 
-// --- ئاگادارییەکان و هەواڵەکان (Notifications & Alerts) ---
 function requestNotifyPermission() {
     if (!('Notification' in window)) { alert("مۆبایلەکەت پشتگیری ئاگاداری ناکات"); return; }
     Notification.requestPermission().then(p=>{
@@ -323,40 +279,20 @@ async function fetchNews() {
     const nc = document.getElementById('news-list'); if(!nc) return;
     const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS2j8Z4JmuZ2Fq75MNmQ1siz3l9djVQqaIQhk9R9SrSbBx94k3zRfQHeuDpTx_SBW8ZYaWB0Bvxor7M/pub?output=csv&gid=0";
     try {
-        const r = await fetch(url,{cache:"no-store"});
-        const csv = await r.text();
-        const rows = csv.split(/\r?\n/).slice(1);
+        const r = await fetch(url,{cache:"no-store"}); const csv = await r.text(); const rows = csv.split(/\r?\n/).slice(1);
         if(rows.length>0 && rows[0].trim()!=="") {
             let html="",latestTitle="";
             rows.forEach((row,i)=>{
                 const fc=row.indexOf(','); if(fc===-1) return;
-                const t=row.substring(0,fc).replace(/(^"|"$)/g,'').trim();
-                const d=row.substring(fc+1).replace(/(^"|"$)/g,'').trim();
-                if(i===0) latestTitle=t;
-                html+=` <span style="margin-left:80px;display:inline-block;"> <b>• ${t}</b> : ${d} </span> `;
+                const t=row.substring(0,fc).replace(/(^"|"$)/g,'').trim(); const d=row.substring(fc+1).replace(/(^"|"$)/g,'').trim();
+                if(i===0) latestTitle=t; html+=` <span style="margin-left:80px;display:inline-block;"> <b>• ${t}</b> : ${d} </span> `;
             });
-            nc.innerHTML=html+html;
-            const stored=localStorage.getItem('last_news_title');
+            nc.innerHTML=html+html; const stored=localStorage.getItem('last_news_title');
             if(stored!==latestTitle && Notification.permission==="granted") {
-                let alertMsg = (latestTitle.includes('تاقیکردنەوە') || latestTitle.includes('تاقیكردنەوە'))
-                    ? "كاتی تاقیكردنەوە دانراوە، سەردانی ویب سایتەكە بكە"
-                    : "ویب سایتەكە ئەپدەیت كرایەوە، سەردانی بكە";
+                let alertMsg = (latestTitle.includes('تاقیکردنەوە') || latestTitle.includes('تاقیكردنەوە')) ? "كاتی تاقیكردنەوە دانراوە، سەردانی ویب سایتەكە بكە" : "ویب سایتەكە ئەپدەیت كرایەوە، سەردانی بكە";
                 if('serviceWorker' in navigator) {
-                    navigator.serviceWorker.ready.then(reg => {
-                        reg.showNotification("ئاگاداری نوێ | IT Chamchamal", {
-                            body: alertMsg + "\n" + latestTitle,
-                            icon: "it-icon-final-192.png",
-                            badge: "it-icon-final-192.png",
-                            tag: 'news-alert',
-                            vibrate: [200, 100, 200]
-                        });
-                    });
-                } else {
-                    new Notification("ئاگاداری نوێ | IT Chamchamal", {
-                        body: alertMsg + "\n" + latestTitle,
-                        icon: "it-icon-final-192.png"
-                    });
-                }
+                    navigator.serviceWorker.ready.then(reg => { reg.showNotification("ئاگاداری نوێ | IT Chamchamal", { body: alertMsg + "\n" + latestTitle, icon: "it-icon-final-192.png", badge: "it-icon-final-192.png", tag: 'news-alert', vibrate: [200, 100, 200] }); });
+                } else { new Notification("ئاگاداری نوێ | IT Chamchamal", { body: alertMsg + "\n" + latestTitle, icon: "it-icon-final-192.png" }); }
                 localStorage.setItem('last_news_title',latestTitle);
             } else if(!stored) localStorage.setItem('last_news_title',latestTitle);
         } else nc.innerHTML="هیچ هەواڵێکی نوێ نییە.";
@@ -364,59 +300,34 @@ async function fetchNews() {
 }
 setInterval(fetchNews, 60000);
 
-// --- زەنگی وانەکان و پشوو (Class & Break Alerts) ---
 let classAlertTimeouts = [];
 function scheduleClassAlerts() {
-    // پاککردنەوەی زەنگەکانی پێشوو
-    classAlertTimeouts.forEach(clearTimeout);
-    classAlertTimeouts = [];
-
+    classAlertTimeouts.forEach(clearTimeout); classAlertTimeouts = [];
     const stored = localStorage.getItem('today_profile');
     if (!stored || Object.keys(scheduleData).length === 0) return;
     const p = JSON.parse(stored);
-
-    const dayIdx = getTodayDayIndex();
-    if (dayIdx === null) return; // ئەگەر ئەمڕۆ پشوو بوو (پێنجشەممە، هەینی، شەممە)
-
+    const dayIdx = getTodayDayIndex(); if (dayIdx === null) return; 
     const lessons = scheduleData[p.shift]?.[parseInt(p.sem)]?.[p.group]?.[dayIdx];
     if (!lessons || lessons.length === 0) return;
 
     lessons.forEach(r => {
         const cleanTime = r[2].replace(/AM|PM/i, '').trim();
         const timeParts = cleanTime.split(':');
-        let h = parseInt(timeParts[0] || "0", 10);
-        let m = parseInt(timeParts[1] || "0", 10);
-        const isPM = r[2].toUpperCase().includes('PM');
-        const isAM = r[2].toUpperCase().includes('AM');
-        
-        if (isPM && h < 12) h += 12;
-        if (isAM && h === 12) h = 0;
-        if (!isPM && !isAM) {
-            if (p.shift === 'evening' && h < 12) h += 12;
-        }
+        let h = parseInt(timeParts[0] || "0", 10); let m = parseInt(timeParts[1] || "0", 10);
+        const isPM = r[2].toUpperCase().includes('PM'); const isAM = r[2].toUpperCase().includes('AM');
+        if (isPM && h < 12) h += 12; if (isAM && h === 12) h = 0;
+        if (!isPM && !isAM) { if (p.shift === 'evening' && h < 12) h += 12; }
+        const classStartTime = new Date(); classStartTime.setHours(h, m, 0, 0); const now = new Date().getTime();
 
-        // کاتی دەستپێکردنی وانەکە
-        const classStartTime = new Date();
-        classStartTime.setHours(h, m, 0, 0);
-        const now = new Date().getTime();
-
-        // ١. زەنگی ٢ خولەک پێش دەستپێکردن
         const preClassAlarm = classStartTime.getTime() - (2 * 60 * 1000);
         if (preClassAlarm > now) {
-            const timeout1 = setTimeout(() => {
-                showToast(`⏰ ئامادەبە، پاش ٢ خولەکی تر وانەی (${r[1]}) دەست پێدەکات!`, '⚠️');
-                sendPushNotification(`⏰ ئامادەبە!`, `پاش ٢ خولەکی تر وانەی ${r[1]} دەست پێدەکات.`);
-            }, preClassAlarm - now);
+            const timeout1 = setTimeout(() => { showToast(`⏰ ئامادەبە، پاش ٢ خولەکی تر وانەی (${r[1]}) دەست پێدەکات!`, '⚠️'); sendPushNotification(`⏰ ئامادەبە!`, `پاش ٢ خولەکی تر وانەی ${r[1]} دەست پێدەکات.`); }, preClassAlarm - now);
             classAlertTimeouts.push(timeout1);
         }
 
-        // ٢. زەنگی پشوو (دوای ٩٠ خولەک)
         const breakAlarm = classStartTime.getTime() + (90 * 60 * 1000);
         if (breakAlarm > now) {
-            const timeout2 = setTimeout(() => {
-                showToast(`☕ زەنگی پشوو: وانەی (${r[1]}) تەواو بوو، کاتی پشووە (٣٠ خولەک)!`, '🎉');
-                sendPushNotification(`☕ کاتی پشووە!`, `وانەی ${r[1]} تەواو بوو. پشوویەکی باش!`);
-            }, breakAlarm - now);
+            const timeout2 = setTimeout(() => { showToast(`☕ زەنگی پشوو: وانەی (${r[1]}) تەواو بوو، کاتی پشووە (٣٠ خولەک)!`, '🎉'); sendPushNotification(`☕ کاتی پشووە!`, `وانەی ${r[1]} تەواو بوو. پشوویەکی باش!`); }, breakAlarm - now);
             classAlertTimeouts.push(timeout2);
         }
     });
@@ -425,40 +336,41 @@ function scheduleClassAlerts() {
 function sendPushNotification(title, body) {
     if (Notification.permission === 'granted') {
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.ready.then(reg => {
-                reg.showNotification(title, {
-                    body: body,
-                    icon: 'it-icon-final-192.png',
-                    badge: 'it-icon-final-192.png',
-                    vibrate: [200, 100, 200, 100, 200],
-                    requireInteraction: true
-                });
-            });
-        } else {
-            new Notification(title, { body: body, icon: 'it-icon-final-192.png' });
-        }
+            navigator.serviceWorker.ready.then(reg => { reg.showNotification(title, { body: body, icon: 'it-icon-final-192.png', badge: 'it-icon-final-192.png', vibrate: [200, 100, 200, 100, 200], requireInteraction: true }); });
+        } else { new Notification(title, { body: body, icon: 'it-icon-final-192.png' }); }
     }
 }
 
-// --- ئەمڕۆی من (Today Logic) ---
 let todayGender = null;
+let todayStage = null;
 let todayGroup = null;
 let todayShiftSel = null;
 
 function selectGender(g) {
     triggerHaptic(); todayGender = g;
     ['male','female'].forEach(x => {
-        const b = document.getElementById('gbtn-'+x);
-        if(!b) return;
+        const b = document.getElementById('gbtn-'+x); if(!b) return;
         b.style.background = x===g ? 'rgba(255,255,255,0.35)' : 'rgba(255,255,255,0.1)';
         b.style.border = x===g ? '2px solid white' : '2px solid rgba(255,255,255,0.3)';
     });
 }
+function selectTodayStage(st) {
+    triggerHaptic(); todayStage = st;
+    ['1','2'].forEach(x => {
+        const b = document.getElementById('tstagebtn-'+x); if(!b) return;
+        b.style.background = x==st ? 'rgba(255,255,255,0.35)' : 'rgba(255,255,255,0.1)';
+        b.style.border = x==st ? '2px solid white' : '2px solid rgba(255,255,255,0.3)';
+    });
+    const semContainer = document.getElementById('today-sem-container');
+    const semSelect = document.getElementById('today-sem');
+    semContainer.style.display = 'block';
+    if(st == 1) { semSelect.innerHTML = '<option value="1">سمستەری ١</option><option value="2">سمستەری ٢</option>'; } 
+    else { semSelect.innerHTML = '<option value="3">سمستەری ٣</option><option value="4">سمستەری ٤</option>'; }
+}
 function selectTodayGroup(g) {
     triggerHaptic(); todayGroup = g;
     ['A','B','C'].forEach(x => {
-        const b = document.getElementById('tgbtn-'+x);
-        if(!b) return;
+        const b = document.getElementById('tgbtn-'+x); if(!b) return;
         b.style.background = x===g ? 'rgba(255,255,255,0.35)' : 'rgba(255,255,255,0.1)';
         b.style.border = x===g ? '2px solid white' : '2px solid rgba(255,255,255,0.3)';
     });
@@ -466,8 +378,7 @@ function selectTodayGroup(g) {
 function selectTodayShift(s) {
     triggerHaptic(); todayShiftSel = s;
     ['morning','evening'].forEach(x => {
-        const b = document.getElementById('tsbtn-'+x);
-        if(!b) return;
+        const b = document.getElementById('tsbtn-'+x); if(!b) return;
         b.style.background = x===s ? 'rgba(255,255,255,0.35)' : 'rgba(255,255,255,0.1)';
         b.style.border = x===s ? '2px solid white' : '2px solid rgba(255,255,255,0.3)';
     });
@@ -478,20 +389,17 @@ function saveTodayProfile() {
     const sem  = document.getElementById('today-sem')?.value;
     if(!name)          { showToast('تکایە ناوت بنووسە', '⚠️'); return; }
     if(!todayGender)   { showToast('تکایە ڕەگەزت دیاری بکە', '⚠️'); return; }
+    if(!todayStage)    { showToast('تکایە قۆناغ دیاری بکە', '⚠️'); return; }
     if(!todayGroup)    { showToast('تکایە گرووپت هەڵبژێرە', '⚠️'); return; }
     if(!todayShiftSel) { showToast('تکایە دەوامت هەڵبژێرە', '⚠️'); return; }
     
-    const profile = { name, gender: todayGender, sem, group: todayGroup, shift: todayShiftSel };
+    const profile = { name, gender: todayGender, stage: todayStage, sem, group: todayGroup, shift: todayShiftSel };
     localStorage.setItem('today_profile', JSON.stringify(profile));
-    
     showToast('زانیارییەکانت پاشەکەوت کرا! ✨', '✅');
     
     setTimeout(() => {
-        if (document.getElementById('schedule-tab').style.display === 'block') {
-            initScheduleTab();
-        } else {
-            renderTodayMain();
-        }
+        if (document.getElementById('schedule-tab').style.display === 'block') { initScheduleTab(); } 
+        else { renderTodayMain(); }
         scheduleClassAlerts();
     }, 600);
 }
@@ -499,66 +407,44 @@ function saveTodayProfile() {
 function resetTodayProfile() {
     triggerHaptic();
     localStorage.removeItem('today_profile');
-    classAlertTimeouts.forEach(clearTimeout);
-    classAlertTimeouts = [];
+    classAlertTimeouts.forEach(clearTimeout); classAlertTimeouts = [];
     
-    todayGender = null; todayGroup = null; todayShiftSel = null;
-    ['male','female'].forEach(x => {
-        const b = document.getElementById('gbtn-'+x);
-        if(b) { b.style.background='rgba(255,255,255,0.1)'; b.style.border='2px solid rgba(255,255,255,0.3)'; }
-    });
-    ['A','B','C'].forEach(x => {
-        const b = document.getElementById('tgbtn-'+x);
-        if(b) { b.style.background='rgba(255,255,255,0.1)'; b.style.border='2px solid rgba(255,255,255,0.3)'; }
-    });
-    ['morning','evening'].forEach(x => {
-        const b = document.getElementById('tsbtn-'+x);
-        if(b) { b.style.background='rgba(255,255,255,0.1)'; b.style.border='2px solid rgba(255,255,255,0.3)'; }
-    });
+    todayGender = null; todayGroup = null; todayShiftSel = null; todayStage = null;
+    ['male','female'].forEach(x => { const b = document.getElementById('gbtn-'+x); if(b) { b.style.background='rgba(255,255,255,0.1)'; b.style.border='2px solid rgba(255,255,255,0.3)'; } });
+    ['1','2'].forEach(x => { const b = document.getElementById('tstagebtn-'+x); if(b) { b.style.background='rgba(255,255,255,0.1)'; b.style.border='2px solid rgba(255,255,255,0.3)'; } });
+    ['A','B','C'].forEach(x => { const b = document.getElementById('tgbtn-'+x); if(b) { b.style.background='rgba(255,255,255,0.1)'; b.style.border='2px solid rgba(255,255,255,0.3)'; } });
+    ['morning','evening'].forEach(x => { const b = document.getElementById('tsbtn-'+x); if(b) { b.style.background='rgba(255,255,255,0.1)'; b.style.border='2px solid rgba(255,255,255,0.3)'; } });
+    document.getElementById('today-sem-container').style.display = 'none';
 
-    if (document.getElementById('schedule-tab').style.display === 'block') {
-        initScheduleTab();
-    } else {
-        document.getElementById('today-setup').style.display = 'block';
-        document.getElementById('today-main').style.display  = 'none';
-    }
+    if (document.getElementById('schedule-tab').style.display === 'block') { initScheduleTab(); } 
+    else { document.getElementById('today-setup').style.display = 'block'; document.getElementById('today-main').style.display  = 'none'; }
 }
 
 function getTodayGreeting(name, gender) {
-    const h = new Date().getHours();
-    let timeWord, emoji;
-    if (h >= 5  && h < 12) { timeWord = 'بەیانی باش';    emoji = '🌤️'; }
-    else if (h >= 12 && h < 17) { timeWord = 'نیوەڕۆت باش';  emoji = '☀️'; }
-    else if (h >= 17 && h < 21) { timeWord = 'ئێوارەت باش';  emoji = '🌇'; }
-    else                        { timeWord = 'شەوت باش';     emoji = '🌙'; }
-    const title = gender === 'male' ? 'کاک' : 'خاتوو';
-    return { greeting: `${timeWord}، ${title} ${name}!`, emoji };
+    const h = new Date().getHours(); let timeWord, emoji;
+    if (h >= 5  && h < 12) { timeWord = 'بەیانی باش'; emoji = '🌤️'; }
+    else if (h >= 12 && h < 17) { timeWord = 'نیوەڕۆت باش'; emoji = '☀️'; }
+    else if (h >= 17 && h < 21) { timeWord = 'ئێوارەت باش'; emoji = '🌇'; }
+    else { timeWord = 'شەوت باش'; emoji = '🌙'; }
+    const title = gender === 'male' ? 'کاک' : 'خاتوو'; return { greeting: `${timeWord}، ${title} ${name}!`, emoji };
 }
 
 function getTodayDayIndex() {
-    const jsDay = new Date().getDay();
-    const map = { 0:1, 1:2, 2:3, 3:4 };
-    return map[jsDay] !== undefined ? map[jsDay] : null;
+    const jsDay = new Date().getDay(); const map = { 0:1, 1:2, 2:3, 3:4 }; return map[jsDay] !== undefined ? map[jsDay] : null;
 }
-
 function getTodayDayName(jsDay) {
-    const names = { 0:'یەکشەممە', 1:'دووشەممە', 2:'سێشەممە', 3:'چوارشەممە', 4:'پێنجشەممە', 5:'هەینی', 6:'شەممە' };
-    return names[jsDay] || '';
+    const names = { 0:'یەکشەممە', 1:'دووشەممە', 2:'سێشەممە', 3:'چوارشەممە', 4:'پێنجشەممە', 5:'هەینی', 6:'شەممە' }; return names[jsDay] || '';
 }
 
 function renderTodayMain() {
     const stored = localStorage.getItem('today_profile');
-    if(!stored) {
-        document.getElementById('today-setup').style.display = 'block';
-        document.getElementById('today-main').style.display  = 'none';
-        return;
-    }
+    if(!stored) { document.getElementById('today-setup').style.display = 'block'; document.getElementById('today-main').style.display  = 'none'; return; }
     const p = JSON.parse(stored);
-    document.getElementById('today-setup').style.display = 'none';
-    document.getElementById('today-main').style.display  = 'block';
+    document.getElementById('today-setup').style.display = 'none'; document.getElementById('today-main').style.display  = 'block';
 
     const { greeting, emoji } = getTodayGreeting(p.name, p.gender);
-    const shiftLabel = p.shift === 'morning' ? 'دەوامی بەیانیان ☀️' : 'دەوامی ئێوارن 🌙';
+    const stageLabel = p.stage == 1 ? 'قۆناغی یەکەم' : 'قۆناغی دووەم';
+    const shiftLabel = p.shift === 'morning' ? 'دەوامی بەیانیان ☀️' : 'دەوامی ئێواران 🌙';
     const greetBox = document.getElementById('today-greeting-box');
 
     if(greetBox) {
@@ -566,16 +452,12 @@ function renderTodayMain() {
         greetBox.innerHTML = `
             <div style="font-size:2.2rem;margin-bottom:8px;">${emoji}</div>
             <div style="color:white;font-size:1.18rem;font-weight:900;margin-bottom:6px;line-height:1.4;">${greeting}</div>
-            <div style="color:rgba(255,255,255,0.72);font-size:0.82rem;font-weight:600;">سمستەری ${p.sem} &nbsp;·&nbsp; Group ${p.group} &nbsp;·&nbsp; ${shiftLabel}</div>
+            <div style="color:rgba(255,255,255,0.72);font-size:0.82rem;font-weight:600;">${stageLabel} - سمستەری ${p.sem} &nbsp;·&nbsp; Group ${p.group} &nbsp;·&nbsp; ${shiftLabel}</div>
         `;
     }
 
-    const box = document.getElementById('today-schedule-box');
-    if(!box) return;
-
-    const jsDay   = new Date().getDay();
-    const dayName = getTodayDayName(jsDay);
-    const dayIdx  = getTodayDayIndex();
+    const box = document.getElementById('today-schedule-box'); if(!box) return;
+    const jsDay = new Date().getDay(); const dayName = getTodayDayName(jsDay); const dayIdx = getTodayDayIndex();
 
     if(dayIdx === null) {
         box.innerHTML = `
@@ -583,13 +465,10 @@ function renderTodayMain() {
             <div style="font-size:2.4rem;margin-bottom:12px;">🎉</div>
             <div style="font-weight:900;font-size:1.12rem;color:var(--text);margin-bottom:8px;">${dayName} — ئەمڕؤ پشووە!</div>
             <div style="color:var(--text-muted);font-size:0.88rem;line-height:1.6;">ئەمڕۆ وانە نییە، کاتێکی خۆش بەسەر بەرە 😎</div>
-        </div>`;
-        return;
+        </div>`; return;
     }
 
-    const lessons = scheduleData[p.shift]?.[parseInt(p.sem)]?.[p.group]?.[dayIdx];
-    const now     = new Date();
-
+    const lessons = scheduleData[p.shift]?.[parseInt(p.sem)]?.[p.group]?.[dayIdx]; const now = new Date();
     let html = `
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
         <span style="background:linear-gradient(135deg,var(--primary),var(--secondary));color:white;padding:5px 16px;border-radius:20px;font-size:0.85rem;font-weight:700;">📅 ${dayName}</span>
@@ -604,41 +483,23 @@ function renderTodayMain() {
         </div>`;
     } else {
         lessons.forEach(r => {
-            const cleanTime = r[2].replace(/AM|PM/i, '').trim();
-            const timeParts = cleanTime.split(':');
-            const lessonStart = new Date();
-            let h = parseInt(timeParts[0] || "0", 10);
-            let m = parseInt(timeParts[1] || "0", 10);
-            let isPM = r[2].toUpperCase().includes('PM');
-            let isAM = r[2].toUpperCase().includes('AM');
-            if (isPM && h < 12) h += 12;
-            if (isAM && h === 12) h = 0;
-            if (!isPM && !isAM) {
-                if (p.shift === 'evening' && h < 12) h += 12;
-            }
-            lessonStart.setHours(h, m, 0, 0);
-            const lessonEnd = new Date(lessonStart.getTime() + 2 * 60 * 60 * 1000);
-            const isNow  = now >= lessonStart && now < lessonEnd;
-            const isPast = now >= lessonEnd;
-            const c = '#1e3a8a';
+            const cleanTime = r[2].replace(/AM|PM/i, '').trim(); const timeParts = cleanTime.split(':'); const lessonStart = new Date();
+            let h = parseInt(timeParts[0] || "0", 10); let m = parseInt(timeParts[1] || "0", 10);
+            let isPM = r[2].toUpperCase().includes('PM'); let isAM = r[2].toUpperCase().includes('AM');
+            if (isPM && h < 12) h += 12; if (isAM && h === 12) h = 0;
+            if (!isPM && !isAM) { if (p.shift === 'evening' && h < 12) h += 12; }
+            lessonStart.setHours(h, m, 0, 0); const lessonEnd = new Date(lessonStart.getTime() + 2 * 60 * 60 * 1000);
+            const isNow = now >= lessonStart && now < lessonEnd; const isPast = now >= lessonEnd; const c = '#1e3a8a';
 
             html += `
-            <div style="
-                background:var(--surface);border-radius:16px;
-                border:1.5px solid ${isNow ? c : 'var(--border)'};
-                padding:14px 16px;margin-bottom:10px;
-                display:flex;align-items:center;gap:14px;
-                ${isNow  ? 'box-shadow:0 0 0 3px '+c+'28;' : ''}
-                ${isPast ? 'opacity:0.52;' : ''}
-                transition:all 0.3s;
-            ">
+            <div style="background:var(--surface);border-radius:16px;border:1.5px solid ${isNow ? c : 'var(--border)'};padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;gap:14px;${isNow ? 'box-shadow:0 0 0 3px '+c+'28;' : ''}${isPast ? 'opacity:0.52;' : ''}transition:all 0.3s;">
                 <div style="width:50px;height:50px;border-radius:14px;background:${c}1a;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
                     <span style="color:${c};font-weight:900;font-size:0.8rem;" dir="ltr">${r[2]}</span>
                 </div>
                 <div style="flex:1;min-width:0;">
                     <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:4px;">
                         <span style="background:${c};color:white;padding:4px 12px;border-radius:20px;font-size:0.82rem;font-weight:700;white-space:nowrap;">${r[1]}</span>
-                        ${isNow  ? `<span style="background:#10b981;color:white;padding:3px 9px;border-radius:10px;font-size:0.72rem;font-weight:700;">⬤ ئێستا</span>` : ''}
+                        ${isNow ? `<span style="background:#10b981;color:white;padding:3px 9px;border-radius:10px;font-size:0.72rem;font-weight:700;">⬤ ئێستا</span>` : ''}
                         ${isPast ? `<span style="background:var(--surface2);color:var(--text-muted);padding:3px 9px;border-radius:10px;font-size:0.72rem;border:1px solid var(--border);">تەواوبوو</span>` : ''}
                     </div>
                     <div style="font-size:0.78rem;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${r[3]}</div>
@@ -650,34 +511,42 @@ function renderTodayMain() {
 }
 
 function initTodayTab() {
-    const setupForm = document.getElementById('today-setup');
-    const todayTab = document.getElementById('today-tab');
-    const todayMain = document.getElementById('today-main');
+    const setupForm = document.getElementById('today-setup'); const todayTab = document.getElementById('today-tab'); const todayMain = document.getElementById('today-main');
     todayTab.insertBefore(setupForm, todayMain);
-
     const stored = localStorage.getItem('today_profile');
     if(stored) {
         const p = JSON.parse(stored);
         const nameEl = document.getElementById('today-name');
-        const semEl  = document.getElementById('today-sem');
-        if(nameEl) nameEl.value = p.name  || '';
-        if(semEl)  semEl.value  = p.sem   || '1';
+        if(nameEl) nameEl.value = p.name || '';
         if(p.gender) selectGender(p.gender);
-        if(p.group)  selectTodayGroup(p.group);
-        if(p.shift)  selectTodayShift(p.shift);
+        if(p.stage) selectTodayStage(p.stage);
+        const semEl = document.getElementById('today-sem');
+        if(semEl) semEl.value = p.sem || '1';
+        if(p.group) selectTodayGroup(p.group);
+        if(p.shift) selectTodayShift(p.shift);
         renderTodayMain();
     } else {
-        document.getElementById('today-setup').style.display = 'block';
-        document.getElementById('today-main').style.display  = 'none';
+        document.getElementById('today-setup').style.display = 'block'; document.getElementById('today-main').style.display = 'none';
     }
 }
 
-// --- ژمێرەری نمرەکان و کۆنفێتی (GPA & Confetti) ---
+function updateGPASemesters() {
+    const stage = document.getElementById('gpa-stage-select').value;
+    const semSelect = document.getElementById('gpa-sem-select');
+    semSelect.innerHTML = '<option value="" disabled selected>سمستەر هەڵبژێرە...</option>';
+    if(stage == "1") { semSelect.innerHTML += '<option value="1">سمستەری ١</option><option value="2">سمستەری ٢</option>'; } 
+    else if(stage == "2") { semSelect.innerHTML += '<option value="3">سمستەری ٣</option><option value="4">سمستەری ٤</option>'; }
+    semSelect.disabled = false;
+    document.getElementById('grading-container').innerHTML = ''; 
+    document.getElementById('clear-sem-btn').style.display = 'none';
+}
+
 function renderGrading() {
     const sem=document.getElementById('gpa-sem-select').value;
     const subjects=subjectList[sem]||[];
     localStorage.setItem('gpa_selected_sem',sem);
     const container=document.getElementById('grading-container'); container.innerHTML="";
+    document.getElementById('clear-sem-btn').style.display = 'block';
     let lblDaily = "ڕۆژانە", lblAtt = "نەهاتن", lblQuiz = "کویز", lblRep = "ڕاپۆرت و سیمینار", lblMid = "میدتێرم", lblFin = "فایناڵ", lblStat = "تکایە نمرەکانت داخڵ بکە...", lblDel = "🗑️ سڕینەوەی ئەم بابەتە";
     subjects.forEach((sub,idx)=>{
         const color='#1e3a8a';
@@ -691,19 +560,15 @@ function toggleAccordion(btn) { triggerHaptic(); btn.classList.toggle("active-ac
 function calcSub(sem,idx, isLoading = false) {
     const getVal=id=>{const el=document.getElementById(id);let v=el.value;if(v==="")return null;if(v<0){el.value=0;return 0;}return parseFloat(v);};
     const d=getVal(`daily-${sem}-${idx}`),a=getVal(`attend-${sem}-${idx}`),q=getVal(`quiz-${sem}-${idx}`),r=getVal(`report-${sem}-${idx}`),m=getVal(`mid-${sem}-${idx}`),f=getVal(`final-${sem}-${idx}`);
-    let current=0;
-    if(d!==null)current+=d;if(a!==null)current+=a;if(q!==null)current+=q;if(r!==null)current+=r;if(m!==null)current+=m;
-    let msg="";
-    let hasReached25 = false;
-    let hasReached50Final = false;
+    let current=0; if(d!==null)current+=d;if(a!==null)current+=a;if(q!==null)current+=q;if(r!==null)current+=r;if(m!==null)current+=m;
+    let msg=""; let hasReached25 = false; let hasReached50Final = false;
 
     if(current>50) msg="<b style='color:#ef4444'>هەڵە! کۆی سەعی نابێت لە ٥٠ زیاتر بێت.</b>";
     else if(f!==null&&f>50) msg="<b style='color:#ef4444'>هەڵە! نمرەی فایناڵ نابێت لە ٥٠ زیاتر بێت.</b>";
     else {
         let lblTotal = "کۆی سەعی (بێ فایناڵ):";
         msg=`<div style="margin-bottom:5px;">${lblTotal} <span style="color:var(--primary);font-size:1.1rem;font-weight:800;">${current}</span></div>`;
-        let missing=[];
-        if(d===null)missing.push("ڕۆژانە");if(a===null)missing.push("نەهاتن");if(q===null)missing.push("کویز");if(r===null)missing.push("ڕاپۆرت");if(m===null)missing.push("میدتێرم");
+        let missing=[]; if(d===null)missing.push("ڕۆژانە");if(a===null)missing.push("نەهاتن");if(q===null)missing.push("کویز");if(r===null)missing.push("ڕاپۆرت");if(m===null)missing.push("میدتێرم");
         if(missing.length>0&&current<50) msg+=`<div style="color:#d97706;font-size:0.82rem;margin-top:4px;font-weight:600;">💡 هەوڵبدە لە (${missing.join(' و ')}) نمرە بەدەست بهێنیت</div>`;
 
         if(current<25) msg+=`<br><span style="color:#ef4444;font-weight:800;">⚠️ مەترسی! نمرەی سەعیت زۆر کەمە.</span>`;
@@ -712,26 +577,22 @@ function calcSub(sem,idx, isLoading = false) {
         else { msg+=`<br><span style="color:#10b981;font-weight:700;">🏆 سەعی تەواو! تەنها فایناڵ ماوە.</span>`; if(current >= 25) hasReached25 = true; }
 
         if(f!==null) {
-            let final=current+f;
-            let lblFinTotal = "کۆی گشتی:";
+            let final=current+f; let lblFinTotal = "کۆی گشتی:";
             msg=`<div style="font-size:1.1rem;margin-bottom:6px;">${lblFinTotal} <span style="color:var(--text);font-weight:900;">${final}</span></div>`;
             if(final>100) msg+=`<span style="color:#ef4444">هەڵە! لە ١٠٠ تێپەڕی کرد.</span>`;
             else if(final>=50) { msg+=`<span style="color:#10b981;font-weight:700;">🎉 پیرۆزە دەرچوویت!</span>`; if(final>=85) msg+=` <span style="color:#f59e0b">ئاستێکی بەرز!</span>`; hasReached50Final = true; }
             else msg+=`<span style="color:#ef4444">😢 بەداخەوە کەوتویت.</span>`;
         }
     }
-    const sd=document.getElementById(`status-${sem}-${idx}`);
-    if(sd) { sd.innerHTML=msg; }
+    const sd=document.getElementById(`status-${sem}-${idx}`); if(sd) sd.innerHTML=msg;
     if(sd) { const p=sd.closest('.panel'); if(p && p.style.maxHeight) p.style.maxHeight=p.scrollHeight+"px"; }
 
     if (!isLoading) {
         saveGrades();
-        const lastScore25 = sessionStorage.getItem(`confetti_25_${sem}_${idx}`);
-        const lastScore50 = sessionStorage.getItem(`confetti_50_${sem}_${idx}`);
+        const lastScore25 = sessionStorage.getItem(`confetti_25_${sem}_${idx}`); const lastScore50 = sessionStorage.getItem(`confetti_50_${sem}_${idx}`);
         if (hasReached50Final && lastScore50 !== 'true') { triggerConfetti('big'); sessionStorage.setItem(`confetti_50_${sem}_${idx}`, 'true'); }
         else if (hasReached25 && !hasReached50Final && lastScore25 !== 'true') { triggerConfetti('small'); sessionStorage.setItem(`confetti_25_${sem}_${idx}`, 'true'); }
-        if (!hasReached25) sessionStorage.removeItem(`confetti_25_${sem}_${idx}`);
-        if (!hasReached50Final) sessionStorage.removeItem(`confetti_50_${sem}_${idx}`);
+        if (!hasReached25) sessionStorage.removeItem(`confetti_25_${sem}_${idx}`); if (!hasReached50Final) sessionStorage.removeItem(`confetti_50_${sem}_${idx}`);
     }
 }
 
@@ -754,70 +615,52 @@ function triggerConfetti(type) {
 
 function saveGrades() {
     try {
-        const inputs = document.querySelectorAll('#grading-container input');
-        let data = JSON.parse(localStorage.getItem('it_chamchamal_grades') || '{}');
-        let changed = false;
+        const inputs = document.querySelectorAll('#grading-container input'); let data = JSON.parse(localStorage.getItem('it_chamchamal_grades') || '{}'); let changed = false;
         inputs.forEach(i => { if (data[i.id] !== i.value && i.value !== "") { changed = true; } data[i.id] = i.value; });
-        localStorage.setItem('it_chamchamal_grades', JSON.stringify(data));
-        if (changed) showToast("نمرەکەت پاشەکەوت کرا", "💾");
+        localStorage.setItem('it_chamchamal_grades', JSON.stringify(data)); if (changed) showToast("نمرەکەت پاشەکەوت کرا", "💾");
     } catch(e){}
 }
 
 function loadGrades() {
     try {
         const saved=JSON.parse(localStorage.getItem('it_chamchamal_grades')||'{}');
-        for(let id in saved){
-            let el=document.getElementById(id);
-            if(el){ el.value=saved[id]; let p=id.split('-'); if(p.length>=3) calcSub(p[1],p[2], true); }
-        }
+        for(let id in saved){ let el=document.getElementById(id); if(el){ el.value=saved[id]; let p=id.split('-'); if(p.length>=3) calcSub(p[1],p[2], true); } }
     } catch(e){}
 }
 
 function clearSubject(sem,idx) {
-    let msg = "دڵنیای لە سڕینەوەی نمرەکانی ئەم بابەتە؟";
-    if(!confirm(msg)) return;
+    let msg = "دڵنیای لە سڕینەوەی نمرەکانی ئەم بابەتە؟"; if(!confirm(msg)) return;
     try {
         let data=JSON.parse(localStorage.getItem('it_chamchamal_grades')||'{}');
         ['daily','attend','quiz','report','mid','final'].forEach(f=>{let id=`${f}-${sem}-${idx}`;if(document.getElementById(id))document.getElementById(id).value="";delete data[id];});
         localStorage.setItem('it_chamchamal_grades',JSON.stringify(data));
         document.getElementById(`status-${sem}-${idx}`).innerHTML="تکایە نمرەکانت داخڵ بکە...";
-        sessionStorage.removeItem(`confetti_25_${sem}_${idx}`);
-        sessionStorage.removeItem(`confetti_50_${sem}_${idx}`);
+        sessionStorage.removeItem(`confetti_25_${sem}_${idx}`); sessionStorage.removeItem(`confetti_50_${sem}_${idx}`);
     } catch(e){}
 }
 
 function resetSemesterGrades() {
     const sem=document.getElementById('gpa-sem-select').value;
-    let msg = `دڵنیای لە سڕینەوەی هەموو نمرەکانی سمستەری ${sem}؟`;
-    if(!confirm(msg)) return;
+    let msg = `دڵنیای لە سڕینەوەی هەموو نمرەکانی سمستەری ${sem}؟`; if(!confirm(msg)) return;
     try {
         let data=JSON.parse(localStorage.getItem('it_chamchamal_grades')||'{}');
         Object.keys(data).forEach(k=>{if(k.includes(`-${sem}-`))delete data[k];});
-        localStorage.setItem('it_chamchamal_grades',JSON.stringify(data));
-        renderGrading();
+        localStorage.setItem('it_chamchamal_grades',JSON.stringify(data)); renderGrading();
     } catch(e){}
 }
 
-// --- کاتی تاقیکردنەوەکان ---
 let examIntervals=[];
 async function checkExams() {
     const container = document.getElementById('exams-container');
     const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS2j8Z4JmuZ2Fq75MNmQ1siz3l9djVQqaIQhk9R9SrSbBx94k3zRfQHeuDpTx_SBW8ZYaWB0Bvxor7M/pub?output=csv&gid=1091649278";
     try {
-        const r = await fetch(url, { cache: "no-store" });
-        const csvText = await r.text();
-        const rows = csvText.split(/\r?\n/).slice(1);
-
-        examIntervals.forEach(clearInterval);
-        examIntervals = [];
-        if(container) container.innerHTML = "";
-
+        const r = await fetch(url, { cache: "no-store" }); const csvText = await r.text(); const rows = csvText.split(/\r?\n/).slice(1);
+        examIntervals.forEach(clearInterval); examIntervals = []; if(container) container.innerHTML = "";
         let activeExams = [];
         rows.forEach(row => {
             let columns = row.split(',');
             if(columns.length >= 2) {
-                let title = columns[0].replace(/(^"|"$)/g, '').trim();
-                let dateVal = columns[1].replace(/(^"|"$)/g, '').trim();
+                let title = columns[0].replace(/(^"|"$)/g, '').trim(); let dateVal = columns[1].replace(/(^"|"$)/g, '').trim();
                 let timeVal = columns.length >= 3 && columns[2].trim() !== "" ? columns[2].replace(/(^"|"$)/g, '').trim() : "12:00 AM";
                 if(title && dateVal) {
                     let dParts = dateVal.split(/[-\/]/);
@@ -825,23 +668,16 @@ async function checkExams() {
                         if(dParts[2].length === 4) dateVal = `${dParts[2]}-${dParts[1].padStart(2, '0')}-${dParts[0].padStart(2, '0')}`;
                         else if(dParts[0].length === 4) dateVal = `${dParts[0]}-${dParts[1].padStart(2, '0')}-${dParts[2].padStart(2, '0')}`;
                     }
-                    let isPM = timeVal.toUpperCase().includes('PM');
-                    let isAM = timeVal.toUpperCase().includes('AM');
-                    let cleanTime = timeVal.replace(/AM|PM/i, '').trim();
-                    let tParts = cleanTime.split(':');
-                    let h = parseInt(tParts[0] || "0", 10);
-                    let m = (tParts[1] || "00").padStart(2, '0');
-                    let s = (tParts[2] || "00").padStart(2, '0');
-                    if(isPM && h < 12) h += 12;
-                    if(isAM && h === 12) h = 0;
+                    let isPM = timeVal.toUpperCase().includes('PM'); let isAM = timeVal.toUpperCase().includes('AM');
+                    let cleanTime = timeVal.replace(/AM|PM/i, '').trim(); let tParts = cleanTime.split(':');
+                    let h = parseInt(tParts[0] || "0", 10); let m = (tParts[1] || "00").padStart(2, '0'); let s = (tParts[2] || "00").padStart(2, '0');
+                    if(isPM && h < 12) h += 12; if(isAM && h === 12) h = 0;
                     let exDate = new Date(`${dateVal}T${h.toString().padStart(2, '0')}:${m}:${s}`);
                     if(!isNaN(exDate.getTime()) && exDate > new Date()) activeExams.push({ Title: title, dateObj: exDate });
                 }
             }
         });
-
         activeExams.sort((a, b) => a.dateObj - b.dateObj);
-
         if(activeExams.length > 0) {
             activeExams.forEach(exam => {
                 const divId = "timer-" + Math.random().toString(36).substr(2, 9);
@@ -851,32 +687,19 @@ async function checkExams() {
                     startSpecificTimer(exam.dateObj, divId);
                 }
             });
-        } else {
-            if(container) container.innerHTML = `<h3 style='text-align:center;opacity:0.5;color:var(--text);'>هیچ تاقیکردنەوەیەک نییە</h3>`;
-        }
-
+        } else { if(container) container.innerHTML = `<h3 style='text-align:center;opacity:0.5;color:var(--text);'>هیچ تاقیکردنەوەیەک نییە</h3>`; }
+        
         let alertContainer = document.getElementById('today-exam-alerts');
         if (alertContainer) {
             if (activeExams.length > 0) {
                 let alertsHTML = '';
                 activeExams.forEach(exam => {
-                    const diffTime = Math.abs(exam.dateObj - new Date());
-                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                    const diffTime = Math.abs(exam.dateObj - new Date()); const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
                     let timeText = diffDays === 1 ? "سبەی" : diffDays === 0 ? "ئەمڕۆ" : `ماوە: ${diffDays} ڕۆژ`;
-                    alertsHTML += `
-                    <div style="display:flex;align-items:center;gap:8px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.25);border-radius:10px;padding:8px 12px;margin-bottom:6px;">
-                        <span style="font-size:0.9rem;flex-shrink:0;">⚠️</span>
-                        <span style="color:#dc2626;font-weight:700;font-size:0.78rem;flex-shrink:0;">تاقیکردنەوە:</span>
-                        <span style="font-weight:600;font-size:0.78rem;color:var(--text);flex:1;">${exam.Title}</span>
-                        <span style="background:#dc2626;color:white;padding:2px 8px;border-radius:20px;font-size:0.7rem;font-weight:700;flex-shrink:0;white-space:nowrap;">${timeText}</span>
-                    </div>`;
-                });
-                alertContainer.innerHTML = alertsHTML;
-            } else {
-                alertContainer.innerHTML = '';
-            }
+                    alertsHTML += `<div style="display:flex;align-items:center;gap:8px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.25);border-radius:10px;padding:8px 12px;margin-bottom:6px;"><span style="font-size:0.9rem;flex-shrink:0;">⚠️</span><span style="color:#dc2626;font-weight:700;font-size:0.78rem;flex-shrink:0;">تاقیکردنەوە:</span><span style="font-weight:600;font-size:0.78rem;color:var(--text);flex:1;">${exam.Title}</span><span style="background:#dc2626;color:white;padding:2px 8px;border-radius:20px;font-size:0.7rem;font-weight:700;flex-shrink:0;white-space:nowrap;">${timeText}</span></div>`;
+                }); alertContainer.innerHTML = alertsHTML;
+            } else { alertContainer.innerHTML = ''; }
         }
-
     } catch(e) {}
 }
 
@@ -887,46 +710,33 @@ function startSpecificTimer(date,id) {
         const d=Math.floor(dist/(1000*60*60*24)),h=Math.floor((dist%(1000*60*60*24))/(1000*60*60)),m=Math.floor((dist%(1000*60*60))/(1000*60)),s=Math.floor((dist%(1000*60))/1000);
         const pad=n=>n<10?"0"+n:n;
         if(document.getElementById(`d-${id}`)){document.getElementById(`d-${id}`).innerText=pad(d);document.getElementById(`h-${id}`).innerText=pad(h);document.getElementById(`m-${id}`).innerText=pad(m);document.getElementById(`s-${id}`).innerText=pad(s);}
-    },1000);
-    examIntervals.push(int);
+    },1000); examIntervals.push(int);
 }
 
 function animateValue(obj, start, end, duration) {
-    if(!obj) return;
-    let startTimestamp = null;
+    if(!obj) return; let startTimestamp = null;
     const step = (timestamp) => {
         if (!startTimestamp) startTimestamp = timestamp;
-        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-        const current = Math.floor(progress * (end - start) + start);
-        obj.textContent = String(current).padStart(7, '0');
-        if (progress < 1) { window.requestAnimationFrame(step); }
-        else { obj.textContent = String(end).padStart(7, '0'); }
-    };
-    window.requestAnimationFrame(step);
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1); const current = Math.floor(progress * (end - start) + start);
+        obj.textContent = String(current).padStart(7, '0'); if (progress < 1) { window.requestAnimationFrame(step); } else { obj.textContent = String(end).padStart(7, '0'); }
+    }; window.requestAnimationFrame(step);
 }
 
 async function initVisitorCounter() {
-    const counterEl = document.getElementById('visitor-counter');
-    if(!counterEl) return;
+    const counterEl = document.getElementById('visitor-counter'); if(!counterEl) return;
     const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS2j8Z4JmuZ2Fq75MNmQ1siz3l9djVQqaIQhk9R9SrSbBx94k3zRfQHeuDpTx_SBW8ZYaWB0Bvxor7M/pub?gid=352983700&single=true&output=csv";
     const scriptUrl = "https://script.google.com/macros/s/AKfycbzlRtpJXxMDCT7mU7hD_eXQ97NVoPm4s0xq6dnH1cb3qqX58wTtH3tw-S54fU-MrflrJQ/exec";
     try { fetch(scriptUrl, { mode: 'no-cors' }); } catch(e) {}
     try {
-        const r = await fetch(csvUrl, { cache: "no-store" });
-        const text = await r.text();
-        const rows = text.split(/\r?\n/);
-        let n = 0;
+        const r = await fetch(csvUrl, { cache: "no-store" }); const text = await r.text(); const rows = text.split(/\r?\n/); let n = 0;
         for (const row of rows) {
-            if (!row.trim()) continue;
-            const cells = row.split(',');
+            if (!row.trim()) continue; const cells = row.split(',');
             for (const cell of cells) {
-                const cleanCell = cell.replace(/(^"|"$)/g, '').trim();
-                const val = parseInt(cleanCell, 10);
+                const cleanCell = cell.replace(/(^"|"$)/g, '').trim(); const val = parseInt(cleanCell, 10);
                 if (!isNaN(val) && val > 0) { n = val; break; }
             }
             if (n > 0) break;
-        }
-        animateValue(counterEl, 0, n, 1500);
+        } animateValue(counterEl, 0, n, 1500);
     } catch(e) { animateValue(counterEl, 0, 0, 1500); }
 }
 
@@ -938,39 +748,24 @@ function updateClock() {
     } catch(e){}
 }
 
-// --- ئامادەکردن لە کاتی بارکردن ---
 window.addEventListener('load', async function () {
-    // شاردنەوەی لۆدینگ تەنها دوای ١ چرکە لە جێگەی ٤ چرکە
     setTimeout(forceHideLoader, 1000); 
-
     try { autoRequestNotification(); } catch(e){}
     try { fetchNews(); } catch(e){}
     try { await fetchSchedule(); } catch(e){}
     try { initVisitorCounter(); } catch(e){}
     try { checkUpdate(); } catch(e){}
     try {
-        const savedGPASem = localStorage.getItem('gpa_selected_sem');
-        if (savedGPASem) { const sel = document.getElementById('gpa-sem-select'); if(sel) sel.value = savedGPASem; }
-        renderGrading();
-    } catch(e){}
-    try {
-        const savedTheme = localStorage.getItem('it_theme') || 'classic';
-        applyTheme(savedTheme, true);
+        const savedTheme = localStorage.getItem('it_theme') || 'classic'; applyTheme(savedTheme, true);
     } catch(e){}
     try {
         const savedStars = localStorage.getItem('it_stars');
-        if (savedStars === null || savedStars === '1') applyStarField(true, true);
-        else applyStarField(false, true);
+        if (savedStars === null || savedStars === '1') applyStarField(true, true); else applyStarField(false, true);
     } catch(e){}
     try { checkExams(); } catch(e){}
     try { setInterval(updateClock,1000); updateClock(); } catch(e){}
 
-    try {
-        const todayMain = document.getElementById('today-main');
-        if (todayMain && todayMain.style.display === 'block') renderTodayMain();
-    } catch(e){}
+    try { const todayMain = document.getElementById('today-main'); if (todayMain && todayMain.style.display === 'block') renderTodayMain(); } catch(e){}
 });
 
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js').catch(err=>console.log('SW Failed',err));
-}
+if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js').catch(err=>console.log('SW Failed',err)); }
