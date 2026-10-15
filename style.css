@@ -161,17 +161,17 @@ header h2 { color: rgba(255,255,255,0.7); font-size: 0.85rem; margin-top: 4px; f
     width: 100% !important;
     /* سێبەرە کاڵەکەمان لابرد بۆ ئەوەی ئایفۆن نەیبڕێت */
 }
-
 #news-list {
     display: inline-block !important;
     white-space: nowrap !important;
-    width: max-content !important; /* ئەمە وا دەکات ئایفۆن درێژییەکەی لێ تێک نەچێت */
+    min-width: 100% !important;
     padding-right: 15px;
-    -webkit-transform: translateZ(0); /* خێراکردنی گرافیک بەبێ کێشە */
+    -webkit-transform: translateZ(0);
     transform: translateZ(0);
     -webkit-animation: scrollNews 25s linear infinite !important;
     animation: scrollNews 25s linear infinite !important;
 }
+
 
 @-webkit-keyframes scrollNews {
     0% { -webkit-transform: translateX(0); }
