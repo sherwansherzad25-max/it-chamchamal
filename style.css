@@ -1,5 +1,4 @@
 :root {
-    /* ڕەنگە فەرمییەکان - شینی زانکۆیی */
     --primary:       #1e3a8a;
     --primary-light: #3b82f6;
     --secondary:     #2563eb;
@@ -23,7 +22,6 @@
 }
 
 body.theme-dark {
-    /* دۆخی تاریک */
     --primary:       #3b82f6;
     --primary-light: #60a5fa;
     --secondary:     #2563eb;
@@ -154,9 +152,47 @@ header h2 { color: rgba(255,255,255,0.7); font-size: 0.85rem; margin-top: 4px; f
     display: flex; align-items: center; position: relative; z-index: 2;
 }
 .notif-btn { background: transparent; border: none; font-size: 1rem; padding: 0 8px; cursor: pointer; border-left: 1px solid var(--border); }
-.news-scroll-area { flex: 1; overflow: hidden; white-space: nowrap; }
-#news-list { display: inline-block; font-weight: 600; font-size: 0.8rem; padding-right: 15px; animation: tickerMove 40s linear infinite; }
-@keyframes tickerMove { 0%{transform:translateX(0%)} 100%{transform:translateX(100%)} }
+
+.news-scroll-area {
+    flex: 1;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+    position: relative !important;
+    width: 100% !important;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+}
+
+#news-list {
+    display: inline-block !important;
+    font-weight: 600;
+    font-size: 0.8rem;
+    padding-right: 15px;
+    white-space: nowrap !important;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    will-change: transform;
+    -webkit-animation: scrollNews 25s linear infinite !important;
+    animation: scrollNews 25s linear infinite !important;
+}
+
+@-webkit-keyframes scrollNews {
+    0% {
+        -webkit-transform: translate3d(0, 0, 0);
+    }
+    100% {
+        -webkit-transform: translate3d(50%, 0, 0);
+    }
+}
+
+@keyframes scrollNews {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+    100% {
+        transform: translate3d(50%, 0, 0);
+    }
+}
 
 .main-container { max-width: 900px; margin: 0 auto; padding: 5px 15px; position: relative; z-index: 10; }
 .semester-content { display: none; background: var(--surface); padding: 15px; border-radius: var(--radius); box-shadow: 0 4px 15px var(--shadow-color); border: 1px solid var(--border); animation: fadeSlideUp 0.3s ease; margin-bottom: 15px; }
@@ -165,7 +201,6 @@ header h2 { color: rgba(255,255,255,0.7); font-size: 0.85rem; margin-top: 4px; f
 @keyframes fadeSlideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 .inner-sem-content { display: none; margin-top: 15px; animation: fadeSlideUp 0.3s ease; }
 
-/* بچووککردنەوەی پادینگی کاردەکان بۆ ئەوەی زۆرترین زانیاری جێی ببێتەوە */
 .hero-card { border-radius: 20px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); color: white; padding: 18px 15px; box-shadow: 0 8px 25px var(--glow); position: relative; overflow: hidden; margin-bottom: 15px; }
 .hero-badge { display: inline-block; background: rgba(255,255,255,0.15); padding: 4px 12px; border-radius: 15px; font-size: 0.7rem; font-weight: 800; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.2); }
 .hero-title { font-size: 1.15rem; font-weight: 900; margin-bottom: 8px; line-height: 1.4; }
@@ -193,7 +228,6 @@ header h2 { color: rgba(255,255,255,0.7); font-size: 0.85rem; margin-top: 4px; f
 .tab-btn:active { transform: scale(0.96); }
 .tab-btn.active-btn { transform: scale(1.02); box-shadow: 0 4px 10px rgba(0,0,0,0.15); border: 2px solid white !important; }
 
-/* ڕێکخستنی خشتە و پادینگەکان بۆ لابردنی سکرۆڵی ئاسۆیی */
 .table-container { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 15px; background: var(--surface); }
 table { width: 100%; border-collapse: collapse; min-width: 320px; }
 th { background: var(--table-header); color: #ffffff; padding: 10px 8px; text-align: center; font-size: 0.8rem; font-weight: 800; }
@@ -222,10 +256,6 @@ tr:nth-child(even) td { background: var(--table-row-alt); }
 
 .visitor-counter { font-size: 1.4rem; font-weight: 900; color: #3b82f6; font-family: monospace; letter-spacing: 2px; }
 
-/* 
-  چارەسەری مینیوی خوارەوە (Bottom Nav) 
-  وادەکات تەنها ٤ تاب دەربکەوێت و بە ڕاکێشان ئەوانی تر ببینرێت 
-*/
 .bottom-nav { 
     position: fixed; bottom: 0; left: 0; right: 0; 
     height: var(--bnav-h); background: var(--surface); 
