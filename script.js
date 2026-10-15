@@ -195,6 +195,9 @@ function renderScheduleDays(sem, shift, group) {
     document.getElementById('group-display-title').innerHTML = `${shiftText} - سمستەری ${sem} - <span style="color:var(--primary)">گرووپی ${group}</span>`;
 
 const dn = ['یەکشەممە','دووشەممە','سێشەممە','چوارشەممە'];
+    document.getElementById('daysArea').style.display = 'grid';
+    document.getElementById('daysArea').style.gridTemplateColumns = 'repeat(2, 1fr)';
+    document.getElementById('daysArea').style.gap = '10px';
     document.getElementById('daysArea').innerHTML = dn.map((n,i)=>
         `<button class="tab-btn" style="width:100%; padding:14px 8px; background:#dbeafe; color:#1e3a8a; border:2px solid #1e3a8a; border-radius:14px; font-weight:800; font-size:0.9rem; cursor:pointer;" onclick="selectDay('${group}',${i+1},'${n}')">${n}</button>`
     ).join('');
