@@ -67,14 +67,14 @@ function openInnerStage(stageId) {
     triggerHaptic();
     document.querySelectorAll(".inner-sem-content").forEach(el=>el.style.display="none");
     const target = document.getElementById(stageId);
-    if(target) { target.style.display="block"; target.scrollIntoView({behavior:'smooth'}); }
+    if(target) { target.style.display="block"; }
 }
 
 function openSemTable(tableId) {
     triggerHaptic();
     document.querySelectorAll(".sem-table-wrap").forEach(el=>el.style.display="none");
     const target = document.getElementById(tableId);
-    if(target) { target.style.display="block"; target.scrollIntoView({behavior:'smooth'}); }
+    if(target) { target.style.display="block"; }
 }
 
 const THEMES = ['classic','dark'];
