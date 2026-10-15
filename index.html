@@ -121,8 +121,7 @@
     <a href="#" onclick="showSection('home-tab'); setActiveNav('bnav-home'); closeNav()"><span id="lang-home">🏠 سەرەکی</span></a>
     <a href="#" onclick="showSection('today-tab'); setActiveNav('bnav-today'); initTodayTab(); closeNav()"><span id="lang-side-today">⭐ ئەمڕۆی من</span></a>
     <a href="#" onclick="showSection('schedule-tab'); setActiveNav('bnav-schedule'); closeNav()"><span id="lang-schedule">١ · 📅 خشتەی هەفتانە</span></a>
-    <a href="#" onclick="showSection('semesters-tab'); setActiveNav('bnav-semesters'); closeNav()"><span id="lang-semesters">٢ · 📚 سمستەرەکان</span></a>
-    <a href="#" onclick="showSection('exam-tab'); setActiveNav('bnav-exam'); closeNav(); checkExams();"><span id="lang-menu-exam">٣ · ⏳ کاتی تاقیکردنەوە</span></a>
+<a href="#" onclick="showSection('semesters-tab'); setActiveNav('bnav-semesters'); closeNav()"><span id="lang-semesters">٢ · 📚 قۆناغەکان</span></a>    <a href="#" onclick="showSection('exam-tab'); setActiveNav('bnav-exam'); closeNav(); checkExams();"><span id="lang-menu-exam">٣ · ⏳ کاتی تاقیکردنەوە</span></a>
     <a href="#" onclick="showSection('gpa-tab'); setActiveNav('bnav-gpa'); closeNav()"><span id="lang-menu-gpa">٤ · 🧮 هەژمارکردنی نمرە</span></a>
     <a href="#" onclick="showSection('about-tab'); setActiveNav('bnav-about'); closeNav()"><span id="lang-about">٥ · ℹ️ دەربارە</span></a>
     <a href="#" onclick="openThemePanel(); closeNav()"><span id="lang-side-theme">🎨 ڕووکار و دیزاین</span></a>
@@ -339,19 +338,19 @@
             <h3>هەڵبژاردنی قۆناغ</h3>
         </div>
         
-        <div class="sem-grid" style="grid-template-columns: 1fr;">
-            <div class="sem-card" style="background:linear-gradient(135deg,#1e3a8a,#1e40af); padding:25px;" onclick="openInnerStage('stage1')">
-                <span style="font-size:1.1rem;">📚 قۆناغی یەکەم</span>
+    <div class="sem-grid" style="grid-template-columns: repeat(2, 1fr); gap: 12px;">
+            <div class="sem-card" style="background:linear-gradient(135deg, #93c5fd, #bfdbfe); color: #1e3a8a; border: 1px solid #60a5fa; padding:16px 10px;" onclick="openInnerStage('stage1')">
+                <span style="font-size:0.95rem; font-weight: 900;">📚 قۆناغی یەکەم</span>
             </div>
-            <div class="sem-card" style="background:linear-gradient(135deg,#2563eb,#3b82f6); padding:25px;" onclick="openInnerStage('stage2')">
-                <span style="font-size:1.1rem;">📚 قۆناغی دووەم</span>
+            <div class="sem-card" style="background:linear-gradient(135deg, #bfdbfe, #dbeafe); color: #1e3a8a; border: 1px solid #93c5fd; padding:16px 10px;" onclick="openInnerStage('stage2')">
+                <span style="font-size:0.95rem; font-weight: 900;">📚 قۆناغی دووەم</span>
             </div>
         </div>
 
         <div id="stage1" class="inner-sem-content">
-            <div style="display:flex;gap:10px;margin-bottom:15px;margin-top:15px;">
-                <button class="shift-btn" onclick="openSemTable('sem1-table')" style="flex:1;background:var(--primary);color:white;border:none;">سمستەری یەکەم</button>
-                <button class="shift-btn" onclick="openSemTable('sem2-table')" style="flex:1;background:var(--primary);color:white;border:none;">سمستەری دووەم</button>
+           <div style="display:flex;gap:12px;margin-bottom:20px;margin-top:18px;">
+                <button class="shift-btn" onclick="openSemTable('sem1-table')" style="flex:1;background:#dbeafe;color:#1e3a8a;border:2px solid #1e3a8a;padding:14px;font-size:0.92rem;border-radius:14px;font-weight:800;">سمستەری یەکەم</button>
+                <button class="shift-btn" onclick="openSemTable('sem2-table')" style="flex:1;background:#dbeafe;color:#1e3a8a;border:2px solid #1e3a8a;padding:14px;font-size:0.92rem;border-radius:14px;font-weight:800;">سمستەری دووەم</button>
             </div>
             
             <div id="sem1-table" class="sem-table-wrap" style="display:none;">
@@ -386,9 +385,9 @@
         </div>
 
         <div id="stage2" class="inner-sem-content">
-            <div style="display:flex;gap:10px;margin-bottom:15px;margin-top:15px;">
-                <button class="shift-btn" onclick="openSemTable('sem3-table')" style="flex:1;background:var(--primary);color:white;border:none;">سمستەری سێیەم</button>
-                <button class="shift-btn" onclick="openSemTable('sem4-table')" style="flex:1;background:var(--primary);color:white;border:none;">سمستەری چوارەم</button>
+         <div style="display:flex;gap:12px;margin-bottom:20px;margin-top:18px;">
+                <button class="shift-btn" onclick="openSemTable('sem3-table')" style="flex:1;background:#dbeafe;color:#1e3a8a;border:2px solid #1e3a8a;padding:14px;font-size:0.92rem;border-radius:14px;font-weight:800;">سمستەری سێیەم</button>
+                <button class="shift-btn" onclick="openSemTable('sem4-table')" style="flex:1;background:#dbeafe;color:#1e3a8a;border:2px solid #1e3a8a;padding:14px;font-size:0.92rem;border-radius:14px;font-weight:800;">سمستەری چوارەم</button>
             </div>
 
             <div id="sem3-table" class="sem-table-wrap" style="display:none;">
@@ -470,9 +469,9 @@
         <span class="bnav-label" id="bnav-label-schedule">خشتە</span>
         <span class="bnav-dot"></span>
     </button>
-    <button class="bnav-item" id="bnav-semesters" onclick="showSection('semesters-tab'); setActiveNav('bnav-semesters')" aria-label="سمستەر">
+    <button class="bnav-item" id="bnav-semesters" onclick="showSection('semesters-tab'); setActiveNav('bnav-semesters')" aria-label="قۆناغ">
         <span class="bnav-icon">📚</span>
-        <span class="bnav-label" id="bnav-label-semesters">سمستەر</span>
+        <span class="bnav-label" id="bnav-label-semesters">قۆناغ</span>
         <span class="bnav-dot"></span>
     </button>
     <button class="bnav-item" id="bnav-exam" onclick="showSection('exam-tab'); setActiveNav('bnav-exam'); checkExams()" aria-label="تاقیکردنەوە">
