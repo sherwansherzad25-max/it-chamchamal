@@ -194,11 +194,11 @@ function renderScheduleDays(sem, shift, group) {
     const shiftText = shift==='morning' ? 'بەیانیان' : 'ئێوارن';
     document.getElementById('group-display-title').innerHTML = `${shiftText} - سمستەری ${sem} - <span style="color:var(--primary)">گرووپی ${group}</span>`;
 
-    const dn = ['یەکشەممە','دووشەممە','سێشەممە','چوارشەممە'];
+const dn = ['یەکشەممە','دووشەممە','سێشەممە','چوارشەممە'];
     document.getElementById('daysArea').innerHTML = dn.map((n,i)=>
-        `<button class="tab-btn" style="background:var(--primary);color:white;border:none;margin:4px;" onclick="selectDay('${group}',${i+1},'${n}')">${n}</button>`
+        `<button class="tab-btn" style="width:100%; padding:14px 8px; background:#dbeafe; color:#1e3a8a; border:2px solid #1e3a8a; border-radius:14px; font-weight:800; font-size:0.9rem; cursor:pointer;" onclick="selectDay('${group}',${i+1},'${n}')">${n}</button>`
     ).join('');
-    document.getElementById('daysArea').innerHTML += `<br><button onclick="resetTodayProfile();" style="grid-column: span 2; margin-top:10px;padding:10px 20px;border-radius:14px;background:transparent;border:1.5px solid var(--border);color:var(--text-muted);font-family:var(--font);font-size:0.85rem;cursor:pointer;font-weight:600;">⚙️ گۆڕینی زانیارییەکان</button>`;
+    document.getElementById('daysArea').innerHTML += `<button onclick="resetTodayProfile();" style="grid-column: span 2; margin-top:8px; padding:12px; border-radius:14px; background:transparent; border:1.5px solid var(--border); color:var(--text-muted); font-family:var(--font); font-size:0.85rem; cursor:pointer; font-weight:600; width:100%;">⚙️ گۆڕینی زانیارییەکان</button>`;
     document.getElementById('schedule-box').style.display = 'none'; document.getElementById('schedule-body').innerHTML = '';
 }
 
@@ -247,9 +247,10 @@ function selectGroup(g) {
     const ag = document.getElementById('btn-grp-'+g); if(ag) ag.classList.add('active-btn');
     const shiftText = currentShift==='morning' ? 'بەیانیان' : 'ئێوارن';
     document.getElementById('group-display-title').innerHTML = `سمستەر ${currentSem} - ${shiftText} - <span style="color:var(--primary)">گرووپی ${g}</span>`;
-    const dn = ['یەکشەممە','دووشەممە','سێشەممە','چوارشەممە'];
-    document.getElementById('daysArea').innerHTML = dn.map((n,i)=>`<button class="tab-btn" style="background:var(--primary);color:white;border:none;margin:4px;" onclick="selectDay('${g}',${i+1},'${n}')">${n}</button>`).join('');
+   const dn = ['یەکشەممە','دووشەممە','سێشەممە','چوارشەممە'];
+    document.getElementById('daysArea').innerHTML = dn.map((n,i)=>`<button class="tab-btn" style="width:100%; padding:14px 8px; background:#dbeafe; color:#1e3a8a; border:2px solid #1e3a8a; border-radius:14px; font-weight:800; font-size:0.9rem; cursor:pointer;" onclick="selectDay('${g}',${i+1},'${n}')">${n}</button>`).join('');
 }
+
 
 function selectDay(g, d, dayName) {
     triggerHaptic();
