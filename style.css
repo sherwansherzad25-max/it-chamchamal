@@ -145,6 +145,8 @@ header h2 { color: rgba(255,255,255,0.7); font-size: 0.85rem; margin-top: 4px; f
     background: var(--surface); border: 1px solid var(--border);
     border-radius: 10px; height: 35px; display: flex; align-items: center;
     overflow: hidden; box-shadow: 0 4px 10px var(--shadow-color);
+    -webkit-transform: translate3d(0, 0, 0);
+    -webkit-mask-image: -webkit-radial-gradient(white, black);
 }
 .news-badge {
     background: #ef4444; color: white; padding: 0 12px;
@@ -153,34 +155,29 @@ header h2 { color: rgba(255,255,255,0.7); font-size: 0.85rem; margin-top: 4px; f
 }
 .notif-btn { background: transparent; border: none; font-size: 1rem; padding: 0 8px; cursor: pointer; border-left: 1px solid var(--border); }
 
-.news-scroll-area {
-    flex: 1;
-    overflow: hidden !important;
-    white-space: nowrap !important;
-    position: relative !important;
-    width: 100% !important;
-    /* سێبەرە کاڵەکەمان لابرد بۆ ئەوەی ئایفۆن نەیبڕێت */
+.news-scroll-area { 
+    flex: 1; overflow: hidden; white-space: nowrap; position: relative; 
 }
-#news-list {
-    display: inline-block !important;
-    white-space: nowrap !important;
-    min-width: 100% !important;
-    padding-right: 15px;
+
+#news-list { 
+    display: inline-block; 
+    font-weight: 600; 
+    font-size: 0.8rem; 
+    padding-right: 15px; 
     -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-    -webkit-animation: scrollNews 25s linear infinite !important;
-    animation: scrollNews 25s linear infinite !important;
+    will-change: transform;
+    -webkit-animation: tickerMove 40s linear infinite;
+    animation: tickerMove 40s linear infinite; 
 }
 
-
-@-webkit-keyframes scrollNews {
-    0% { -webkit-transform: translateX(0); }
-    100% { -webkit-transform: translateX(50%); }
+@-webkit-keyframes tickerMove { 
+    0% { -webkit-transform: translateX(0%); } 
+    100% { -webkit-transform: translateX(100%); } 
 }
 
-@keyframes scrollNews {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(50%); }
+@keyframes tickerMove { 
+    0% { transform: translateX(0%); } 
+    100% { transform: translateX(100%); } 
 }
 
 
