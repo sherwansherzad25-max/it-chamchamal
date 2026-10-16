@@ -5,7 +5,7 @@ function showToast(message, icon = "✅") {
         let container = document.getElementById('toast-container');
         if (!container) { container = document.createElement('div'); container.id = 'toast-container'; document.body.appendChild(container); }
         const toast = document.createElement('div'); toast.className = 'toast-message';
-        toast.innerHTML = `<span>${icon}</span> <span>${message}</span>`;
+        toast.innerHTML = `<span class="toast-dot"></span> <span>${message}</span>`;
         container.appendChild(toast);
         setTimeout(() => { toast.remove(); }, 3800);
     } catch(e){}
@@ -16,7 +16,7 @@ function autoRequestNotification() {
     if (Notification.permission === "default") {
         setTimeout(() => {
             Notification.requestPermission().then(permission => {
-                if (permission === "granted") { new Notification("IT Chamchamal", { body: "ئێستا ئاگادارییەکان وەردەگریت", icon: "it-icon-final-192.png" }); }
+                if (permission === "granted") { new Notification("پەیمانگای تەکنیکی چەمچەماڵ", { body: "ئێستا ئاگادارییەکان وەردەگریت", icon: "it-icon-final-192.png" }); }
             });
         }, 3000);
     }
@@ -61,7 +61,7 @@ function setActiveNav(id) {
 }
 
 function checkUpdate() { if ('serviceWorker' in navigator) { navigator.serviceWorker.ready.then(reg => reg.update()); } }
-if (localStorage.getItem("app_version") !== APP_VERSION) { localStorage.setItem("app_version",APP_VERSION); window.location.reload(true); }
+try { if (localStorage.getItem("app_version") !== APP_VERSION) { localStorage.setItem("app_version",APP_VERSION); if (!sessionStorage.getItem("app_reloaded")) { sessionStorage.setItem("app_reloaded","1"); window.location.reload(true); } } } catch(e){}
 
 function openInnerStage(stageId) {
     triggerHaptic();
@@ -140,6 +140,7 @@ async function fetchSchedule() {
     const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS2j8Z4JmuZ2Fq75MNmQ1siz3l9djVQqaIQhk9R9SrSbBx94k3zRfQHeuDpTx_SBW8ZYaWB0Bvxor7M/pub?gid=175394541&single=true&output=csv";
     try {
         const r = await fetch(url, { cache: "no-store" });
+        if (!r.ok) throw new Error("HTTP " + r.status);
         const csvText = await r.text();
         const rows = csvText.split(/\r?\n/).slice(1);
         const data = {};
@@ -156,7 +157,7 @@ async function fetchSchedule() {
             data[shift][sem][group][day].push([no, subject, time, teacher]);
         });
         scheduleData = data; scheduleClassAlerts(); 
-    } catch (e) { console.error("Error fetching schedule:", e); }
+    } catch (e) { console.error("Error fetching schedule:", e); showToast("نەتوانرا خشتەی وانەکان بار بکرێت، ئینتەرنێتەکەت بپشکنە", "⚠️"); }
 }
 
 function initScheduleTab() {
@@ -191,7 +192,7 @@ function initScheduleTab() {
 function renderScheduleDays(sem, shift, group) {
     currentSem = sem; currentShift = shift;
     document.getElementById('group-display-title').style.display = 'block';
-    const shiftText = shift==='morning' ? 'بەیانیان' : 'ئێوارن';
+    const shiftText = shift==='morning' ? 'بەیانیان' : 'ئێواران';
     document.getElementById('group-display-title').innerHTML = `${shiftText} - سمستەری ${sem} - <span style="color:var(--primary)">گرووپی ${group}</span>`;
 
 const dn = ['یەکشەممە','دووشەممە','سێشەممە','چوارشەممە'];
@@ -201,7 +202,7 @@ const dn = ['یەکشەممە','دووشەممە','سێشەممە','چوارشە
     document.getElementById('daysArea').innerHTML = dn.map((n,i)=>
         `<button class="tab-btn" style="width:100%; padding:14px 8px; background:#dbeafe; color:#1e3a8a; border:2px solid #1e3a8a; border-radius:14px; font-weight:800; font-size:0.9rem; cursor:pointer;" onclick="selectDay('${group}',${i+1},'${n}')">${n}</button>`
     ).join('');
-    document.getElementById('daysArea').innerHTML += `<button onclick="resetTodayProfile();" style="grid-column: span 2; margin-top:8px; padding:12px; border-radius:14px; background:transparent; border:1.5px solid var(--border); color:var(--text-muted); font-family:var(--font); font-size:0.85rem; cursor:pointer; font-weight:600; width:100%;">⚙️ گۆڕینی زانیارییەکان</button>`;
+    document.getElementById('daysArea').innerHTML += `<button onclick="resetTodayProfile();" style="grid-column: span 2; margin-top:8px; padding:12px; border-radius:14px; background:transparent; border:1.5px solid var(--border); color:var(--text-muted); font-family:var(--font); font-size:0.85rem; cursor:pointer; font-weight:600; width:100%;">گۆڕینی زانیارییەکان</button>`;
     document.getElementById('schedule-box').style.display = 'none'; document.getElementById('schedule-body').innerHTML = '';
 }
 
@@ -238,7 +239,7 @@ function setSem(s) {
     document.getElementById('group-display-title').style.display='block';
     const btnC = document.getElementById('btn-grp-C');
     if (currentShift==='morning' && (currentSem===2||currentSem===4)) { if(btnC) btnC.style.display='inline-block'; } else { if(btnC) btnC.style.display='none'; }
-    const shiftText = currentShift==='morning' ? 'بەیانیان' : 'ئێوارن';
+    const shiftText = currentShift==='morning' ? 'بەیانیان' : 'ئێواران';
     document.getElementById('group-display-title').innerHTML = `سمستەر ${s} - ${shiftText} - <span style="color:var(--text-muted)">گرووپ هەڵبژێرە</span>`;
     document.querySelectorAll('.grp-btn').forEach(b=>b.classList.remove('active-btn'));
     document.getElementById('daysArea').innerHTML=""; document.getElementById('schedule-box').style.display='none';
@@ -248,7 +249,7 @@ function selectGroup(g) {
     triggerHaptic();
     document.querySelectorAll('.grp-btn').forEach(b=>b.classList.remove('active-btn'));
     const ag = document.getElementById('btn-grp-'+g); if(ag) ag.classList.add('active-btn');
-    const shiftText = currentShift==='morning' ? 'بەیانیان' : 'ئێوارن';
+    const shiftText = currentShift==='morning' ? 'بەیانیان' : 'ئێواران';
     document.getElementById('group-display-title').innerHTML = `سمستەر ${currentSem} - ${shiftText} - <span style="color:var(--primary)">گرووپی ${g}</span>`;
    const dn = ['یەکشەممە','دووشەممە','سێشەممە','چوارشەممە'];
     document.getElementById('daysArea').innerHTML = dn.map((n,i)=>`<button class="tab-btn" style="width:100%; padding:14px 8px; background:#dbeafe; color:#1e3a8a; border:2px solid #1e3a8a; border-radius:14px; font-weight:800; font-size:0.9rem; cursor:pointer;" onclick="selectDay('${g}',${i+1},'${n}')">${n}</button>`).join('');
@@ -258,7 +259,7 @@ function selectGroup(g) {
 function selectDay(g, d, dayName) {
     triggerHaptic();
     const body = document.getElementById('schedule-body'); if(!body) return; body.innerHTML='';
-    const shiftText = currentShift==='morning' ? 'بەیانیان' : 'ئێوارن';
+    const shiftText = currentShift==='morning' ? 'بەیانیان' : 'ئێواران';
     document.getElementById('group-display-title').innerHTML = `${shiftText} - سمستەری ${currentSem} - <span style="color:var(--primary)">گرووپی ${g}</span> - ڕۆژی ${dayName}`;
     if (scheduleData[currentShift]?.[currentSem]?.[g]?.[d]) {
         const lessons = scheduleData[currentShift][currentSem][g][d];
@@ -283,7 +284,7 @@ async function fetchNews() {
     const nc = document.getElementById('news-list'); if(!nc) return;
     const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS2j8Z4JmuZ2Fq75MNmQ1siz3l9djVQqaIQhk9R9SrSbBx94k3zRfQHeuDpTx_SBW8ZYaWB0Bvxor7M/pub?output=csv&gid=0";
     try {
-        const r = await fetch(url,{cache:"no-store"}); const csv = await r.text(); const rows = csv.split(/\r?\n/).slice(1);
+        const r = await fetch(url,{cache:"no-store"}); if(!r.ok) throw new Error("HTTP " + r.status); const csv = await r.text(); const rows = csv.split(/\r?\n/).slice(1);
         if(rows.length>0 && rows[0].trim()!=="") {
             let html="",latestTitle="";
             rows.forEach((row,i)=>{
@@ -291,16 +292,16 @@ async function fetchNews() {
                 const t=row.substring(0,fc).replace(/(^"|"$)/g,'').trim(); const d=row.substring(fc+1).replace(/(^"|"$)/g,'').trim();
                 if(i===0) latestTitle=t; html+=` <span style="margin-left:80px;display:inline-block;"> <b>• ${t}</b> : ${d} </span> `;
             });
-            nc.innerHTML=html+html; const stored=localStorage.getItem('last_news_title');
+            nc.innerHTML=html+html; nc.dataset.loaded='1'; const stored=localStorage.getItem('last_news_title');
             if(stored!==latestTitle && Notification.permission==="granted") {
-                let alertMsg = (latestTitle.includes('تاقیکردنەوە') || latestTitle.includes('تاقیكردنەوە')) ? "كاتی تاقیكردنەوە دانراوە، سەردانی ویب سایتەكە بكە" : "ویب سایتەكە ئەپدەیت كرایەوە، سەردانی بكە";
+                let alertMsg = (latestTitle.includes('تاقیکردنەوە') || latestTitle.includes('تاقیكردنەوە')) ? "کاتی تاقیکردنەوە دانراوە، سەردانی ماڵپەڕەکە بکە" : "ماڵپەڕەکە نوێکرایەوە، سەردانی بکە";
                 if('serviceWorker' in navigator) {
-                    navigator.serviceWorker.ready.then(reg => { reg.showNotification("ئاگاداری نوێ | IT Chamchamal", { body: alertMsg + "\n" + latestTitle, icon: "it-icon-final-192.png", badge: "it-icon-final-192.png", tag: 'news-alert', vibrate: [200, 100, 200] }); });
-                } else { new Notification("ئاگاداری نوێ | IT Chamchamal", { body: alertMsg + "\n" + latestTitle, icon: "it-icon-final-192.png" }); }
+                    navigator.serviceWorker.ready.then(reg => { reg.showNotification("ئاگاداری نوێ | پەیمانگای تەکنیکی چەمچەماڵ", { body: alertMsg + "\n" + latestTitle, icon: "it-icon-final-192.png", badge: "it-icon-final-192.png", tag: 'news-alert', vibrate: [200, 100, 200] }); });
+                } else { new Notification("ئاگاداری نوێ | پەیمانگای تەکنیکی چەمچەماڵ", { body: alertMsg + "\n" + latestTitle, icon: "it-icon-final-192.png" }); }
                 localStorage.setItem('last_news_title',latestTitle);
             } else if(!stored) localStorage.setItem('last_news_title',latestTitle);
-        } else nc.innerHTML="هیچ هەواڵێکی نوێ نییە.";
-    } catch(e) {}
+        } else { nc.innerHTML="هیچ هەواڵێکی نوێ نییە."; nc.dataset.loaded='1'; }
+    } catch(e) { if(!nc.dataset.loaded) nc.textContent = "نەتوانرا هەواڵەکان بار بکرێن، ئینتەرنێتەکەت بپشکنە."; }
 }
 setInterval(fetchNews, 60000);
 
@@ -325,13 +326,13 @@ function scheduleClassAlerts() {
 
         const preClassAlarm = classStartTime.getTime() - (2 * 60 * 1000);
         if (preClassAlarm > now) {
-            const timeout1 = setTimeout(() => { showToast(`⏰ ئامادەبە، پاش ٢ خولەکی تر وانەی (${r[1]}) دەست پێدەکات!`, '⚠️'); sendPushNotification(`⏰ ئامادەبە!`, `پاش ٢ خولەکی تر وانەی ${r[1]} دەست پێدەکات.`); }, preClassAlarm - now);
+            const timeout1 = setTimeout(() => { showToast(`ئامادەبە، پاش ٢ خولەکی تر وانەی (${r[1]}) دەست پێدەکات.`, '⚠️'); sendPushNotification(`ئامادەبە`, `پاش ٢ خولەکی تر وانەی ${r[1]} دەست پێدەکات.`); }, preClassAlarm - now);
             classAlertTimeouts.push(timeout1);
         }
 
         const breakAlarm = classStartTime.getTime() + (90 * 60 * 1000);
         if (breakAlarm > now) {
-            const timeout2 = setTimeout(() => { showToast(`☕ زەنگی پشوو: وانەی (${r[1]}) تەواو بوو، کاتی پشووە (٣٠ خولەک)!`, '🎉'); sendPushNotification(`☕ کاتی پشووە!`, `وانەی ${r[1]} تەواو بوو. پشوویەکی باش!`); }, breakAlarm - now);
+            const timeout2 = setTimeout(() => { showToast(`کاتی پشووە: وانەی (${r[1]}) تەواو بوو (٣٠ خولەک پشوو).`, '🎉'); sendPushNotification(`کاتی پشووە`, `وانەی ${r[1]} تەواو بوو. پشوویەکی باش.`); }, breakAlarm - now);
             classAlertTimeouts.push(timeout2);
         }
     });
@@ -399,7 +400,7 @@ function saveTodayProfile() {
     
     const profile = { name, gender: todayGender, stage: todayStage, sem, group: todayGroup, shift: todayShiftSel };
     localStorage.setItem('today_profile', JSON.stringify(profile));
-    showToast('زانیارییەکانت پاشەکەوت کرا! ✨', '✅');
+    showToast('زانیارییەکانت پاشەکەوت کرا', '✅');
     
     setTimeout(() => {
         if (document.getElementById('schedule-tab').style.display === 'block') { initScheduleTab(); } 
@@ -426,11 +427,11 @@ function resetTodayProfile() {
 
 function getTodayGreeting(name, gender) {
     const h = new Date().getHours(); let timeWord, emoji;
-    if (h >= 5  && h < 12) { timeWord = 'بەیانی باش'; emoji = '🌤️'; }
-    else if (h >= 12 && h < 17) { timeWord = 'نیوەڕۆت باش'; emoji = '☀️'; }
-    else if (h >= 17 && h < 21) { timeWord = 'ئێوارەت باش'; emoji = '🌇'; }
-    else { timeWord = 'شەوت باش'; emoji = '🌙'; }
-    const title = gender === 'male' ? 'کاک' : 'خاتوو'; return { greeting: `${timeWord}، ${title} ${name}!`, emoji };
+    if (h >= 5  && h < 12) { timeWord = 'بەیانی باش'; emoji = ''; }
+    else if (h >= 12 && h < 17) { timeWord = 'نیوەڕۆت باش'; emoji = ''; }
+    else if (h >= 17 && h < 21) { timeWord = 'ئێوارەت باش'; emoji = ''; }
+    else { timeWord = 'شەوت باش'; emoji = ''; }
+    const title = gender === 'male' ? 'کاک' : 'خاتوو'; return { greeting: `${timeWord}، ${title} ${name}`, emoji };
 }
 
 function getTodayDayIndex() {
@@ -448,7 +449,7 @@ function renderTodayMain() {
 
     const { greeting, emoji } = getTodayGreeting(p.name, p.gender);
     const stageLabel = p.stage == 1 ? 'قۆناغی یەکەم' : 'قۆناغی دووەم';
-    const shiftLabel = p.shift === 'morning' ? 'دەوامی بەیانیان ☀️' : 'دەوامی ئێواران 🌙';
+    const shiftLabel = p.shift === 'morning' ? 'دەوامی بەیانیان' : 'دەوامی ئێواران';
     const greetBox = document.getElementById('today-greeting-box');
 
     if(greetBox) {
@@ -466,23 +467,23 @@ function renderTodayMain() {
     if(dayIdx === null) {
         box.innerHTML = `
         <div style="text-align:center;padding:32px 20px;background:var(--surface);border-radius:20px;border:1.5px solid var(--border);">
-            <div style="font-size:2.4rem;margin-bottom:12px;">🎉</div>
-            <div style="font-weight:900;font-size:1.12rem;color:var(--text);margin-bottom:8px;">${dayName} — ئەمڕؤ پشووە!</div>
-            <div style="color:var(--text-muted);font-size:0.88rem;line-height:1.6;">ئەمڕۆ وانە نییە، کاتێکی خۆش بەسەر بەرە 😎</div>
+            <div style="font-size:2.4rem;margin-bottom:12px;"></div>
+            <div style="font-weight:900;font-size:1.12rem;color:var(--text);margin-bottom:8px;">${dayName} — ئەمڕۆ پشووە</div>
+            <div style="color:var(--text-muted);font-size:0.88rem;line-height:1.6;">ئەمڕۆ وانە نییە.</div>
         </div>`; return;
     }
 
     const lessons = scheduleData[p.shift]?.[parseInt(p.sem)]?.[p.group]?.[dayIdx]; const now = new Date();
     let html = `
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
-        <span style="background:linear-gradient(135deg,var(--primary),var(--secondary));color:white;padding:5px 16px;border-radius:20px;font-size:0.85rem;font-weight:700;">📅 ${dayName}</span>
+        <span style="background:linear-gradient(135deg,var(--primary),var(--secondary));color:white;padding:5px 16px;border-radius:20px;font-size:0.85rem;font-weight:700;">${dayName}</span>
         <span style="color:var(--text-muted);font-size:0.82rem;font-weight:600;">وانەکانی ئەمڕۆ</span>
     </div>`;
 
     if(!lessons || lessons.length === 0) {
         html += `
         <div style="text-align:center;padding:26px;background:var(--surface);border-radius:16px;border:1.5px dashed var(--border);">
-            <div style="font-size:1.8rem;margin-bottom:8px;">📭</div>
+            <div style="font-size:1.8rem;margin-bottom:8px;"></div>
             <div style="color:var(--text-muted);font-weight:700;">ئەمڕۆ وانە نییە بۆ گرووپی ${p.group}</div>
         </div>`;
     } else {
@@ -551,7 +552,7 @@ function renderGrading() {
     localStorage.setItem('gpa_selected_sem',sem);
     const container=document.getElementById('grading-container'); container.innerHTML="";
     document.getElementById('clear-sem-btn').style.display = 'block';
-    let lblDaily = "ڕۆژانە", lblAtt = "نەهاتن", lblQuiz = "کویز", lblRep = "ڕاپۆرت و سیمینار", lblMid = "میدتێرم", lblFin = "فایناڵ", lblStat = "تکایە نمرەکانت داخڵ بکە...", lblDel = "🗑️ سڕینەوەی ئەم بابەتە";
+    let lblDaily = "ڕۆژانە", lblAtt = "نەهاتن", lblQuiz = "کویز", lblRep = "ڕاپۆرت و سیمینار", lblMid = "میدتێرم", lblFin = "فایناڵ", lblStat = "تکایە نمرەکانت داخڵ بکە...", lblDel = "سڕینەوەی ئەم بابەتە";
     subjects.forEach((sub,idx)=>{
         const color='#1e3a8a';
         container.innerHTML+=`<div class="grade-item"><button class="accordion" onclick="toggleAccordion(this)"><span class="subject-badge" style="background:${color};">${sub}</span><span id="score-${sem}-${idx}" style="font-size:0.78rem;opacity:0.5;">▼</span></button><div class="panel"><div class="gpa-input-row"><label>${lblDaily}</label><input type="number" min="0" max="50" id="daily-${sem}-${idx}" oninput="calcSub('${sem}',${idx})"></div><div class="gpa-input-row"><label>${lblAtt}</label><input type="number" min="0" max="50" id="attend-${sem}-${idx}" oninput="calcSub('${sem}',${idx})"></div><div class="gpa-input-row"><label>${lblQuiz}</label><input type="number" min="0" max="50" id="quiz-${sem}-${idx}" oninput="calcSub('${sem}',${idx})"></div><div class="gpa-input-row"><label>${lblRep}</label><input type="number" min="0" max="50" id="report-${sem}-${idx}" oninput="calcSub('${sem}',${idx})"></div><div class="gpa-input-row"><label>${lblMid}</label><input type="number" min="0" max="50" id="mid-${sem}-${idx}" oninput="calcSub('${sem}',${idx})"></div><div class="gpa-input-row" style="border-top:1px solid var(--border);"><label style="color:${color};font-weight:800;">${lblFin}</label><input type="number" min="0" max="50" id="final-${sem}-${idx}" oninput="calcSub('${sem}',${idx})"></div><div id="status-${sem}-${idx}" style="text-align:center;padding:12px;font-size:0.88rem;font-weight:600;color:var(--text-muted);background:var(--surface2);margin:10px 0;border-radius:12px;line-height:1.7;border:1px solid var(--border);">${lblStat}</div><div class="clear-btns-container"><button class="btn-clear-sub" onclick="clearSubject('${sem}',${idx})">${lblDel}</button></div></div></div>`;
@@ -573,19 +574,19 @@ function calcSub(sem,idx, isLoading = false) {
         let lblTotal = "کۆی سەعی (بێ فایناڵ):";
         msg=`<div style="margin-bottom:5px;">${lblTotal} <span style="color:var(--primary);font-size:1.1rem;font-weight:800;">${current}</span></div>`;
         let missing=[]; if(d===null)missing.push("ڕۆژانە");if(a===null)missing.push("نەهاتن");if(q===null)missing.push("کویز");if(r===null)missing.push("ڕاپۆرت");if(m===null)missing.push("میدتێرم");
-        if(missing.length>0&&current<50) msg+=`<div style="color:#d97706;font-size:0.82rem;margin-top:4px;font-weight:600;">💡 هەوڵبدە لە (${missing.join(' و ')}) نمرە بەدەست بهێنیت</div>`;
+        if(missing.length>0&&current<50) msg+=`<div style="color:#d97706;font-size:0.82rem;margin-top:4px;font-weight:600;">پێشنیار: هەوڵبدە لە (${missing.join(' و ')}) نمرە بەدەست بهێنیت</div>`;
 
-        if(current<25) msg+=`<br><span style="color:#ef4444;font-weight:800;">⚠️ مەترسی! نمرەی سەعیت زۆر کەمە.</span>`;
-        else if(current<35) { msg+=`<br><span style="color:#d97706;">باشە، بەڵام هێشتا مەترسی هەیە.</span>`; if(current >= 25) hasReached25 = true; }
-        else if(current<50) { msg+=`<br><span style="color:#059669;font-weight:700;">🌟 ئاستت نایابە!</span>`; if(current >= 25) hasReached25 = true; }
-        else { msg+=`<br><span style="color:#10b981;font-weight:700;">🏆 سەعی تەواو! تەنها فایناڵ ماوە.</span>`; if(current >= 25) hasReached25 = true; }
+        if(current<25) msg+=`<br><span style="color:#ef4444;font-weight:800;">نمرەی سەعیت کەمە، پێویستە زیاتر هەوڵ بدەیت.</span>`;
+        else if(current<35) { msg+=`<br><span style="color:#d97706;">ئاستێکی مامناوەندییە، دەتوانیت باشتر بکەیت.</span>`; if(current >= 25) hasReached25 = true; }
+        else if(current<50) { msg+=`<br><span style="color:#059669;font-weight:700;">ئاستێکی باشە.</span>`; if(current >= 25) hasReached25 = true; }
+        else { msg+=`<br><span style="color:#10b981;font-weight:700;">نمرەی سەعی تەواوە، تەنها فایناڵ ماوە.</span>`; if(current >= 25) hasReached25 = true; }
 
         if(f!==null) {
             let final=current+f; let lblFinTotal = "کۆی گشتی:";
             msg=`<div style="font-size:1.1rem;margin-bottom:6px;">${lblFinTotal} <span style="color:var(--text);font-weight:900;">${final}</span></div>`;
             if(final>100) msg+=`<span style="color:#ef4444">هەڵە! لە ١٠٠ تێپەڕی کرد.</span>`;
-            else if(final>=50) { msg+=`<span style="color:#10b981;font-weight:700;">🎉 پیرۆزە دەرچوویت!</span>`; if(final>=85) msg+=` <span style="color:#f59e0b">ئاستێکی بەرز!</span>`; hasReached50Final = true; }
-            else msg+=`<span style="color:#ef4444">😢 بەداخەوە کەوتویت.</span>`;
+            else if(final>=50) { msg+=`<span style="color:#10b981;font-weight:700;">پیرۆزە، دەرچوویت.</span>`; if(final>=85) msg+=` <span style="color:#f59e0b">ئاستێکی بەرزە.</span>`; hasReached50Final = true; }
+            else msg+=`<span style="color:#ef4444">بەداخەوە، نمرەی ئێستا بۆ دەرچوون بەس نییە.</span>`;
         }
     }
     const sd=document.getElementById(`status-${sem}-${idx}`); if(sd) sd.innerHTML=msg;
@@ -658,7 +659,7 @@ async function checkExams() {
     const container = document.getElementById('exams-container');
     const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS2j8Z4JmuZ2Fq75MNmQ1siz3l9djVQqaIQhk9R9SrSbBx94k3zRfQHeuDpTx_SBW8ZYaWB0Bvxor7M/pub?output=csv&gid=1091649278";
     try {
-        const r = await fetch(url, { cache: "no-store" }); const csvText = await r.text(); const rows = csvText.split(/\r?\n/).slice(1);
+        const r = await fetch(url, { cache: "no-store" }); if(!r.ok) throw new Error("HTTP " + r.status); const csvText = await r.text(); const rows = csvText.split(/\r?\n/).slice(1);
         examIntervals.forEach(clearInterval); examIntervals = []; if(container) container.innerHTML = "";
         let activeExams = [];
         rows.forEach(row => {
@@ -700,11 +701,11 @@ async function checkExams() {
                 activeExams.forEach(exam => {
                     const diffTime = Math.abs(exam.dateObj - new Date()); const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
                     let timeText = diffDays === 1 ? "سبەی" : diffDays === 0 ? "ئەمڕۆ" : `ماوە: ${diffDays} ڕۆژ`;
-                    alertsHTML += `<div style="display:flex;align-items:center;gap:8px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.25);border-radius:10px;padding:8px 12px;margin-bottom:6px;"><span style="font-size:0.9rem;flex-shrink:0;">⚠️</span><span style="color:#dc2626;font-weight:700;font-size:0.78rem;flex-shrink:0;">تاقیکردنەوە:</span><span style="font-weight:600;font-size:0.78rem;color:var(--text);flex:1;">${exam.Title}</span><span style="background:#dc2626;color:white;padding:2px 8px;border-radius:20px;font-size:0.7rem;font-weight:700;flex-shrink:0;white-space:nowrap;">${timeText}</span></div>`;
+                    alertsHTML += `<div style="display:flex;align-items:center;gap:8px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.25);border-radius:10px;padding:8px 12px;margin-bottom:6px;"><span style="color:#dc2626;font-weight:700;font-size:0.78rem;flex-shrink:0;">تاقیکردنەوە:</span><span style="font-weight:600;font-size:0.78rem;color:var(--text);flex:1;">${exam.Title}</span><span style="background:#dc2626;color:white;padding:2px 8px;border-radius:20px;font-size:0.7rem;font-weight:700;flex-shrink:0;white-space:nowrap;">${timeText}</span></div>`;
                 }); alertContainer.innerHTML = alertsHTML;
             } else { alertContainer.innerHTML = ''; }
         }
-    } catch(e) {}
+    } catch(e) { if(container && !container.innerHTML.trim()) container.innerHTML = `<h3 style='text-align:center;opacity:0.5;color:var(--text);'>نەتوانرا کاتی تاقیکردنەوەکان بار بکرێت، ئینتەرنێتەکەت بپشکنە</h3>`; }
 }
 
 function startSpecificTimer(date,id) {
@@ -764,7 +765,7 @@ window.addEventListener('load', async function () {
     } catch(e){}
     try {
         const savedStars = localStorage.getItem('it_stars');
-        if (savedStars === null || savedStars === '1') applyStarField(true, true); else applyStarField(false, true);
+        if (savedStars === '1') applyStarField(true, true); else applyStarField(false, true);
     } catch(e){}
     try { checkExams(); } catch(e){}
     try { setInterval(updateClock,1000); updateClock(); } catch(e){}
