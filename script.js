@@ -37,10 +37,69 @@ let endOfYearMessage = "";
 
 const subjectList = {
     1: ["Logic Design","IT Fundamentals","Mathematics","English","Kurdology"],
-    2: ["Database","English II","Network +","Programming","Web Design"],
+    2: ["Database Concept","English II","Network +","Principle of Programming","Web Design"],
     3: ["Web Programming","O.O.P","Database Management System","Computer Network II","Operating System"],
     4: ["Mobile Application","Web Programming II","Visual Programming","Information Security","Project"]
 };
+
+// PDF Schedule Links (تەنها دوو لینکمان پێویستە)
+const pdfScheduleLinks = {
+    'morning': "https://drive.google.com/drive/folders/1LBuADyaORVolDayFMeyprTCyMAyf0_m_?usp=sharing",
+    'evening': "https://drive.google.com/drive/folders/15E5SzGt7-kMejTfHPzZh8mmQBDcJIbaF?usp=sharing"
+};
+
+let selectedPdfShift = null;
+
+function switchScheduleView(view) {
+    triggerHaptic();
+    const textView = document.getElementById('schedule-text-view');
+    const pdfView = document.getElementById('schedule-pdf-view');
+    const btnText = document.getElementById('sched-view-text-btn');
+    const btnPdf = document.getElementById('sched-view-pdf-btn');
+
+    if (view === 'text') {
+        if(textView) textView.style.display = 'block';
+        if(pdfView) pdfView.style.display = 'none';
+        btnText.classList.add('active-btn');
+        btnPdf.classList.remove('active-btn');
+    } else {
+        if(textView) textView.style.display = 'none';
+        if(pdfView) pdfView.style.display = 'block';
+        btnPdf.classList.add('active-btn');
+        btnText.classList.remove('active-btn');
+    }
+}
+
+function selectPdfShift(shift) {
+    triggerHaptic();
+    selectedPdfShift = shift;
+    
+    // چالاککردنی ڕەنگی بەتنەکان
+    document.getElementById('pdf-shift-morning').classList.toggle('active', shift === 'morning');
+    document.getElementById('pdf-shift-evening').classList.toggle('active', shift === 'evening');
+
+    // چالاککردنی دوگمەی بازدان بۆ خشتە چونکە دەوام هەڵبژێردرا
+    const jumpBtn = document.getElementById('pdf-jump-btn');
+    if (jumpBtn) {
+        jumpBtn.style.opacity = '1';
+        jumpBtn.style.pointerEvents = 'auto';
+        jumpBtn.style.background = 'linear-gradient(135deg, var(--primary), var(--secondary))';
+        jumpBtn.style.boxShadow = '0 4px 15px var(--glow)';
+    }
+}
+
+function openPdfSchedule() {
+    if (!selectedPdfShift) return;
+    triggerHaptic();
+    const link = pdfScheduleLinks[selectedPdfShift];
+    
+    // پشکنین کە ئایا لینکەکە دانراوە یان نا
+    if (link && link.startsWith("http")) {
+        window.open(link, '_blank');
+    } else {
+        showToast("هێشتا لینکی ئەم دەوامە دانەنراوە", "⚠️");
+    }
+}
 
 function openNav() { triggerHaptic(); document.getElementById("mySidebar").style.width="280px"; document.getElementById("sidebarOverlay").style.display="block"; document.body.classList.add('sidebar-open'); }
 function closeNav() { document.getElementById("mySidebar").style.width="0"; document.getElementById("sidebarOverlay").style.display="none"; document.body.classList.remove('sidebar-open'); }
@@ -195,7 +254,7 @@ function renderScheduleDays(sem, shift, group) {
     const shiftText = shift==='morning' ? 'بەیانیان' : 'ئێواران';
     document.getElementById('group-display-title').innerHTML = `${shiftText} - سمستەری ${sem} - <span style="color:var(--primary)">گرووپی ${group}</span>`;
 
-const dn = ['یەکشەممە','دووشەممە','سێشەممە','چوارشەممە'];
+    const dn = ['یەکشەممە','دووشەممە','سێشەممە','چوارشەممە'];
     document.getElementById('daysArea').style.display = 'grid';
     document.getElementById('daysArea').style.gridTemplateColumns = 'repeat(2, 1fr)';
     document.getElementById('daysArea').style.gap = '10px';
@@ -251,10 +310,9 @@ function selectGroup(g) {
     const ag = document.getElementById('btn-grp-'+g); if(ag) ag.classList.add('active-btn');
     const shiftText = currentShift==='morning' ? 'بەیانیان' : 'ئێواران';
     document.getElementById('group-display-title').innerHTML = `سمستەر ${currentSem} - ${shiftText} - <span style="color:var(--primary)">گرووپی ${g}</span>`;
-   const dn = ['یەکشەممە','دووشەممە','سێشەممە','چوارشەممە'];
+    const dn = ['یەکشەممە','دووشەممە','سێشەممە','چوارشەممە'];
     document.getElementById('daysArea').innerHTML = dn.map((n,i)=>`<button class="tab-btn" style="width:100%; padding:14px 8px; background:#dbeafe; color:#1e3a8a; border:2px solid #1e3a8a; border-radius:14px; font-weight:800; font-size:0.9rem; cursor:pointer;" onclick="selectDay('${g}',${i+1},'${n}')">${n}</button>`).join('');
 }
-
 
 function selectDay(g, d, dayName) {
     triggerHaptic();
@@ -303,7 +361,6 @@ async function fetchNews() {
         } else { nc.innerHTML="هیچ هەواڵێکی نوێ نییە."; nc.dataset.loaded='1'; }
     } catch(e) { if(!nc.dataset.loaded) nc.textContent = "نەتوانرا هەواڵەکان بار بکرێن، ئینتەرنێتەکەت بپشکنە."; }
 }
-setInterval(fetchNews, 60000);
 
 let classAlertTimeouts = [];
 function scheduleClassAlerts() {
@@ -332,7 +389,7 @@ function scheduleClassAlerts() {
 
         const breakAlarm = classStartTime.getTime() + (90 * 60 * 1000);
         if (breakAlarm > now) {
-            const timeout2 = setTimeout(() => { showToast(`کاتی پشووە: وانەی (${r[1]}) تەواو بوو (٣٠ خولەک پشوو).`, '🎉'); sendPushNotification(`کاتی پشووە`, `وانەی ${r[1]} تەواو بوو. پشوویەکی باش.`); }, breakAlarm - now);
+            const timeout2 = setTimeout(() => { showToast(`کاتی پشووە: وانەی (${r[1]}) تەواو بوو (٣0 خولەک پشوو).`, '🎉'); sendPushNotification(`کاتی پشووە`, `وانەی ${r[1]} تەواو بوو. پشوویەکی باش.`); }, breakAlarm - now);
             classAlertTimeouts.push(timeout2);
         }
     });
@@ -427,10 +484,10 @@ function resetTodayProfile() {
 
 function getTodayGreeting(name, gender) {
     const h = new Date().getHours(); let timeWord, emoji;
-    if (h >= 5  && h < 12) { timeWord = 'بەیانی باش'; emoji = ''; }
-    else if (h >= 12 && h < 17) { timeWord = 'نیوەڕۆت باش'; emoji = ''; }
-    else if (h >= 17 && h < 21) { timeWord = 'ئێوارەت باش'; emoji = ''; }
-    else { timeWord = 'شەوت باش'; emoji = ''; }
+    if (h >= 5  && h < 12) { timeWord = 'بەیانی باش'; emoji = '☀️'; }
+    else if (h >= 12 && h < 17) { timeWord = 'نیوەڕۆت باش'; emoji = '🌤️'; }
+    else if (h >= 17 && h < 21) { timeWord = 'ئێوارەت باش'; emoji = '🌆'; }
+    else { timeWord = 'شەوت باش'; emoji = '🌙'; }
     const title = gender === 'male' ? 'کاک' : 'خاتوو'; return { greeting: `${timeWord}، ${title} ${name}`, emoji };
 }
 
@@ -467,7 +524,7 @@ function renderTodayMain() {
     if(dayIdx === null) {
         box.innerHTML = `
         <div style="text-align:center;padding:32px 20px;background:var(--surface);border-radius:20px;border:1.5px solid var(--border);">
-            <div style="font-size:2.4rem;margin-bottom:12px;"></div>
+            <div style="font-size:2.4rem;margin-bottom:12px;">🎉</div>
             <div style="font-weight:900;font-size:1.12rem;color:var(--text);margin-bottom:8px;">${dayName} — ئەمڕۆ پشووە</div>
             <div style="color:var(--text-muted);font-size:0.88rem;line-height:1.6;">ئەمڕۆ وانە نییە.</div>
         </div>`; return;
@@ -483,7 +540,7 @@ function renderTodayMain() {
     if(!lessons || lessons.length === 0) {
         html += `
         <div style="text-align:center;padding:26px;background:var(--surface);border-radius:16px;border:1.5px dashed var(--border);">
-            <div style="font-size:1.8rem;margin-bottom:8px;"></div>
+            <div style="font-size:1.8rem;margin-bottom:8px;">☕</div>
             <div style="color:var(--text-muted);font-weight:700;">ئەمڕۆ وانە نییە بۆ گرووپی ${p.group}</div>
         </div>`;
     } else {
@@ -497,14 +554,14 @@ function renderTodayMain() {
             const isNow = now >= lessonStart && now < lessonEnd; const isPast = now >= lessonEnd; const c = '#1e3a8a';
 
             html += `
-            <div style="background:var(--surface);border-radius:16px;border:1.5px solid ${isNow ? c : 'var(--border)'};padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;gap:14px;${isNow ? 'box-shadow:0 0 0 3px '+c+'28;' : ''}${isPast ? 'opacity:0.52;' : ''}transition:all 0.3s;">
+            <div style="background:var(--surface);border-radius:16px;border:1.5px solid ${isNow ? c : 'var(--border)'};padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;gap:14px;${isNow ? 'box-shadow:0 0 12px '+c+'40;' : ''}${isPast ? 'opacity:0.52;' : ''}transition:all 0.3s;">
                 <div style="width:50px;height:50px;border-radius:14px;background:${c}1a;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
                     <span style="color:${c};font-weight:900;font-size:0.8rem;" dir="ltr">${r[2]}</span>
                 </div>
                 <div style="flex:1;min-width:0;">
                     <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:4px;">
                         <span style="background:${c};color:white;padding:4px 12px;border-radius:20px;font-size:0.82rem;font-weight:700;white-space:nowrap;">${r[1]}</span>
-                        ${isNow ? `<span style="background:#10b981;color:white;padding:3px 9px;border-radius:10px;font-size:0.72rem;font-weight:700;">⬤ ئێستا</span>` : ''}
+                        ${isNow ? `<span style="background:#10b981;color:white;padding:3px 9px;border-radius:10px;font-size:0.72rem;font-weight:700;box-shadow:0 0 8px rgba(16,185,129,0.5);">⬤ ئێستا</span>` : ''}
                         ${isPast ? `<span style="background:var(--surface2);color:var(--text-muted);padding:3px 9px;border-radius:10px;font-size:0.72rem;border:1px solid var(--border);">تەواوبوو</span>` : ''}
                     </div>
                     <div style="font-size:0.78rem;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${r[3]}</div>
@@ -753,24 +810,31 @@ function updateClock() {
     } catch(e){}
 }
 
-window.addEventListener('load', async function () {
+window.addEventListener('load', function () {
     setTimeout(forceHideLoader, 1000); 
     try { autoRequestNotification(); } catch(e){}
-    try { fetchNews(); } catch(e){}
-    try { await fetchSchedule(); } catch(e){}
-    try { initVisitorCounter(); } catch(e){}
-    try { checkUpdate(); } catch(e){}
+    
+    // ١. کارپێکردنی ڕووکار و دیزاین بەبێ چاوەڕێکردن (کردنەوەی دەستبەجێ)
     try {
-        const savedTheme = localStorage.getItem('it_theme') || 'classic'; applyTheme(savedTheme, true);
+        const savedTheme = localStorage.getItem('it_theme') || 'classic'; 
+        applyTheme(savedTheme, true);
     } catch(e){}
     try {
         const savedStars = localStorage.getItem('it_stars');
         if (savedStars === '1') applyStarField(true, true); else applyStarField(false, true);
     } catch(e){}
-    try { checkExams(); } catch(e){}
     try { setInterval(updateClock,1000); updateClock(); } catch(e){}
 
-    try { const todayMain = document.getElementById('today-main'); if (todayMain && todayMain.style.display === 'block') renderTodayMain(); } catch(e){}
+    // ٢. هێنانەوەی زانیارییەکان لە پاشبنەما (بەبێ وەستاندنی ماڵپەڕەکە)
+    try { fetchNews(); } catch(e){}
+    try { 
+        fetchSchedule().then(() => {
+            // نوێکردنەوەی خشتەی ئەمڕۆ کاتێک زانیارییەکان گەیشتن
+            const todayMain = document.getElementById('today-main'); 
+            if (todayMain && todayMain.style.display === 'block') renderTodayMain();
+        }); 
+    } catch(e){}
+    try { initVisitorCounter(); } catch(e){}
+    try { checkUpdate(); } catch(e){}
+    try { checkExams(); } catch(e){}
 });
-
-if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js').catch(err=>console.log('SW Failed',err)); }
