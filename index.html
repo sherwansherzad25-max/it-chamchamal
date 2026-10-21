@@ -15,7 +15,7 @@
     <meta name="keywords" content="IT Chamchamal, بەشی ئایتی چەمچەماڵ">
     <meta name="author" content="Sherwan Sherzad">
     <meta property="og:title" content="بەشی تەکنەلۆژیای زانیاری | پەیمانگای تەکنیکی چەمچەماڵ">
-    <meta property="og:url" content="https://sherwansherzad25-max.github.io/it-chamchamal/">
+    <meta property="og:url" content="https://itchamchamal.site/">
     <title>بەشی تەکنەلۆژیای زانیاری – پەیمانگای تەکنیکی چەمچەماڵ</title>
 
     <link rel="icon" type="image/png" sizes="192x192" href="it-icon-final-192.png?v=5">
@@ -23,11 +23,9 @@
     <link rel="manifest" href="manifest.json?v=5">
     <meta name="theme-color" content="#1e3a8a">
 
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Changa:wght@800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&family=Poppins:wght@600;700;800;900&family=Changa:wght@800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
-        /* ئایکۆنی SVG */
         .ic { width: 1.15em; height: 1.15em; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vertical-align: -0.2em; flex-shrink: 0; }
         .bnav-icon .ic { width: 1.35rem; height: 1.35rem; vertical-align: middle; }
         .section-header-icon .ic { width: 1.2rem; height: 1.2rem; color: var(--primary); }
@@ -35,13 +33,12 @@
         .sidebar a .ic { opacity: 0.85; }
         .notif-btn .ic { width: 1rem; height: 1rem; vertical-align: middle; color: var(--text-muted); }
         .toast-dot { width: 8px; height: 8px; border-radius: 50%; background: #d4a62a; flex-shrink: 0; }
-        /* لۆدینگ سکرینی سادەتر: لۆگۆ + ناو + هێڵی بار */
         #loader-canvas, .ld-ring, .ld-glow { display: none !important; }
-        /* یەک ڕەنگی سەرەکی (شین) و ڕەنگی لاوەکی (زێڕین) */
         .news-badge { background: var(--primary); }
         .site-note { font-size: 0.78rem; color: var(--text-muted); line-height: 1.8; background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 10px 12px; margin-top: 12px; }
         .contact-box { margin-top: 14px; font-size: 0.82rem; line-height: 2; color: var(--text); }
         .contact-box a { color: var(--primary); font-weight: 800; text-decoration: none; }
+        .dev-name-en { font-family: 'Poppins', sans-serif; font-weight: 800; }
     </style>
 </head>
 <body>
@@ -57,6 +54,7 @@
     <symbol id="i-palette" viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r="1"/><circle cx="17.5" cy="10.5" r="1"/><circle cx="8.5" cy="7.5" r="1"/><circle cx="6.5" cy="12.5" r="1"/><path d="M12 2a10 10 0 1 0 0 20 2 2 0 0 0 1.5-3.3 2 2 0 0 1 1.5-3.3H18a4 4 0 0 0 4-4C22 6 17.5 2 12 2z"/></symbol>
     <symbol id="i-send" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/></symbol>
     <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></symbol>
+    <symbol id="i-file-text" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></symbol>
 </svg>
 
 <div id="loading-screen" style="background:linear-gradient(160deg,#0a0e1a 0%,#0f1e3d 40%,#0a1628 70%,#071020 100%);overflow:hidden;">
@@ -121,7 +119,7 @@
 <div class="theme-overlay" id="themeOverlay" onclick="closeThemePanel()"></div>
 <div class="theme-panel" id="themePanel">
     <button class="theme-close" onclick="closeThemePanel()">✕</button>
-    <h3><svg class="ic"><use href="#i-palette"/></svg> ڕووکاری ماڵپەڕ</h3>
+    <h3><svg class="ic"><use href="#i-palette"/></svg> ڕووکار</h3>
     <div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:14px;font-weight:600;">ڕووکار هەڵبژێرە</div>
     <div class="theme-grid">
         <div class="theme-card" id="tc-classic" onclick="applyTheme('classic')">
@@ -151,10 +149,11 @@
     <a href="#" onclick="showSection('home-tab'); setActiveNav('bnav-home'); closeNav()"><span id="lang-home"><svg class="ic"><use href="#i-home"/></svg> سەرەکی</span></a>
     <a href="#" onclick="showSection('today-tab'); setActiveNav('bnav-today'); initTodayTab(); closeNav()"><span id="lang-side-today"><svg class="ic"><use href="#i-star"/></svg> ئەمڕۆی من</span></a>
     <a href="#" onclick="showSection('schedule-tab'); setActiveNav('bnav-schedule'); closeNav()"><span id="lang-schedule">١ · <svg class="ic"><use href="#i-cal"/></svg> خشتەی هەفتانە</span></a>
-<a href="#" onclick="showSection('semesters-tab'); setActiveNav('bnav-semesters'); closeNav()"><span id="lang-semesters">٢ · <svg class="ic"><use href="#i-book"/></svg> قۆناغەکان</span></a>    <a href="#" onclick="showSection('exam-tab'); setActiveNav('bnav-exam'); closeNav(); checkExams();"><span id="lang-menu-exam">٣ · <svg class="ic"><use href="#i-clock"/></svg> کاتی تاقیکردنەوە</span></a>
+    <a href="#" onclick="showSection('semesters-tab'); setActiveNav('bnav-semesters'); closeNav()"><span id="lang-semesters">٢ · <svg class="ic"><use href="#i-book"/></svg> قۆناغەکان</span></a>
+    <a href="#" onclick="showSection('exam-tab'); setActiveNav('bnav-exam'); closeNav(); checkExams();"><span id="lang-menu-exam">٣ · <svg class="ic"><use href="#i-clock"/></svg> کاتی تاقیکردنەوە</span></a>
     <a href="#" onclick="showSection('gpa-tab'); setActiveNav('bnav-gpa'); closeNav()"><span id="lang-menu-gpa">٤ · <svg class="ic"><use href="#i-calc"/></svg> هەژمارکردنی نمرە</span></a>
     <a href="#" onclick="showSection('about-tab'); setActiveNav('bnav-about'); closeNav()"><span id="lang-about">٥ · <svg class="ic"><use href="#i-info"/></svg> دەربارە</span></a>
-    <a href="#" onclick="openThemePanel(); closeNav()"><span id="lang-side-theme"><svg class="ic"><use href="#i-palette"/></svg> ڕووکار و دیزاین</span></a>
+    <a href="#" onclick="openThemePanel(); closeNav()"><span id="lang-side-theme"><svg class="ic"><use href="#i-palette"/></svg> ڕووکار</span></a>
     <a href="https://t.me/sherwan25" target="_blank" style="color:#fbbf24;"><span id="lang-contact"><svg class="ic"><use href="#i-send"/></svg> پەیوەندی (Telegram)</span></a>
 </div>
 
@@ -169,8 +168,9 @@
         <div id="liveClock" style="font-size: 0.7rem; padding: 4px 10px; background: rgba(255,255,255,0.18); backdrop-filter: blur(8px); color: white; border-radius: 12px; font-family: monospace; direction: ltr; border: 1px solid rgba(255,255,255,0.2);">00:00:00 PM</div>
     </div>
     <div class="header-titles">
-        <h1 class="moving-header" id="lang-institute">پەیمانگای تەکنیکی چەمچەماڵ</h1>
-        <h2 id="lang-dept-sub">بەشی تەکنەلۆژیای زانیاری (IT)</h2>
+        <h2 class="moving-header" id="lang-university">زانكۆی پۆلیته‌كنیكی سلێمانی</h2>
+        <h2 class="moving-header" id="lang-institute">پەیمانگای تەکنیکی چەمچەماڵ</h2>
+        <h2 id="lang-dept-sub">بەشی تەکنەلۆژیای زانیاری</h2>
     </div>
 </header>
 
@@ -179,7 +179,7 @@
         <div class="news-badge" id="lang-alert">ئاگاداری</div>
         <button class="notif-btn" onclick="requestNotifyPermission()" title="ئاگادارکردنەوە"><svg class="ic"><use href="#i-bell"/></svg></button>
         <div class="news-scroll-area">
-<div id="news-list">چاوەڕێ بکە... دوایین هەواڵەکان بار دەکرێن...</div>
+            <div id="news-list">چاوەڕێ بکە... دوایین هەواڵەکان بار دەکرێن...</div>
         </div>
     </div>
 </div>
@@ -190,38 +190,47 @@
         <div class="hero-card">
             <div class="hero-inner">
                 <div class="hero-badge">بەشی تەکنەلۆژیای زانیاری · 2026</div>
-                <h2 class="hero-title" id="lang-welcome-title" style="text-align:center;">بەخێربێن خوێندکارانی بەشی تەکنەلۆژیای زانیاری (IT)</h2>
-                <p class="hero-desc" id="lang-welcome-text" style="text-align:center;">
-                    بۆ گەیشتن بە هەر بەشێک، کرتەی <span class="hero-highlight" style="color:#fbbf24;text-shadow:0 0 10px rgba(251,191,36,0.4);">" لیست "</span> بکە لە سەرەوە. ئەم بەشانەت بۆ ئامادەکراوە:
-                </p>
-                <div class="info-cards-grid">
+<h2 class="hero-title" id="lang-welcome-title" style="text-align:center; line-height: 1.5;">
+    بەخێربێن خوێندکارانی بەشی تەکنەلۆژیای زانیاری 
+    <span dir="ltr" style="display: block; font-family: 'Poppins', sans-serif; font-size: 0.85em; color: #fbbf24; letter-spacing: 1px; margin-top: 6px; text-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+        Information Technology
+    </span>
+<p class="hero-desc" id="lang-welcome-text" style="text-align:center; line-height: 1.6;">
+    بۆ گەیشتن بە هەر بەشێک، کرتەی <span class="hero-highlight" style="color:#fbbf24;text-shadow:0 0 10px rgba(251,191,36,0.4);">" لیست "</span> بکە لە سەرەوە، ئەم بەشانەت بۆ ئامادەکراوە:
+</p>
+             <div class="info-cards-grid">
                     <div class="info-card">
                         <div class="info-card-icon"><svg class="ic"><use href="#i-star"/></svg></div>
-                        <div><div class="info-card-title" id="lang-c1-t">ئەمڕۆی من</div><p id="lang-c1-d">وانە و کاتەکانی ئەمڕۆت</p></div>
+                        <div style="text-align: right; flex: 1;"><div class="info-card-title" id="lang-c1-t">١ · ئەمڕۆی من</div><p id="lang-c1-d">وانە و کاتەکانی ئەمڕۆت</p></div>
                     </div>
                     <div class="info-card">
                         <div class="info-card-icon"><svg class="ic"><use href="#i-cal"/></svg></div>
-                        <div><div class="info-card-title" id="lang-c2-t">١ · خشتەی هەفتانە</div><p id="lang-c2-d">وانەکانی ڕۆژانە بۆ هەردوو دەوام</p></div>
+                        <div style="text-align: right; flex: 1;"><div class="info-card-title" id="lang-c2-t">٢ · خشتەی هەفتانە</div><p id="lang-c2-d">وانەکانی ڕۆژانە بۆ هەردوو دەوام</p></div>
                     </div>
                     <div class="info-card">
                         <div class="info-card-icon"><svg class="ic"><use href="#i-book"/></svg></div>
-                        <div><div class="info-card-title" id="lang-c3-t">٢ · سمستەرەکان</div><p id="lang-c3-d">وانەکان بە شێوازی PDF</p></div>
+                        <div style="text-align: right; flex: 1;"><div class="info-card-title" id="lang-c3-t">٣ · سمستەرەکان</div><p id="lang-c3-d">وانەکان بە شێوازی PDF</p></div>
                     </div>
                     <div class="info-card">
                         <div class="info-card-icon"><svg class="ic"><use href="#i-clock"/></svg></div>
-                        <div><div class="info-card-title" id="lang-c4-t">٣ · کاتی تاقیکردنەوە</div><p id="lang-c4-d">کاتژمێری ماوەی تاقیکردنەوە</p></div>
+                        <div style="text-align: right; flex: 1;"><div class="info-card-title" id="lang-c4-t">٤ · کاتی تاقیکردنەوە</div><p id="lang-c4-d">کاتژمێری ماوەی تاقیکردنەوە</p></div>
                     </div>
                     <div class="info-card">
                         <div class="info-card-icon"><svg class="ic"><use href="#i-calc"/></svg></div>
-                        <div><div class="info-card-title" id="lang-c5-t">٤ · هەژمارکردنی نمرە</div><p id="lang-c5-d">کۆی نمرەکانت بزانە</p></div>
+                        <div style="text-align: right; flex: 1;"><div class="info-card-title" id="lang-c5-t">٥ · هەژمارکردنی نمرە</div><p id="lang-c5-d">کۆی نمرەکانت بزانە</p></div>
                     </div>
                     <div class="info-card">
                         <div class="info-card-icon"><svg class="ic"><use href="#i-palette"/></svg></div>
-                        <div><div class="info-card-title" id="lang-c7-t">٥ · ڕووکار و دیزاین</div><p id="lang-c7-d">گۆڕینی ڕەنگ و تروسکەی ئەستێرە</p></div>
+                        <div style="text-align: right; flex: 1;"><div class="info-card-title" id="lang-c7-t">٦ · ڕووکار</div><p id="lang-c7-d">گۆڕینی ڕەنگ و تروسکەی ئەستێرە</p></div>
                     </div>
-                </div>
-                <div class="hero-thanks">
-                    <p id="lang-thanks">سوپاس بۆ <strong>(محمد اسماعیل)</strong> <span id="lang-and">و</span> <strong>(محمد بێستون)</strong> — <span id="lang-helpers" style="opacity:0.8;font-size:0.8rem;">بۆ هاوکارییان لە دروستکردنی ئەم ماڵپەڕەدا</span></p>
+                    <div class="info-card">
+                        <div class="info-card-icon"><svg class="ic"><use href="#i-info"/></svg></div>
+                        <div style="text-align: right; flex: 1;"><div class="info-card-title" id="lang-c6-t">٧ · دەربارە</div><p id="lang-c6-d">زانیاری دەربارەی پڕۆژەکە</p></div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-icon"><svg class="ic"><use href="#i-send"/></svg></div>
+                        <div style="text-align: right; flex: 1;"><div class="info-card-title" id="lang-c8-t">٨ · پەیوەندی</div><p id="lang-c8-d">پەیوەندی بە گەشەپێدەرەوە</p></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -321,44 +330,74 @@
         <button id="clear-sem-btn" class="btn-clear-sem" style="display:none;" onclick="resetSemesterGrades()">سڕینەوەی هەموو وانەکانی ئەم سمستەرە</button>
     </div>
 
-    <div id="schedule-tab" class="semester-content">
+  <div id="schedule-tab" class="semester-content">
         <div class="section-header">
             <div class="section-header-icon"><svg class="ic"><use href="#i-cal"/></svg></div>
-            <h3 id="lang-sched-header">خشتەی هەفتانە (جەدۆل)</h3>
-        </div>
-        <div class="shift-selection">
-            <button class="shift-btn morning" onclick="selectShift('morning')">بەیانیان</button>
-            <button class="shift-btn evening active" onclick="selectShift('evening')">ئێواران</button>
-        </div>
-        
-        <div class="sem-btn-row">
-            <button id="sched-stage-1" class="tab-btn sem-btn" style="background:linear-gradient(135deg,#1e3a8a,#1e40af);color:white;border:none;" onclick="setSchedStage(1)">قۆناغی یەکەم</button>
-            <button id="sched-stage-2" class="tab-btn sem-btn" style="background:linear-gradient(135deg,#2563eb,#3b82f6);color:white;border:none;" onclick="setSchedStage(2)">قۆناغی دووەم</button>
-        </div>
-        <div id="sched-sem-row" style="display:none; gap:10px; justify-content:center; margin-bottom:20px;">
-            <button id="btn-sem-opt1" class="tab-btn grp-btn" style="flex:1;" onclick="setSem(1)"></button>
-            <button id="btn-sem-opt2" class="tab-btn grp-btn" style="flex:1;" onclick="setSem(2)"></button>
+            <h3 id="lang-sched-header">خشتەی هەفتانە</h3>
         </div>
 
-        <div id="group-selection" style="display:none;gap:12px;justify-content:center;margin-bottom:20px;flex-wrap:wrap;">
-            <button id="btn-grp-A" class="tab-btn grp-btn" style="background:linear-gradient(135deg,#1e3a8a,#1e40af);color:white;border:none;" onclick="selectGroup('A')">Group A</button>
-            <button id="btn-grp-B" class="tab-btn grp-btn" style="background:linear-gradient(135deg,#1e3a8a,#1e40af);color:white;border:none;" onclick="selectGroup('B')">Group B</button>
-            <button id="btn-grp-C" class="tab-btn grp-btn" style="background:linear-gradient(135deg,#1e3a8a,#1e40af);color:white;border:none;display:none;" onclick="selectGroup('C')">Group C</button>
+        <div style="display:flex; gap:10px; margin-bottom:18px;">
+            <button id="sched-view-text-btn" class="tab-btn active-btn" style="flex:1;" onclick="switchScheduleView('text')">
+                <svg class="ic"><use href="#i-cal"/></svg> خشتە لە ماڵپەڕ
+            </button>
+            <button id="sched-view-pdf-btn" class="tab-btn" style="flex:1;" onclick="switchScheduleView('pdf')">
+                <svg class="ic"><use href="#i-file-text"/></svg> بینینی خشتە بە PDF
+            </button>
         </div>
-        <h3 id="group-display-title" style="display:none;"></h3>
-        <div id="daysArea" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom:18px;"></div>
-        <div id="schedule-box" style="display:none;">
-            <div class="table-container">
-                <table>
-                    <thead><tr>
-                        <th id="lang-tbl-no">ژمارە</th>
-                        <th id="lang-tbl-sub">بابەت</th>
-                        <th id="lang-tbl-time">کات</th>
-                        <th id="lang-tbl-teacher">مامۆستا</th>
-                    </tr></thead>
-                    <tbody id="schedule-body"></tbody>
-                </table>
+
+        <!-- بەشی یەکەم: خشتەی ناو ماڵپەڕ -->
+        <div id="schedule-text-view">
+            <div class="shift-selection">
+                <button class="shift-btn morning" onclick="selectShift('morning')">بەیانیان</button>
+                <button class="shift-btn evening active" onclick="selectShift('evening')">ئێواران</button>
             </div>
+            
+            <div class="sem-btn-row">
+                <button id="sched-stage-1" class="tab-btn sem-btn" style="background:linear-gradient(135deg,#1e3a8a,#1e40af);color:white;border:none;" onclick="setSchedStage(1)">قۆناغی یەکەم</button>
+                <button id="sched-stage-2" class="tab-btn sem-btn" style="background:linear-gradient(135deg,#2563eb,#3b82f6);color:white;border:none;" onclick="setSchedStage(2)">قۆناغی دووەم</button>
+            </div>
+            <div id="sched-sem-row" style="display:none; gap:10px; justify-content:center; margin-bottom:20px;">
+                <button id="btn-sem-opt1" class="tab-btn grp-btn" style="flex:1;" onclick="setSem(1)"></button>
+                <button id="btn-sem-opt2" class="tab-btn grp-btn" style="flex:1;" onclick="setSem(2)"></button>
+            </div>
+
+            <div id="group-selection" style="display:none;gap:12px;justify-content:center;margin-bottom:20px;flex-wrap:wrap;">
+                <button id="btn-grp-A" class="tab-btn grp-btn" style="background:linear-gradient(135deg,#1e3a8a,#1e40af);color:white;border:none;" onclick="selectGroup('A')">Group A</button>
+                <button id="btn-grp-B" class="tab-btn grp-btn" style="background:linear-gradient(135deg,#1e3a8a,#1e40af);color:white;border:none;" onclick="selectGroup('B')">Group B</button>
+                <button id="btn-grp-C" class="tab-btn grp-btn" style="background:linear-gradient(135deg,#1e3a8a,#1e40af);color:white;border:none;display:none;" onclick="selectGroup('C')">Group C</button>
+            </div>
+            <h3 id="group-display-title" style="display:none;"></h3>
+            <div id="daysArea" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom:18px;"></div>
+            <div id="schedule-box" style="display:none;">
+                <div class="table-container">
+                    <table>
+                        <thead><tr>
+                            <th id="lang-tbl-no">ژمارە</th>
+                            <th id="lang-tbl-sub">بابەت</th>
+                            <th id="lang-tbl-time">کات</th>
+                            <th id="lang-tbl-teacher">مامۆستا</th>
+                        </tr></thead>
+                        <tbody id="schedule-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- بەشی دووەم: بینینی خشتە بە PDF -->
+        <div id="schedule-pdf-view" style="display:none; background:var(--surface2); padding:20px; border-radius:16px; border:1px solid var(--border);">
+            <h4 style="margin-bottom:8px; color:var(--primary); font-size:1.1rem; text-align:center;">بینینی خشتە بە وێنە / PDF</h4>
+            <p style="font-size:0.85rem; color:var(--text-muted); text-align:center; margin-bottom:20px; line-height: 1.6;">تکایە دەوامەکەت هەڵبژێرە، دواتر کرتە لە دوگمەی خوارەوە بکە بۆ بینینی خشتەی سەرجەم قۆناغەکان.</p>
+            
+            <div style="margin-bottom:20px;">
+                <div style="display:flex; gap:10px;">
+                    <button class="shift-btn" id="pdf-shift-morning" onclick="selectPdfShift('morning')">بەیانیان</button>
+                    <button class="shift-btn" id="pdf-shift-evening" onclick="selectPdfShift('evening')">ئێواران</button>
+                </div>
+            </div>
+
+            <button id="pdf-jump-btn" onclick="openPdfSchedule()" class="download-btn" style="width:100%; padding:14px; text-align:center; font-size:0.95rem; background:gray; border-radius:12px; transition: 0.3s; opacity: 0.5; pointer-events: none;">
+                <svg class="ic"><use href="#i-file-text"/></svg> بینینی خشتەی وانەکان
+            </button>
         </div>
     </div>
 
@@ -368,7 +407,7 @@
             <h3>هەڵبژاردنی قۆناغ</h3>
         </div>
         
-    <div class="sem-grid" style="grid-template-columns: repeat(2, 1fr); gap: 12px;">
+        <div class="sem-grid" style="grid-template-columns: repeat(2, 1fr); gap: 12px;">
             <div class="sem-card" style="background:linear-gradient(135deg, #93c5fd, #bfdbfe); color: #1e3a8a; border: 1px solid #60a5fa; padding:16px 10px;" onclick="openInnerStage('stage1')">
                 <span style="font-size:0.95rem; font-weight: 900;">قۆناغی یەکەم</span>
             </div>
@@ -383,12 +422,11 @@
                 <button class="shift-btn" onclick="openSemTable('sem2-table')" style="flex:1;background:#dbeafe;color:#1e3a8a;border:2px solid #1e3a8a;padding:14px;font-size:0.92rem;border-radius:14px;font-weight:800;">سمستەری دووەم</button>
             </div>
             
-                      <div id="sem1-table" class="sem-table-wrap" style="display:none;">
+            <div id="sem1-table" class="sem-table-wrap" style="display:none;">
                 <div style="text-align:center; margin-bottom:15px; padding:10px; background:#f0f4ff; border:1px dashed #93c5fd; border-radius:12px; color:#1e3a8a; font-weight:800; font-size:0.95rem;">
                     قۆناغی یەکەم - سمستەری یەکەم
                 </div>
                 <div class="table-container">
-
                    <table>
                         <thead><tr><th class="th-sub">ناوی وانە</th><th class="th-lec">وانە بە pdf</th></tr></thead>
                         <tbody>
@@ -402,20 +440,18 @@
                 </div>
             </div>
 
-               <div id="sem2-table" class="sem-table-wrap" style="display:none;">
+            <div id="sem2-table" class="sem-table-wrap" style="display:none;">
                 <div style="text-align:center; margin-bottom:15px; padding:10px; background:#f0f4ff; border:1px dashed #93c5fd; border-radius:12px; color:#1e3a8a; font-weight:800; font-size:0.95rem;">
                     قۆناغی یەکەم - سمستەری دووەم
                 </div>
                 <div class="table-container">
-
-
                     <table>
                         <thead><tr><th class="th-sub">ناوی وانە</th><th class="th-lec">وانە بە pdf</th></tr></thead>
                         <tbody>
-                            <tr><td><span class="subject-badge" style="background:#64748b;">Database</span></td><td><a href="https://drive.google.com/drive/folders/1v1cPSMwNCzJ93P3if77aBSH3R6lQ6W46?usp=drive_link" target="_blank" class="download-btn btn-dl">بینین</a></td></tr>
+                            <tr><td><span class="subject-badge" style="background:#64748b;">Database Concept</span></td><td><a href="https://drive.google.com/drive/folders/1v1cPSMwNCzJ93P3if77aBSH3R6lQ6W46?usp=drive_link" target="_blank" class="download-btn btn-dl">بینین</a></td></tr>
                             <tr><td><span class="subject-badge" style="background:#64748b;">English II</span></td><td><a href="https://drive.google.com/drive/folders/1Se6yT_wi37QdwuHdhegGua9wgRCpRF4z?usp=drive_link" target="_blank" class="download-btn btn-dl">بینین</a></td></tr>
                             <tr><td><span class="subject-badge" style="background:#64748b;">Network +</span></td><td><a href="https://drive.google.com/drive/folders/1j5V28ybYfoILvt24CaTZ-2I9gFJ5BBN9?usp=drive_link" target="_blank" class="download-btn btn-dl">بینین</a></td></tr>
-                            <tr><td><span class="subject-badge" style="background:#64748b;">Programming</span></td><td><a href="https://drive.google.com/drive/folders/1efNtV9t40s2KTZ0HE9lv-PfLBw_ffnLS?usp=drive_link" target="_blank" class="download-btn btn-dl">بینین</a></td></tr>
+                            <tr><td><span class="subject-badge" style="background:#64748b;">Principle of Programming</span></td><td><a href="https://drive.google.com/drive/folders/1efNtV9t40s2KTZ0HE9lv-PfLBw_ffnLS?usp=drive_link" target="_blank" class="download-btn btn-dl">بینین</a></td></tr>
                             <tr><td><span class="subject-badge" style="background:#64748b;">Web Design</span></td><td><a href="https://drive.google.com/drive/folders/1hv6vYbnSv7Fj97013N__ZvK9_YxYcfHR?usp=drive_link" target="_blank" class="download-btn btn-dl">بینین</a></td></tr>
                         </tbody>
                     </table>
@@ -424,17 +460,16 @@
         </div>
 
         <div id="stage2" class="inner-sem-content">
-         <div style="display:flex;gap:12px;margin-bottom:20px;margin-top:18px;">
+            <div style="display:flex;gap:12px;margin-bottom:20px;margin-top:18px;">
                 <button class="shift-btn" onclick="openSemTable('sem3-table')" style="flex:1;background:#dbeafe;color:#1e3a8a;border:2px solid #1e3a8a;padding:14px;font-size:0.92rem;border-radius:14px;font-weight:800;">سمستەری سێیەم</button>
                 <button class="shift-btn" onclick="openSemTable('sem4-table')" style="flex:1;background:#dbeafe;color:#1e3a8a;border:2px solid #1e3a8a;padding:14px;font-size:0.92rem;border-radius:14px;font-weight:800;">سمستەری چوارەم</button>
             </div>
 
-                <div id="sem3-table" class="sem-table-wrap" style="display:none;">
+            <div id="sem3-table" class="sem-table-wrap" style="display:none;">
                 <div style="text-align:center; margin-bottom:15px; padding:10px; background:#f0f4ff; border:1px dashed #93c5fd; border-radius:12px; color:#1e3a8a; font-weight:800; font-size:0.95rem;">
                     قۆناغی دووەم - سمستەری سێیەم
                 </div>
                 <div class="table-container">
-
                     <table>
                         <thead><tr><th class="th-sub">ناوی وانە</th><th class="th-lec">وانە بە pdf</th></tr></thead>
                         <tbody>
@@ -447,12 +482,12 @@
                     </table>
                 </div>
             </div>
+
             <div id="sem4-table" class="sem-table-wrap" style="display:none;">
                 <div style="text-align:center; margin-bottom:15px; padding:10px; background:#f0f4ff; border:1px dashed #93c5fd; border-radius:12px; color:#1e3a8a; font-weight:800; font-size:0.95rem;">
                     قۆناغی دووەم - سمستەری چوارەم
                 </div>
                 <div class="table-container">
-
                     <table>
                         <thead><tr><th class="th-sub">ناوی وانە</th><th class="th-lec">وانە بە pdf</th></tr></thead>
                         <tbody>
@@ -474,17 +509,17 @@
             <h2 id="lang-about-title">دەربارەی پڕۆژە</h2>
             <p id="lang-about-text">ئەم پڕۆژەیە هەوڵێکی تایبەتە بۆ کۆکردنەوەی هەموو پێداویستییەکانی خوێندکارانی بەشی تەکنەلۆژیای زانیاری (IT) لە پەیمانگای تەکنیکی چەمچەماڵ. ئامانجی سەرەکی ئاسانکارییە بۆ گەیشتن بە زانیارییەکان بە خێراترین کات.</p>
             <hr class="about-divider">
-            <p class="about-meta"><span id="lang-dev">گەشەپێدەر:</span> <strong>شیروان شێرزاد خالد</strong></p>
+            <p class="about-meta"><span id="lang-dev">گەشەپێدەر:</span> <strong class="dev-name-en">Sherwan Sherzad Khalid</strong></p>
             <p class="about-meta" style="margin-top:8px;"><span id="lang-ver">وەشان:</span> <span class="version-badge">3.2.0 (٢٠٢٦)</span></p>
 
             <div class="site-note">
-                ئەم ماڵپەڕە بە ئامانجی ئاسانکاری و خزمەتکردنی خوێندکارانی بەشی تەکنەلۆژیای زانیاری ئامادەکراوە. بۆ زانیاری فەرمی، تکایە پەیوەندی بەبه‌شی ته‌كنه‌لۆژیای زانیاری  له‌ پەیمانگای ته‌كنیكی چه‌مچه‌ماڵه‌وه‌ بکە.
+                ئەم ماڵپەڕە بە ئامانجی ئاسانکاری و خزمەتکردنی خوێندکارانی بەشی تەکنەلۆژیای زانیاری ئامادەکراوە. بۆ زانیاری فەرمی، تکایە پەیوەندی بەبه‌شی ته‌كنه‌لۆژیای زانیاری له‌ پەیمانگای ته‌كنیكی چه‌مچه‌ماڵه‌وه‌ بکە.
             </div>
         </div>
     </div>
 
     <div class="qr-card">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://sherwansherzad25-max.github.io/it-chamchamal/&margin=0" alt="QR">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://itchamchamal.site/&margin=0" alt="QR">
         <div>
             <p id="lang-scan">سکان بۆ هاوبەشکردن</p>
             <span>IT Chamchamal</span>
@@ -493,8 +528,14 @@
 </div>
 
 <footer>
-    <p id="lang-created" style="opacity:0.75;font-size:0.88rem;margin-bottom:6px;">دروستکراوە لەلایەن خوێندکار:</p>
-    <div style="color: #ca8a04; font-size: 1.4rem; font-weight: 900; text-shadow: 0 2px 4px rgba(0,0,0,0.3); letter-spacing: 0.5px; margin: 8px 0;">شیروان شێرزاد خالد</div>
+<div style="margin-bottom: 18px; margin-top: 5px;">
+        <div id="lang-created" dir="ltr" style="display: inline-block; font-family: 'Poppins', sans-serif; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.6); margin-bottom: 4px;">
+            Created by:
+        </div>
+        <div class="dev-name-en" dir="ltr" style="font-size: 1.55rem; font-weight: 900; background: linear-gradient(to right, #fbbf24, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0px 4px 10px rgba(245, 158, 11, 0.3)); letter-spacing: 0.5px; margin-top: 2px;">
+            Sherwan Sherzad Khalid
+        </div>
+    </div>
     <span class="footer-tagline" id="lang-footer-hope">بە هیوای سوودگەیاندن بە هەموو خوێندکارانی بەشی تەکنەلۆژیای زانیاری</span>
     <p style="opacity:0.6;font-size:0.78rem;margin-top:10px;">ماڵپەڕێک بۆ ئاسانکاری و خزمەتکردنی خوێندکارانی بەشی تەکنەلۆژیای زانیاری.</p>
     <p style="opacity:0.55;font-size:0.82rem;margin-top:14px;">© ٢٠٢٦ <span id="lang-copy">هەموو مافەکان پارێزراون</span></p>
