@@ -1,4 +1,4 @@
-const CACHE_NAME = 'it-chamchamal-v3.2'; // ڤێرژنەکەم گۆڕی بۆ 3.2 بۆ ئەوەی گۆڕانکارییەکان یەکسەر وەربگرێت
+const CACHE_NAME = 'it-chamchamal-v3.3';
 const assets = [
   './',
   './index.html',
@@ -9,17 +9,18 @@ const assets = [
   './manifest.json'
 ];
 
-// 1. Install Event - Caching Assets
+
 self.addEventListener('install', event => {
   self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll(assets);
+      // one missing file must not break the whole install
+      return Promise.all(assets.map(a => cache.add(a).catch(() => {})));
     })
   );
 });
 
-// 2. Activate Event - Cleaning old caches
+
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys => {
@@ -32,7 +33,7 @@ self.addEventListener('activate', event => {
   return self.clients.claim();
 });
 
-// 3. Fetch Event - Network First Strategy
+
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
 
@@ -51,9 +52,8 @@ self.addEventListener('fetch', event => {
   );
 });
 
-// 4. Push Event - (ئەمە بەشە گرنگەکەیە بۆ ئاگاداری)
 self.addEventListener('push', function(event) {
-  // داتا وەردەگرێت ئەگەر هەبێت، ئەگەر نەبوو دەقێکی جێگیر دەنێرێت
+  
   let data = { title: 'ئاگاداری نوێ', body: 'هەواڵێکی نوێ لە بەشی ئایتی', url: './' };
   
   if (event.data) {
@@ -68,9 +68,9 @@ self.addEventListener('push', function(event) {
     body: data.body,
     icon: './it-icon-final-192.png',
     badge: './it-icon-final-192.png',
-    vibrate: [100, 50, 100], // مۆبایلەکە دەلەرێتەوە
+    vibrate: [100, 50, 100], 
     data: {
-      url: data.url || './' // کاتێک کلیکی لێ دەکەیت ئەم لینکە دەکرێتەوە
+      url: data.url || './' 
     },
     actions: [
       {action: 'explore', title: 'بینینی سایت'}
@@ -82,13 +82,12 @@ self.addEventListener('push', function(event) {
   );
 });
 
-// 5. Notification Click Event - (کاتێک کلیک لە ئاگادارییەکە دەکەیت)
 self.addEventListener('notificationclick', function(event) {
-  event.notification.close(); // ئاگادارییەکە دادەخات
+  event.notification.close(); 
   
   event.waitUntil(
     clients.matchAll({type: 'window'}).then( windowClients => {
-      // ئەگەر سایتەکە کراوەتەوە، دەچێتە سەر ئەو، ئەگەر نا دانەیەکی نوێ دەکاتەوە
+   
       for (var i = 0; i < windowClients.length; i++) {
         var client = windowClients[i];
         if (client.url === event.notification.data.url && 'focus' in client) {
