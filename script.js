@@ -5,21 +5,29 @@ function showToast(message, icon = "✅") {
         let container = document.getElementById('toast-container');
         if (!container) { container = document.createElement('div'); container.id = 'toast-container'; document.body.appendChild(container); }
         const toast = document.createElement('div'); toast.className = 'toast-message';
-        toast.innerHTML = `<span class="toast-dot"></span> <span>${message}</span>`;
+        const dot = document.createElement('span'); dot.className = 'toast-dot';
+        const txt = document.createElement('span'); txt.textContent = message;
+        toast.appendChild(dot); toast.appendChild(txt);
         container.appendChild(toast);
         setTimeout(() => { toast.remove(); }, 3800);
     } catch(e){}
 }
 
-function autoRequestNotification() {
-    if (!("Notification" in window)) return;
-    if (Notification.permission === "default") {
-        setTimeout(() => {
-            Notification.requestPermission().then(permission => {
-                if (permission === "granted") { new Notification("پەیمانگای تەکنیکی چەمچەماڵ", { body: "ئێستا ئاگادارییەکان وەردەگریت", icon: "it-icon-final-192.png" }); }
-            });
-        }, 3000);
-    }
+function esc(v) {
+    return String(v == null ? '' : v).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function getProfile() {
+    try {
+        const raw = localStorage.getItem('today_profile');
+        if (!raw) return null;
+        const p = JSON.parse(raw);
+        return (p && typeof p === 'object') ? p : null;
+    } catch(e) { return null; }
+}
+
+function accentColor() {
+    return document.body.classList.contains('theme-dark') ? '#60a5fa' : '#1e3a8a';
 }
 
 function forceHideLoader() {
@@ -30,13 +38,13 @@ function forceHideLoader() {
 const TELEGRAM_USERNAME = "sherwan25";
 let currentSem = 1;
 let currentShift = 'evening';
-const APP_VERSION = "3.2";
+const APP_VERSION = "3.3";
 
 let isEndOfYear = false;
 let endOfYearMessage = "";
 
 const subjectList = {
-    1: ["Logic Design","IT Fundamentals","Mathematics","English","Kurdology"],
+    1: ["Comp. Org & Logic Design","IT Fundamentals","Mathematics","English","Kurdology"],
     2: ["Database Concept","English II","Network +","Principle of Programming","Web Design"],
     3: ["Web Programming","O.O.P","Database Management System","Computer Network II","Operating System"],
     4: ["Mobile Application","Web Programming II","Visual Programming","Information Security","Project"]
@@ -50,23 +58,52 @@ const pdfScheduleLinks = {
 
 let selectedPdfShift = null;
 
-function switchScheduleView(view) {
-    triggerHaptic();
+let schedMode = null;
+
+function switchScheduleView(view, silent) {
+    if (!silent) triggerHaptic();
+    schedMode = view;
+    applyScheduleView();
+}
+
+function resetScheduleOutput() {
+    const da = document.getElementById('daysArea'); if (da) da.innerHTML = '';
+    const sb = document.getElementById('schedule-box'); if (sb) sb.style.display = 'none';
+    const body = document.getElementById('schedule-body'); if (body) body.innerHTML = '';
+    const gt = document.getElementById('group-display-title'); if (gt) gt.style.display = 'none';
+}
+
+function applyScheduleView() {
+    const p = getProfile();
+    const view = schedMode || (p ? 'mine' : 'browse');
     const textView = document.getElementById('schedule-text-view');
     const pdfView = document.getElementById('schedule-pdf-view');
-    const btnText = document.getElementById('sched-view-text-btn');
-    const btnPdf = document.getElementById('sched-view-pdf-btn');
+    ['mine', 'browse', 'pdf'].forEach(v => {
+        const b = document.getElementById('sched-view-' + v + '-btn');
+        if (b) b.classList.toggle('active-btn', v === view);
+    });
+    if (!textView || !pdfView) return;
 
-    if (view === 'text') {
-        if(textView) textView.style.display = 'block';
-        if(pdfView) pdfView.style.display = 'none';
-        btnText.classList.add('active-btn');
-        btnPdf.classList.remove('active-btn');
+    if (view === 'pdf') { textView.style.display = 'none'; pdfView.style.display = 'block'; return; }
+    pdfView.style.display = 'none'; textView.style.display = 'block';
+
+    resetScheduleOutput();
+    const semRow = document.getElementById('sched-sem-row'); if (semRow) semRow.style.display = 'none';
+    const grpRow = document.getElementById('group-selection'); if (grpRow) grpRow.style.display = 'none';
+    const shiftSel = textView.querySelector('.shift-selection');
+    const stageRow = textView.querySelector('.sem-btn-row');
+    const empty = document.getElementById('sched-mine-empty');
+
+    if (view === 'mine') {
+        if (shiftSel) shiftSel.style.display = 'none';
+        if (stageRow) stageRow.style.display = 'none';
+        if (p) { if (empty) empty.style.display = 'none'; renderScheduleDays(p.sem, p.shift, p.group); }
+        else if (empty) { empty.style.display = 'block'; }
     } else {
-        if(textView) textView.style.display = 'none';
-        if(pdfView) pdfView.style.display = 'block';
-        btnPdf.classList.add('active-btn');
-        btnText.classList.remove('active-btn');
+        if (empty) empty.style.display = 'none';
+        if (shiftSel) shiftSel.style.display = 'flex';
+        if (stageRow) stageRow.style.display = 'grid';
+        selectShift((p && p.shift) || currentShift, true);
     }
 }
 
@@ -120,7 +157,7 @@ function setActiveNav(id) {
 }
 
 function checkUpdate() { if ('serviceWorker' in navigator) { navigator.serviceWorker.ready.then(reg => reg.update()); } }
-try { if (localStorage.getItem("app_version") !== APP_VERSION) { localStorage.setItem("app_version",APP_VERSION); if (!sessionStorage.getItem("app_reloaded")) { sessionStorage.setItem("app_reloaded","1"); window.location.reload(true); } } } catch(e){}
+try { if (localStorage.getItem("app_version") !== APP_VERSION) localStorage.setItem("app_version", APP_VERSION); } catch(e){}
 
 function openInnerStage(stageId) {
     triggerHaptic();
@@ -148,6 +185,7 @@ function applyTheme(name, isLoad = false) {
     const tc = document.getElementById('tc-'+name); if (tc) tc.classList.add('active');
     let metaThemeColor = document.querySelector('meta[name="theme-color"]');
     if (metaThemeColor) metaThemeColor.setAttribute('content', themeHeaderColors[name] || '#1e3a8a');
+    try { const tm = document.getElementById('today-main'); if (!isLoad && tm && tm.style.display === 'block') renderTodayMain(); } catch(e){}
 }
 
 function openThemePanel() { triggerHaptic(); document.getElementById('themePanel').classList.add('open'); document.getElementById('themeOverlay').classList.add('open'); }
@@ -220,53 +258,37 @@ async function fetchSchedule() {
 }
 
 function initScheduleTab() {
-    const stored = localStorage.getItem('today_profile');
-    const schedTab = document.getElementById('schedule-tab');
-    const oldUI = schedTab.querySelectorAll('.shift-selection, .sem-btn-row, #sched-sem-row, #group-selection');
+    if (schedMode === 'mine' && !getProfile()) schedMode = null;
+    applyScheduleView();
+}
 
-    let setupContainer = document.getElementById('sched-setup-container');
-    if (!setupContainer) {
-        setupContainer = document.createElement('div'); setupContainer.id = 'sched-setup-container';
-        const header = schedTab.querySelector('.section-header');
-        header.parentNode.insertBefore(setupContainer, header.nextSibling);
-    }
+const DAY_NAMES = ['یەکشەممە','دووشەممە','سێشەممە','چوارشەممە'];
 
-    if (stored) {
-        setupContainer.style.display = 'none';
-        oldUI.forEach(el => el.style.display = 'none');
-        const p = JSON.parse(stored);
-        renderScheduleDays(p.sem, p.shift, p.group);
-    } else {
-        oldUI.forEach(el => el.style.display = 'none');
-        document.querySelector('.shift-selection').style.display = 'flex';
-        document.querySelector('.sem-btn-row').style.display = 'grid';
-        
-        document.getElementById('daysArea').innerHTML = '';
-        document.getElementById('schedule-box').style.display = 'none';
-        document.getElementById('group-display-title').style.display = 'none';
-        setupContainer.style.display = 'none';
-    }
+function dayButtonsHTML(g) {
+    const safeG = String(g).replace(/[^A-Za-z]/g, '');
+    return DAY_NAMES.map((n, i) =>
+        `<button class="tab-btn day-btn" data-d="${i+1}" onclick="selectDay('${safeG}',${i+1},'${n}')">${n}</button>`
+    ).join('');
 }
 
 function renderScheduleDays(sem, shift, group) {
     currentSem = sem; currentShift = shift;
-    document.getElementById('group-display-title').style.display = 'block';
+    const gt = document.getElementById('group-display-title');
+    gt.style.display = 'block';
     const shiftText = shift==='morning' ? 'بەیانیان' : 'ئێواران';
-    document.getElementById('group-display-title').innerHTML = `${shiftText} - سمستەری ${sem} - <span style="color:var(--primary)">گرووپی ${group}</span>`;
+    gt.innerHTML = `${shiftText} - سمستەری ${esc(sem)} - <span style="color:var(--primary)">گرووپی ${esc(group)}</span>`;
 
-    const dn = ['یەکشەممە','دووشەممە','سێشەممە','چوارشەممە'];
-    document.getElementById('daysArea').style.display = 'grid';
-    document.getElementById('daysArea').style.gridTemplateColumns = 'repeat(2, 1fr)';
-    document.getElementById('daysArea').style.gap = '10px';
-    document.getElementById('daysArea').innerHTML = dn.map((n,i)=>
-        `<button class="tab-btn" style="width:100%; padding:14px 8px; background:#dbeafe; color:#1e3a8a; border:2px solid #1e3a8a; border-radius:14px; font-weight:800; font-size:0.9rem; cursor:pointer;" onclick="selectDay('${group}',${i+1},'${n}')">${n}</button>`
-    ).join('');
-    document.getElementById('daysArea').innerHTML += `<button onclick="resetTodayProfile();" style="grid-column: span 2; margin-top:8px; padding:12px; border-radius:14px; background:transparent; border:1.5px solid var(--border); color:var(--text-muted); font-family:var(--font); font-size:0.85rem; cursor:pointer; font-weight:600; width:100%;">گۆڕینی زانیارییەکان</button>`;
+    const da = document.getElementById('daysArea');
+    da.style.display = 'grid';
+    da.style.gridTemplateColumns = 'repeat(2, 1fr)';
+    da.style.gap = '10px';
+    da.innerHTML = dayButtonsHTML(group) +
+        `<button onclick="resetTodayProfile();" style="grid-column: span 2; margin-top:8px; padding:12px; border-radius:14px; background:transparent; border:1.5px solid var(--border); color:var(--text-muted); font-family:var(--font); font-size:0.85rem; cursor:pointer; font-weight:600; width:100%;">گۆڕینی زانیارییەکان</button>`;
     document.getElementById('schedule-box').style.display = 'none'; document.getElementById('schedule-body').innerHTML = '';
 }
 
-function selectShift(shift) {
-    triggerHaptic(); currentShift = shift;
+function selectShift(shift, silent) {
+    if (!silent) triggerHaptic(); currentShift = shift;
     document.querySelector('.shift-btn.morning')?.classList.remove('active'); document.querySelector('.shift-btn.evening')?.classList.remove('active');
     if(shift==='morning') document.querySelector('.shift-btn.morning')?.classList.add('active'); else document.querySelector('.shift-btn.evening')?.classList.add('active');
     document.getElementById('sched-sem-row').style.display='none'; document.getElementById('group-selection').style.display='none'; document.getElementById('group-display-title').style.display='none'; document.getElementById('daysArea').innerHTML=""; document.getElementById('schedule-box').style.display='none';
@@ -309,25 +331,28 @@ function selectGroup(g) {
     document.querySelectorAll('.grp-btn').forEach(b=>b.classList.remove('active-btn'));
     const ag = document.getElementById('btn-grp-'+g); if(ag) ag.classList.add('active-btn');
     const shiftText = currentShift==='morning' ? 'بەیانیان' : 'ئێواران';
-    document.getElementById('group-display-title').innerHTML = `سمستەر ${currentSem} - ${shiftText} - <span style="color:var(--primary)">گرووپی ${g}</span>`;
-    const dn = ['یەکشەممە','دووشەممە','سێشەممە','چوارشەممە'];
-    document.getElementById('daysArea').innerHTML = dn.map((n,i)=>`<button class="tab-btn" style="width:100%; padding:14px 8px; background:#dbeafe; color:#1e3a8a; border:2px solid #1e3a8a; border-radius:14px; font-weight:800; font-size:0.9rem; cursor:pointer;" onclick="selectDay('${g}',${i+1},'${n}')">${n}</button>`).join('');
+    document.getElementById('group-display-title').innerHTML = `سمستەر ${esc(currentSem)} - ${shiftText} - <span style="color:var(--primary)">گرووپی ${esc(g)}</span>`;
+    document.getElementById('daysArea').innerHTML = dayButtonsHTML(g);
+    document.getElementById('schedule-box').style.display = 'none';
 }
 
 function selectDay(g, d, dayName) {
     triggerHaptic();
     const body = document.getElementById('schedule-body'); if(!body) return; body.innerHTML='';
     const shiftText = currentShift==='morning' ? 'بەیانیان' : 'ئێواران';
-    document.getElementById('group-display-title').innerHTML = `${shiftText} - سمستەری ${currentSem} - <span style="color:var(--primary)">گرووپی ${g}</span> - ڕۆژی ${dayName}`;
-    if (scheduleData[currentShift]?.[currentSem]?.[g]?.[d]) {
-        const lessons = scheduleData[currentShift][currentSem][g][d];
+    document.getElementById('group-display-title').innerHTML = `${shiftText} - سمستەری ${esc(currentSem)} - <span style="color:var(--primary)">گرووپی ${esc(g)}</span> - ڕۆژی ${esc(dayName)}`;
+    document.querySelectorAll('#daysArea .day-btn').forEach(b => b.classList.toggle('active-day', Number(b.dataset.d) === Number(d)));
+    const lessons = scheduleData[currentShift]?.[currentSem]?.[g]?.[d];
+    if (lessons) {
         if (lessons.length>0) {
+            let rowsHtml = '';
             lessons.forEach(r=>{
-                body.innerHTML += `<tr><td style="font-weight:800;">${r[0]}</td><td><span style="background:var(--primary);color:white;padding:5px 14px;border-radius:20px;font-weight:700;display:inline-block;">${r[1]}</span></td><td dir="ltr" style="font-weight:700;">${r[2]}</td><td style="font-size:0.88rem;color:var(--text-muted);">${r[3]}</td></tr>`;
+                rowsHtml += `<tr><td style="font-weight:800;">${esc(r[0])}</td><td><span style="background:var(--primary);color:white;padding:5px 14px;border-radius:20px;font-weight:700;display:inline-block;">${esc(r[1])}</span></td><td dir="ltr" style="font-weight:700;">${esc(r[2])}</td><td style="font-size:0.88rem;color:var(--text-muted);">${esc(r[3])}</td></tr>`;
             });
+            body.innerHTML = rowsHtml;
         } else { body.innerHTML = `<tr><td colspan="4" style="color:var(--text-muted);">${g==='C'?'گرووپی C وانەی نییە لەم ڕۆژانەدا':'وانە نییە'}</td></tr>`; }
-        document.getElementById('schedule-box').style.display='block';
-    } else { body.innerHTML=`<tr><td colspan="4" style="color:var(--text-muted);">زانیاری نییە</td></tr>`; document.getElementById('schedule-box').style.display='block'; }
+    } else { body.innerHTML=`<tr><td colspan="4" style="color:var(--text-muted);">${g==='C'?'گرووپی C وانەی نییە لەم ڕۆژانەدا':'زانیاری نییە'}</td></tr>`; }
+    document.getElementById('schedule-box').style.display='block';
 }
 
 function requestNotifyPermission() {
@@ -348,7 +373,7 @@ async function fetchNews() {
             rows.forEach((row,i)=>{
                 const fc=row.indexOf(','); if(fc===-1) return;
                 const t=row.substring(0,fc).replace(/(^"|"$)/g,'').trim(); const d=row.substring(fc+1).replace(/(^"|"$)/g,'').trim();
-                if(i===0) latestTitle=t; html+=` <span style="margin-left:80px;display:inline-block;"> <b>• ${t}</b> : ${d} </span> `;
+                if(i===0) latestTitle=t; html+=` <span style="margin-left:80px;display:inline-block;"> <b>• ${esc(t)}</b> : ${esc(d)} </span> `;
             });
             nc.innerHTML=html+html; nc.dataset.loaded='1'; const stored=localStorage.getItem('last_news_title');
             if(stored!==latestTitle && Notification.permission==="granted") {
@@ -365,9 +390,8 @@ async function fetchNews() {
 let classAlertTimeouts = [];
 function scheduleClassAlerts() {
     classAlertTimeouts.forEach(clearTimeout); classAlertTimeouts = [];
-    const stored = localStorage.getItem('today_profile');
-    if (!stored || Object.keys(scheduleData).length === 0) return;
-    const p = JSON.parse(stored);
+    const p = getProfile();
+    if (!p || Object.keys(scheduleData).length === 0) return;
     const dayIdx = getTodayDayIndex(); if (dayIdx === null) return; 
     const lessons = scheduleData[p.shift]?.[parseInt(p.sem)]?.[p.group]?.[dayIdx];
     if (!lessons || lessons.length === 0) return;
@@ -389,7 +413,7 @@ function scheduleClassAlerts() {
 
         const breakAlarm = classStartTime.getTime() + (90 * 60 * 1000);
         if (breakAlarm > now) {
-            const timeout2 = setTimeout(() => { showToast(`کاتی پشووە: وانەی (${r[1]}) تەواو بوو (٣0 خولەک پشوو).`, '🎉'); sendPushNotification(`کاتی پشووە`, `وانەی ${r[1]} تەواو بوو. پشوویەکی باش.`); }, breakAlarm - now);
+            const timeout2 = setTimeout(() => { showToast(`کاتی پشووە: وانەی (${r[1]}) تەواو بوو (٣٠ خولەک پشوو).`, '🎉'); sendPushNotification(`کاتی پشووە`, `وانەی ${r[1]} تەواو بوو. پشوویەکی باش.`); }, breakAlarm - now);
             classAlertTimeouts.push(timeout2);
         }
     });
@@ -488,7 +512,7 @@ function getTodayGreeting(name, gender) {
     else if (h >= 12 && h < 17) { timeWord = 'نیوەڕۆت باش'; emoji = '🌤️'; }
     else if (h >= 17 && h < 21) { timeWord = 'ئێوارەت باش'; emoji = '🌆'; }
     else { timeWord = 'شەوت باش'; emoji = '🌙'; }
-    const title = gender === 'male' ? 'کاک' : 'خاتوو'; return { greeting: `${timeWord}، ${title} ${name}`, emoji };
+    const title = gender === 'male' ? 'کاک' : 'خاتوو'; return { greeting: `${timeWord}، ${title} ${esc(name)}`, emoji };
 }
 
 function getTodayDayIndex() {
@@ -499,9 +523,8 @@ function getTodayDayName(jsDay) {
 }
 
 function renderTodayMain() {
-    const stored = localStorage.getItem('today_profile');
-    if(!stored) { document.getElementById('today-setup').style.display = 'block'; document.getElementById('today-main').style.display  = 'none'; return; }
-    const p = JSON.parse(stored);
+    const p = getProfile();
+    if(!p) { document.getElementById('today-setup').style.display = 'block'; document.getElementById('today-main').style.display  = 'none'; return; }
     document.getElementById('today-setup').style.display = 'none'; document.getElementById('today-main').style.display  = 'block';
 
     const { greeting, emoji } = getTodayGreeting(p.name, p.gender);
@@ -514,7 +537,7 @@ function renderTodayMain() {
         greetBox.innerHTML = `
             <div style="font-size:2.2rem;margin-bottom:8px;">${emoji}</div>
             <div style="color:white;font-size:1.18rem;font-weight:900;margin-bottom:6px;line-height:1.4;">${greeting}</div>
-            <div style="color:rgba(255,255,255,0.72);font-size:0.82rem;font-weight:600;">${stageLabel} - سمستەری ${p.sem} &nbsp;·&nbsp; Group ${p.group} &nbsp;·&nbsp; ${shiftLabel}</div>
+            <div style="color:rgba(255,255,255,0.72);font-size:0.82rem;font-weight:600;">${stageLabel} - سمستەری ${esc(p.sem)} &nbsp;·&nbsp; Group ${esc(p.group)} &nbsp;·&nbsp; ${shiftLabel}</div>
         `;
     }
 
@@ -541,7 +564,7 @@ function renderTodayMain() {
         html += `
         <div style="text-align:center;padding:26px;background:var(--surface);border-radius:16px;border:1.5px dashed var(--border);">
             <div style="font-size:1.8rem;margin-bottom:8px;">☕</div>
-            <div style="color:var(--text-muted);font-weight:700;">ئەمڕۆ وانە نییە بۆ گرووپی ${p.group}</div>
+            <div style="color:var(--text-muted);font-weight:700;">ئەمڕۆ وانە نییە بۆ گرووپی ${esc(p.group)}</div>
         </div>`;
     } else {
         lessons.forEach(r => {
@@ -551,20 +574,20 @@ function renderTodayMain() {
             if (isPM && h < 12) h += 12; if (isAM && h === 12) h = 0;
             if (!isPM && !isAM) { if (p.shift === 'evening' && h < 12) h += 12; }
             lessonStart.setHours(h, m, 0, 0); const lessonEnd = new Date(lessonStart.getTime() + 2 * 60 * 60 * 1000);
-            const isNow = now >= lessonStart && now < lessonEnd; const isPast = now >= lessonEnd; const c = '#1e3a8a';
+            const isNow = now >= lessonStart && now < lessonEnd; const isPast = now >= lessonEnd; const c = accentColor();
 
             html += `
             <div style="background:var(--surface);border-radius:16px;border:1.5px solid ${isNow ? c : 'var(--border)'};padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;gap:14px;${isNow ? 'box-shadow:0 0 12px '+c+'40;' : ''}${isPast ? 'opacity:0.52;' : ''}transition:all 0.3s;">
                 <div style="width:50px;height:50px;border-radius:14px;background:${c}1a;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                    <span style="color:${c};font-weight:900;font-size:0.8rem;" dir="ltr">${r[2]}</span>
+                    <span style="color:${c};font-weight:900;font-size:0.8rem;" dir="ltr">${esc(r[2])}</span>
                 </div>
                 <div style="flex:1;min-width:0;">
                     <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:4px;">
-                        <span style="background:${c};color:white;padding:4px 12px;border-radius:20px;font-size:0.82rem;font-weight:700;white-space:nowrap;">${r[1]}</span>
+                        <span style="background:${c};color:white;padding:4px 12px;border-radius:20px;font-size:0.82rem;font-weight:700;white-space:nowrap;">${esc(r[1])}</span>
                         ${isNow ? `<span style="background:#10b981;color:white;padding:3px 9px;border-radius:10px;font-size:0.72rem;font-weight:700;box-shadow:0 0 8px rgba(16,185,129,0.5);">⬤ ئێستا</span>` : ''}
                         ${isPast ? `<span style="background:var(--surface2);color:var(--text-muted);padding:3px 9px;border-radius:10px;font-size:0.72rem;border:1px solid var(--border);">تەواوبوو</span>` : ''}
                     </div>
-                    <div style="font-size:0.78rem;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${r[3]}</div>
+                    <div style="font-size:0.78rem;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(r[3])}</div>
                 </div>
             </div>`;
         });
@@ -575,9 +598,8 @@ function renderTodayMain() {
 function initTodayTab() {
     const setupForm = document.getElementById('today-setup'); const todayTab = document.getElementById('today-tab'); const todayMain = document.getElementById('today-main');
     todayTab.insertBefore(setupForm, todayMain);
-    const stored = localStorage.getItem('today_profile');
-    if(stored) {
-        const p = JSON.parse(stored);
+    const p = getProfile();
+    if(p) {
         const nameEl = document.getElementById('today-name');
         if(nameEl) nameEl.value = p.name || '';
         if(p.gender) selectGender(p.gender);
@@ -612,7 +634,7 @@ function renderGrading() {
     let lblDaily = "ڕۆژانە", lblAtt = "نەهاتن", lblQuiz = "کویز", lblRep = "ڕاپۆرت و سیمینار", lblMid = "میدتێرم", lblFin = "فایناڵ", lblStat = "تکایە نمرەکانت داخڵ بکە...", lblDel = "سڕینەوەی ئەم بابەتە";
     subjects.forEach((sub,idx)=>{
         const color='#1e3a8a';
-        container.innerHTML+=`<div class="grade-item"><button class="accordion" onclick="toggleAccordion(this)"><span class="subject-badge" style="background:${color};">${sub}</span><span id="score-${sem}-${idx}" style="font-size:0.78rem;opacity:0.5;">▼</span></button><div class="panel"><div class="gpa-input-row"><label>${lblDaily}</label><input type="number" min="0" max="50" id="daily-${sem}-${idx}" oninput="calcSub('${sem}',${idx})"></div><div class="gpa-input-row"><label>${lblAtt}</label><input type="number" min="0" max="50" id="attend-${sem}-${idx}" oninput="calcSub('${sem}',${idx})"></div><div class="gpa-input-row"><label>${lblQuiz}</label><input type="number" min="0" max="50" id="quiz-${sem}-${idx}" oninput="calcSub('${sem}',${idx})"></div><div class="gpa-input-row"><label>${lblRep}</label><input type="number" min="0" max="50" id="report-${sem}-${idx}" oninput="calcSub('${sem}',${idx})"></div><div class="gpa-input-row"><label>${lblMid}</label><input type="number" min="0" max="50" id="mid-${sem}-${idx}" oninput="calcSub('${sem}',${idx})"></div><div class="gpa-input-row" style="border-top:1px solid var(--border);"><label style="color:${color};font-weight:800;">${lblFin}</label><input type="number" min="0" max="50" id="final-${sem}-${idx}" oninput="calcSub('${sem}',${idx})"></div><div id="status-${sem}-${idx}" style="text-align:center;padding:12px;font-size:0.88rem;font-weight:600;color:var(--text-muted);background:var(--surface2);margin:10px 0;border-radius:12px;line-height:1.7;border:1px solid var(--border);">${lblStat}</div><div class="clear-btns-container"><button class="btn-clear-sub" onclick="clearSubject('${sem}',${idx})">${lblDel}</button></div></div></div>`;
+        container.innerHTML+=`<div class="grade-item"><button class="accordion" onclick="toggleAccordion(this)"><span class="subject-badge" style="background:${color};">${sub}</span><span id="score-${sem}-${idx}" style="font-size:0.78rem;opacity:0.5;">▼</span></button><div class="panel"><div class="gpa-input-row"><label>${lblDaily}</label><input type="number" min="0" max="50" id="daily-${sem}-${idx}" oninput="calcSub('${sem}',${idx})"></div><div class="gpa-input-row"><label>${lblAtt}</label><input type="number" min="0" max="50" id="attend-${sem}-${idx}" oninput="calcSub('${sem}',${idx})"></div><div class="gpa-input-row"><label>${lblQuiz}</label><input type="number" min="0" max="50" id="quiz-${sem}-${idx}" oninput="calcSub('${sem}',${idx})"></div><div class="gpa-input-row"><label>${lblRep}</label><input type="number" min="0" max="50" id="report-${sem}-${idx}" oninput="calcSub('${sem}',${idx})"></div><div class="gpa-input-row"><label>${lblMid}</label><input type="number" min="0" max="50" id="mid-${sem}-${idx}" oninput="calcSub('${sem}',${idx})"></div><div class="gpa-input-row" style="border-top:1px solid var(--border);"><label style="color:var(--primary);font-weight:800;">${lblFin}</label><input type="number" min="0" max="50" id="final-${sem}-${idx}" oninput="calcSub('${sem}',${idx})"></div><div id="status-${sem}-${idx}" style="text-align:center;padding:12px;font-size:0.88rem;font-weight:600;color:var(--text-muted);background:var(--surface2);margin:10px 0;border-radius:12px;line-height:1.7;border:1px solid var(--border);">${lblStat}</div><div class="clear-btns-container"><button class="btn-clear-sub" onclick="clearSubject('${sem}',${idx})">${lblDel}</button></div></div></div>`;
     });
     loadGrades();
 }
@@ -715,15 +737,18 @@ let examIntervals=[];
 async function checkExams() {
     const container = document.getElementById('exams-container');
     const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS2j8Z4JmuZ2Fq75MNmQ1siz3l9djVQqaIQhk9R9SrSbBx94k3zRfQHeuDpTx_SBW8ZYaWB0Bvxor7M/pub?output=csv&gid=1091649278";
+    const GRACE_MS = 3 * 60 * 60 * 1000; // keep an exam visible for 3 hours after it starts
     try {
         const r = await fetch(url, { cache: "no-store" }); if(!r.ok) throw new Error("HTTP " + r.status); const csvText = await r.text(); const rows = csvText.split(/\r?\n/).slice(1);
         examIntervals.forEach(clearInterval); examIntervals = []; if(container) container.innerHTML = "";
         let activeExams = [];
         rows.forEach(row => {
-            let columns = row.split(',');
+            if(!row.trim()) return;
+            const columns = splitCsvLine(row).map(c => c.trim());
             if(columns.length >= 2) {
-                let title = columns[0].replace(/(^"|"$)/g, '').trim(); let dateVal = columns[1].replace(/(^"|"$)/g, '').trim();
-                let timeVal = columns.length >= 3 && columns[2].trim() !== "" ? columns[2].replace(/(^"|"$)/g, '').trim() : "12:00 AM";
+                let title = columns[0]; let dateVal = columns[1];
+                // no time written in the sheet -> end of that day, so the exam stays visible all day
+                let timeVal = columns.length >= 3 && columns[2] !== "" ? columns[2] : "11:59 PM";
                 if(title && dateVal) {
                     let dParts = dateVal.split(/[-\/]/);
                     if(dParts.length === 3) {
@@ -735,7 +760,7 @@ async function checkExams() {
                     let h = parseInt(tParts[0] || "0", 10); let m = (tParts[1] || "00").padStart(2, '0'); let s = (tParts[2] || "00").padStart(2, '0');
                     if(isPM && h < 12) h += 12; if(isAM && h === 12) h = 0;
                     let exDate = new Date(`${dateVal}T${h.toString().padStart(2, '0')}:${m}:${s}`);
-                    if(!isNaN(exDate.getTime()) && exDate > new Date()) activeExams.push({ Title: title, dateObj: exDate });
+                    if(!isNaN(exDate.getTime()) && exDate.getTime() + GRACE_MS > Date.now()) activeExams.push({ Title: title, dateObj: exDate });
                 }
             }
         });
@@ -745,20 +770,25 @@ async function checkExams() {
                 const divId = "timer-" + Math.random().toString(36).substr(2, 9);
                 if(container) {
                     let lblDay = "ڕۆژ", lblHr = "کاژێر", lblMin = "خولەک", lblSec = "چرکە";
-                    container.innerHTML += `<div class="countdown-box"><h2 style="margin:0;font-size:1.05rem;color:#fbbf24;">${exam.Title}</h2><p style="margin:5px 0 8px;opacity:0.8;font-size:0.78rem;">${exam.dateObj.toLocaleString('ku-IQ')}</p><div class="timer-row"><div class="timer-unit"><div class="timer-box" id="d-${divId}">00</div><div class="timer-label">${lblDay}</div></div><div class="timer-unit"><div class="timer-box" id="h-${divId}">00</div><div class="timer-label">${lblHr}</div></div><div class="timer-unit"><div class="timer-box" id="m-${divId}">00</div><div class="timer-label">${lblMin}</div></div><div class="timer-unit"><div class="timer-box" id="s-${divId}">00</div><div class="timer-label">${lblSec}</div></div></div></div>`;
-                    startSpecificTimer(exam.dateObj, divId);
+                    container.innerHTML += `<div class="countdown-box"><h2 class="exam-title">${esc(exam.Title)}</h2><p style="margin:5px 0 8px;opacity:0.8;font-size:0.78rem;">${esc(exam.dateObj.toLocaleString('ku-IQ'))}</p><div class="timer-row" id="row-${divId}"><div class="timer-unit"><div class="timer-box" id="d-${divId}">00</div><div class="timer-label">${lblDay}</div></div><div class="timer-unit"><div class="timer-box" id="h-${divId}">00</div><div class="timer-label">${lblHr}</div></div><div class="timer-unit"><div class="timer-box" id="m-${divId}">00</div><div class="timer-label">${lblMin}</div></div><div class="timer-unit"><div class="timer-box" id="s-${divId}">00</div><div class="timer-label">${lblSec}</div></div></div><div class="exam-started" id="st-${divId}" style="display:none;">تاقیکردنەوەکە دەستی پێکرد</div></div>`;
                 }
             });
+            // start the timers after the whole list is in the DOM (innerHTML += rebuilds earlier nodes)
+            if(container) {
+                const ids = [...container.querySelectorAll('.timer-row')].map(el => el.id.replace('row-', ''));
+                ids.forEach((id, i) => startSpecificTimer(activeExams[i].dateObj, id));
+            }
         } else { if(container) container.innerHTML = `<h3 style='text-align:center;opacity:0.5;color:var(--text);'>هیچ تاقیکردنەوەیەک نییە</h3>`; }
-        
+
         let alertContainer = document.getElementById('today-exam-alerts');
         if (alertContainer) {
             if (activeExams.length > 0) {
+                const dayStart = d => new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
                 let alertsHTML = '';
                 activeExams.forEach(exam => {
-                    const diffTime = Math.abs(exam.dateObj - new Date()); const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                    let timeText = diffDays === 1 ? "سبەی" : diffDays === 0 ? "ئەمڕۆ" : `ماوە: ${diffDays} ڕۆژ`;
-                    alertsHTML += `<div style="display:flex;align-items:center;gap:8px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.25);border-radius:10px;padding:8px 12px;margin-bottom:6px;"><span style="color:#dc2626;font-weight:700;font-size:0.78rem;flex-shrink:0;">تاقیکردنەوە:</span><span style="font-weight:600;font-size:0.78rem;color:var(--text);flex:1;">${exam.Title}</span><span style="background:#dc2626;color:white;padding:2px 8px;border-radius:20px;font-size:0.7rem;font-weight:700;flex-shrink:0;white-space:nowrap;">${timeText}</span></div>`;
+                    const diffDays = Math.round((dayStart(exam.dateObj) - dayStart(new Date())) / 86400000);
+                    let timeText = diffDays <= 0 ? "ئەمڕۆ" : diffDays === 1 ? "سبەی" : `ماوە: ${diffDays} ڕۆژ`;
+                    alertsHTML += `<div style="display:flex;align-items:center;gap:8px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.25);border-radius:10px;padding:8px 12px;margin-bottom:6px;"><span style="color:#dc2626;font-weight:700;font-size:0.78rem;flex-shrink:0;">تاقیکردنەوە:</span><span style="font-weight:600;font-size:0.78rem;color:var(--text);flex:1;">${esc(exam.Title)}</span><span style="background:#dc2626;color:white;padding:2px 8px;border-radius:20px;font-size:0.7rem;font-weight:700;flex-shrink:0;white-space:nowrap;">${timeText}</span></div>`;
                 }); alertContainer.innerHTML = alertsHTML;
             } else { alertContainer.innerHTML = ''; }
         }
@@ -766,13 +796,21 @@ async function checkExams() {
 }
 
 function startSpecificTimer(date,id) {
-    const int=setInterval(()=>{
-        const now=new Date().getTime(); const dist=date.getTime()-now;
-        if(dist<0){clearInterval(int);return;}
+    const tick = () => {
+        const dist = date.getTime() - Date.now();
+        if (dist <= 0) {
+            clearInterval(int);
+            const row = document.getElementById(`row-${id}`); if (row) row.style.display = 'none';
+            const st = document.getElementById(`st-${id}`); if (st) st.style.display = 'block';
+            return;
+        }
         const d=Math.floor(dist/(1000*60*60*24)),h=Math.floor((dist%(1000*60*60*24))/(1000*60*60)),m=Math.floor((dist%(1000*60*60))/(1000*60)),s=Math.floor((dist%(1000*60))/1000);
         const pad=n=>n<10?"0"+n:n;
         if(document.getElementById(`d-${id}`)){document.getElementById(`d-${id}`).innerText=pad(d);document.getElementById(`h-${id}`).innerText=pad(h);document.getElementById(`m-${id}`).innerText=pad(m);document.getElementById(`s-${id}`).innerText=pad(s);}
-    },1000); examIntervals.push(int);
+    };
+    const int = setInterval(tick, 1000);
+    tick();
+    examIntervals.push(int);
 }
 
 function animateValue(obj, start, end, duration) {
@@ -812,7 +850,6 @@ function updateClock() {
 
 window.addEventListener('load', function () {
     setTimeout(forceHideLoader, 1000); 
-    try { autoRequestNotification(); } catch(e){}
     
     // ١. کارپێکردنی ڕووکار و دیزاین بەبێ چاوەڕێکردن (کردنەوەی دەستبەجێ)
     try {
